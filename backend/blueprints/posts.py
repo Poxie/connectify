@@ -8,9 +8,9 @@ user_posts = Blueprint('user_posts', __name__, url_prefix='/users/<int:id>')
 posts.register_blueprint(user_posts)
 
 # Create user post
-@user_posts.post('/posts')
+@posts.post('/posts')
 @token_required
-def create_user_post(id: int):
+def create_user_post(token_id: int):
     title = request.form.get('title')
     content = request.form.get('content')
 
@@ -19,7 +19,7 @@ def create_user_post(id: int):
         return 'Required fields may not be empty.', 400
 
     # Checking if user exists
-    user = get_user_by_id(id)
+    user = get_user_by_id(token_id)
     if not user:
         return 'User does not exist.', 404
 
@@ -27,9 +27,19 @@ def create_user_post(id: int):
     data = {
         'title': title, 
         'content': content,
-        'owner_id': id
+        'owner_id': token_id
     }
     post = create_post(data)
+
+    return jsonify(post)
+
+# Get post by id
+@posts.get('/posts/<int:id>')
+def get_post(id: int):
+    # Getting post
+    post = get_post_by_id(id)
+    if not post:
+        return 'Post does not exist.', 404
 
     return jsonify(post)
 
@@ -45,13 +55,3 @@ def get_user_post(id: int):
     posts = get_posts_by_user_id(id)
 
     return jsonify(posts)
-
-# Get post by id
-@posts.get('/posts/<int:id>')
-def get_post(id: int):
-    # Getting post
-    post = get_post_by_id(id)
-    if not post:
-        return 'Post does not exist.', 404
-
-    return jsonify(post)
