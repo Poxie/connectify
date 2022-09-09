@@ -25,7 +25,7 @@ def create_post_like(post_id: int, user_id: int):
     }
 
 # Getting post likes
-def get_post_likes(post_id: int, with_names=False):
+def get_post_like_count(post_id: int):
     cursor = MySQLCursorDict(db)
 
     # Creating query

@@ -2,6 +2,7 @@ from database import db
 from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
 import time
+from utils.likes import get_post_like_count
 
 # Getting post by id
 def get_post_by_id(id: int):
@@ -14,6 +15,12 @@ def get_post_by_id(id: int):
     # Fetching post
     cursor.execute(query, values)
     post = cursor.fetchone()
+
+    # Updating post with extra attributes
+    if post:
+        # Getting like count for post
+        like_count = get_post_like_count(id)
+        post['like_count'] = like_count
 
     return post
 
@@ -28,6 +35,12 @@ def get_posts_by_user_id(id: int):
     # Fetching posts
     cursor.execute(query, values)
     posts = cursor.fetchmany(10)
+
+    # Updating posts with extra attributes
+    for post in posts:
+        # Getting post likes
+        like_count = get_post_like_count(post['id'])
+        post['like_count'] = like_count
 
     return posts
 
