@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from utils.auth import token_required
 from utils.users import get_user_by_id
-from utils.posts import create_post
+from utils.posts import create_post, get_posts_by_user_id
 
 posts = Blueprint('posts', __name__, url_prefix='/users/<int:id>')
 
@@ -30,3 +30,16 @@ def create_user_post(id: int):
     post = create_post(data)
 
     return jsonify(post)
+
+# Get user posts
+@posts.get('/posts')
+def get_user_post(id: int):
+    # Checking if user exists
+    user = get_user_by_id(id)
+    if not user:
+        return 'User does not exist.', 404
+
+    # Getting post
+    posts = get_posts_by_user_id(id)
+
+    return jsonify(posts)

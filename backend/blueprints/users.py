@@ -41,29 +41,3 @@ def create_new_user():
         return str(e), 409
 
     return jsonify(user)
-
-# Create user post
-@users.post('/users/<int:id>/posts')
-@token_required
-def create_user_post(id: int):
-    title = request.form.get('title')
-    content = request.form.get('content')
-
-    # Checking if required fields are missing
-    if not title or not content:
-        return 'Required fields may not be empty.', 400
-
-    # Checking if user exists
-    user = get_user_by_id(id)
-    if not user:
-        return 'User does not exist.', 404
-
-    # Creating post
-    data = {
-        'title': title, 
-        'content': content,
-        'owner_id': id
-    }
-    post = create_post(data)
-
-    return jsonify(post)

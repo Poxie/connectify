@@ -17,6 +17,20 @@ def get_post_by_id(id: int):
 
     return post
 
+# Getting posts by user id
+def get_posts_by_user_id(id: int):
+    cursor = MySQLCursorDict(db)
+
+    # Creating query
+    query = "SELECT * FROM posts WHERE owner_id = %s"
+    values = (id,)
+
+    # Fetching posts
+    cursor.execute(query, values)
+    posts = cursor.fetchmany(10)
+
+    return posts
+
 # Creating post id
 POST_ID_LENGTh = 10
 def create_post_id() -> int:
