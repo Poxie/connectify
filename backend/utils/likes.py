@@ -1,3 +1,4 @@
+import re
 import time
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
@@ -23,6 +24,20 @@ def create_post_like(post_id: int, user_id: int):
         'post_id': post_id,
         'user_id': user_id
     }
+
+# Deleting post like
+def delete_post_like(post_id: int, user_id: int):
+    cursor = MySQLCursorDict(db)
+
+    # Creating query
+    query = "DELETE FROM likes WHERE post_id = %s AND user_id = %s"
+    values = (post_id, user_id)
+
+    # Executing delete query
+    cursor.execute(query, values)
+    db.commit()
+
+    return {}
 
 # Getting post likes
 def get_post_like_count(post_id: int):
