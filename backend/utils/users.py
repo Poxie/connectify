@@ -7,7 +7,7 @@ from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
 # Function to fetch 
-def get_user_by_username(username: str):
+def get_user_by_username(username: str, with_password=False):
     cursor = MySQLCursorDict(db)
 
     # Creating select query
@@ -19,7 +19,7 @@ def get_user_by_username(username: str):
     user = cursor.fetchone()
 
     # Deleting unwanted user information
-    if user:
+    if user and not with_password:
         del user['password']
 
     return user
