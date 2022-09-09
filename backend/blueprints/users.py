@@ -23,15 +23,18 @@ def get_user(id: int):
 @users.post('/users')
 def create_new_user():
     username = request.form.get('username')
+    password = request.form.get('password')
 
-    # If username is not present, return bad request
+    # If missing fields, return bad request
+    field_suffix = 'is a required field'
     if not username:
-        return 'Username is a required field.', 400
+        return 'Username ' + field_suffix, 400
+    elif not password:
+        return 'Password ' + field_suffix, 400
 
     # Creating user
-    user = None
     try:
-        user = create_user(username)
+        user = create_user(username, password)
     except ValueError as e:
         return str(e), 409
 

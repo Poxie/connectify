@@ -1,8 +1,10 @@
+import os
 from random import randrange
 from tkinter.messagebox import RETRY
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
-from typing import Dict, Union
+from cryptography.fernet import Fernet
+f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
 # Function to fetch 
 def get_user_by_username(username: str):
@@ -15,6 +17,10 @@ def get_user_by_username(username: str):
     # Fetching user
     cursor.execute(query, values)
     user = cursor.fetchone()
+
+    # Deleting unwanted user information
+    if user:
+        del user['password']
 
     return user
 
@@ -29,6 +35,10 @@ def get_user_by_id(id: int):
     # Fetching user
     cursor.execute(query, values)
     user = cursor.fetchone()
+
+    # Deleting unwanted user information
+    if user:
+        del user['password']
 
     return user
 
@@ -52,20 +62,24 @@ def create_user_id() -> int:
     return id
 
 # Function to create new user
-def create_user(username: str):
+def create_user(username: str, password: str):
     cursor = MySQLCursorDict(db)
 
     # Checking if username is available
     username_unavailable = get_user_by_username(username)
     if username_unavailable:
         raise ValueError('Username is unavailable.')
+    
+    # Encrypting password
+    encoded_password = password.encode('utf-8')
+    hashed_password = f.encrypt(encoded_password)
 
     # Creating unique id
     id = create_user_id()
 
     # Creating insert query
-    query = "INSERT INTO users (id, username) VALUES (%s, %s)"
-    values = (id, username)
+    query = "INSERT INTO users (id, username, password) VALUES (%s, %s, %s)"
+    values = (id, username, hashed_password)
 
     # Creating user
     cursor.execute(query, values)
