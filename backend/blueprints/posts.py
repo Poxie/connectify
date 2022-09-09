@@ -1,12 +1,14 @@
 from flask import Blueprint, request, jsonify
 from utils.auth import token_required
 from utils.users import get_user_by_id
-from utils.posts import create_post, get_posts_by_user_id
+from utils.posts import create_post, get_posts_by_user_id, get_post_by_id
 
-posts = Blueprint('posts', __name__, url_prefix='/users/<int:id>')
+posts = Blueprint('posts', __name__)
+user_posts = Blueprint('user_posts', __name__, url_prefix='/users/<int:id>')
+posts.register_blueprint(user_posts)
 
 # Create user post
-@posts.post('/posts')
+@user_posts.post('/posts')
 @token_required
 def create_user_post(id: int):
     title = request.form.get('title')
@@ -32,7 +34,7 @@ def create_user_post(id: int):
     return jsonify(post)
 
 # Get user posts
-@posts.get('/posts')
+@user_posts.get('/posts')
 def get_user_post(id: int):
     # Checking if user exists
     user = get_user_by_id(id)
@@ -43,3 +45,13 @@ def get_user_post(id: int):
     posts = get_posts_by_user_id(id)
 
     return jsonify(posts)
+
+# Get post by id
+@posts.get('/posts/<int:id>')
+def get_post(id: int):
+    # Getting post
+    post = get_post_by_id(id)
+    if not post:
+        return 'Post does not exist.', 404
+
+    return jsonify(post)
