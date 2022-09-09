@@ -28,6 +28,6 @@ def user_login():
         return 'Login details are incorrect.', 409
     
     # Creating user access token
-    token = jwt.encode({ 'id': user['id'] }, os.getenv('JWT_SECRET_JEY') or '')
+    token = jwt.encode({ 'id': user['id'] }, os.getenv('JWT_SECRET_KEY') or '')
 
     return jsonify({ 'token': token })

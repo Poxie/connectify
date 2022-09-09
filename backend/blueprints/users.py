@@ -2,6 +2,7 @@ import json
 from flask import Blueprint, request, jsonify
 from database import db
 from utils.users import get_user_by_id, create_user
+from utils.auth import token_required
 
 users = Blueprint('users', __name__)
 
@@ -39,3 +40,9 @@ def create_new_user():
         return str(e), 409
 
     return jsonify(user)
+
+# Create user post
+@users.post('/users/<int:id>/posts')
+@token_required
+def create_user_post(id: int):
+    return jsonify({ 'test': 'heylo' })
