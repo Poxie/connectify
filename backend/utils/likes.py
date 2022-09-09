@@ -42,3 +42,21 @@ def get_post_like_count(post_id: int):
         like_count = data['like_count']
 
     return like_count
+
+# Getting specific like
+def get_post_like(post_id: int, user_id: int):
+    cursor = MySQLCursorDict(db)
+
+    # Creating query
+    query = "SELECT * FROM likes WHERE post_id = %s AND user_id = %s"
+    values = (
+        post_id,
+        user_id
+    )
+
+    # Fetching like
+    cursor.execute(query, values)
+    like = cursor.fetchone()
+    cursor.reset()
+
+    return like
