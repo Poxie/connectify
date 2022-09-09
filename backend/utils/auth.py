@@ -24,10 +24,7 @@ def token_required(f):
         # Checking if token is valid
         try:
             data = jwt.decode(token, os.getenv('JWT_SECRET_KEY') or '', algorithms=['HS256'])
-
-            # Comparing token id and actual user's id
-            if kwargs['id'] != data['id']:
-                return 'Unauthorized.', 401
+            kwargs['token_id'] = data['id']
                 
         except Exception as e:
             print(e)
