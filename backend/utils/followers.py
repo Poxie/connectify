@@ -37,6 +37,20 @@ def create_follower(follower_id: int, followee_id: int):
 
     return follow
 
+# Delete follow
+def delete_follower(follower_id: int, followee_id: int):
+    cursor = MySQLCursorDict(db)
+
+    # Creating delete query
+    query = "DELETE FROM followers WHERE follower_id = %s AND followee_id = %s"
+    values = (follower_id, followee_id)
+
+    # Executing delete query
+    cursor.execute(query, values)
+    db.commit()
+
+    return {}
+
 # Getting user follower count
 def get_user_follower_count(user_id: int):
     cursor = MySQLCursorDict(db)
