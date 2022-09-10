@@ -1,12 +1,12 @@
-import re
+import time
+from typing import Union
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
-import time
-from utils.likes import get_post_like_count
+from utils.likes import get_post_like_count, get_post_like
 
 # Getting post by id
-def get_post_by_id(id: int):
+def get_post_by_id(id: int, token_id: Union[int, None]=None):
     cursor = MySQLCursorDict(db)
 
     # Creating query
@@ -23,10 +23,17 @@ def get_post_by_id(id: int):
         like_count = get_post_like_count(id)
         post['like_count'] = like_count
 
+        # Checking if current user has liked post
+        post['has_liked'] = False
+        if token_id:
+            like = get_post_like(id, token_id)
+            if like:
+                post['has_liked'] = True
+
     return post
 
 # Getting posts by user id
-def get_posts_by_user_id(id: int):
+def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
     cursor = MySQLCursorDict(db)
 
     # Creating query
@@ -42,6 +49,14 @@ def get_posts_by_user_id(id: int):
         # Getting post likes
         like_count = get_post_like_count(post['id'])
         post['like_count'] = like_count
+
+        # Checking if current user has liked post
+        post['has_liked'] = False
+        if token_id:
+            like = get_post_like(post['id'], token_id)
+            if like:
+                post['has_liked'] = True
+
 
     return posts
 

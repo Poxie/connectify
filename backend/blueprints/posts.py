@@ -1,5 +1,6 @@
+from typing import Union
 from flask import Blueprint, request, jsonify
-from utils.auth import token_required
+from utils.auth import token_required, token_optional
 from utils.users import get_user_by_id
 from utils.posts import create_post, get_posts_by_user_id, get_post_by_id, delete_post
 
@@ -53,9 +54,10 @@ def delete_user_post(id: int, token_id: int):
 
 # Get post by id
 @posts.get('/posts/<int:id>')
-def get_post(id: int):
+@token_optional
+def get_post(id: int, token_id: Union[int, None]=None):
     # Getting post
-    post = get_post_by_id(id)
+    post = get_post_by_id(id, token_id)
     if not post:
         return 'Post does not exist.', 404
 
@@ -63,13 +65,14 @@ def get_post(id: int):
 
 # Get user posts
 @user_posts.get('/posts')
-def get_user_post(id: int):
+@token_optional
+def get_user_post(id: int, token_id: Union[int, None]=None):
     # Checking if user exists
     user = get_user_by_id(id)
     if not user:
         return 'User does not exist.', 404
 
     # Getting post
-    posts = get_posts_by_user_id(id)
+    posts = get_posts_by_user_id(id, token_id)
 
     return jsonify(posts)
