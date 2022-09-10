@@ -69,3 +69,24 @@ def get_user_follower_count(user_id: int):
         follower_count = data['follower_count']
         
     return follower_count
+
+# Getting user followees
+def get_user_followees(id: int):
+    cursor = MySQLCursorDict(db)
+
+    # Creating select query
+    query = "SELECT followee_id FROM followers WHERE follower_id = %s"
+    values = (id,)
+
+    # Fetching followee_ids
+    cursor.execute(query, values)
+    data = cursor.fetchall()
+    
+    # Getting followee ids
+    followee_ids = []
+    if data:
+        for item in data:
+            if item and 'followee_id' in item:
+                followee_ids.append(item['followee_id'])
+
+    return followee_ids

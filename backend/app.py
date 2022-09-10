@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_cors import CORS
+from blueprints.me import me
 from blueprints.users import users
 from blueprints.login import login
 from blueprints.posts import posts
@@ -15,6 +16,7 @@ app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': os.getenv('FRONTEND_ORIGIN')}})
 
 # Registering blueprints
+app.register_blueprint(me)
 app.register_blueprint(users)
 app.register_blueprint(login)
 app.register_blueprint(posts)

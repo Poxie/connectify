@@ -1,8 +1,7 @@
 import os
 import jwt
 from flask import Blueprint, request, jsonify
-from utils.users import get_user_by_username, get_user_by_id
-from utils.auth import token_required
+from utils.users import get_user_by_username
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
@@ -32,10 +31,3 @@ def user_login():
     token = jwt.encode({ 'id': user['id'] }, os.getenv('JWT_SECRET_KEY') or '')
 
     return jsonify({ 'token': token })
-
-@login.get('/me')
-@token_required
-def get_me(token_id: int):
-    # Getting user based on token id
-    user = get_user_by_id(token_id)
-    return jsonify(user)

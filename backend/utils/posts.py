@@ -1,5 +1,5 @@
 import time
-from typing import Union
+from typing import Union, List
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
@@ -36,6 +36,18 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
                 post['has_liked'] = True
 
     return post
+
+# Getting many posts by many user ids
+def get_posts_by_user_ids(user_ids: List[int]):
+    cursor = MySQLCursorDict(db)
+
+    # Getting all posts from followed users
+    posts = []
+    for id in user_ids:
+        user_posts = get_posts_by_user_id(id)
+        posts = posts + user_posts
+
+    return posts
 
 # Getting posts by user id
 def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
