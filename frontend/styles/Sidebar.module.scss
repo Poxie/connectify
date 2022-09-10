@@ -1,0 +1,39 @@
+.container {
+    padding-right: 25px;
+    border-right: 2px solid var(--background-tertiary);
+    width: 200px;
+}
+.tabs {
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+}
+.tab {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 10px;
+    margin-left: -10px;
+    border-radius: var(--border-radius-primary);
+    transition: background-color .1s;
+
+    &:hover {
+        background-color: var(--background-secondary);
+    }
+
+    svg {
+        width: 32px;
+        fill: var(--text-secondary);
+    }
+
+    &.active {
+        color: var(--text-primary);
+
+        svg {
+            fill: var(--text-primary);
+        }
+    }
+}
