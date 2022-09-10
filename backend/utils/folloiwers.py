@@ -36,3 +36,22 @@ def create_follower(follower_id: int, followee_id: int):
     follow = get_follower(follower_id, followee_id)
 
     return follow
+
+# Getting user follower count
+def get_user_follower_count(user_id: int):
+    cursor = MySQLCursorDict(db)
+
+    # Creating select query
+    query = "SELECT COUNT(*) as follower_count FROM followers WHERE followee_id = %s"
+    values = (user_id,)
+
+    # Fetching follower count
+    cursor.execute(query, values)
+    data = cursor.fetchone()
+
+    # Determining follower count
+    follower_count = 0
+    if data:
+        follower_count = data['follower_count']
+        
+    return follower_count

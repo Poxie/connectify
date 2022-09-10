@@ -3,6 +3,7 @@ from random import randrange
 from tkinter.messagebox import RETRY
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
+from utils.folloiwers import get_user_follower_count
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
@@ -35,6 +36,12 @@ def get_user_by_id(id: int):
     # Fetching user
     cursor.execute(query, values)
     user = cursor.fetchone()
+
+    # Adding extra attribues
+    if user:
+        # Fetching user follower count
+        follower_count = get_user_follower_count(id)
+        user['follower_count'] = follower_count
 
     # Deleting unwanted user information
     if user:
