@@ -1,5 +1,5 @@
 .container {
-    padding-right: 25px;
+    padding-right: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
     width: 200px;
 }
@@ -7,10 +7,10 @@
     gap: 5px;
     display: flex;
     flex-direction: column;
-    padding: 15px 0;
+    padding: var(--spacing-primary) 0;
 }
 .tab {
-    gap: 15px;
+    gap: var(--spacing-primary);
     display: flex;
     align-items: center;
     color: var(--text-secondary);
