@@ -10,13 +10,15 @@ export const AuthProvider: React.FC<{
 }> = ({ children }) => {
     const [profile, setProfile] = useState(null);
     const [token, setToken] = useState<null | string>(null);
-
+    const [loading, setLoading] = useState(true);
 
     // Checking if user is logged in on render
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(token) {
             setToken(token);
+        } else {
+            setLoading(false);
         }
     }, []);
 
@@ -30,6 +32,9 @@ export const AuthProvider: React.FC<{
             })
             .catch(error => {
                 console.log(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
             })
     }, [token]);
 
@@ -76,7 +81,9 @@ export const AuthProvider: React.FC<{
 
     const value = {
         get,
-        post
+        post,
+        loading,
+        profile
     }
     return(
         <AuthContext.Provider value={value}>
