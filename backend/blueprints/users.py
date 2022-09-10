@@ -1,19 +1,21 @@
 import json
+from typing import Union
 from flask import Blueprint, request, jsonify
 from database import db
 from utils.users import get_user_by_id, create_user
 from utils.posts import create_post
-from utils.auth import token_required
+from utils.auth import token_required, token_optional
 
 users = Blueprint('users', __name__)
 
 # Get user
 @users.get('/users/<int:id>')
-def get_user(id: int):
+@token_optional
+def get_user(id: int, token_id: Union[int, None]=None):
     cursor = db.cursor()
 
     # Getting user
-    user = get_user_by_id(id)
+    user = get_user_by_id(id, token_id)
     
     # If user does not exist, throw 404
     if not user:

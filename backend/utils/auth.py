@@ -1,4 +1,5 @@
 from multiprocessing import AuthenticationError
+from weakref import ref
 import jwt, os
 from flask import request, jsonify
 from functools import wraps
@@ -32,4 +33,34 @@ def token_required(f):
 
         return f(*args, **kwargs)
 
+    return decorator
+
+def token_optional(f):
+    @wraps(f)
+    def decorator(*args, **kwargs):
+        # Checking if authorization headers are present
+        if not 'Authorization' in request.headers:
+            return f(*args, **kwargs)
+
+        # Checking if token is present
+        authorization = request.headers.get('Authorization')
+        if not authorization or len(authorization.split(' ')) < 2:
+            return f(*args, **kwargs)
+
+        # Checking if token is present
+        token = authorization.split(' ')[1]
+        if not token:
+            return f(*args, **kwargs)
+
+        # Setting token_id on successful decode
+        try:
+            data = jwt.decode(token, os.getenv('JWT_SECRET_KEY') or '', algorithms=['HS256'])
+            kwargs['token_id'] = data['id']
+                
+        except Exception as e:
+            print(e)
+            pass
+
+        return f(*args, **kwargs)
+    
     return decorator

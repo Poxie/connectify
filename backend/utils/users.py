@@ -1,9 +1,10 @@
 import os
 from random import randrange
 from tkinter.messagebox import RETRY
+from typing import Union
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
-from utils.followers import get_user_follower_count
+from utils.followers import get_user_follower_count, get_follower
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
@@ -26,7 +27,7 @@ def get_user_by_username(username: str, with_password=False):
     return user
 
 # Function to fetch user by id
-def get_user_by_id(id: int):
+def get_user_by_id(id: int, token_id: Union[int, None]=None):
     cursor = MySQLCursorDict(db)
 
     # Creating select query
@@ -42,6 +43,13 @@ def get_user_by_id(id: int):
         # Fetching user follower count
         follower_count = get_user_follower_count(id)
         user['follower_count'] = follower_count
+
+        # Checking if current user is following fetched user
+        user['is_following'] = False
+        if token_id:
+            follow = get_follower(token_id, id)
+            if follow:
+                user['is_following'] = True
 
     # Deleting unwanted user information
     if user:
