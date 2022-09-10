@@ -1,0 +1,15 @@
+.content {
+    padding: 20px 0;
+    width: var(--width-main);
+    max-width: var(--width-max);
+    margin: 0 auto;
+    border-bottom: 2px solid var(--background-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.site-name {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--color-secondary);
+}

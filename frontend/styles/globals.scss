@@ -8,6 +8,11 @@
   --text-secondary: #606770;
   --text-light-primary: #fff;
   --text-light-secondary: #cccccc;
+  --width-main: 1100px;
+  --width-max: 90%;
+  --border-radius-primary: 8px;
+  --button-background-primary: #008FA2;
+  --button-background-primary-hover: #006F7E;
 }
 
 html,
@@ -30,6 +35,7 @@ a {
 button {
   color: inherit;
   outline: none;
+  border: none;
   background-color: transparent;
   font-family: inherit;
 }
