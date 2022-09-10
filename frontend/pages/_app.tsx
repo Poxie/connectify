@@ -30,7 +30,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <Sidebar />
         <main style={{
           flex: 1,
-          padding: 'var(--spacing-primary)'
+          paddingLeft: 'var(--spacing-primary)',
+          paddingTop: 'var(--spacing-primary)'
         }}>
           {getLayout(
             <Component {...pageProps} />
