@@ -10,7 +10,7 @@ export const SidebarTab: React.FC<{
     path: string;
 }> = ({ text, neutralIcon, activeIcon, path }) => {
     const currentPath = useRouter().pathname;
-    const active = currentPath === path;
+    const active = currentPath.startsWith(path);
 
     const className = [
         styles['tab'],
