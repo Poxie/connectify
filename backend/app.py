@@ -1,4 +1,6 @@
-from flask import Flask, Blueprint
+import os
+from flask import Flask
+from flask_cors import CORS
 from blueprints.users import users
 from blueprints.login import login
 from blueprints.posts import posts
@@ -8,6 +10,9 @@ from blueprints.followers import followers
 
 # Creating Flask app
 app = Flask(__name__)
+
+# Setting up cors
+CORS(app, resources={r'/*': {'origins': os.getenv('FRONTEND_ORIGIN')}})
 
 # Registering blueprints
 app.register_blueprint(users)
