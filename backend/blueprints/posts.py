@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from utils.auth import token_required
 from utils.users import get_user_by_id
-from utils.posts import create_post, get_posts_by_user_id, get_post_by_id
+from utils.posts import create_post, get_posts_by_user_id, get_post_by_id, delete_post
 
 posts = Blueprint('posts', __name__)
 user_posts = Blueprint('user_posts', __name__, url_prefix='/users/<int:id>')
@@ -32,6 +32,24 @@ def create_user_post(token_id: int):
     post = create_post(data)
 
     return jsonify(post)
+
+# Delete user post
+@posts.delete('/posts/<int:id>')
+@token_required
+def delete_user_post(id: int, token_id: int):
+    # Making sure post exists
+    post = get_post_by_id(id)
+    if not post:
+        return 'Post does not exist.', 404
+
+    # Making sure logged in person is owner of post
+    if post['owner_id'] != token_id:
+        return 'Unauthorized.', 401
+
+    # Deleting post
+    data = delete_post(id)
+
+    return jsonify(data)
 
 # Get post by id
 @posts.get('/posts/<int:id>')

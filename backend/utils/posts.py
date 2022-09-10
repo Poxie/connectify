@@ -1,3 +1,4 @@
+import re
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
@@ -88,3 +89,17 @@ def create_post(post):
     post = get_post_by_id(id)
 
     return post
+
+# Function to delete post
+def delete_post(id):
+    cursor = MySQLCursorDict(db)
+
+    # Creating delete query
+    query = "DELETE FROM posts WHERE id = %s"
+    values = (id,)
+
+    # Executing delete query
+    cursor.execute(query, values)
+    db.commit()
+
+    return {}
