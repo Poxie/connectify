@@ -37,7 +37,7 @@ def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
     cursor = MySQLCursorDict(db)
 
     # Creating query
-    query = "SELECT * FROM posts WHERE owner_id = %s"
+    query = "SELECT * FROM posts WHERE author_id = %s"
     values = (id,)
 
     # Fetching posts
@@ -87,10 +87,10 @@ def create_post(post):
     id = create_post_id()
 
     # Creating insert query
-    query = "INSERT INTO posts (id, owner_id, title, content, timestamp) VALUES (%s, %s, %s, %s, %s)"
+    query = "INSERT INTO posts (id, author_id, title, content, timestamp) VALUES (%s, %s, %s, %s, %s)"
     values = (
         id,
-        post['owner_id'],
+        post['author_id'],
         post['title'],
         post['content'],
         time.time()

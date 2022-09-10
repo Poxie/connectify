@@ -28,7 +28,7 @@ def create_user_post(token_id: int):
     data = {
         'title': title, 
         'content': content,
-        'owner_id': token_id
+        'author_id': token_id
     }
     post = create_post(data)
 
@@ -44,7 +44,7 @@ def delete_user_post(id: int, token_id: int):
         return 'Post does not exist.', 404
 
     # Making sure logged in person is owner of post
-    if post['owner_id'] != token_id:
+    if post['author_id'] != token_id:
         return 'Unauthorized.', 401
 
     # Deleting post
