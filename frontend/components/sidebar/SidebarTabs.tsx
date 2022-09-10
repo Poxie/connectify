@@ -10,7 +10,7 @@ import { SettingsNeutralIcon } from "../../assets/icons/SettingsNeutralIcon"
 import { SidebarTab } from "./SidebarTab"
 
 const tabs = [
-    { text: 'Home', path: '/', activeIcon: <HomeActiveIcon />, neutralIcon: <HomeNeutralIcon /> },
+    { text: 'Home', path: '/home', activeIcon: <HomeActiveIcon />, neutralIcon: <HomeNeutralIcon /> },
     { text: 'Messages', path: '/messages', activeIcon: <MessagesActiveIcon />, neutralIcon: <MessagesNeutralIcon /> },
     { text: 'Notifications', path: '/notifications', activeIcon: <NotificationActiveIcon />, neutralIcon: <NotificationNeutralIcon /> },
     { text: 'Settings', path: '/settings', activeIcon: <SettingsActiveIcon />, neutralIcon: <SettingsNeutralIcon /> }
