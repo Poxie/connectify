@@ -3,7 +3,7 @@ from random import randrange
 from tkinter.messagebox import RETRY
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
-from utils.folloiwers import get_user_follower_count
+from utils.followers import get_user_follower_count
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
