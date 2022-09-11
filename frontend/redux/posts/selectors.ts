@@ -1,3 +1,3 @@
 import { RootState } from "../store";
 
-export const selectPostById = (state: RootState, postId: string) => state.posts.posts[postId];
+export const selectPostById = (state: RootState, postId: number) => state.posts.posts[postId];

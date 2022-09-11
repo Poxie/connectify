@@ -1,4 +1,5 @@
-import { ADD_POST_LIKE, REMOVE_POST_LIKE, SET_POST } from "./constants"
+import { Post } from "../../types";
+import { ADD_POST_LIKE, REMOVE_POST_LIKE, SET_POST, SET_POSTS } from "./constants"
 import { PostsReducer } from "./types"
 
 const initialState = {
@@ -16,6 +17,21 @@ export const postsReducer: PostsReducer = (state=initialState, action) => {
                     ...state.posts,
                     [post.id]: post
                 }
+            }
+        }
+        case SET_POSTS: {
+            const posts: Post[] = action.payload;
+            
+            const newPosts = {
+                ...state.posts,
+            }
+            posts.forEach(post => {
+                newPosts[post.id] = post;
+            })
+
+            return {
+                ...state,
+                posts: newPosts
             }
         }
         case ADD_POST_LIKE: {
