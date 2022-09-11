@@ -7,6 +7,31 @@ from utils.likes import get_post_like_count, get_post_like
 from utils.comments import get_post_comment_count
 from utils.users import get_user_by_id
 
+# Hydrating posts with extra attributes
+def hydrate_post(post, token_id: Union[int, None]=None):
+    id = post['id']
+
+    # Getting like count for post
+    like_count = get_post_like_count(id)
+    post['like_count'] = like_count
+
+    # Getting post comment count
+    comment_count = get_post_comment_count(post['id'])
+    post['comment_count'] = comment_count
+
+    # Getting author object
+    author = get_user_by_id(post['author_id'], token_id)
+    post['author'] = author
+
+    # Checking if current user has liked post
+    post['has_liked'] = False
+    if token_id:
+        like = get_post_like(id, token_id)
+        if like:
+            post['has_liked'] = True
+
+    return post
+
 # Getting post by id
 def get_post_by_id(id: int, token_id: Union[int, None]=None):
     cursor = MySQLCursorDict(db)
@@ -21,24 +46,7 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
 
     # Updating post with extra attributes
     if post:
-        # Getting like count for post
-        like_count = get_post_like_count(id)
-        post['like_count'] = like_count
-
-        # Getting post comment count
-        comment_count = get_post_comment_count(post['id'])
-        post['comment_count'] = comment_count
-
-        # Getting author object
-        author = get_user_by_id(post['author_id'], token_id)
-        post['author'] = author
-
-        # Checking if current user has liked post
-        post['has_liked'] = False
-        if token_id:
-            like = get_post_like(id, token_id)
-            if like:
-                post['has_liked'] = True
+        post = hydrate_post(post, token_id)
 
     return post
 
@@ -68,24 +76,7 @@ def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
 
     # Updating posts with extra attributes
     for post in posts:
-        # Getting post likes
-        like_count = get_post_like_count(post['id'])
-        post['like_count'] = like_count
-
-        # Getting post comment count
-        comment_count = get_post_comment_count(post['id'])
-        post['comment_count'] = comment_count
-
-        # Getting author object
-        author = get_user_by_id(id, token_id)
-        post['author'] = author
-
-        # Checking if current user has liked post
-        post['has_liked'] = False
-        if token_id:
-            like = get_post_like(post['id'], token_id)
-            if like:
-                post['has_liked'] = True
+        post = hydrate_post(post, token_id)
 
 
     return posts
