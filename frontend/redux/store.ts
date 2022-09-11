@@ -5,9 +5,12 @@ import { TypedUseSelectorHook } from "react-redux/es/types";
 import { $CombinedState, AnyAction, combineReducers } from "redux";
 import { feedReducer } from "./feed/reducer";
 import { FeedState } from "./feed/types";
+import { postsReducer } from "./posts/reducer";
+import { PostsState } from "./posts/types";
 
 const combinedReducer = combineReducers({
-    feed: feedReducer
+    feed: feedReducer,
+    posts: postsReducer
 });
 
 const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) => {
@@ -34,6 +37,7 @@ export type RootState = {
     readonly [$CombinedState]?: undefined;
 } & {
     feed: FeedState;
+    posts: PostsState;
 }
 
 // Hooks
