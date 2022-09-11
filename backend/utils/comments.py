@@ -2,6 +2,7 @@ import time
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
+from utils.users import get_user_by_id
 
 # Creating post id
 COMMENT_ID_LENGTH = 10
@@ -47,6 +48,12 @@ def get_post_comments(post_id: int):
     # Fetching comments
     cursor.execute(query, values)
     comments = cursor.fetchmany(10)
+
+    # Hydrating comment object
+    for comment in comments:
+        # Getting comment author object
+        author = get_user_by_id(comment['author_id'])
+        comment['author'] = author
 
     return comments
 
