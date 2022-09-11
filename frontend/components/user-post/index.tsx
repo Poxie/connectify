@@ -22,7 +22,8 @@ export const UserPost: React.FC<Post> = ({
             <UserPostContent 
                 content={content}
             />
-            <UserPostFooter 
+            <UserPostFooter
+                id={id}
                 like_count={like_count}
                 has_liked={has_liked}
             />
