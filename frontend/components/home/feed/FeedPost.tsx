@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { motion } from 'framer-motion';
 import { addFeedPostLike, removeFeedPostLike } from "../../../redux/feed/actions";
 import { selectFeedPost } from "../../../redux/feed/hooks";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
@@ -20,10 +21,15 @@ export const FeedPost: React.FC<{
     }, []);
 
     return(
-        <UserPost 
-            post={post}
-            onPostLike={onPostLike}
-            onPostUnlike={onPostUnlike}
-        />
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+        >
+            <UserPost 
+                post={post}
+                onPostLike={onPostLike}
+                onPostUnlike={onPostUnlike}
+            />
+        </motion.div>
     )
 });

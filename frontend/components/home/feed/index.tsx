@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { selectFeedPostIds } from '../../../redux/feed/hooks';
 import { setFeedPosts } from '../../../redux/feed/actions';
 import { FeedPost } from './FeedPost';
+import { UserPostSkeleton } from '../../user-post/UserPostSkeleton';
+import { AnimatePresence } from 'framer-motion';
 
 export const Feed = () => {
     const { get, loading } = useAuth();
@@ -23,6 +25,14 @@ export const Feed = () => {
 
     return(
         <div className={styles['container']}>
+            <AnimatePresence>
+                {loading && postIds.length === 0 && Array.from(Array(4)).map((_, key) => (
+                    <UserPostSkeleton 
+                        key={key}
+                    />
+                ))}
+            </AnimatePresence>
+
             {postIds.map(id => <FeedPost id={id} key={id} />)}
         </div>
     )
