@@ -1,28 +1,29 @@
 import styles from '../../../styles/Feed.module.scss';
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/auth/AuthProvider";
-import { Post } from "../../../types";
-import { UserPost } from "../../user-post";
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { selectFeedPostIds } from '../../../redux/feed/hooks';
+import { setFeedPosts } from '../../../redux/feed/actions';
+import { FeedPost } from './FeedPost';
 
 export const Feed = () => {
     const { get, loading } = useAuth();
-    const [feed, setFeed] = useState<Post[]>([]);
+    const dispatch = useAppDispatch();
+    const postIds = useAppSelector(selectFeedPostIds);
 
+    // Initial fetch for feed posts 
     useEffect(() => {
-        if(loading) return;
+        if(loading || postIds.length) return;
 
         get(`/feed`)
-            .then(setFeed)
+            .then(posts => {
+                dispatch(setFeedPosts(posts));
+            })
     }, [get, loading]);
 
     return(
         <div className={styles['container']}>
-            {feed.map(post => (
-                <UserPost 
-                    {...post}
-                    key={post.id}
-                />
-            ))}
+            {postIds.map(id => <FeedPost id={id} key={id} />)}
         </div>
     )
 }
