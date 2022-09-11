@@ -5,6 +5,7 @@ import { Navbar } from '../components/navbar'
 import { Sidebar } from '../components/sidebar'
 import { ReactElement, ReactNode } from 'react'
 import { NextPage } from 'next'
+import { wrapper } from '../redux/store'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -41,4 +42,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     </AuthProvider>
   )
 }
-export default MyApp
+export default wrapper.withRedux(MyApp);
