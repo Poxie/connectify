@@ -8,3 +8,32 @@
     display: block;
     margin-bottom: var(--spacing-primary);
 }
+.comments {
+    padding-top: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
+    border-top: 2px solid var(--background-tertiary);
+}
+.comments-header {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-primary);
+    display: block;
+}
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-primary);
+}
+.comment-header {
+    display: flex;
+    gap: var(--spacing-primary);
+}
+.comment-author-name {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+.comment-content {
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: block;
+    margin-top: 8px;
+}

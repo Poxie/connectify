@@ -2,13 +2,14 @@ import styles from '../../styles/Post.module.scss';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { addPostLike, removePostLike, setPost } from "../../redux/posts/actions";
+import { addPostLike, removePostLike, setPost, setPostComments } from "../../redux/posts/actions";
 import { selectPostById } from "../../redux/posts/selectors";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { PostTitle } from './PostTitle';
 import { PostContent } from './PostContent';
 import { UserPostHeader } from '../user-post/UserPostHeader';
 import { UserPostFooter } from '../user-post/UserPostFooter';
+import { PostComments } from './PostComments';
 
 export const Post = () => {
     const { get, loading } = useAuth();
@@ -25,6 +26,16 @@ export const Post = () => {
                 dispatch(setPost(post));
             })
     }, [get, loading, postId]);
+
+    // Fetching post comments
+    useEffect(() => {
+        if(loading || !post?.id || post?.comments) return;
+
+        get(`/posts/${post.id}/comments`)
+            .then(comments => {
+                dispatch(setPostComments(post.id, comments));
+            })
+    }, [post, get, loading])
 
     // Handling post like and unlike
     const onPostLike = (id: number) => {
@@ -63,6 +74,10 @@ export const Post = () => {
                 onPostLike={onPostLike}
                 onPostUnlike={onPostUnlike}
                 id={id}
+            />
+            <PostComments 
+                postId={post.id}
+                comment_count={comment_count}
             />
         </div>
     )
