@@ -10,6 +10,7 @@ import { PostContent } from './PostContent';
 import { UserPostHeader } from '../user-post/UserPostHeader';
 import { UserPostFooter } from '../user-post/UserPostFooter';
 import { PostComments } from './PostComments';
+import { PostSkeleton } from './PostSkeleton';
 
 export const Post = () => {
     const { get, loading } = useAuth();
@@ -46,7 +47,7 @@ export const Post = () => {
     }
 
     // If post is not present, return null
-    if(!post) return null;
+    if(!post) return <PostSkeleton />;
 
     // Destructuring properties
     const {

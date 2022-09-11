@@ -37,3 +37,78 @@
     display: block;
     margin-top: 8px;
 }
+
+.skeleton-text {
+    background-color: var(--background-tertiary);
+    border-radius: 8px;
+    height: 24px;
+}
+.skeleton-header {
+    display: flex;
+    gap: var(--spacing-primary);
+    margin-bottom: var(--spacing-primary)
+}
+.skeleton-author, 
+.skeleton-timestamp, 
+.skeleton-title, 
+.skeleton-content, 
+.skeleton-footer-button,
+.skeleton-comment-count,
+.skeleton-comment-author,
+.skeleton-comment-timestamp,
+.skeleton-comment-content {
+    @extend .skeleton-text;
+}
+.skeleton-author {
+    width: 75px;
+}
+.skeleton-timestamp {
+    width: 120px;
+}
+.skeleton-title {
+    width: 400px;
+    height: 30px;
+}
+.skeleton-content {
+    width: 600px;
+    margin-top: 25px;
+}
+.skeleton-footer {
+    display: flex;
+    gap: var(--spacing-primary);
+    padding-top: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
+    border-top: 1px solid var(--background-tertiary);
+}
+.skeleton-footer-button {
+    width: 100px;
+}
+.skeleton-comments {
+    margin-top: var(--spacing-primary);
+    border-top: 1px solid var(--background-tertiary);
+}
+.skeleton-comment-count {
+    width: 100px;
+    height: 20px;
+    margin: var(--spacing-primary) 0;
+}
+.skeleton-comment {
+    padding: 10px 0;
+}
+.skeleton-comment-header {
+    display: flex;
+    gap: var(--spacing-primary);
+    margin-bottom: 8px;
+}
+.skeleton-comment-author {
+    width: 80px;
+    height: 20px;
+}
+.skeleton-comment-timestamp {
+    width: 120px;
+    height: 20px;
+}
+.skeleton-comment-content {
+    width: 300px;
+    height: 18px;
+}
