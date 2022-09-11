@@ -9,19 +9,21 @@ export const UserPostFooter: React.FC<{
     id: number;
     has_liked: boolean;
     like_count: number;
-}> = ({ id, has_liked, like_count }) => {
+    onPostLike: (id: number) => void;
+    onPostUnlike: (id: number) => void;
+}> = ({ id, has_liked, like_count, onPostLike, onPostUnlike }) => {
     const { post, destroy } = useAuth();
 
     const like = useCallback(() => {
+        onPostLike(id);
         post(`/posts/${id}/likes`)
-            .then(console.log)
-            .catch(console.error)
-    }, [post]);
+            .catch(console.error);
+    }, [post, id]);
     const unlike = useCallback(() => {
+        onPostUnlike(id);
         destroy(`/posts/${id}/likes`)
-            .then(console.log)
-            .catch(console.error)
-    }, [post]);
+            .catch(console.error);
+    }, [destroy, id]);
 
     return(
         <div className={styles['footer']}>
