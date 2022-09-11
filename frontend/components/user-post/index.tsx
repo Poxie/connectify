@@ -16,6 +16,7 @@ export const UserPost: React.FC<{
         author,
         content,
         timestamp,
+        comment_count,
         like_count,
         has_liked,
     },
@@ -35,6 +36,7 @@ export const UserPost: React.FC<{
                 id={id}
                 like_count={like_count}
                 has_liked={has_liked}
+                comment_count={comment_count}
                 onPostLike={onPostLike}
                 onPostUnlike={onPostUnlike}
             />

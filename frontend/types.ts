@@ -13,5 +13,6 @@ export type Post = {
     content: string;
     has_liked: boolean;
     like_count: number;
+    comment_count: number;
     timestamp: number;
 }

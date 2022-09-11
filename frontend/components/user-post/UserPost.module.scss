@@ -42,6 +42,8 @@
 .footer {
     padding-top: var(--spacing-primary);
     border-top: 2px solid var(--background-tertiary);
+    display: flex;
+    gap: 25px;
 }
 .footer-button {
     gap: 10px;
