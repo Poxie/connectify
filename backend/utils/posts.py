@@ -38,13 +38,13 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
     return post
 
 # Getting many posts by many user ids
-def get_posts_by_user_ids(user_ids: List[int]):
+def get_posts_by_user_ids(user_ids: List[int], token_id: Union[int, None]=None):
     cursor = MySQLCursorDict(db)
 
     # Getting all posts from followed users
     posts = []
     for id in user_ids:
-        user_posts = get_posts_by_user_id(id)
+        user_posts = get_posts_by_user_id(id, token_id)
         posts = posts + user_posts
 
     return posts

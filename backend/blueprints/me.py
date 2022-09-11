@@ -20,7 +20,7 @@ def get_my_feed(token_id: int):
     followee_ids = get_user_followees(token_id)
     
     # Getting posts from followed users
-    posts = get_posts_by_user_ids(followee_ids)
+    posts = get_posts_by_user_ids(followee_ids, token_id)
 
     # Sorting posts by timestamp
     posts = sorted(posts, key=lambda d: d['timestamp'], reverse=True)
