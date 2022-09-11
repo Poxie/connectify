@@ -79,9 +79,30 @@ export const AuthProvider: React.FC<{
         )
     }, [token]);
 
+    // Function to delete data through the API with user authentication.
+    const destroy = useCallback(async (query: string) => {
+        return(
+            fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(async res => {
+                // If request is sucessful, return json data
+                if(res.ok) {
+                    return res.json()
+                }
+                // Else throw error
+                throw new Error(await res.text())
+            })
+        )
+    }, [token]);
+
     const value = {
         get,
         post,
+        destroy,
         loading,
         profile
     }
