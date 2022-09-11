@@ -15,4 +15,13 @@ export type Post = {
     like_count: number;
     comment_count: number;
     timestamp: number;
+    comments?: Comment[];
+}
+export type Comment = {
+    id: number;
+    author_id: number;
+    post_id: number;
+    author: User;
+    content: string;
+    timestamp: number;
 }

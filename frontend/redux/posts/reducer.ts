@@ -1,5 +1,5 @@
-import { Post } from "../../types";
-import { ADD_POST_LIKE, REMOVE_POST_LIKE, SET_POST, SET_POSTS } from "./constants"
+import { Comment, Post } from "../../types";
+import { ADD_POST_LIKE, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
 import { PostsReducer } from "./types"
 
 const initialState = {
@@ -16,6 +16,29 @@ export const postsReducer: PostsReducer = (state=initialState, action) => {
                 posts: {
                     ...state.posts,
                     [post.id]: post
+                }
+            }
+        }
+        case SET_POST_COMMENTS: {
+            // Destructuring payload
+            const { postId, comments }: {
+                postId: number, 
+                comments: Comment[]
+            } = action.payload;
+
+            // Getting correct post
+            let post = state.posts[postId];
+            if(!post) return state;
+            post = {...post};
+
+            // Adding comments
+            post.comments = comments;
+
+            return {
+                ...state,
+                posts: {
+                    ...state.posts,
+                    [postId]: post
                 }
             }
         }
