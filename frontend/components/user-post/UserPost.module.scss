@@ -65,3 +65,41 @@
         fill: var(--text-secondary);
     }
 }
+
+// Styles for placeholder skeletons
+.skeleton {
+    @extend .container;
+    height: 139px;
+}
+.skeleton-flex {
+    display: flex;
+    gap: 15px;
+}
+.skeleton-text {
+    height: 22px;
+    background-color: var(--background-tertiary);
+    border-radius: 6px;
+}
+.skeleton-name {
+    @extend .skeleton-text;
+    width: 120px;
+}
+.skeleton-timestamp {
+    @extend .skeleton-text;
+    width: 70px;
+}
+.skeleton-content {
+    @extend .skeleton-text;
+    width: 500px;
+}
+.skeleton-footer {
+    @extend .skeleton-footer;
+    @extend .skeleton-flex;
+    align-items: flex-end;
+    flex-grow: 1
+}
+.skeleton-footer-button {
+    @extend .skeleton-text;
+    width: 90px;
+    height: 23px;
+}
