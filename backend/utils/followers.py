@@ -65,7 +65,7 @@ def get_user_follower_count(user_id: int):
 
     # Determining follower count
     follower_count = 0
-    if data:
+    if data and 'follower_count' in data:
         follower_count = data['follower_count']
         
     return follower_count
