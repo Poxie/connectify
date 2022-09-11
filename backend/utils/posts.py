@@ -4,6 +4,7 @@ from database import db
 from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
 from utils.likes import get_post_like_count, get_post_like
+from utils.comments import get_post_comment_count
 from utils.users import get_user_by_id
 
 # Getting post by id
@@ -23,6 +24,10 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
         # Getting like count for post
         like_count = get_post_like_count(id)
         post['like_count'] = like_count
+
+        # Getting post comment count
+        comment_count = get_post_comment_count(post['id'])
+        post['comment_count'] = comment_count
 
         # Getting author object
         author = get_user_by_id(post['author_id'], token_id)
@@ -66,6 +71,10 @@ def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
         # Getting post likes
         like_count = get_post_like_count(post['id'])
         post['like_count'] = like_count
+
+        # Getting post comment count
+        comment_count = get_post_comment_count(post['id'])
+        post['comment_count'] = comment_count
 
         # Getting author object
         author = get_user_by_id(id, token_id)

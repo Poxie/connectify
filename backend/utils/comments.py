@@ -50,6 +50,25 @@ def get_post_comments(post_id: int):
 
     return comments
 
+# Getting post comment count
+def get_post_comment_count(post_id: int):
+    cursor = MySQLCursorDict(db)
+
+    # Creating query
+    query = "SELECT COUNT(*) as comment_count FROM comments WHERE post_id = %s"
+    values = (post_id,)
+
+    # Executing query
+    cursor.execute(query, values)
+    data = cursor.fetchone()
+
+    # Getting comment count
+    comment_count = 0
+    if data and 'comment_count' in data:
+        comment_count = data['comment_count']
+
+    return comment_count
+
 # Creating post comment
 def create_post_comment(post_id: int, data):
     cursor = MySQLCursorDict(db)
