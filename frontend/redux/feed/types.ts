@@ -1,8 +1,7 @@
 import { AnyAction } from 'redux';
-import { Post } from "../../types"
 
 export type FeedState = {
-    posts: Post[];
+    postIds: number[];
     loading: boolean;
 }
 
