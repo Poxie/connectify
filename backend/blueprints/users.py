@@ -12,8 +12,6 @@ users = Blueprint('users', __name__)
 @users.get('/users/<int:id>')
 @token_optional
 def get_user(id: int, token_id: Union[int, None]=None):
-    cursor = db.cursor()
-
     # Getting user
     user = get_user_by_id(id, token_id)
     

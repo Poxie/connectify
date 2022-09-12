@@ -25,32 +25,28 @@ def create_comment_id() -> int:
 
 # Getting comment by id
 def get_comment_by_id(id: int):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "SELECT * FROM comments WHERE id = %s"
     values = (id,)
 
     # Fetching comment
-    cursor.execute(query, values)
-    comment = cursor.fetchone()
+    comment = db.fetch_one(query, values)
 
     return comment
 
 # Getting post comments
 def get_post_comments(post_id: int):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "SELECT * FROM comments WHERE post_id = %s"
     values = (post_id,)
 
     # Fetching comments
-    cursor.execute(query, values)
-    comments = cursor.fetchmany(10)
+    comments = db.fetch_all(query, values)
 
     # Hydrating comment object
     for comment in comments:
+        if not comment: continue
+            
         # Getting comment author object
         author = get_user_by_id(comment['author_id'])
         comment['author'] = author
@@ -59,15 +55,12 @@ def get_post_comments(post_id: int):
 
 # Getting post comment count
 def get_post_comment_count(post_id: int):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "SELECT COUNT(*) as comment_count FROM comments WHERE post_id = %s"
     values = (post_id,)
 
     # Executing query
-    cursor.execute(query, values)
-    data = cursor.fetchone()
+    data = db.fetch_one(query, values)
 
     # Getting comment count
     comment_count = 0
@@ -78,8 +71,6 @@ def get_post_comment_count(post_id: int):
 
 # Creating post comment
 def create_post_comment(post_id: int, data):
-    cursor = MySQLCursorDict(db)
-
     # Creating comment id
     id = create_comment_id()
 
@@ -94,8 +85,7 @@ def create_post_comment(post_id: int, data):
     )
 
     # Inserting comment
-    cursor.execute(query, values)
-    db.commit()
+    db.insert(query, values)
 
     # Fetching created comment
     comment = get_comment_by_id(id)

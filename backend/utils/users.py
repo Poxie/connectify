@@ -10,15 +10,12 @@ f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
 # Function to fetch 
 def get_user_by_username(username: str, with_password=False):
-    cursor = MySQLCursorDict(db)
-
     # Creating select query
     query = "SELECT * FROM users WHERE username = %s"
     values = (username,)
 
     # Fetching user
-    cursor.execute(query, values)
-    user = cursor.fetchone()
+    user = db.fetch_one(query, values)
 
     # Deleting unwanted user information
     if user and not with_password:
@@ -28,15 +25,12 @@ def get_user_by_username(username: str, with_password=False):
 
 # Function to fetch user by id
 def get_user_by_id(id: int, token_id: Union[int, None]=None):
-    cursor = MySQLCursorDict(db)
-
     # Creating select query
     query = "SELECT * FROM users WHERE id = %s"
     values = (id,)
 
     # Fetching user
-    cursor.execute(query, values)
-    user = cursor.fetchone()
+    user = db.fetch_one(query, values)
 
     # Adding extra attribues
     if user:
@@ -78,8 +72,6 @@ def create_user_id() -> int:
 
 # Function to create new user
 def create_user(username: str, password: str):
-    cursor = MySQLCursorDict(db)
-
     # Checking if username is available
     username_unavailable = get_user_by_username(username)
     if username_unavailable:
@@ -97,8 +89,7 @@ def create_user(username: str, password: str):
     values = (id, username, hashed_password)
 
     # Creating user
-    cursor.execute(query, values)
-    db.commit()
+    db.insert(query, values)
 
     # Fetching created user
     user = get_user_by_id(id)

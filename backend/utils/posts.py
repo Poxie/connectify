@@ -34,15 +34,12 @@ def hydrate_post(post, token_id: Union[int, None]=None):
 
 # Getting post by id
 def get_post_by_id(id: int, token_id: Union[int, None]=None):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "SELECT * FROM posts WHERE id = %s"
     values = (id,)
 
     # Fetching post
-    cursor.execute(query, values)
-    post = cursor.fetchone()
+    post = db.fetch_one(query, values)
 
     # Updating post with extra attributes
     if post:
@@ -52,8 +49,6 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
 
 # Getting many posts by many user ids
 def get_posts_by_user_ids(user_ids: List[int], token_id: Union[int, None]=None):
-    cursor = MySQLCursorDict(db)
-
     # Getting all posts from followed users
     posts = []
     for id in user_ids:
@@ -64,15 +59,12 @@ def get_posts_by_user_ids(user_ids: List[int], token_id: Union[int, None]=None):
 
 # Getting posts by user id
 def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "SELECT * FROM posts WHERE author_id = %s"
     values = (id,)
 
     # Fetching posts
-    cursor.execute(query, values)
-    posts = cursor.fetchmany(10)
+    posts = db.fetch_all(query, values)
 
     # Updating posts with extra attributes
     for post in posts:
@@ -102,8 +94,6 @@ def create_post_id() -> int:
 
 # Function to create post
 def create_post(post):
-    cursor = MySQLCursorDict(db)
-
     # Creating post id
     id = create_post_id()
 
@@ -118,8 +108,7 @@ def create_post(post):
     )
 
     # Creating post
-    cursor.execute(query, values)
-    db.commit()
+    db.insert(query, values)
 
     # Fetching created post
     post = get_post_by_id(id)
@@ -128,14 +117,11 @@ def create_post(post):
 
 # Function to delete post
 def delete_post(id):
-    cursor = MySQLCursorDict(db)
-
     # Creating delete query
     query = "DELETE FROM posts WHERE id = %s"
     values = (id,)
 
     # Executing delete query
-    cursor.execute(query, values)
-    db.commit()
+    db.delete(query, values)
 
     return {}

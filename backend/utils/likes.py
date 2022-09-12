@@ -6,8 +6,6 @@ from utils.users import get_user_by_id
 
 # Creating post like
 def create_post_like(post_id: int, user_id: int):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "INSERT INTO likes (post_id, user_id, timestamp) VALUES (%s, %s, %s)"
     values = (
@@ -17,8 +15,7 @@ def create_post_like(post_id: int, user_id: int):
     )
 
     # Executing create query
-    cursor.execute(query, values)
-    db.commit()
+    db.insert(query, values)
 
     return {
         'post_id': post_id,
@@ -27,29 +24,23 @@ def create_post_like(post_id: int, user_id: int):
 
 # Deleting post like
 def delete_post_like(post_id: int, user_id: int):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "DELETE FROM likes WHERE post_id = %s AND user_id = %s"
     values = (post_id, user_id)
 
     # Executing delete query
-    cursor.execute(query, values)
-    db.commit()
+    db.delete(query, values)
 
     return {}
 
 # Getting post likes
 def get_post_like_count(post_id: int):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "SELECT COUNT(*) AS like_count FROM likes WHERE post_id = %s"
     values = (post_id,)
 
     # Executing query
-    cursor.execute(query, values)
-    data = cursor.fetchone()
+    data = db.fetch_one(query, values)
 
     # Getting like count
     like_count = 0
@@ -60,8 +51,6 @@ def get_post_like_count(post_id: int):
 
 # Getting specific like
 def get_post_like(post_id: int, user_id: int):
-    cursor = MySQLCursorDict(db)
-
     # Creating query
     query = "SELECT * FROM likes WHERE post_id = %s AND user_id = %s"
     values = (
@@ -70,8 +59,6 @@ def get_post_like(post_id: int, user_id: int):
     )
 
     # Fetching like
-    cursor.execute(query, values)
-    like = cursor.fetchone()
-    cursor.reset()
+    like = db.fetch_one(query, values)
 
     return like
