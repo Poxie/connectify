@@ -7,10 +7,13 @@ import { feedReducer } from "./feed/reducer";
 import { FeedState } from "./feed/types";
 import { postsReducer } from "./posts/reducer";
 import { PostsState } from "./posts/types";
+import { usersReducer } from "./users/reducer";
+import { UsersState } from "./users/types";
 
 const combinedReducer = combineReducers({
     feed: feedReducer,
-    posts: postsReducer
+    posts: postsReducer,
+    users: usersReducer
 });
 
 const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) => {
@@ -38,6 +41,7 @@ export type RootState = {
 } & {
     feed: FeedState;
     posts: PostsState;
+    users: UsersState;
 }
 
 // Hooks

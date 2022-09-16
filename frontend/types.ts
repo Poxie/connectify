@@ -4,6 +4,7 @@ export type User = {
     display_name: string | null;
     follower_count: number;
     is_following: boolean;
+    is_self: boolean;
 }
 export type Post = {
     id: number;
