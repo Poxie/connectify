@@ -54,12 +54,18 @@ export const UserHeader = () => {
                     </div>
                 </div>
                 <div className={styles['header-buttons']}>
-                    <Button
-                        onClick={user.is_following ? unfollow : follow}
-                        disabled={disabled}
-                    >
-                        {user.is_following ? 'Unfollow' : 'Follow'}
-                    </Button>
+                    {!user.is_self ? (
+                        <Button
+                            onClick={user.is_following ? unfollow : follow}
+                            disabled={disabled}
+                        >
+                            {user.is_following ? 'Unfollow' : 'Follow'}
+                        </Button>
+                    ) : (
+                        <Button>
+                            Edit Profile
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>
