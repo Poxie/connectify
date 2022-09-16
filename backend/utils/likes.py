@@ -1,8 +1,5 @@
-import re
 import time
 from database import db
-from mysql.connector.cursor import MySQLCursorDict
-from utils.users import get_user_by_id
 
 # Creating post like
 def create_post_like(post_id: int, user_id: int):

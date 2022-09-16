@@ -1,8 +1,7 @@
 import time
-from typing import Union, List
 from database import db
-from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
+from typing import Union, List
 from utils.likes import get_post_like_count, get_post_like
 from utils.comments import get_post_comment_count
 from utils.users import get_user_by_id

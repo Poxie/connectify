@@ -1,7 +1,5 @@
-import re
 import time
 from database import db
-from mysql.connector.cursor import MySQLCursorDict
 from random import randrange
 from utils.users import get_user_by_id
 

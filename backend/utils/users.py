@@ -1,9 +1,7 @@
 import os
 from random import randrange
-from tkinter.messagebox import RETRY
 from typing import Union
 from database import db
-from mysql.connector.cursor import MySQLCursorDict
 from utils.followers import get_user_follower_count, get_follower
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
@@ -14,11 +12,10 @@ def hydrate_user(user, token_id):
     follower_count = get_user_follower_count(user['id'])
     user['follower_count'] = follower_count
 
-    # Setting default attributes
-    user['is_following'] = False
-    user['is_self'] = False
+    # 
 
     # Checking if user is self
+    user['is_self'] = False
     if token_id == user['id']:
         user['is_self'] = True
     else:

@@ -1,5 +1,4 @@
 import time
-from mysql.connector.cursor import MySQLCursorDict
 from database import db
 
 # Getting specific follower
