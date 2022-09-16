@@ -1,3 +1,4 @@
+import re
 import time
 from database import db
 from mysql.connector.cursor import MySQLCursorDict
@@ -23,6 +24,14 @@ def create_comment_id() -> int:
     # Else return created id
     return id
 
+# Hydrating comment objects
+def hydrate_comment(comment):
+    # Getting comment author object
+    author = get_user_by_id(comment['author_id'])
+    comment['author'] = author
+
+    return comment
+
 # Getting comment by id
 def get_comment_by_id(id: int):
     # Creating query
@@ -31,6 +40,10 @@ def get_comment_by_id(id: int):
 
     # Fetching comment
     comment = db.fetch_one(query, values)
+
+    # Hydrating comment
+    if comment:
+        comment = hydrate_comment(comment)
 
     return comment
 
@@ -47,9 +60,7 @@ def get_post_comments(post_id: int):
     for comment in comments:
         if not comment: continue
             
-        # Getting comment author object
-        author = get_user_by_id(comment['author_id'])
-        comment['author'] = author
+        comment = hydrate_comment(comment)
 
     return comments
 
