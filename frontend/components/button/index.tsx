@@ -3,7 +3,7 @@ import styles from './Button.module.scss';
 
 export default function Button({ children, style, onClick, href, ariaLabel, target, className='', type='default' }: {
     children: any;
-    type?: 'default' | 'hollow';
+    type?: 'default' | 'hollow' | 'transparent';
     className?: string;
     style?: React.CSSProperties;
     onClick?: () => void;

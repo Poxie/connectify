@@ -15,6 +15,13 @@
         transition: fill .2s;
     }
     
+    &.transparent {
+        color: var(--text-secondary);
+
+        &:hover {
+            color: var(--text-primary);
+        }
+    }
     &.default {
         color: var(--text-light-primary);
         background-color: var(--button-background-primary);
