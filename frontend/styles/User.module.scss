@@ -92,3 +92,23 @@
     flex-direction: column;
     gap: var(--spacing-primary);
 }
+
+.skeleton-text {
+    border-radius: 6px;
+    background-color: var(--background-tertiary);
+}
+.header-name-skeleton {
+    @extend .skeleton-text;
+    height: 32px;
+    width: 120px;
+}
+.header-subtext-skeleton {
+    @extend .skeleton-text;
+    height: 21px;
+    width: 90px;
+}
+.header-button-skeleton {
+    @extend .skeleton-text;
+    height: 41px;
+    width: 90px;
+}
