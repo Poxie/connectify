@@ -2,7 +2,7 @@ import os
 import re
 from dotenv import load_dotenv
 import mysql.connector
-from mysql.connector.cursor import MySQLCursorDict
+from mysql.connector.cursor import MySQLCursorBufferedDict
 
 # Making sure we can use environment variables
 load_dotenv()
@@ -15,7 +15,7 @@ class Database():
             passwd=os.getenv('MYSQL_PASSWORD'),
             database=os.getenv('MYSQL_DATABASE')
         )
-        self.cursor = MySQLCursorDict(self.db)
+        self.cursor = MySQLCursorBufferedDict(self.db)
 
     # Fuction to commit changes to database
     def __commit(self):
