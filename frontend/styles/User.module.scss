@@ -92,6 +92,10 @@
     flex-direction: column;
     gap: var(--spacing-primary);
 }
+.empty {
+    text-align: center;
+    color: var(--text-secondary);
+}
 
 .skeleton-text {
     border-radius: 6px;
