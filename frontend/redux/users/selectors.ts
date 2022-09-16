@@ -16,7 +16,15 @@ export const selectUserPostIds = createSelector(
     [selectUserById],
     user => user?.postIds
 )
+export const selectUserLikedIds = createSelector(
+    [selectUserById],
+    user => user?.likedIds
+)
 export const selectUserHasLoadedPosts = createSelector(
     [selectUserById],
     user => user?.postIds !== undefined
+)
+export const selectUserHasLoadedLikedPosts = createSelector(
+    [selectUserById],
+    user => user?.likedIds !== undefined
 )
