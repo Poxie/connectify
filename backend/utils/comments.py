@@ -50,7 +50,7 @@ def get_comment_by_id(id: int):
 # Getting post comments
 def get_post_comments(post_id: int):
     # Creating query
-    query = "SELECT * FROM comments WHERE post_id = %s"
+    query = "SELECT * FROM comments WHERE post_id = %s ORDER BY timestamp DESC"
     values = (post_id,)
 
     # Fetching comments
