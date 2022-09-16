@@ -5,18 +5,34 @@ import { selectUserById } from "../../redux/users/selectors"
 import Button from '../button';
 import { useDispatch } from 'react-redux';
 import { addUserFollow, removeUserFollow } from '../../redux/users/actions';
+import { useState } from 'react';
+import { useAuth } from '../../contexts/auth/AuthProvider';
 
 export const UserHeader = () => {
     const dispatch = useDispatch();
+    const { post, destroy } = useAuth();
+    const [disabled, setDisabled] = useState(false);
     const { userId } = useRouter().query as { userId: string };
     const user = useAppSelector(state => selectUserById(state, parseInt(userId)));
     if(!user) return null;
 
     const follow = () => {
-        dispatch(addUserFollow(parseInt(userId)));
+        setDisabled(true);
+        
+        post(`/followers/${userId}/`, {'test': 'yey'})
+            .then(follow => {
+                setDisabled(false);
+                dispatch(addUserFollow(parseInt(userId)));
+            })
     }
     const unfollow = () => {
-        dispatch(removeUserFollow(parseInt(userId)));
+        setDisabled(true);
+        
+        destroy(`/followers/${userId}/`)
+            .then(follow => {
+                setDisabled(false);
+                dispatch(removeUserFollow(parseInt(userId)));
+            })
     }
 
     return(
@@ -40,6 +56,7 @@ export const UserHeader = () => {
                 <div className={styles['header-buttons']}>
                     <Button
                         onClick={user.is_following ? unfollow : follow}
+                        disabled={disabled}
                     >
                         {user.is_following ? 'Unfollow' : 'Follow'}
                     </Button>
