@@ -20,7 +20,7 @@ export const PostComments: React.FC<{
                 {comment_count} comments
             </span>
 
-            <AddCommentInput />
+            <AddCommentInput postId={postId} />
             
             <ul className={styles['comment-container']}>
                 {commentIds?.map(id => (
