@@ -55,6 +55,7 @@ export const postsReducer: PostsReducer = (state=initialState, action) => {
 
             // Adding comment
             post.comments = [...[comment], ...(post.comments || [])];
+            post.comment_count++;
 
             return {
                 ...state,
