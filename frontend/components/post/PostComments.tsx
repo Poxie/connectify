@@ -27,6 +27,7 @@ export const PostComments: React.FC<{
                     <PostComment 
                         id={id}
                         postId={postId}
+                        key={id}
                     />
                 ))}
             </ul>
