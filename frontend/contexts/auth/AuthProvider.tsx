@@ -59,13 +59,19 @@ export const AuthProvider: React.FC<{
     }, [token]);
 
     // Function to post data to API with user authentication.
-    const post = useCallback(async (query: string) => {
+    const post = useCallback(async (query: string, body?: Object) => {
+        const formData = new FormData();
+        Object.entries(body || {}).forEach(([key, value]) => {
+            formData.append(key, value);
+        })
+
         return(
             fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                body: formData
             })
             .then(async res => {
                 // If request successful, return json data
