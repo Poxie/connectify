@@ -43,6 +43,7 @@
     background-color: var(--background-secondary);
     border-top: 1px solid var(--background-tertiary);
     border-bottom: 1px solid var(--background-tertiary);
+    margin-bottom: var(--spacing-primary);
 
     li {
         flex: 1;
@@ -85,4 +86,9 @@
             }
         }
     }
+}
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-primary);
 }

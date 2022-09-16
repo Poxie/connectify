@@ -1,5 +1,5 @@
 import { User } from "../../types";
-import { ADD_USER_FOLLOW, REMOVE_USER_FOLLOW, SET_USER } from "./constants";
+import { ADD_USER_FOLLOW, REMOVE_USER_FOLLOW, SET_USER, SET_USER_POST_IDS } from "./constants";
 import { UsersReducer, UsersState } from "./types"
 
 const initialState = {
@@ -46,6 +46,27 @@ export const usersReducer: UsersReducer = (state=initialState, action) => {
             // Updating user follow count
             user.follower_count--;
             user.is_following = false;
+
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    [userId]: user
+                }
+            }
+        }
+        case SET_USER_POST_IDS: {
+            const { userId, postIds }: {
+                userId: number;
+                postIds: number[];
+            } = action.payload;
+
+            let user = state.users[userId];
+            if(!user) return state;
+            user = {...user};
+
+            // Setting user postIds
+            user.postIds = postIds;
 
             return {
                 ...state,

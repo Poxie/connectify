@@ -8,3 +8,15 @@ export const selectUserById = createSelector(
     [selectUsers, selectId],
     (users, userId) => users[userId]
 )
+export const selectUserExists = createSelector(
+    [selectUserById],
+    user => user !== undefined
+)
+export const selectUserPostIds = createSelector(
+    [selectUserById],
+    user => user?.postIds
+)
+export const selectUserHasLoadedPosts = createSelector(
+    [selectUserById],
+    user => user?.postIds !== undefined
+)
