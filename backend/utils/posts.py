@@ -60,7 +60,7 @@ def get_posts_by_user_ids(user_ids: List[int], token_id: Union[int, None]=None):
 # Getting posts by user id
 def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
     # Creating query
-    query = "SELECT * FROM posts WHERE author_id = %s"
+    query = "SELECT * FROM posts WHERE author_id = %s ORDER BY timestamp DESC"
     values = (id,)
 
     # Fetching posts
