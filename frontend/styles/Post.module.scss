@@ -18,6 +18,17 @@
     margin-bottom: var(--spacing-primary);
     display: block;
 }
+.add-comment {
+    border-bottom: 2px solid var(--background-tertiary);
+    margin-bottom: var(--spacing-primary);
+    padding-bottom: var(--spacing-primary);
+}
+.add-comment-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: var(--spacing-primary);
+}
 .comment-container {
     display: flex;
     flex-direction: column;

@@ -3,6 +3,8 @@ import { selectCommentIds } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
 import { PostComment } from './PostComment';
 import { PostCommentSkeleton } from './PostCommentSkeleton';
+import { Input } from '../input';
+import { AddCommentInput } from './AddCommentInput';
 
 export const PostComments: React.FC<{
     postId: number;
@@ -17,6 +19,8 @@ export const PostComments: React.FC<{
             <span className={styles['comments-header']}>
                 {comment_count} comments
             </span>
+
+            <AddCommentInput />
             
             <ul className={styles['comment-container']}>
                 {commentIds?.map(id => (
