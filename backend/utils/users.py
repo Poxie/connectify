@@ -8,6 +8,29 @@ from utils.followers import get_user_follower_count, get_follower
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
+# Hydrating user
+def hydrate_user(user, token_id):
+    # Fetching user follower count
+    follower_count = get_user_follower_count(user['id'])
+    user['follower_count'] = follower_count
+
+    # Setting default attributes
+    user['is_following'] = False
+    user['is_self'] = False
+
+    # Checking if user is self
+    if token_id == user['id']:
+        user['is_self'] = True
+    else:
+        # Checking if current user is following fetched user
+        user['is_following'] = False
+        if token_id:
+            follow = get_follower(token_id, user['id'])
+            if follow:
+                user['is_following'] = True
+
+    return user
+
 # Function to fetch 
 def get_user_by_username(username: str, with_password=False):
     # Creating select query
@@ -34,16 +57,7 @@ def get_user_by_id(id: int, token_id: Union[int, None]=None):
 
     # Adding extra attribues
     if user:
-        # Fetching user follower count
-        follower_count = get_user_follower_count(id)
-        user['follower_count'] = follower_count
-
-        # Checking if current user is following fetched user
-        user['is_following'] = False
-        if token_id:
-            follow = get_follower(token_id, id)
-            if follow:
-                user['is_following'] = True
+        user = hydrate_user(user, token_id)
 
     # Deleting unwanted user information
     if user:
