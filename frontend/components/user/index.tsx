@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useAppSelector } from "../../redux/store"
 import { setUser } from "../../redux/users/actions";
 import { selectUserById } from "../../redux/users/selectors";
+import { UserHeader } from "./UserHeader";
 
 export const UserProfile = () => {
     const { get } = useAuth();
@@ -26,8 +27,8 @@ export const UserProfile = () => {
     if(!user) return null;
 
     return(
-        <div>
-            {user.username}
-        </div>
+        <>
+            <UserHeader />
+        </>
     )
 }
