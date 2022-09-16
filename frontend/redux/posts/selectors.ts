@@ -12,3 +12,7 @@ export const selectCommentById = createSelector(
     [selectPostById, selectCommentId],
     (post, commentId) => post?.comments?.find(comment => comment.id === commentId)
 )
+export const selectPostHasLoadedComments = createSelector(
+    [selectPostById],
+    post => post?.comments !== undefined
+)

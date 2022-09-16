@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { addPostLike, removePostLike, setPost, setPostComments } from "../../redux/posts/actions";
-import { selectPostById } from "../../redux/posts/selectors";
+import { selectPostById, selectPostHasLoadedComments } from "../../redux/posts/selectors";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { PostTitle } from './PostTitle';
 import { PostContent } from './PostContent';
@@ -16,27 +16,28 @@ export const Post = () => {
     const { get, loading } = useAuth();
     const { postId } = useRouter().query as { postId: string };
     const post = useAppSelector(state => selectPostById(state, parseInt(postId)));
+    const commentsAreFetched = useAppSelector(state => selectPostHasLoadedComments(state, parseInt(postId)));
     const dispatch = useAppDispatch();
 
     // Fetching post on mount
     useEffect(() => {
-        if(loading) return;
+        if(loading || post) return;
 
         get(`/posts/${postId}`)
             .then(post => {
                 dispatch(setPost(post));
             })
-    }, [get, loading, postId]);
+    }, [get, loading, post, postId]);
 
     // Fetching post comments
     useEffect(() => {
-        if(loading || !post?.id || post?.comments) return;
+        if(!post?.id || commentsAreFetched) return;
 
-        get(`/posts/${post.id}/comments`)
+        get(`/posts/${post?.id}/comments`)
             .then(comments => {
                 dispatch(setPostComments(post.id, comments));
             })
-    }, [post, get, loading])
+    }, [post?.id, commentsAreFetched])
 
     // Handling post like and unlike
     const onPostLike = (id: number) => {
