@@ -12,6 +12,9 @@ export const UserPostTimestamp: React.FC<{
         time = time.slice(0,1).toUpperCase() + time.slice(1);
         const ampmTime = new Date(timestamp * 1000).toLocaleString('en', { hour: 'numeric', minute: 'numeric', hour12: true })
         time = `${time} at ${ampmTime}`;
+    } else {
+        const timeFormater = new Intl.DateTimeFormat('en');
+        time = timeFormater.format(timestamp * 1000);
     }
     return(
         <span className={styles['timestamp']}>
