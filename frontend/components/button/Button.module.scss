@@ -33,6 +33,17 @@
             background-color: var(--button-background-primary-hover);
         }
     }
+    &.secondary {
+        color: var(--text-secondary);
+        background-color: var(--background-tertiary);
+
+        svg {
+            fill: var(--text-secondary);
+        }
+        &:hover {
+            background-color: var(--background-quaternary);
+        }
+    }
     &.hollow {
         border: 1px solid var(--text-light-primary);
         color: var(--text-light-primary);
