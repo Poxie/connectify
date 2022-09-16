@@ -1,8 +1,8 @@
+import { useRouter } from 'next/router';
+import { useAppSelector } from '../../redux/store';
+import { selectUserById } from '../../redux/users/selectors';
 import styles from '../../styles/User.module.scss';
-import { useRouter } from "next/router";
-import { useAppSelector } from "../../redux/store"
-import { selectUserById } from "../../redux/users/selectors"
-import { UserHeaderButtons } from './UserHeaderButtons';
+import { UserHeaderButtons } from "./UserHeaderButtons";
 
 export const UserHeader = () => {
     const { userId } = useRouter().query as { userId: string };

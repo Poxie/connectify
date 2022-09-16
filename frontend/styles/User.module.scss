@@ -1,7 +1,5 @@
 .header {
     background-color: var(--background-secondary);
-    border-bottom-left-radius: var(--spacing-primary);
-    border-bottom-right-radius: var(--spacing-primary);
 
     h2 {
         margin: 0;
@@ -39,4 +37,52 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+.tabs {
+    display: flex;
+    background-color: var(--background-secondary);
+    border-top: 1px solid var(--background-tertiary);
+    border-bottom: 1px solid var(--background-tertiary);
+
+    li {
+        flex: 1;
+        text-align: center;
+        font-weight: 600;
+        color: var(--text-secondary);
+        position: relative;
+        transition: background-color .3s, color .3s;
+        
+        a {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        span {
+            position: relative;
+            height: 100%;
+            padding: var(--spacing-primary) 5px;
+            display: inline-block;
+        }
+
+        &:hover {
+            background-color: var(--background-quaternary);
+        }
+        
+        &.active-tab {
+            color: var(--text-primary);
+
+            span::after {
+                content: '';
+                background-color: var(--color-primary);
+                height: 3px;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 120px;
+            }
+        }
+    }
 }

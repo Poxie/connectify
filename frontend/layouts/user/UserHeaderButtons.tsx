@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useAppSelector } from "../../redux/store";
 import { addUserFollow, removeUserFollow } from "../../redux/users/actions";
 import { selectUserById } from "../../redux/users/selectors";
-import Button from "../button";
+import Button from '../../components/button';
 
 export const UserHeaderButtons: React.FC<{
     userId: number;
