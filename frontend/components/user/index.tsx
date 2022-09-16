@@ -32,9 +32,11 @@ export const UserProfile = () => {
 
     // Returning while user posts are loading
     if(!postIds) return(
-        Array.from(Array(4)).map((_, key) => (
+        <>
+        {Array.from(Array(4)).map((_, key) => (
             <UserPostSkeleton />
-        ))
+        ))}
+        </>
     );
 
     return(
