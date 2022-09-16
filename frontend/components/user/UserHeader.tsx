@@ -2,38 +2,12 @@ import styles from '../../styles/User.module.scss';
 import { useRouter } from "next/router";
 import { useAppSelector } from "../../redux/store"
 import { selectUserById } from "../../redux/users/selectors"
-import Button from '../button';
-import { useDispatch } from 'react-redux';
-import { addUserFollow, removeUserFollow } from '../../redux/users/actions';
-import { useState } from 'react';
-import { useAuth } from '../../contexts/auth/AuthProvider';
+import { UserHeaderButtons } from './UserHeaderButtons';
 
 export const UserHeader = () => {
-    const dispatch = useDispatch();
-    const { post, destroy } = useAuth();
-    const [disabled, setDisabled] = useState(false);
     const { userId } = useRouter().query as { userId: string };
     const user = useAppSelector(state => selectUserById(state, parseInt(userId)));
     if(!user) return null;
-
-    const follow = () => {
-        setDisabled(true);
-        
-        post(`/followers/${userId}/`, {'test': 'yey'})
-            .then(follow => {
-                setDisabled(false);
-                dispatch(addUserFollow(parseInt(userId)));
-            })
-    }
-    const unfollow = () => {
-        setDisabled(true);
-        
-        destroy(`/followers/${userId}/`)
-            .then(follow => {
-                setDisabled(false);
-                dispatch(removeUserFollow(parseInt(userId)));
-            })
-    }
 
     return(
         <div className={styles['header']}>
@@ -53,20 +27,7 @@ export const UserHeader = () => {
                         </span>
                     </div>
                 </div>
-                <div className={styles['header-buttons']}>
-                    {!user.is_self ? (
-                        <Button
-                            onClick={user.is_following ? unfollow : follow}
-                            disabled={disabled}
-                        >
-                            {user.is_following ? 'Unfollow' : 'Follow'}
-                        </Button>
-                    ) : (
-                        <Button>
-                            Edit Profile
-                        </Button>
-                    )}
-                </div>
+                <UserHeaderButtons userId={parseInt(userId)} />
             </div>
         </div>
     )
