@@ -124,3 +124,29 @@ def delete_post(id):
     db.delete(query, values)
 
     return {}
+
+# Getting user liked posts
+def get_user_liked_posts(user_id: int, token_id: Union[int, None]=None):
+    # Creating query
+    query = "SELECT post_id FROM likes WHERE user_id = %s"
+    values = (user_id,)
+
+    # Fetching likes
+    likes = db.fetch_all(query, values)
+
+    # If not likes, return empty list
+    posts = []
+    if not likes:
+        return posts
+
+    # Fetching every post from liked posts
+    for like in likes:
+        if not like: continue
+
+        # Fetching post
+        post_id = like['post_id']
+        post = get_post_by_id(post_id, token_id)
+        if post:
+            posts.append(post)
+
+    return posts
