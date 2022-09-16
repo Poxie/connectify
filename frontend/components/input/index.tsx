@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from './Input.module.scss';
 
 export const Input: React.FC<{
@@ -10,6 +10,11 @@ export const Input: React.FC<{
     defaultValue?: string;
 }> = ({ placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur }) => {
     const [value, setValue] = useState(defaultValue || '');
+
+    // Updating value on defaultValue change
+    useEffect(() => {
+        setValue(defaultValue || '');
+    }, [defaultValue]);
 
     // Handling input change
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
