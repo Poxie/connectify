@@ -42,6 +42,40 @@ def create_new_user():
 
     return jsonify(user)
 
+# Update user
+@users.patch('/users/<int:user_id>')
+@token_required
+def update_user(user_id: int, token_id: int):
+    print(request.form)
+    
+    # Making sure user being updated is logged in user
+    if token_id != user_id:
+        return 'Unauthorized.', 401
+
+    # Creating update query
+    query = "UPDATE users SET "
+    added_values = []
+    variables = ()
+    for key, value in request.form.items():
+        # Making sure only allowed values are updated
+        if key in ['display_name', 'bio']:
+            added_values.append(f'{key} = %s')
+            variables = variables + (value,)
+
+    # Combining values and variables
+    values = ', '.join(added_values)
+    query += values
+    query += " WHERE id = %s"
+    variables += (user_id,)
+
+    # Executing query
+    db.update(query, variables)
+
+    # Fetching new user
+    user = get_user_by_id(user_id)
+
+    return jsonify(user)
+
 @users.get('/users/<int:user_id>/likes')
 @token_optional
 def get_user_likes(user_id: int, token_id: Union[int, None]=None):

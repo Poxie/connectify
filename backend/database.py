@@ -51,4 +51,10 @@ class Database():
         self.__commit()
         self.__reset()
 
+    # Function to update
+    def update(self, query, values):
+        self.cursor.execute(query, values)
+        self.__commit()
+        self.__reset()
+
 db = Database()
