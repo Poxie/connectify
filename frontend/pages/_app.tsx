@@ -6,6 +6,7 @@ import { Sidebar } from '../components/sidebar'
 import { ReactElement, ReactNode } from 'react'
 import { NextPage } from 'next'
 import { wrapper } from '../redux/store'
+import { ModalProvider } from '../contexts/modal/ModalProvider'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -21,24 +22,26 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return(
     <AuthProvider>
-      <Navbar />
-      <div style={{
-        display: 'flex',
-        width: 'var(--width-main)',
-        maxWidth: 'var(--width-max)',
-        margin: '0 auto'
-      }}>
-        <Sidebar />
-        <main style={{
-          flex: 1,
-          paddingLeft: 'var(--spacing-primary)',
-          paddingTop: 'var(--spacing-primary)'
+      <ModalProvider>
+        <Navbar />
+        <div style={{
+          display: 'flex',
+          width: 'var(--width-main)',
+          maxWidth: 'var(--width-max)',
+          margin: '0 auto'
         }}>
-          {getLayout(
-            <Component {...pageProps} />
-          )}
-        </main>
-      </div>
+          <Sidebar />
+          <main style={{
+            flex: 1,
+            paddingLeft: 'var(--spacing-primary)',
+            paddingTop: 'var(--spacing-primary)'
+          }}>
+            {getLayout(
+              <Component {...pageProps} />
+            )}
+          </main>
+        </div>
+      </ModalProvider>
     </AuthProvider>
   )
 }

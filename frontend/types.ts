@@ -2,6 +2,7 @@ export type User = {
     id: number;
     username: string;
     display_name: string | null;
+    bio: string;
     follower_count: number;
     is_following: boolean;
     is_self: boolean;

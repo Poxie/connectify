@@ -6,11 +6,14 @@ import { useAppSelector } from "../../redux/store";
 import { addUserFollow, removeUserFollow } from "../../redux/users/actions";
 import { selectUserById } from "../../redux/users/selectors";
 import Button from '../../components/button';
+import { useModal } from '../../contexts/modal/ModalProvider';
+import { EditProfileModal } from '../../modals/edit-profile/EditProfileModal';
 
 export const UserHeaderButtons: React.FC<{
     userId: number;
 }> = ({ userId }) => {
     const dispatch = useDispatch();
+    const { setModal } = useModal();
     const { post, destroy } = useAuth();
     const [disabled, setDisabled] = useState(false);
     const user = useAppSelector(state => selectUserById(state, userId));
@@ -35,6 +38,11 @@ export const UserHeaderButtons: React.FC<{
             })
     }
 
+    // Function to open edit modal
+    const editProfile = () => {
+        setModal(<EditProfileModal />);
+    }
+
     return(
         <div className={styles['header-buttons']}>
             {!user.is_self ? (
@@ -46,7 +54,10 @@ export const UserHeaderButtons: React.FC<{
                     {user.is_following ? 'Unfollow' : 'Follow'}
                 </Button>
             ) : (
-                <Button type={'secondary'}>
+                <Button 
+                    type={'secondary'} 
+                    onClick={editProfile}
+                >
                     Edit Profile
                 </Button>
             )}

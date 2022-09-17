@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import styles from './Input.module.scss';
 
 export const Input: React.FC<{
+    inputClassName?: string;
+    labelClassName?: string;
     placeholder?: string;
     onChange?: (text: string) => void;
     onSubmit?: (text: string) => void;
     onBlur?: () => void;
     onFocus?: () => void;
     defaultValue?: string;
-}> = ({ placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur }) => {
+    label?: string;
+    name?: string;
+}> = ({ inputClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, label, name }) => {
     const [value, setValue] = useState(defaultValue || '');
 
     // Updating value on defaultValue change
@@ -31,7 +35,24 @@ export const Input: React.FC<{
         onSubmit && onSubmit(value);
     }
 
+    inputClassName = [
+        styles['container'],
+        inputClassName ? inputClassName : ''
+    ].join(' ');
+    labelClassName = [
+        styles['label'],
+        labelClassName ? labelClassName : ''
+    ].join(' ');
     return(
+        <>
+        {label && (
+            <label 
+                htmlFor={name} 
+                className={labelClassName}
+            >
+                {label}
+            </label>
+        )}
         <input 
             type="text"
             placeholder={placeholder}
@@ -40,7 +61,10 @@ export const Input: React.FC<{
             onBlur={onBlur}
             onFocus={onFocus}
             value={value}
-            className={styles['container']}
+            name={name}
+            id={name}
+            className={inputClassName}
         />
+        </>
     )
 }
