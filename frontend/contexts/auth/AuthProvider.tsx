@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { User } from '../../types';
 import { AuthContext as AuthContextType } from './types';
 
 const AuthContext = React.createContext({} as AuthContextType);
@@ -8,7 +9,7 @@ export const useAuth = () => React.useContext(AuthContext);
 export const AuthProvider: React.FC<{
     children: any;
 }> = ({ children }) => {
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState<User | null>(null);
     const [token, setToken] = useState<null | string>(null);
     const [loading, setLoading] = useState(true);
 
@@ -105,12 +106,41 @@ export const AuthProvider: React.FC<{
         )
     }, [token]);
 
+    // Function to patch data on the API with user authentication.
+    const patch = useCallback(async (query: string, body?: Object) => {
+        const formData = new FormData();
+        Object.entries(body || {}).forEach(([key, value]) => {
+            formData.append(key, value);
+        })
+
+        return(
+            fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            })
+            .then(async res => {
+                // If request successful, return json data
+                if(res.ok) {
+                    return res.json()
+                }
+                // Else throw error
+                throw new Error(await res.text())
+            })
+            .then(data => data)
+        )
+    }, [token]);
+
     const value = {
         get,
         post,
+        patch,
         destroy,
         loading,
-        profile
+        profile,
+        setProfile
     }
     return(
         <AuthContext.Provider value={value}>
