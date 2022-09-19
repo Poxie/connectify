@@ -22,12 +22,17 @@ export const EditProfileBanner: React.FC<{
     if(banner instanceof File) {
         const blob = new Blob([banner]);
         url = URL.createObjectURL(blob);
-    } else {
+    } else if(banner) {
         url = `${process.env.NEXT_PUBLIC_BANNER_ENDPOINT}${banner}`;
     }
+
+    const className = [
+        styles['banner'],
+        url !== undefined ? styles['has-image'] : ''
+    ].join(' ');
     return(
         <div 
-            className={styles['banner']} 
+            className={className} 
             onClick={openFileSelector}
             style={{ backgroundImage: `url(${url})` }}
         >

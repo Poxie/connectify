@@ -13,6 +13,13 @@
         display: none;
     }
 
+    &.has-image {
+        &::after {
+            color: var(--text-light-primary);
+            background-color: rgba(0,0,0,.6);
+        }
+    }
+
     &:hover {
         background-color: var(--background-quaternary);
    
@@ -38,6 +45,8 @@
     background-color: var(--background-secondary);
     border-bottom-left-radius: var(--border-radius-primary);
     border-bottom-right-radius: var(--border-radius-primary);
+    z-index: 1;
+    position: relative;
 }
 .avatar {
     width: 100px;
