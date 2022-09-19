@@ -6,7 +6,8 @@
     border-top-right-radius: var(--border-radius-primary);
     transition: background-color .2s;
     cursor: pointer;
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
 
     input {
