@@ -1,5 +1,8 @@
 module.exports = {
   reactStrictMode: true,
+  images: {
+    domains: ['localhost']
+  },
   async redirects() {
     return[
       {

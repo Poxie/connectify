@@ -12,6 +12,7 @@ import { setUser } from '../../redux/users/actions';
 import { useAppSelector } from '../../redux/store';
 import { selectUserById } from '../../redux/users/selectors';
 import { EditProfileBanner } from './EditProfileBanner';
+import { EditProfileAvatar } from './EditProfileAvatar';
 
 export const EditProfileModal = () => {
     const { profile, patch } = useAuth();
@@ -52,6 +53,9 @@ export const EditProfileModal = () => {
                 if(tempUser.banner instanceof File) {
                     tempUser.banner = user.banner;
                 }
+                if(tempUser.avatar instanceof File) {
+                    tempUser.avatar = user.avatar;
+                }
 
                 dispatch(setUser(tempUser));
                 setDisabled(false);
@@ -68,7 +72,11 @@ export const EditProfileModal = () => {
                 banner={tempUser?.banner || null}
             />
             <div className={styles['content']}>
-                <div className={styles['avatar']} />
+                <EditProfileAvatar 
+                    updateProperty={updateProperty}
+                    avatar={tempUser?.avatar || null}
+                />
+
                 <div className={styles['text']}>
                     <span className={styles['name']}>
                         {tempUser?.display_name || tempUser?.username}
