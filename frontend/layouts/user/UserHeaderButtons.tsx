@@ -50,6 +50,7 @@ export const UserHeaderButtons: React.FC<{
                     onClick={user.is_following ? unfollow : follow}
                     disabled={disabled}
                     type={user.is_following ? 'secondary' : 'default'}
+                    className={styles['header-button']}
                 >
                     {user.is_following ? 'Unfollow' : 'Follow'}
                 </Button>
@@ -57,6 +58,7 @@ export const UserHeaderButtons: React.FC<{
                 <Button 
                     type={'secondary'} 
                     onClick={editProfile}
+                    className={styles['header-button']}
                 >
                     Edit Profile
                 </Button>
