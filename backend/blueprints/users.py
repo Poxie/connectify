@@ -52,14 +52,24 @@ def update_user(user_id: int, token_id: int):
 
     # Checking if banner files are present
     banner = None
+    avatar = None
     for key, value in request.files.items():
+        app_root = os.path.dirname(os.path.abspath(__file__))
+        id = f'{user_id}-{round(time.time())}.png'
+        file_name = None
+
         if key in ['banner']:
-            app_root = os.path.dirname(os.path.abspath(__file__))
             folder = os.path.join(app_root, '../imgs/banner/')
-            id = f'{user_id}-{round(time.time())}.png'
             file_name = os.path.join(folder, id)
-            value.save(file_name)
             banner = id
+            
+        if key in ['avatar']:
+            folder = os.path.join(app_root, '../imgs/avatar/')
+            file_name = os.path.join(folder, id)
+            avatar = id
+
+        if file_name:
+            value.save(file_name)
 
     # Creating update query
     query = "UPDATE users SET "
@@ -75,6 +85,9 @@ def update_user(user_id: int, token_id: int):
     if banner:
         added_values.append(f'banner = %s')
         variables += (banner,)
+    if avatar:
+        added_values.append(f'avatar = %s')
+        variables += (avatar,)
 
     # Combining values and variables
     values = ', '.join(added_values)
