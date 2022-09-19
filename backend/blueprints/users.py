@@ -1,4 +1,4 @@
-import json, os
+import json, os, time
 from typing import Union
 from flask import Blueprint, request, jsonify
 from database import db
@@ -56,9 +56,10 @@ def update_user(user_id: int, token_id: int):
         if key in ['banner']:
             app_root = os.path.dirname(os.path.abspath(__file__))
             folder = os.path.join(app_root, '../imgs/banner/')
-            file_name = os.path.join(folder, f'{user_id}.png')
+            id = f'{user_id}-{round(time.time())}.png'
+            file_name = os.path.join(folder, id)
             value.save(file_name)
-            banner = f'{user_id}.png'
+            banner = id
 
     # Creating update query
     query = "UPDATE users SET "
