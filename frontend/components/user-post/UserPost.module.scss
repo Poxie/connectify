@@ -102,6 +102,7 @@
 .skeleton-content {
     @extend .skeleton-text;
     width: 500px;
+    max-width: 100%;
 }
 .skeleton-footer {
     @extend .skeleton-footer;
