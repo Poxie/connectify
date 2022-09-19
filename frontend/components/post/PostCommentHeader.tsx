@@ -1,7 +1,7 @@
 import { User } from "../../types"
 import styles from '../../styles/Post.module.scss';
 import { UserPostTimestamp } from "../user-post/UserPostTimestamp";
-import { PostCommentAuthor } from "./PostCommentAuthor"
+import { UserPostAuthor } from "../user-post/UserPostAuthor";
 
 export const PostCommentHeader: React.FC<{
     author: User;
@@ -9,7 +9,7 @@ export const PostCommentHeader: React.FC<{
 }> = ({ author, timestamp }) => {
     return(
         <div className={styles['comment-header']}>
-            <PostCommentAuthor {...author} />
+            <UserPostAuthor {...author} />
             <UserPostTimestamp timestamp={timestamp} />
         </div>
     )

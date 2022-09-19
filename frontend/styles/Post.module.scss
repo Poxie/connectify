@@ -36,11 +36,8 @@
 }
 .comment-header {
     display: flex;
-    gap: var(--spacing-primary);
-}
-.comment-author-name {
-    font-weight: 600;
-    color: var(--text-secondary);
+    align-items: center;
+    gap: 8px;
 }
 .comment-content {
     font-size: 14px;
