@@ -4,6 +4,33 @@
     background-color: var(--background-tertiary);
     border-top-left-radius: var(--border-radius-primary);
     border-top-right-radius: var(--border-radius-primary);
+    transition: background-color .2s;
+    cursor: pointer;
+    background-size: contain;
+    background-position: center;
+
+    input {
+        display: none;
+    }
+
+    &:hover {
+        background-color: var(--background-quaternary);
+   
+        &::after {
+            opacity: 1;
+        }
+    }
+    &::after {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        content: 'Change banner';
+        opacity: 0;
+        transition: opacity .3s;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
 }
 .content {
     display: flex;

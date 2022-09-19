@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/users/actions';
 import { useAppSelector } from '../../redux/store';
 import { selectUserById } from '../../redux/users/selectors';
+import { EditProfileBanner } from './EditProfileBanner';
 
 export const EditProfileModal = () => {
     const { profile, patch } = useAuth();
@@ -27,6 +28,8 @@ export const EditProfileModal = () => {
 
     const updateProperty = (property: keyof User, value: any) => {
         if(!user) return;
+
+        // Updating temporary properties
         setTempUser((user: any) => {
             if(!user) return user;
             user = {...user};
@@ -42,8 +45,14 @@ export const EditProfileModal = () => {
         if(!tempUser) return;
         setDisabled(true);
 
+        // Updating user
         patch(`/users/${user?.id}`, {...tempUser})
             .then(user => {
+                // Making sure not to dispatch user object with file value
+                if(tempUser.banner instanceof File) {
+                    tempUser.banner = user.banner;
+                }
+
                 dispatch(setUser(tempUser));
                 setDisabled(false);
             })
@@ -54,7 +63,10 @@ export const EditProfileModal = () => {
             <ModalHeader>
                 Edit Profile
             </ModalHeader>
-            <div className={styles['banner']} />
+            <EditProfileBanner 
+                updateProperty={updateProperty}
+                banner={tempUser?.banner || null}
+            />
             <div className={styles['content']}>
                 <div className={styles['avatar']} />
                 <div className={styles['text']}>
