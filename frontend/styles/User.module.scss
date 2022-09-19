@@ -22,6 +22,7 @@
 .header-avatar {
     --dimensions: 150px;
     width: var(--dimensions);
+    min-width: var(--dimensions);
     height: var(--dimensions);
     margin-top: calc(-1 * var(--dimensions) / 2);
     margin-right: var(--spacing-primary);
@@ -35,11 +36,16 @@
 }
 .header-main {
     display: flex;
+    flex: 1;
 }
 .header-text {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+.user-stats {
+    margin-top: 5px;
+    font-size: 15px;
 }
 .tabs {
     display: flex;

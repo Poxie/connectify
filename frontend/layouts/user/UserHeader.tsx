@@ -28,9 +28,16 @@ export const UserHeader = () => {
                         <h2>
                             {user.display_name || user.username}
                         </h2>
-                        <span>
-                            {user.follower_count} followers
-                        </span>
+                        {user.bio && (
+                            <span>
+                                {user.bio}
+                            </span>
+                        )}
+                        <div className={styles['user-stats']}>
+                            <span>
+                                {user.follower_count} followers
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <UserHeaderButtons userId={parseInt(userId)} />
