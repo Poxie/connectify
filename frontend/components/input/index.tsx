@@ -12,7 +12,8 @@ export const Input: React.FC<{
     defaultValue?: string;
     label?: string;
     name?: string;
-}> = ({ inputClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, label, name }) => {
+    textArea?: boolean;
+}> = ({ inputClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, label, name, textArea=false }) => {
     const [value, setValue] = useState(defaultValue || '');
 
     // Updating value on defaultValue change
@@ -21,7 +22,7 @@ export const Input: React.FC<{
     }, [defaultValue]);
 
     // Handling input change
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = e.target.value;
         setValue(value);
 
@@ -29,12 +30,13 @@ export const Input: React.FC<{
     }
 
     // Checking if key is enter
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if(e.key !== 'Enter') return;
 
         onSubmit && onSubmit(value);
     }
 
+    // Creating classNames
     inputClassName = [
         styles['container'],
         inputClassName ? inputClassName : ''
@@ -43,6 +45,19 @@ export const Input: React.FC<{
         styles['label'],
         labelClassName ? labelClassName : ''
     ].join(' ');
+
+    // Properties
+    const properties = {
+        placeholder,
+        onChange: handleChange,
+        onKeyDown: handleKeyDown,
+        onBlur,
+        onFocus,
+        value,
+        name,
+        id: name,
+        className: inputClassName
+    }
     return(
         <>
         {label && (
@@ -53,18 +68,20 @@ export const Input: React.FC<{
                 {label}
             </label>
         )}
-        <input 
-            type="text"
-            placeholder={placeholder}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            onBlur={onBlur}
-            onFocus={onFocus}
-            value={value}
-            name={name}
-            id={name}
-            className={inputClassName}
-        />
+        {textArea ? (
+            <textarea
+                style={{ 
+                    minHeight: 90,
+                    maxHeight: 300
+                }} 
+                {...properties}
+            />
+        ) : (
+            <input
+                type="text" 
+                {...properties}
+            />
+        )}
         </>
     )
 }
