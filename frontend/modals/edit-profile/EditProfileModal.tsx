@@ -99,6 +99,7 @@ export const EditProfileModal = () => {
                 label={'Bio'}
                 defaultValue={tempUser?.bio || ''}
                 onChange={bio => updateProperty('bio', bio)}
+                textArea={true}
             />
             <ModalFooter 
                 cancelLabel={'Close'}
