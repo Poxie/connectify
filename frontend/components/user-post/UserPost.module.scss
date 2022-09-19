@@ -23,7 +23,16 @@
 }
 .header {
     display: flex;
-    gap: var(--spacing-primary);
+    gap: 10px;
+    align-items: center;
+}
+.author-avatar {
+    height: 25px;
+    width: 25px;
+    background-color: var(--background-tertiary);
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
 }
 .author-name {
     font-weight: 600;
@@ -32,7 +41,7 @@
 .timestamp {
     font-size: 14px;
     color: var(--text-secondary);
-    align-self: flex-end;
+    margin-top: 4px;
     font-weight: 600;
     opacity: .8;
 }
