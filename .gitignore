@@ -41,3 +41,4 @@ yarn-error.log*
 /backend/venv
 /backend/pyvenv.cfg
 /backend/.env
+/backend/imgs

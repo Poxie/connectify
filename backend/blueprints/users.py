@@ -1,4 +1,4 @@
-import json
+import json, os
 from typing import Union
 from flask import Blueprint, request, jsonify
 from database import db
@@ -46,11 +46,19 @@ def create_new_user():
 @users.patch('/users/<int:user_id>')
 @token_required
 def update_user(user_id: int, token_id: int):
-    print(request.form)
-    
     # Making sure user being updated is logged in user
     if token_id != user_id:
         return 'Unauthorized.', 401
+
+    # Checking if banner files are present
+    banner = None
+    for key, value in request.files.items():
+        if key in ['banner']:
+            app_root = os.path.dirname(os.path.abspath(__file__))
+            folder = os.path.join(app_root, '../imgs/banner/')
+            file_name = os.path.join(folder, f'{user_id}.png')
+            value.save(file_name)
+            banner = f'{user_id}.png'
 
     # Creating update query
     query = "UPDATE users SET "
@@ -61,6 +69,11 @@ def update_user(user_id: int, token_id: int):
         if key in ['display_name', 'bio']:
             added_values.append(f'{key} = %s')
             variables = variables + (value,)
+
+    # Adding files to query
+    if banner:
+        added_values.append(f'banner = %s')
+        variables += (banner,)
 
     # Combining values and variables
     values = ', '.join(added_values)
