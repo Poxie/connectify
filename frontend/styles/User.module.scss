@@ -15,6 +15,9 @@
     background-color: var(--background-tertiary);
     border-top-left-radius: var(--border-radius-primary);
     border-top-right-radius: var(--border-radius-primary);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .header-avatar {
     --dimensions: 150px;

@@ -12,7 +12,12 @@ export const UserHeader = () => {
 
     return(
         <div className={styles['header']}>
-            <div className={styles['header-banner']} />
+            <div 
+                className={styles['header-banner']} 
+                style={{
+                    backgroundImage: user.banner ? `url(${process.env.NEXT_PUBLIC_BANNER_ENDPOINT}${user.banner})` : undefined
+                }} 
+            />
 
             <div className={styles['header-content']}>
                 <div className={styles['header-main']}>
