@@ -34,7 +34,7 @@ export const UserProfile = () => {
     if(!postIds) return(
         <div className={styles['posts']}>
             {Array.from(Array(4)).map((_, key) => (
-                <UserPostSkeleton />
+                <UserPostSkeleton key={key} />
             ))}
         </div>
     );
