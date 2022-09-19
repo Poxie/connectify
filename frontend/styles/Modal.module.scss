@@ -16,7 +16,8 @@
     z-index: 14141414;
     border-radius: var(--border-radius-primary);
     padding: var(--spacing-primary);
-    min-width: 500px;
+    width: 600px;
+    max-width: var(--width-max);
 }
 .header {
     margin: 0;
