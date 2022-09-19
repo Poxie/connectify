@@ -7,6 +7,7 @@ export type User = {
     is_following: boolean;
     is_self: boolean;
     banner: null | string | File;
+    avatar: null | string | File;
     postIds?: number[];
     likedIds?: number[];
 }

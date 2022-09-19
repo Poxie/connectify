@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '../../redux/store';
 import { selectUserById } from '../../redux/users/selectors';
@@ -22,7 +23,13 @@ export const UserHeader = () => {
             <div className={styles['header-content']}>
                 <div className={styles['header-main']}>
                     <div className={styles['header-avatar']}>
-                        {/* put user avatar, when applicable */}
+                        {user.avatar && (
+                            <Image 
+                                src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`}
+                                width={150}
+                                height={150}
+                            />
+                        )}
                     </div>
                     <div className={styles['header-text']}>
                         <h2>

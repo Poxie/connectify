@@ -29,6 +29,7 @@
     background-color: var(--background-tertiary);
     border-radius: 50%;
     border: 6px solid var(--background-secondary);
+    overflow: hidden;
 }
 .header-content {
     display: flex;
