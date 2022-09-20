@@ -29,10 +29,12 @@
 .author-avatar {
     height: 25px;
     width: 25px;
+    min-width: 25px;
     background-color: var(--background-tertiary);
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    display: block;
 }
 .author-name {
     font-weight: 600;

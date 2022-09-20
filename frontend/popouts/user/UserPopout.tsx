@@ -53,6 +53,7 @@ export const UserPopout: React.FC<User> = (user) => {
                     <Button 
                         className={styles['button']} 
                         type={'secondary'}
+                        href={userPath}
                     >
                         Go to profile
                     </Button>
