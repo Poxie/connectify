@@ -8,6 +8,7 @@ import { ReactElement, ReactNode } from 'react'
 import { NextPage } from 'next'
 import { wrapper } from '../redux/store'
 import { ModalProvider } from '../contexts/modal/ModalProvider'
+import { PopoutProvider } from '../contexts/popouts/PopoutProvider';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -24,15 +25,17 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return(
     <AuthProvider>
       <ModalProvider>
-        <Navbar />
-        <div className={styles['app-content']}>
-          <Sidebar />
-          <main>
-            {getLayout(
-              <Component {...pageProps} />
-            )}
-          </main>
-        </div>
+        <PopoutProvider>
+          <Navbar />
+          <div className={styles['app-content']}>
+            <Sidebar />
+            <main>
+              {getLayout(
+                <Component {...pageProps} />
+              )}
+            </main>
+          </div>
+        </PopoutProvider>
       </ModalProvider>
     </AuthProvider>
   )

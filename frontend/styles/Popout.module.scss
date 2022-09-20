@@ -1,0 +1,12 @@
+.container {
+    position: fixed;
+    z-index: 1414141414;
+    padding: 10px;
+    margin-top: -10px;
+}
+.content {
+    background-color: var(--background-tertiary);
+    padding: var(--spacing-primary);
+    border-radius: var(--border-radius-primary);
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px 0px;
+}
