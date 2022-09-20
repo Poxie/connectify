@@ -6,9 +6,11 @@ export const Popout: React.FC<{
     children: any;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
+    width: number;
+    height: number;
     left: number;
     top: number;
-}> = ({ children, onMouseEnter, onMouseLeave, top: _top, left: _left }) => {
+}> = ({ children, onMouseEnter, onMouseLeave, top: _top, left: _left, width: _width, height: _height }) => {
     const ref = useRef<HTMLDivElement>(null);
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
@@ -20,8 +22,14 @@ export const Popout: React.FC<{
         const { width } = ref.current.getBoundingClientRect();
 
         // Determining popout position
-        setLeft(_left - width);
-        setTop(_top);
+        let left = _left - width + width / 2 + _width / 2;
+        if(left < 15) left = 15;
+        
+        let top = _top + 40;
+
+        // Setting popout position
+        setLeft(left);
+        setTop(top);
     }, [_top, _left]);
 
     return(

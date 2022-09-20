@@ -12,6 +12,7 @@ export const PopoutProvider: React.FC<{
 }> = ({ children }) => {
     const [popout, setPopout] = useState<ReactElement | null>(null);
     const [position, setPosition] = useState({left: 0, top: 0});
+    const [dimensions, setDimensions] = useState({width: 0, height: 0});
     const [hoverPopout, setHoverPopout] = useState(false);
 
     // Handling mouse enter and leave popout
@@ -26,10 +27,11 @@ export const PopoutProvider: React.FC<{
         if(!ref.current) return;
 
         // Setting position of ref element
-        const { left, top } = ref.current.getBoundingClientRect();
+        const { left, top, height, width } = ref.current.getBoundingClientRect();
 
         // Setting popout related data
         setPosition({ left, top });
+        setDimensions({ width, height });
         setPopout(popout);
     }
     // Closing popouts
@@ -51,6 +53,8 @@ export const PopoutProvider: React.FC<{
                     <Popout
                         top={position.top}
                         left={position.left}
+                        width={dimensions.width}
+                        height={dimensions.height}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                     >
