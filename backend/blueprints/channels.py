@@ -20,6 +20,6 @@ def create_message_channel(token_id: int):
 
     type = int(request.form.get('type') or 1)
 
-    create_channel(type, token_id, recipient_id)
+    channel = create_channel(type, token_id, recipient_id)
 
-    return jsonify({})
+    return jsonify(channel)

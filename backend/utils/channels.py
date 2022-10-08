@@ -27,27 +27,9 @@ def get_channel_by_id(id):
     values = (id,)
 
     # Executing query
-    channel = db.fetch_one(id, values)
+    channel = db.fetch_one(query, values)
     
     return channel
-
-# Getting channel by recipient ids
-def get_channel_by_recipients(token_id: int, recipient_id: int):
-    query = """
-    SELECT channels.* FROM recipients
-        INNER JOIN channels ON recipients.channel_id = channels.id
-    WHERE recipients.id = %s OR recipients.id = %s
-    """
-    values = (token_id, recipient_id)
-
-    # Getting both recipient channels
-    recipient_channels = db.fetch_all(query, values)
-
-    # Comparing channels
-    if recipient_channels:
-        print(recipient_channels)
-
-    # return result
 
 # Getting my channels
 def get_my_channels(token_id: int):
@@ -87,5 +69,46 @@ def get_my_channels(token_id: int):
     return channels
 
 def create_channel(type: int, token_id: int, recipient_id: int):
-    # Checking if channel is already present
-    get_channel_by_recipients(token_id, recipient_id)
+    # Fetching involved parties' channels
+    my_channels = get_my_channels(token_id)
+    recipient_channels = get_my_channels(recipient_id)
+
+    # Transforming channels to ids
+    my_channel_ids = [channel['id'] for channel in my_channels]
+    recipient_channel_ids = [channel['id'] for channel in recipient_channels]
+
+    # Finding mutal channel
+    mutual_channel_ids = set(my_channel_ids).intersection(recipient_channel_ids)
+    channel_id = None
+    if len(mutual_channel_ids) > 0:
+        channel_id = mutual_channel_ids.pop()
+
+    # If mutual channel does not exist, create channel
+    if not channel_id:
+        # Creating channel id
+        id = create_channel_id()
+        channel_id = id
+        
+        # Inserting channel
+        channel_insert_query = "INSERT INTO channels (id, type, name, icon) VALUES (%s, %s, %s, %s)"
+        channel_insert_values = (
+            id,
+            type,
+            None,
+            None
+        )
+        db.insert(channel_insert_query, channel_insert_values)
+
+        # Inserting recipients
+        recipient_insert_query = "INSERT INTO recipients (id, channel_id) VALUES (%s,%s), (%s,%s)"
+        recipient_insert_values = (
+            token_id,
+            id,
+            recipient_id,
+            id
+        )
+        db.insert(recipient_insert_query, recipient_insert_values)
+
+    # Fetching channel channel
+    channel = get_channel_by_id(channel_id)
+    return channel
