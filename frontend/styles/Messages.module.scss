@@ -4,6 +4,16 @@
     flex-direction: column;
     height: calc(100vh - var(--navbar-height) - var(--spacing-primary) * 2);
 }
+.header {
+    padding: calc(var(--spacing-primary) / 2) var(--spacing-primary) var(--spacing-primary);
+    border-bottom: 2px solid var(--background-tertiary);
+    display: flex;
+
+    a {
+        cursor: pointer;
+        margin-left: 5px;
+    }
+}
 .list-container {
     overflow: hidden;
     height: 100%;

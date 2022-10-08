@@ -4,6 +4,7 @@ import { useAppSelector } from '../../redux/store';
 import styles from '../../styles/Messages.module.scss';
 import { MessageInput } from "./MessageInput"
 import { Messages } from "./Messages"
+import { MessagesHeader } from './MessagesHeader';
 
 export const MessagesPage = () => {
     const { channelId } = useRouter().query as { channelId: string };
@@ -15,6 +16,9 @@ export const MessagesPage = () => {
     const channelName = channel.name || recipient.display_name || recipient.username;
     return(
         <div className={styles['container']}>
+            <MessagesHeader 
+                recipient={recipient}
+            />
             <Messages 
                 channelId={parseInt(channelId)} 
             />
