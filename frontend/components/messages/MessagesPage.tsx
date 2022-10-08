@@ -25,6 +25,7 @@ export const MessagesPage = () => {
             <MessageInput 
                 channelName={channelName}
                 channelId={parseInt(channelId)}
+                recipientId={recipient.id}
             />
         </div>
     )
