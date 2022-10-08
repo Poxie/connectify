@@ -38,6 +38,10 @@ export const MessagesSidebar = () => {
 
     return(
         <ul className={styles['sidebar']}>
+            <span className={styles['sidebar-header']}>
+                Direct Messages
+            </span>
+            
             {channels.map(id => (
                 <MessageSidebarChannel 
                     id={id}

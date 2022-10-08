@@ -9,6 +9,12 @@
     padding-right: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
 }
+.sidebar-header {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
 .tab {
     padding: 8px 10px;
     border-radius: var(--border-radius-primary);
