@@ -33,12 +33,10 @@ export const Messages: React.FC<{
         list.current.scrollTo({ top: list.current.offsetHeight });
     }, [list, messageIds?.length]);
 
-    if(!messageIds) return null;
-
     return(
         <div className={styles['list-container']}>
             <ul className={styles['list']} ref={list}>
-                {messageIds.map(id => (
+                {messageIds && messageIds.map(id => (
                     <Message 
                         id={id}
                         channelId={channelId}
