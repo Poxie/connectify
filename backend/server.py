@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'verysecret'
@@ -21,12 +21,12 @@ def handle_message(message):
     # Making sure recipient is connected
     if recipient_id in clients:
         recipient_socket_id = clients[recipient_id]
-        send(message, room=recipient_socket_id)
+        emit('direct_message', message, room=recipient_socket_id)
     
     # Sending message to self
     if author_id in clients:
         author_socket_id = clients[author_id]
-        send(message, room=author_socket_id)
+        emit('direct_message', message, room=author_socket_id)
 
 @socketio.on('connect')
 def handle_connect():

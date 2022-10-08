@@ -8,6 +8,7 @@ from blueprints.posts import posts
 from blueprints.likes import likes
 from blueprints.comments import comments
 from blueprints.followers import followers
+from blueprints.channels import channels
 
 # Creating Flask app
 app = Flask(__name__)
@@ -23,3 +24,4 @@ app.register_blueprint(posts)
 app.register_blueprint(likes)
 app.register_blueprint(comments)
 app.register_blueprint(followers)
+app.register_blueprint(channels)
