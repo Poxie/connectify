@@ -1,3 +1,5 @@
+import re
+from utils.users import get_user_by_id
 from database import db
 from random import randrange
 import time
@@ -21,6 +23,17 @@ def create_message_id() -> int:
     # Else return created id
     return id
 
+# Hydrating messages
+def hydrate_message(message):
+    if not message:
+        return message
+
+    # Adding author to message
+    author = get_user_by_id(message['author_id'])
+    message['author'] = author
+
+    return message
+
 # Getting messages
 def get_channel_messages(channel_id: int):
     # Creating select query
@@ -29,6 +42,10 @@ def get_channel_messages(channel_id: int):
 
     # Executing query
     messages = db.fetch_all(query, values)
+
+    # Hydrating messages
+    for message in messages:
+        message = hydrate_message(message)
 
     return messages
 
@@ -40,6 +57,9 @@ def get_message_by_id(id: int):
 
     # Executing query
     message = db.fetch_one(query, values)
+
+    # Hydrating message
+    message = hydrate_message(message)
 
     return message
 
