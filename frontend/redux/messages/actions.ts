@@ -5,7 +5,7 @@ export const setChannels = (channels: Channel[]) => ({
     type: SET_CHANNELS,
     payload: channels
 })
-export const setMessages = (messages: Message[]) => ({
+export const setMessages = (channelId: number, messages: Message[]) => ({
     type: SET_MESSAGES,
-    payload: messages
+    payload: { channelId, messages }
 })

@@ -1,0 +1,57 @@
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--navbar-height) - var(--spacing-primary) * 2);
+}
+.list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 4px;
+    height: 100%;
+    padding: var(--spacing-primary) 0;
+}
+.message {
+    display: flex;
+    gap: 10px;
+    align-self: flex-start;
+    
+    .message-content {
+        padding: 6px 10px;
+        background-color: var(--background-tertiary);
+        color: var(--text-primary);
+        border-radius: 6px;
+    }
+    &.my-message {
+        align-self: flex-end;
+
+        .message-content {
+            background-color: var(--color-primary);
+            color: var(--text-light-primary);
+        }
+    }
+}
+.author {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    display: block;
+}
+.input-container {
+    position: relative;
+}
+.input {
+    padding-right: 80px;
+}
+.input-button {
+    padding: 8px 14px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+}

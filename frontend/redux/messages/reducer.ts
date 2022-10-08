@@ -24,7 +24,7 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
         }
         case SET_MESSAGES: {
             let messages = {...state.messages};
-            messages[action.payload[0].channel_id] = action.payload;
+            messages[action.payload.channelId] = action.payload.messages;
 
             return {
                 ...state,
