@@ -31,3 +31,18 @@ export type Comment = {
     content: string;
     timestamp: number;
 }
+
+export type Channel = {
+    id: number;
+    icon: string | null;
+    name: string | null;
+    type: number;
+    recipients: User[];
+}
+export type Message = {
+    id: number;
+    channel_id: number;
+    author: User;
+    content: string;
+    timestamp: number;
+}
