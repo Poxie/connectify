@@ -1,6 +1,8 @@
 import React, { ReactElement, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client/build/esm/socket';
+import { addMessage } from '../../redux/messages/actions';
 import { useAuth } from '../auth/AuthProvider';
 import { SocketContext as SocketContextType } from './types';
 
@@ -11,6 +13,7 @@ export const useSocket = () => React.useContext(SocketContext);
 export const SocketProvider: React.FC<{
     children: ReactElement;
 }> = ({ children }) => {
+    const dispatch = useDispatch();
     const { profile, loading } = useAuth();
     const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -31,6 +34,7 @@ export const SocketProvider: React.FC<{
         // Socket direct messages
         socket.on('direct_message', message => {
             console.log('direct message:', message);
+            dispatch(addMessage(message.channel_id, message));
         })
 
         // Closing socket on leave
