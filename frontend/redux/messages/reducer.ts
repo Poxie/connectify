@@ -38,7 +38,6 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
                 ...[action.payload.message]
             ];
 
-            console.log('test');
             return {
                 ...state,
                 messages
