@@ -2,8 +2,9 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client/build/esm/socket';
 import { useAuth } from '../auth/AuthProvider';
+import { SocketContext as SocketContextType } from './types';
 
-const SocketContext = React.createContext({});
+const SocketContext = React.createContext({} as SocketContextType);
 
 export const useSocket = () => React.useContext(SocketContext);
 
@@ -39,7 +40,7 @@ export const SocketProvider: React.FC<{
     }, [profile?.id, loading]);
 
     const value = {
-
+        socket
     }
     return(
         <SocketContext.Provider value={value}>
