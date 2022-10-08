@@ -19,6 +19,7 @@ export const MessageSidebarChannel: React.FC<{
     const recipient = channel.recipients[0];
     const name = channel.name || recipient.display_name || recipient.username
     const image = channel.icon || `${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${recipient.avatar}`;
+    const ariaLabel = `${name} (direct message)`;
 
     // Creating tab className
     const className = [
@@ -28,7 +29,7 @@ export const MessageSidebarChannel: React.FC<{
     return(
         <li>
             <Link href={`/messages/${channel.id}`}>
-                <a className={className}>
+                <a className={className} aria-label={ariaLabel}>
                     <div className={styles['tab-avatar']}>
                         <Image 
                             src={image}
