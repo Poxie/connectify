@@ -1,5 +1,5 @@
 import { Channel } from "../../types";
-import { SET_CHANNELS, SET_MESSAGES } from "./constants"
+import { ADD_MESSAGE, SET_CHANNELS, SET_MESSAGES } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 const initialState = {
@@ -26,6 +26,19 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             let messages = {...state.messages};
             messages[action.payload.channelId] = action.payload.messages;
 
+            return {
+                ...state,
+                messages
+            }
+        }
+        case ADD_MESSAGE: {
+            let messages = {...state.messages};
+            messages[action.payload.channelId] = [
+                ...state.messages[action.payload.channelId] || [],
+                ...[action.payload.message]
+            ];
+
+            console.log('test');
             return {
                 ...state,
                 messages

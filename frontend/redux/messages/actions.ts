@@ -1,5 +1,5 @@
 import { Channel, Message } from "../../types";
-import { SET_CHANNELS, SET_MESSAGES } from "./constants";
+import { ADD_MESSAGE, SET_CHANNELS, SET_MESSAGES } from "./constants";
 
 export const setChannels = (channels: Channel[]) => ({
     type: SET_CHANNELS,
@@ -8,4 +8,8 @@ export const setChannels = (channels: Channel[]) => ({
 export const setMessages = (channelId: number, messages: Message[]) => ({
     type: SET_MESSAGES,
     payload: { channelId, messages }
+})
+export const addMessage = (channelId: number, message: Message) => ({
+    type: ADD_MESSAGE,
+    payload: { channelId, message }
 })
