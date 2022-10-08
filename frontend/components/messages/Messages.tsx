@@ -1,6 +1,5 @@
 import styles from '../../styles/Messages.module.scss';
-import { useRouter } from "next/router"
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { setMessages } from "../../redux/messages/actions";
@@ -14,6 +13,7 @@ export const Messages: React.FC<{
     const dispatch = useDispatch();
     const { get, loading } = useAuth();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
+    const list = useRef<HTMLUListElement>(null);
 
     // Fetching channel messages
     useEffect(() => {
@@ -27,17 +27,25 @@ export const Messages: React.FC<{
             })
     }, [channelId, messageIds, get, loading]);
 
+    // Scrolling to bottom on render
+    useEffect(() => {
+        if(!list.current) return;
+        list.current.scrollTo({ top: list.current.offsetHeight });
+    }, [list, messageIds?.length]);
+
     if(!messageIds) return null;
 
     return(
-        <ul className={styles['list']}>
-            {messageIds.map(id => (
-                <Message 
-                    id={id}
-                    channelId={channelId}
-                    key={id}
-                />
-            ))}
-        </ul>
+        <div className={styles['list-container']}>
+            <ul className={styles['list']} ref={list}>
+                {messageIds.map(id => (
+                    <Message 
+                        id={id}
+                        channelId={channelId}
+                        key={id}
+                    />
+                ))}
+            </ul>
+        </div>
     )
 }

@@ -4,13 +4,20 @@
     flex-direction: column;
     height: calc(100vh - var(--navbar-height) - var(--spacing-primary) * 2);
 }
+.list-container {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
 .list {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     gap: 4px;
+    overflow: auto;
     height: 100%;
     padding: var(--spacing-primary) 0;
+    width: 100%;
 }
 .message {
     display: flex;
