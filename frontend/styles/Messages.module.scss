@@ -73,3 +73,19 @@
     transform: translateY(-50%);
     right: 10px;
 }
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    h2 {
+        margin: 0;
+        margin-bottom: 5px;
+    }
+}
+.conversation-button {
+    margin-top: 20px;
+}
