@@ -2,7 +2,7 @@ import json, os, time
 from typing import Union
 from flask import Blueprint, request, jsonify
 from database import db
-from utils.users import get_user_by_id, create_user
+from utils.users import get_user_by_id, create_user, get_users_by_username
 from utils.posts import create_post, get_user_liked_posts
 from utils.auth import token_required, token_optional
 
@@ -109,3 +109,15 @@ def get_user_likes(user_id: int, token_id: Union[int, None]=None):
     # TODO: check if user exists before fetching posts
     posts = get_user_liked_posts(user_id, token_id)
     return jsonify(posts)
+
+# Getting user by search
+@users.get('/users/search')
+def get_user_by_search():
+    query = request.args.get('query')
+    if not query:
+        return 'Query is a required parameter.', 400
+
+    # Getting users by search
+    users = get_users_by_username(query)
+
+    return jsonify(users)

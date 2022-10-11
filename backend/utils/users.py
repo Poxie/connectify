@@ -106,3 +106,14 @@ def create_user(username: str, password: str):
     user = get_user_by_id(id)
 
     return user
+
+# Function to bulk get users by username
+def get_users_by_username(username: str):
+    # Creating query
+    query = "SELECT * FROM users WHERE username LIKE CONCAT('%', %s, '%') OR display_name LIKE CONCAT('%', %s, '%')"
+    values = (username,username)
+
+    # Fetching users
+    users = db.fetch_all(query, values)
+
+    return users
