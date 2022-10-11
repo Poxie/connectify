@@ -1,5 +1,5 @@
 import { Channel } from "../../types";
-import { ADD_MESSAGE, SET_CHANNELS, SET_MESSAGES } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, SET_CHANNELS, SET_MESSAGES } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 const initialState = {
@@ -20,6 +20,15 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
                 ...state,
                 channels,
                 loading: false
+            }
+        }
+        case ADD_CHANNEL: {
+            let channels = {...state.channels}
+            channels[action.payload.id] = action.payload;
+
+            return {
+                ...state,
+                channels
             }
         }
         case SET_MESSAGES: {
