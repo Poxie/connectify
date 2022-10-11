@@ -1,11 +1,22 @@
 from flask import Blueprint, jsonify, request
 from utils.messages import get_channel_messages, create_channel_message
+from utils.channels import get_channel_by_id
 from utils.auth import token_required
 
 messages = Blueprint('messages', __name__)
 
 @messages.get('/channels/<int:channel_id>/messages')
-def get_messages(channel_id: int):
+@token_required
+def get_messages(channel_id: int, token_id: int):
+    # Getting channel
+    channel = get_channel_by_id(channel_id)
+    
+    # Checking if user is part of channel
+    if channel and 'recipients' in channel:
+        ids = [recipient['id'] for recipient in channel['recipients']]
+        if token_id not in ids:
+            return 'Unauthorized.', 401
+
     messages = get_channel_messages(channel_id)
     return jsonify(messages)
 
