@@ -13,9 +13,12 @@ import { useSocket } from '../../contexts/socket/SocketProvider';
 import { useAppSelector } from '../../redux/store';
 import { selectChannelIds } from '../../redux/messages/hooks';
 import { SelectUserChannel } from './SelectUserChannel';
+import { useDispatch } from 'react-redux';
+import { addChannel } from '../../redux/messages/actions';
 
 export const SelectUserModal = () => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { get, post, profile } = useAuth();
     const { socket } = useSocket();
     const { pushModal, close } = useModal();
@@ -48,10 +51,15 @@ export const SelectUserModal = () => {
 
     // Confirming selection
     const onConfirm = (user: User) => {
-        post(`/users/@me/channels/`, {
+        post(`/users/@me/channels`, {
             recipient_id: user.id
         })
             .then(channel => {
+                // If channel was created, add to redux
+                if(!channelIds.includes(channel.id)) {
+                    dispatch(addChannel(channel));
+                }
+
                 router.push(`/messages/${channel.id}`);
                 close();
             })
