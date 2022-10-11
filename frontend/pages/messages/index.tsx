@@ -3,8 +3,16 @@ import { ReactElement } from "react";
 import { MessagesLayout } from "../../layouts/messages/MessagesLayout";
 import { NextPageWithLayout } from "../_app";
 import Button from '../../components/button';
+import { useModal } from '../../contexts/modal/ModalProvider';
+import { SelectUserModal } from '../../modals/select-user/SelectUserModal';
 
 const Messages: NextPageWithLayout = () => {
+    const { setModal } = useModal();
+
+    const openModal = () => {
+        setModal(<SelectUserModal />);
+    }
+    
     return(
         <div className={styles['empty']}>
             <h2>
@@ -13,7 +21,10 @@ const Messages: NextPageWithLayout = () => {
             <span>
                 Choose an existing direct message or create a new one.
             </span>
-            <Button className={styles['conversation-button']}>
+            <Button 
+                className={styles['conversation-button']}
+                onClick={openModal}
+            >
                 Start conversation
             </Button>
         </div>
