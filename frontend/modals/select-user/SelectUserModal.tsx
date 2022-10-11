@@ -10,6 +10,9 @@ import { useModal } from '../../contexts/modal/ModalProvider';
 import { SelectUserConfirmationModal } from './SelectUserConfirmationModal';
 import { useRouter } from 'next/router';
 import { useSocket } from '../../contexts/socket/SocketProvider';
+import { useAppSelector } from '../../redux/store';
+import { selectChannelIds } from '../../redux/messages/hooks';
+import { SelectUserChannel } from './SelectUserChannel';
 
 export const SelectUserModal = () => {
     const router = useRouter();
@@ -18,6 +21,7 @@ export const SelectUserModal = () => {
     const { pushModal, close } = useModal();
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<User[]>([]);
+    const channelIds = useAppSelector(selectChannelIds);
 
     // Fetching results on query change
     useEffect(() => {
@@ -62,10 +66,18 @@ export const SelectUserModal = () => {
                 onChange={setQuery}
                 placeholder={'Search for user...'}
             />
-            {results.length === 0 && (
-                <span className={styles['empty-query']}>
-                    Insert query to search for a user.
+            {!results.length && (
+                <>
+                <span className={styles['label']}>
+                    Current direct messages
                 </span>
+                {channelIds.map(channelId => (
+                    <SelectUserChannel 
+                        id={channelId}
+                        key={channelId} 
+                    />
+                ))}
+                </>
             )}
             {results.length !== 0 && (
                 <ul className={styles['items']}>

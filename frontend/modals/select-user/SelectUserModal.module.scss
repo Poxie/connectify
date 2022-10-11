@@ -1,9 +1,8 @@
-.empty-query {
-    text-align: center;
-    display: block;
-    padding-top: var(--spacing-primary);
+.label {
+    margin-top: var(--spacing-primary);
+    margin-bottom: 10px;
     font-weight: 600;
-    color: var(--text-secondary);
+    display: block;
 }
 .items {
     max-height: 400px;
