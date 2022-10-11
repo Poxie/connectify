@@ -138,6 +138,7 @@ export const AuthProvider: React.FC<{
         post,
         patch,
         destroy,
+        token,
         loading,
         profile,
         setProfile
