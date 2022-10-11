@@ -63,7 +63,7 @@ export const EditProfileModal = () => {
     }
 
     return(
-        <Modal>
+        <>
             <ModalHeader>
                 Edit Profile
             </ModalHeader>
@@ -108,6 +108,6 @@ export const EditProfileModal = () => {
                 onConfirm={confirm}
                 disabled={disabled}
             />
-        </Modal>
+        </>
     )
 }
