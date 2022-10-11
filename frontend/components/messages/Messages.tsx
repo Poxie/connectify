@@ -6,10 +6,13 @@ import { setMessages } from "../../redux/messages/actions";
 import { selectMessageIds } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
+import { User } from '../../types';
+import Link from 'next/link';
 
 export const Messages: React.FC<{
     channelId: number;
-}> = ({ channelId }) => {
+    recipient: User;
+}> = ({ channelId, recipient }) => {
     const dispatch = useDispatch();
     const { get, loading } = useAuth();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
@@ -36,6 +39,19 @@ export const Messages: React.FC<{
     return(
         <div className={styles['list-container']}>
             <ul className={styles['list']} ref={list}>
+                {messageIds && !messageIds?.length && (
+                    <span>
+                        You don't have any messages with 
+                        {' '}
+                        <Link href={`/users/${recipient.id}`}>
+                            <a>
+                                <strong>{recipient.display_name || recipient.username}</strong>
+                            </a>
+                        </Link>
+                        {' '}
+                        yet.
+                    </span>
+                )}
                 {messageIds && messageIds.map(id => (
                     <Message 
                         id={id}

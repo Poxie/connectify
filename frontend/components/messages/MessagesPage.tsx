@@ -20,7 +20,8 @@ export const MessagesPage = () => {
                 recipient={recipient}
             />
             <Messages 
-                channelId={parseInt(channelId)} 
+                channelId={parseInt(channelId)}
+                recipient={recipient}
             />
             <MessageInput 
                 channelName={channelName}
