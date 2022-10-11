@@ -15,9 +15,26 @@
     background-color: var(--background-primary);
     z-index: 14141414;
     border-radius: var(--border-radius-primary);
-    padding: var(--spacing-primary);
     width: 600px;
     max-width: var(--width-max);
+    overflow: hidden;
+}
+.content {
+    display: flex;
+    gap: calc(var(--spacing-primary) * 2);
+    transition: transform .5s;
+    padding: var(--spacing-primary);
+
+    &>div {
+        min-width: 100%;
+        transition: max-height .7s;
+    }
+    &>.active {
+        max-height: 600px;
+    }
+    &>:not(.active) {
+        max-height: 0px;
+    }
 }
 .header {
     margin: 0;

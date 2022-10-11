@@ -3,7 +3,8 @@ import styles from '../styles/Modal.module.scss';
 
 export const Modal: React.FC<{
     children: any;
-}> = ({ children }) => {
+    activeIndex: number;
+}> = ({ children, activeIndex }) => {
     return(
         <motion.div 
             className={styles['container']}
@@ -12,7 +13,12 @@ export const Modal: React.FC<{
             exit={{ scale: .2, opacity: 0, translateX: '-50%', translateY: '-50%' }}
             transition={{ duration: .3 }}
         >
-            {children}
+            <div 
+                className={styles['content']}
+                style={{ transform: `translateX(-${100 * activeIndex}%)` }}
+            >
+                {children}
+            </div>
         </motion.div>
     )
 }
