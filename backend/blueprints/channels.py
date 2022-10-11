@@ -27,19 +27,21 @@ def create_message_channel(token_id: int):
 @channels.get('/channels/<int:channel_id>')
 @token_required
 def get_channel(channel_id: int, token_id: int):
+    # Checking if channel exists
     channel = get_channel_by_id(channel_id)
+    if not channel:
+        return 'Channel does not exist.', 404
 
     # Checking if user has access to channel
-    if channel:
-        recipient_ids = [recipient['id'] for recipient in channel['recipients']]
-        if token_id not in recipient_ids:
-            return 'Unauthorized.', 401
+    recipient_ids = [recipient['id'] for recipient in channel['recipients']]
+    if token_id not in recipient_ids:
+        return 'Unauthorized.', 401
 
-        # Removing self recipient
-        new_recipients = list(filter((
-            lambda recipient: recipient['id'] != token_id), 
-            channel['recipients']
-        ))
-        channel['recipients'] = new_recipients
+    # Removing self recipient
+    new_recipients = list(filter((
+        lambda recipient: recipient['id'] != token_id), 
+        channel['recipients']
+    ))
+    channel['recipients'] = new_recipients
 
     return jsonify(channel)

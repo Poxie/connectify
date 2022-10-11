@@ -8,8 +8,10 @@ messages = Blueprint('messages', __name__)
 @messages.get('/channels/<int:channel_id>/messages')
 @token_required
 def get_messages(channel_id: int, token_id: int):
-    # Getting channel
+    # Checking if channel exists
     channel = get_channel_by_id(channel_id)
+    if not channel:
+        return 'Channel does not exist.', 404
     
     # Checking if user is part of channel
     if channel and 'recipients' in channel:
