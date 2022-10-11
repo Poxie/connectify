@@ -19,7 +19,7 @@ export const MessagesSidebar = () => {
         if(loading || channels.length) return;
 
         // Getting channels
-        get(`/users/@me/channels/`)
+        get(`/users/@me/channels`)
             .then(channels => {
                 dispatch(setChannels(channels));
             })
@@ -41,7 +41,7 @@ export const MessagesSidebar = () => {
             <span className={styles['sidebar-header']}>
                 Direct Messages
             </span>
-            
+
             {channels.map(id => (
                 <MessageSidebarChannel 
                     id={id}
