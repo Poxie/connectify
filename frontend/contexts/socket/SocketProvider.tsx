@@ -14,7 +14,7 @@ export const SocketProvider: React.FC<{
     children: ReactElement;
 }> = ({ children }) => {
     const dispatch = useDispatch();
-    const { profile, loading } = useAuth();
+    const { token, profile, loading } = useAuth();
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export const SocketProvider: React.FC<{
 
         // Creating websocket
         const socket = io('http://localhost:8000', { 
-            query: { id: profile.id }
+            query: { token }
         });
         
         // Socket connection events
