@@ -25,6 +25,17 @@ def get_messages(channel_id: int, token_id: int):
 def add_message(channel_id: int, token_id: int):
     content = request.form.get('content')
 
+    # Checking if channel exists
+    channel = get_channel_by_id(channel_id)
+    if not channel:
+        return 'Channel does not exist.', 404
+
+    # Checking if author can add message
+    if 'recipients' in channel:
+        ids = [recipient['id'] for recipient in channel['recipients']]
+        if token_id not in ids:
+            return 'Unauthorized.', 401
+
     # Creating message
     data = {
         'channel_id': channel_id,
