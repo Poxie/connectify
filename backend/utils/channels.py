@@ -23,11 +23,30 @@ def create_channel_id() -> int:
 
 # Getting channel by id
 def get_channel_by_id(id):
-    query = "SELECT * FROM channels WHERE id = %s"
-    values = (id,)
+    # Getting channel
+    channel_query = "SELECT * FROM channels WHERE id = %s"
+    channel_values = (id,)
+
+    # Fetching channel
+    channel = db.fetch_one(channel_query, channel_values)
+
+    # Getting channel recipients
+    recipient_query = """
+    SELECT users.* FROM recipients
+        INNER JOIN users ON recipients.id = users.id
+    WHERE recipients.channel_id = %s
+    """
+    recipient_values = (id,)
 
     # Executing query
-    channel = db.fetch_one(query, values)
+    recipients = db.fetch_all(recipient_query, recipient_values)
+    if recipients:
+        for recipient in recipients:
+            del recipient['password']
+    
+    # Adding recipients to channel
+    if channel:
+        channel['recipients'] = recipients
     
     return channel
 
@@ -42,6 +61,7 @@ def get_my_channels(token_id: int):
     values = (token_id,)
 
     # Fetching channels
+    print('hey')
     channels = db.fetch_all(query, values)
     
     # Returning if channels is None
