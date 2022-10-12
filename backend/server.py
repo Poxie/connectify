@@ -37,6 +37,19 @@ def handle_channel_created(message):
     if 'recipient_id' not in message:
         return print('recipient_id is missing in message', message)
 
+    # Making sure channel_id is present
+    if 'channel_id' not in message:
+        return print('channel_id is missing in message ', message)
+
+    # Getting recipient id
+    recipient_id = message['recipient_id']
+
+    # Checkiung if recipient is connected
+    if recipient_id in clients:
+        # Sending channel create event
+        recipient_socket_id = clients[recipient_id]
+        emit('DM_CHANNEL_CREATED', message['channel_id'], room=recipient_socket_id)
+
 @socketio.on('connect')
 def handle_connect():
     # Setting up user_id and socket_id relations on connect
