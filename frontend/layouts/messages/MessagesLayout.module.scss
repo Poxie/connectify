@@ -23,7 +23,7 @@
     width: 220px;
     display: flex;
     align-items: center;
-    gap: var(--spacing-primary);
+    justify-content: space-between;
     transition: .15s background-color;
     
     &:hover {
@@ -39,6 +39,11 @@
         background-color: var(--background-secondary);
     }
 }
+.tab-main {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-primary);
+}
 .tab-avatar {
     overflow: hidden;
     border-radius: 50%;
@@ -46,6 +51,20 @@
     height: 32px;
     position: relative;
     background-color: var(--background-tertiary);
+}
+.unread-count {
+    --dimensions: 22px;
+    background-color: var(--color-primary);
+    width: var(--dimensions);
+    height: var(--dimensions);
+    line-height: var(--dimensions);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light-primary);
+    border-radius: 50%;
+    font-weight: 700;
 }
 .loading-text {
     height: 17px;

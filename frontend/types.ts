@@ -38,6 +38,7 @@ export type Channel = {
     name: string | null;
     type: number;
     recipients: User[];
+    unread_count: number;
 }
 export type Message = {
     id: number;

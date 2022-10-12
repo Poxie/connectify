@@ -30,18 +30,25 @@ export const MessageSidebarChannel: React.FC<{
         <li>
             <Link href={`/messages/${channel.id}`}>
                 <a className={className} aria-label={ariaLabel}>
-                    <div className={styles['tab-avatar']}>
-                        {image && (
-                            <Image 
-                                src={image}
-                                layout={'fill'}
-                                objectFit={'cover'}
-                            />
-                        )}
+                    <div className={styles['tab-main']}>
+                        <div className={styles['tab-avatar']}>
+                            {image && (
+                                <Image 
+                                    src={image}
+                                    layout={'fill'}
+                                    objectFit={'cover'}
+                                />
+                            )}
+                        </div>
+                        <span>
+                            {name}
+                        </span>
                     </div>
-                    <span>
-                        {name}
-                    </span>
+                    {channel.unread_count !== 0 && (
+                        <span className={styles['unread-count']}>
+                            {channel.unread_count}
+                        </span>
+                    )}
                 </a>
             </Link>
         </li>
