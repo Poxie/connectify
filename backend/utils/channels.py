@@ -131,4 +131,10 @@ def create_channel(type: int, token_id: int, recipient_id: int):
 
     # Fetching channel channel
     channel = get_channel_by_id(channel_id)
+
+    # Removing self from recipients
+    if channel and 'recipients' in channel:
+        new_recipients = [recipient for recipient in channel['recipients'] if recipient['id'] != token_id]
+        channel['recipients'] = new_recipients
+
     return channel
