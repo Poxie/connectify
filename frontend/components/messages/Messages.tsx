@@ -46,7 +46,7 @@ export const Messages: React.FC<{
     // Scrolling to bottom on render
     useEffect(() => {
         if(!list.current) return;
-        list.current.scrollTo({ top: list.current.offsetHeight });
+        list.current.scrollTo({ top: list.current.scrollHeight });
     }, [list, messageIds?.length]);
 
     return(
