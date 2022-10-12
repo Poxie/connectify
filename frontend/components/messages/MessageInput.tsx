@@ -39,6 +39,7 @@ export const MessageInput: React.FC<{
                 inputClassName={styles['input']}
                 onChange={setContent}
                 defaultValue={content}
+                focusOnMount={true}
                 onSubmit={send}
             />
             <Button 
