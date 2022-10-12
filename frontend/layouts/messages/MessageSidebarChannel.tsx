@@ -31,11 +31,13 @@ export const MessageSidebarChannel: React.FC<{
             <Link href={`/messages/${channel.id}`}>
                 <a className={className} aria-label={ariaLabel}>
                     <div className={styles['tab-avatar']}>
-                        <Image 
-                            src={image}
-                            layout={'fill'}
-                            objectFit={'cover'}
-                        />
+                        {image && (
+                            <Image 
+                                src={image}
+                                layout={'fill'}
+                                objectFit={'cover'}
+                            />
+                        )}
                     </div>
                     <span>
                         {name}
