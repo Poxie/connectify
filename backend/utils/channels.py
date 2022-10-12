@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from random import randrange
 from database import db
 
@@ -21,8 +21,48 @@ def create_channel_id() -> int:
     # Else return created id
     return id
 
+# Hydarating channel
+def hydrate_channel(channel, token_id):
+    # Getting channel recipients
+    recipient_query = """
+    SELECT * FROM recipients
+    JOIN users
+    ON recipients.id = users.id
+    WHERE recipients.channel_id = %s
+    """
+    recipient_values = (channel['id'],)
+
+    # Fetching recipients
+    recipients = db.fetch_all(recipient_query, recipient_values)
+
+    # Removing unwanted properties
+    if recipients:
+        for recipient in recipients:
+            del recipient['password']
+
+    # Adding channel properties
+    if channel and recipients:
+        new_recipients = []
+        unread_count = 0
+
+        for recipient in recipients:
+            # Adding unread_count if recipient is fetching user
+            if recipient['id'] == token_id:
+                unread_count = recipient['unread_count']
+
+            # Else adding recipient to recipient list
+            else:
+                new_recipients.append(recipient)
+
+        # Updating channel properties
+        channel['recipients'] = new_recipients
+        channel['unread_count'] = unread_count
+
+    # Returning channel
+    return channel
+
 # Getting channel by id
-def get_channel_by_id(id):
+def get_channel_by_id(id: int, token_id: Union[int, None]=None):
     # Getting channel
     channel_query = "SELECT * FROM channels WHERE id = %s"
     channel_values = (id,)
@@ -30,23 +70,8 @@ def get_channel_by_id(id):
     # Fetching channel
     channel = db.fetch_one(channel_query, channel_values)
 
-    # Getting channel recipients
-    recipient_query = """
-    SELECT users.* FROM recipients
-        INNER JOIN users ON recipients.id = users.id
-    WHERE recipients.channel_id = %s
-    """
-    recipient_values = (id,)
-
-    # Executing query
-    recipients = db.fetch_all(recipient_query, recipient_values)
-    if recipients:
-        for recipient in recipients:
-            del recipient['password']
-    
-    # Adding recipients to channel
-    if channel:
-        channel['recipients'] = recipients
+    # Hydrating channel
+    channel = hydrate_channel(channel, token_id)
     
     return channel
 
@@ -61,7 +86,6 @@ def get_my_channels(token_id: int):
     values = (token_id,)
 
     # Fetching channels
-    print('hey')
     channels = db.fetch_all(query, values)
     
     # Returning if channels is None
@@ -70,21 +94,7 @@ def get_my_channels(token_id: int):
     
     # Fetching channel recipients
     for channel in channels:
-        recipients_query = """
-        SELECT users.* FROM recipients
-            INNER JOIN users ON recipients.id = users.id
-        WHERE recipients.channel_id = %s
-        AND recipients.id != %s
-        """
-        values = (channel['id'], token_id)
-
-        recipients = db.fetch_all(recipients_query, values)
-
-        # Sanitizing recipients
-        for recipient in recipients:
-            del recipient['password']
-        
-        channel['recipients'] = recipients
+        channel = hydrate_channel(channel, token_id)
 
     return channels
 
@@ -130,11 +140,6 @@ def create_channel(type: int, token_id: int, recipient_id: int):
         db.insert(recipient_insert_query, recipient_insert_values)
 
     # Fetching channel channel
-    channel = get_channel_by_id(channel_id)
-
-    # Removing self from recipients
-    if channel and 'recipients' in channel:
-        new_recipients = [recipient for recipient in channel['recipients'] if recipient['id'] != token_id]
-        channel['recipients'] = new_recipients
+    channel = get_channel_by_id(channel_id, token_id)
 
     return channel
