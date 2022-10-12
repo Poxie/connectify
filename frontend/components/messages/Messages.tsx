@@ -69,6 +69,7 @@ export const Messages: React.FC<{
                     <Message 
                         id={id}
                         prevId={messageIds.slice(key - 1, key)[0]}
+                        nextId={messageIds.slice(key + 1, key + 2)[0]}
                         channelId={channelId}
                         key={id}
                     />

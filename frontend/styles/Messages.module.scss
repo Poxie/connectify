@@ -30,12 +30,15 @@
     width: 100%;
 }
 .message {
-    display: flex;
-    gap: 10px;
     align-self: flex-start;
     position: relative;
     padding-left: 40px;
     
+    .message-main {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
     .message-content {
         padding: 6px 10px;
         background-color: var(--background-tertiary);
@@ -45,9 +48,15 @@
     &.my-message {
         align-self: flex-end;
 
+        .message-main {
+            align-items: flex-end;
+        }
         .message-content {
             background-color: var(--color-primary);
             color: var(--text-light-primary);
+        }
+        .timestamp {
+            text-align: right;
         }
     }
 }
@@ -64,6 +73,14 @@
     position: relative;
     cursor: pointer;
     display: block;
+}
+.timestamp {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: block;
+    margin-top: 3px;
+    margin-bottom: var(--spacing-primary);
 }
 .input-container {
     position: relative;
