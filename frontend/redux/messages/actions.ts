@@ -1,5 +1,5 @@
 import { Channel, Message } from "../../types";
-import { ADD_CHANNEL, ADD_MESSAGE, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_MESSAGES } from "./constants";
+import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_MESSAGES } from "./constants";
 
 export const setChannels = (channels: Channel[]) => ({
     type: SET_CHANNELS,
@@ -20,4 +20,8 @@ export const addMessage = (channelId: number, message: Message) => ({
 export const removeUnreadCount = (channelId: number) => ({
     type: REMOVE_UNREAD_COUNT,
     payload: channelId
+})
+export const increaseUnreadCount = (channelId: number, amount=1) => ({
+    type: INCREASE_UNREAD_COUNT,
+    payload: { channelId, amount }
 })
