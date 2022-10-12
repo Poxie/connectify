@@ -2,8 +2,8 @@ import styles from '../../styles/Messages.module.scss';
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { setMessages } from "../../redux/messages/actions";
-import { selectMessageIds } from "../../redux/messages/hooks";
+import { removeUnreadCount, setMessages } from "../../redux/messages/actions";
+import { selectChannelUnreadCount, selectMessageIds } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
 import { User } from '../../types';
@@ -14,8 +14,9 @@ export const Messages: React.FC<{
     recipient: User;
 }> = ({ channelId, recipient }) => {
     const dispatch = useDispatch();
-    const { get, loading } = useAuth();
+    const { get, patch, loading } = useAuth();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
+    const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
     const list = useRef<HTMLUListElement>(null);
 
     // Fetching channel messages
@@ -29,6 +30,18 @@ export const Messages: React.FC<{
                 dispatch(setMessages(channelId, messages));
             })
     }, [channelId, messageIds, get, loading]);
+
+    // Resetting unread count
+    useEffect(() => {
+        if(!unreadCount) return;
+
+        patch(`/channels/${channelId}/unread`, {
+            unread_count: 0
+        })
+            .then(result => {
+                dispatch(removeUnreadCount(channelId));
+            })
+    }, [unreadCount, channelId, patch]);
 
     // Scrolling to bottom on render
     useEffect(() => {
