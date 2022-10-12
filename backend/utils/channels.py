@@ -143,3 +143,17 @@ def create_channel(type: int, token_id: int, recipient_id: int):
     channel = get_channel_by_id(channel_id, token_id)
 
     return channel
+
+# Updating recipient unread
+def update_unread_count(channel_id: int, recipient_id: int, count: int):
+    # Creating update query
+    query = "UPDATE recipients SET unread_count = %s WHERE channel_id = %s AND id = %s"
+    values = (count, channel_id, recipient_id)
+
+    # Exeucting update query
+    db.update(query, values)
+
+    # Fetching new channel
+    channel = get_channel_by_id(channel_id, recipient_id)
+
+    return channel
