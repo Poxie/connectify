@@ -1,5 +1,5 @@
 import { Channel } from "../../types";
-import { ADD_CHANNEL, ADD_MESSAGE, SET_CHANNELS, SET_MESSAGES } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_MESSAGES } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 const initialState = {
@@ -50,6 +50,18 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             return {
                 ...state,
                 messages
+            }
+        }
+        case REMOVE_UNREAD_COUNT: {
+            const channels = {...state.channels};
+            channels[action.payload] = {
+                ...(channels[action.payload] || {}),
+                unread_count: 0
+            } as Channel;
+
+            return {
+                ...state,
+                channels
             }
         }
         default:
