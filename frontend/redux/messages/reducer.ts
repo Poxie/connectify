@@ -41,6 +41,10 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             }
         }
         case ADD_MESSAGE: {
+            // If prev messages arent loaded, dont add message
+            if(!state.messages[action.payload.channelId]) return state;
+
+            // Adding message to message array
             let messages = {...state.messages};
             messages[action.payload.channelId] = [
                 ...state.messages[action.payload.channelId] || [],
