@@ -15,6 +15,13 @@ export const selectChannelUnreadCount = createSelector(
     [selectChannelById],
     channel => channel?.unread_count
 );
+export const selectCombinedUnreadCount = createSelector(
+    [selectChannels],
+    channels => 
+        Object.entries(channels)
+            .map(([key, value]) => channels[parseInt(key)]?.unread_count || 0)
+            .reduce((partialSum, a) => partialSum + a, 0)
+)
 
 const selectMessages = (state: RootState) => state.messages.messages;
 const selectMessageId = (_: any, __: any, id: number) => id;
