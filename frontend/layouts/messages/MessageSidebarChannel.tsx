@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { selectChannelById } from '../../redux/messages/hooks';
+import { selectChannelById, selectChannelUnreadCount } from '../../redux/messages/hooks';
 import { useAppSelector } from '../../redux/store';
 import styles from './MessagesLayout.module.scss';
 
@@ -10,6 +10,7 @@ export const MessageSidebarChannel: React.FC<{
 }> = ({ id }) => {
     const asPath = useRouter().asPath;
     const channel = useAppSelector(state => selectChannelById(state, id));
+    const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, id));
     if(!channel) return null;
 
     // Determining if channel is active
@@ -44,9 +45,9 @@ export const MessageSidebarChannel: React.FC<{
                             {name}
                         </span>
                     </div>
-                    {channel.unread_count !== 0 && (
+                    {unreadCount !== 0 && (
                         <span className={styles['unread-count']}>
-                            {channel.unread_count}
+                            {unreadCount}
                         </span>
                     )}
                 </a>

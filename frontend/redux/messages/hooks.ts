@@ -11,6 +11,11 @@ export const selectChannelById = createSelector(
     (channels, id) => channels[id]
 )
 
+export const selectChannelUnreadCount = createSelector(
+    [selectChannelById],
+    channel => channel?.unread_count
+);
+
 const selectMessages = (state: RootState) => state.messages.messages;
 const selectMessageId = (_: any, __: any, id: number) => id;
 
