@@ -1,5 +1,5 @@
 import os
-import re
+from flask import abort
 from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector.cursor import MySQLCursorBufferedDict
@@ -15,7 +15,7 @@ class Database():
             passwd=os.getenv('MYSQL_PASSWORD'),
             database=os.getenv('MYSQL_DATABASE')
         )
-        self.cursor = MySQLCursorBufferedDict(self.db)
+        self.cursor = self.db.cursor(buffered=True, dictionary=True)
 
     # Fuction to commit changes to database
     def __commit(self):
@@ -42,6 +42,10 @@ class Database():
     def fetch_all(self, query, values):
         self.cursor.execute(query, values)
         response = self.cursor.fetchall()
+        if response is None:
+            print(response)
+            abort(500)
+
         self.__reset()
         return response
 

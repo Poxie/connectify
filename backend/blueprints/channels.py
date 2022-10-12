@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from utils.auth import token_required
 from utils.constants import DIRECT_MESSAGE_CHANNEL_TYPE
-from utils.channels import create_channel, get_my_channels, get_channel_by_id, update_unread_count
+from utils.channels import create_channel, get_my_channels, get_channel_by_id, update_unread_count, increase_unread_count
 
 channels = Blueprint('channels', __name__)
 
@@ -42,9 +42,20 @@ def get_channel(channel_id: int, token_id: int):
 @channels.patch('/channels/<int:channel_id>/unread')
 @token_required
 def remove_unread(channel_id: int, token_id: int):
-    unread_count = request.form.get('unread_count')
-    if not unread_count:
-        return 'unread_count is a required field.', 400
+    type = request.args.get('type') or 'set'
 
-    result = update_unread_count(channel_id, token_id, int(unread_count))
+    result = None
+
+    # Setting unread count
+    if type == 'set':
+        unread_count = request.form.get('unread_count')
+        if not unread_count:
+            return 'unread_count is a required field.', 400
+        
+        result = update_unread_count(channel_id, token_id, int(unread_count))
+
+    # Increasing unread count
+    if type == 'increase':
+        result = increase_unread_count(channel_id, token_id)
+
     return jsonify(result)

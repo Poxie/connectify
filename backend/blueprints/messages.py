@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from utils.messages import get_channel_messages, create_channel_message
-from utils.channels import get_channel_by_id
+from utils.channels import get_channel_by_id, increase_unread_count
 from utils.auth import token_required
 
 messages = Blueprint('messages', __name__)
@@ -38,6 +38,13 @@ def add_message(channel_id: int, token_id: int):
         if token_id not in ids:
             return 'Unauthorized.', 401
 
+        # Updating recipient unread message count
+        for recipient in channel['recipients']:
+            if recipient['id'] == token_id:
+                continue
+
+            increase_unread_count(channel_id, recipient['id'])
+
     # Creating message
     data = {
         'channel_id': channel_id,
@@ -45,5 +52,7 @@ def add_message(channel_id: int, token_id: int):
         'content': content
     }
     message = create_channel_message(data)
+
+
 
     return jsonify(message)

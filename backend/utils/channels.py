@@ -153,7 +153,28 @@ def update_unread_count(channel_id: int, recipient_id: int, count: int):
     # Exeucting update query
     db.update(query, values)
 
-    # Fetching new channel
-    channel = get_channel_by_id(channel_id, recipient_id)
+    return {}
 
-    return channel
+# Increasing recipient unread
+def increase_unread_count(channel_id: int, recipient_id: int, amount: int=1):
+    # Creating recipient query
+    recipient_query = "SELECT * FROM recipients WHERE channel_id = %s AND id = %s"
+    recipient_values = (channel_id, recipient_id)
+
+    # Fetching recipient
+    recipient = db.fetch_one(recipient_query, recipient_values)
+    if not recipient:
+        return
+
+    # Finding new coutn
+    prev_count = recipient['unread_count']
+    new_count = prev_count + amount
+
+    # Updating count
+    update_query = "UPDATE recipients SET unread_count = %s WHERE channel_id = %s AND id = %s"
+    update_values = (new_count, channel_id, recipient_id)
+
+    # Executing update
+    db.update(update_query, update_values)
+
+    return {}
