@@ -65,9 +65,10 @@ export const Messages: React.FC<{
                         yet.
                     </span>
                 )}
-                {messageIds && messageIds.map(id => (
+                {messageIds && messageIds.map((id, key) => (
                     <Message 
                         id={id}
+                        prevId={messageIds.slice(key - 1, key)[0]}
                         channelId={channelId}
                         key={id}
                     />

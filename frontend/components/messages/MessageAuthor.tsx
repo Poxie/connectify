@@ -9,7 +9,7 @@ export const MessageAuthor: React.FC<{
     author: User;
 }> = ({ author }) => {
     return(
-        <HasPopout popout={<UserPopout {...author} />}>
+        <HasPopout popout={<UserPopout {...author} />} className={styles['avatar']}>
             <Link href={`/users/${author.id}`}>
                 <a className={styles['author']}>
                     {author.avatar && (

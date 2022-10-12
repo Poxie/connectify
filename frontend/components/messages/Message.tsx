@@ -6,13 +6,18 @@ import { MessageAuthor } from './MessageAuthor';
 
 export const Message: React.FC<{
     id: number;
+    prevId: number | undefined;
     channelId: number;
-}> = ({ id, channelId }) => {
+}> = ({ id, prevId, channelId }) => {
     const { profile } = useAuth();
     const message = useAppSelector(state => selectMessageById(state, channelId, id));
+    const prevMessage = useAppSelector(state => selectMessageById(state, channelId, prevId as number));
     const isMyMessage = profile?.id === message?.author_id;
     
     if(!message) return null;
+
+    // Checking if current message should have author
+    const hasAuthor = prevMessage?.author_id !== message.author_id;
 
     const className = [
         styles['message'],
@@ -20,7 +25,7 @@ export const Message: React.FC<{
     ].join(' ');
     return(
         <div className={className}>
-            {!isMyMessage && (
+            {!isMyMessage && hasAuthor && (
                 <MessageAuthor author={message.author} />
             )}
 
