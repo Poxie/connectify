@@ -19,6 +19,7 @@
     margin-left: -10px;
     border-radius: var(--border-radius-primary);
     transition: background-color .1s;
+    position: relative;
 
     &:hover {
         background-color: var(--background-secondary);
@@ -36,6 +37,21 @@
             fill: var(--text-primary);
         }
     }
+}
+.notification-count {
+    position: absolute;
+    background-color: var(--color-primary);
+    color: var(--text-light-primary);
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    left: 30px;
+    top: 5px;
 }
 
 @media (max-width: 700px) {

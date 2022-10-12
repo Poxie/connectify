@@ -8,7 +8,8 @@ export const SidebarTab: React.FC<{
     neutralIcon: ReactElement;
     activeIcon: ReactElement;
     path: string;
-}> = ({ text, neutralIcon, activeIcon, path }) => {
+    notificationCount?: number;
+}> = ({ text, neutralIcon, activeIcon, path, notificationCount }) => {
     const currentPath = useRouter().pathname;
     const active = currentPath.startsWith(path);
 
@@ -24,6 +25,11 @@ export const SidebarTab: React.FC<{
                     <span className={styles['tab-text']}>
                         {text}
                     </span>
+                    {notificationCount !== undefined && notificationCount !== 0 && (
+                        <span className={styles['notification-count']}>
+                            {notificationCount}
+                        </span>
+                    )}
                 </a>
             </Link>
         </li>
