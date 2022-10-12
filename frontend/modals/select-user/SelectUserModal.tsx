@@ -58,6 +58,12 @@ export const SelectUserModal = () => {
                 // If channel was created, add to redux
                 if(!channelIds.includes(channel.id)) {
                     dispatch(addChannel(channel));
+                    
+                    // Sending channel creation event to recipient
+                    socket?.emit('DM_CHANNEL_CREATED', ({
+                        recipient_id: user.id,
+                        channel_id: channel.id
+                    }));
                 }
 
                 router.push(`/messages/${channel.id}`);

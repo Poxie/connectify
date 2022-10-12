@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client/build/esm/socket';
-import { addMessage } from '../../redux/messages/actions';
+import { addChannel, addMessage } from '../../redux/messages/actions';
 import { useAuth } from '../auth/AuthProvider';
 import { SocketContext as SocketContextType } from './types';
 
@@ -14,7 +14,7 @@ export const SocketProvider: React.FC<{
     children: ReactElement;
 }> = ({ children }) => {
     const dispatch = useDispatch();
-    const { token, profile, loading } = useAuth();
+    const { token, profile, loading, get } = useAuth();
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
@@ -35,6 +35,13 @@ export const SocketProvider: React.FC<{
         socket.on('direct_message', message => {
             console.log('direct message:', message);
             dispatch(addMessage(message.channel_id, message));
+        })
+
+        // Socket channel created
+        socket.on('DM_CHANNEL_CREATED', async channelId => {
+            console.log('dm channel:', channelId);
+            const channel = await get(`/channels/${channelId}`);
+            dispatch(addChannel(channel));
         })
 
         // Closing socket on leave
