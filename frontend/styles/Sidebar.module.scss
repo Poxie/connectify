@@ -16,7 +16,6 @@
     color: var(--text-secondary);
     font-weight: 600;
     padding: 10px;
-    margin-left: -10px;
     border-radius: var(--border-radius-primary);
     transition: background-color .1s;
     position: relative;
@@ -26,8 +25,9 @@
     }
 
     svg {
-        width: 32px;
+        width: 26px;
         fill: var(--text-secondary);
+        display: block;
     }
 
     &.active {
@@ -59,22 +59,23 @@
         width: 100%;
         padding: 0;
         border-right: none;
+        position: fixed;
+        z-index: 141414141;
+        bottom: 0;
+        left: 0;
     }
     .tabs {
         flex-direction: row;
         justify-content: space-between;
-
-        a {
-            padding-right: 15px;
-        }
+        padding: var(--spacing-primary);
+        background-color: var(--background-primary);
+        border-top: 2px solid var(--background-tertiary);
     }
-}
-@media (max-width: 600px) {
-    .tabs {
-        padding: 10px 0;
+    .tab {
+        padding: 5px;
 
-        a {
-            padding: 15px;
+        svg {
+            width: 25px;
         }
     }
     .tab-text {
