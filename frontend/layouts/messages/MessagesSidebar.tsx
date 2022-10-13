@@ -7,8 +7,12 @@ import { selectChannelIds, selectChannelsLoading } from "../../redux/messages/ho
 import { useAppSelector } from "../../redux/store"
 import { MessageSidebarChannel } from "./MessageSidebarChannel";
 import { MessageSidebarChannelLoading } from "./MessageSidebarChannelLoading";
+import { AddIcon } from "../../assets/icons/AddIcon";
+import { useModal } from "../../contexts/modal/ModalProvider";
+import { SelectUserModal } from "../../modals/select-user/SelectUserModal";
 
 export const MessagesSidebar = () => {
+    const { setModal } = useModal();
     const { get, loading } = useAuth();
     const dispatch = useDispatch();
     const channels = useAppSelector(selectChannelIds);
@@ -25,6 +29,11 @@ export const MessagesSidebar = () => {
             })
     }, [loading, get, channels]);
 
+    // Function to open start conversation modal
+    const openConvoModal = () => {
+        setModal(<SelectUserModal />);
+    }
+
     // Showing loading skeleton
     if(channelsLoading) {
         return(
@@ -38,9 +47,15 @@ export const MessagesSidebar = () => {
 
     return(
         <ul className={styles['sidebar']}>
-            <span className={styles['sidebar-header']}>
-                Direct Messages
-            </span>
+            <div className={styles['sidebar-header']}>
+                <span>
+                    Direct Messages
+                </span>
+
+                <div onClick={openConvoModal}>
+                    <AddIcon />
+                </div>
+            </div>
 
             {channels.map(id => (
                 <MessageSidebarChannel 

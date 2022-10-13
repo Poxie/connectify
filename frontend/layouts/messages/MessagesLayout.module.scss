@@ -11,10 +11,28 @@
     border-right: 2px solid var(--background-tertiary);
 }
 .sidebar-header {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--text-secondary);
     margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span  {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-secondary);
+    }
+    svg {
+        width: 22px;
+        height: 22px;
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 4px;
+        display: block;
+
+        &:hover {
+            background-color: var(--background-tertiary);
+        }
+    }
 }
 .tab {
     padding: 8px 10px;
