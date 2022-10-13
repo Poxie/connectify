@@ -14,7 +14,7 @@
 @media (max-width: 700px) {
     .app-content {
         flex-direction: column;
-        padding-bottom: var(--sidebar-mobile-height);
+        padding-bottom: calc(var(--sidebar-mobile-height) + var(--spacing-primary));
         padding-top: var(--spacing-primary);
 
         main {

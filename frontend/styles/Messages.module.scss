@@ -156,3 +156,8 @@
         padding-left: 0;
     }
 }
+@media (max-width: 700px) {
+    .container {
+        padding-bottom: 0;
+    }
+}
