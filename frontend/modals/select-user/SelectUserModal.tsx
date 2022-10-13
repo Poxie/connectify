@@ -79,6 +79,7 @@ export const SelectUserModal = () => {
             <Input 
                 onChange={setQuery}
                 placeholder={'Search for user...'}
+                containerClassName={styles['search-input']}
             />
             {!results.length && (
                 <>
@@ -96,6 +97,10 @@ export const SelectUserModal = () => {
                 </>
             )}
             {results.length !== 0 && (
+                <>
+                <span className={styles['label']}>
+                    Showing {results.length} results
+                </span>
                 <ul className={styles['items']}>
                     {results.map(user => (
                         <SelectUserItem 
@@ -105,6 +110,7 @@ export const SelectUserModal = () => {
                         />
                     ))}
                 </ul>
+                </>
             )}
         </div>
     )

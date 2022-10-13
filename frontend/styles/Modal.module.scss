@@ -21,9 +21,7 @@
 }
 .content {
     display: flex;
-    gap: calc(var(--spacing-primary) * 2);
     transition: transform .5s;
-    padding: var(--spacing-primary);
 
     &>div {
         min-width: 100%;
@@ -31,6 +29,7 @@
     }
     &>.active {
         max-height: 600px;
+        overflow: auto;
     }
     &>:not(.active) {
         max-height: 0px;
@@ -38,11 +37,11 @@
 }
 .header {
     margin: 0;
-    margin-bottom: var(--spacing-primary);
+    padding: var(--spacing-primary);
 }
 .footer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-top: var(--spacing-primary);
+    padding: var(--spacing-primary);
 }

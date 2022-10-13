@@ -86,21 +86,23 @@ export const EditProfileModal = () => {
                     </span>
                 </div>
             </div>
-            <Input 
-                labelClassName={styles['label']}
-                placeholder={'Select a name to go by...'}
-                label={'Display name'}
-                defaultValue={tempUser?.display_name || ''}
-                onChange={name => updateProperty('display_name', name)}
-            />
-            <Input 
-                labelClassName={styles['label']}
-                placeholder={'Type a few words about yourself!'}
-                label={'Bio'}
-                defaultValue={tempUser?.bio || ''}
-                onChange={bio => updateProperty('bio', bio)}
-                textArea={true}
-            />
+            <div className={styles['input-container']}>
+                <Input 
+                    labelClassName={styles['label']}
+                    placeholder={'Select a name to go by...'}
+                    label={'Display name'}
+                    defaultValue={tempUser?.display_name || ''}
+                    onChange={name => updateProperty('display_name', name)}
+                />
+                <Input 
+                    labelClassName={styles['label']}
+                    placeholder={'Type a few words about yourself!'}
+                    label={'Bio'}
+                    defaultValue={tempUser?.bio || ''}
+                    onChange={bio => updateProperty('bio', bio)}
+                    textArea={true}
+                />
+            </div>
             <ModalFooter 
                 cancelLabel={'Close'}
                 onCancel={cancel}
