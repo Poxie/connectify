@@ -28,6 +28,7 @@
         cursor: pointer;
         border-radius: 4px;
         display: block;
+        fill: var(--text-secondary);
 
         &:hover {
             background-color: var(--background-tertiary);
