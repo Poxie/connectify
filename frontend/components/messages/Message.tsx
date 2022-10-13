@@ -5,6 +5,8 @@ import { useAuth } from '../../contexts/auth/AuthProvider';
 import { MessageAuthor } from './MessageAuthor';
 import { MessageFooter } from './MessageFooter';
 
+const MINUTES_BETWEEN_MESSAGES = 6
+const SECONDS_IN_A_MINUTE = 60;
 export const Message: React.FC<{
     id: number;
     prevId: number | undefined;
@@ -21,7 +23,11 @@ export const Message: React.FC<{
 
     // Checking if current message should have author and footer
     const hasAuthor = prevMessage?.author_id !== message.author_id;
-    const hasFooter = nextMessage?.author_id !== message.author_id;
+    const hasFooter = (
+        nextMessage?.author_id !== message.author_id || 
+        // If time between messages are 6 mins or longer, add timestamp
+        (nextMessage?.timestamp || 0) - message.timestamp > SECONDS_IN_A_MINUTE * MINUTES_BETWEEN_MESSAGES
+    )
 
     // Checking if message failed
     const failed = message.failed;
