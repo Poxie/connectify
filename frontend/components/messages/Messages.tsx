@@ -2,8 +2,8 @@ import styles from '../../styles/Messages.module.scss';
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { removeUnreadCount, setMessages } from "../../redux/messages/actions";
-import { selectChannelUnreadCount, selectMessageIds } from "../../redux/messages/hooks";
+import { removeUnreadCount, setLastChannelId, setMessages } from "../../redux/messages/actions";
+import { selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
 import { User } from '../../types';
@@ -17,6 +17,7 @@ export const Messages: React.FC<{
     const { get, patch, loading } = useAuth();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
+    const lastChannelId = useAppSelector(selectLastChannelId);
     const list = useRef<HTMLUListElement>(null);
 
     // Fetching channel messages
@@ -30,6 +31,15 @@ export const Messages: React.FC<{
                 dispatch(setMessages(channelId, messages));
             })
     }, [channelId, messageIds, get, loading]);
+
+    // Updating last channelId
+    useEffect(() => {
+        // Checking if last channel is same channel
+        if(channelId === lastChannelId) return;
+
+        // Dispatching new channelId
+        dispatch(setLastChannelId(channelId));
+    }, [channelId, lastChannelId]);
 
     // Resetting unread count
     useEffect(() => {
