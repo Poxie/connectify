@@ -8,10 +8,28 @@
     padding: 0 var(--spacing-primary) var(--spacing-primary);
     border-bottom: 2px solid var(--background-tertiary);
     display: flex;
+    align-items: center;
 
     a {
         cursor: pointer;
         margin-left: 5px;
+    }
+}
+.back-button {
+    margin-right: var(--spacing-primary);
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--background-tertiary);
+    }
+
+    svg {
+        fill: var(--text-secondary);
+        width: 25px;
+        padding: 5px;
+        display: block;
+        rotate: 180deg;
     }
 }
 .list-container {
@@ -131,4 +149,10 @@
 }
 .conversation-button {
     margin-top: 20px;
+}
+
+@media (max-width: 1000px) {
+    .header {
+        padding-left: 0;
+    }
 }

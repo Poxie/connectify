@@ -9,6 +9,7 @@
     gap: 4px;
     padding-right: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
+    min-width: 240px;
 }
 .sidebar-header {
     margin-bottom: 5px;
@@ -39,7 +40,6 @@
     padding: 8px 10px;
     border-radius: var(--border-radius-primary);
     text-align: unset;
-    width: 220px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -90,4 +90,15 @@
     width: 100px;
     background-color: var(--background-tertiary);
     border-radius: 5px;
+}
+
+@media (max-width: 750px) {
+    .sidebar {
+        width: 100%;
+    }
+}
+@media (max-width: 700px) {
+    .container {
+        height: calc(100vh - var(--navbar-height) - var(--sidebar-mobile-height));
+    }
 }
