@@ -56,7 +56,7 @@
             background-color: var(--color-primary);
             color: var(--text-light-primary);
         }
-        .timestamp {
+        .message-footer {
             text-align: right;
         }
     }
@@ -75,7 +75,7 @@
     cursor: pointer;
     display: block;
 }
-.timestamp {
+.message-footer {
     font-size: 13px;
     font-weight: 600;
     color: var(--text-secondary);

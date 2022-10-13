@@ -47,4 +47,6 @@ export type Message = {
     author: User;
     content: string;
     timestamp: number;
+    loading?: boolean;
+    tempId?: number;
 }

@@ -48,16 +48,22 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             }
         }
         case ADD_MESSAGE: {
+            // Extracting payload values
+            const { channelId, message } = action.payload;
+
             // If prev messages arent loaded, dont add message
-            if(!state.messages[action.payload.channelId]) return state;
+            if(!state.messages[channelId]) return state;
 
-            // Adding message to message array
-            let messages = {...state.messages};
-            messages[action.payload.channelId] = [
-                ...state.messages[action.payload.channelId] || [],
-                ...[action.payload.message]
-            ];
+            // Creating new messages object
+            let messages = {...state.messages}
 
+            // Filtering out temp messages
+            const newMessages = state.messages[channelId]?.filter(msg => msg.id !== message.tempId)
+            newMessages?.push(message);
+
+            // Replacing channel message array
+            messages[channelId] = newMessages;
+            
             return {
                 ...state,
                 messages

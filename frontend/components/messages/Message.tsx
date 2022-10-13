@@ -41,7 +41,16 @@ export const Message: React.FC<{
                 </div>
                 
                 {hasFooter && (
-                    <MessageFooter timestamp={message.timestamp} />
+                    <div className={styles['message-footer']}>
+                        {message.loading && (
+                            <span>
+                                Sending...
+                            </span>
+                        )}
+                        {!message.loading && (
+                            <MessageFooter timestamp={message.timestamp} />
+                        )}
+                    </div>
                 )}
             </div>
         </div>
