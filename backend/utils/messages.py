@@ -92,3 +92,14 @@ def create_channel_message(message):
     message = get_message_by_id(id)
     
     return message
+
+# Getting unread message count
+def get_unread_message_count(user_id: int):
+    # Creating query
+    query = "SELECT SUM(unread_count) AS count FROM recipients WHERE id = %s"
+    values = (user_id,)
+
+    # Fetching count
+    count = db.fetch_one(query, values)
+
+    return count

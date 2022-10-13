@@ -5,6 +5,7 @@ from database import db
 from utils.users import get_user_by_id, create_user, get_users_by_username
 from utils.posts import create_post, get_user_liked_posts
 from utils.auth import token_required, token_optional
+from utils.messages import get_unread_message_count
 
 users = Blueprint('users', __name__)
 
@@ -121,3 +122,10 @@ def get_user_by_search():
     users = get_users_by_username(query)
 
     return jsonify(users)
+
+# Getting user urnead messages
+@users.get('/users/@me/unread_messages')
+@token_required
+def get_my_unreads(token_id: int):
+    unread_count = get_unread_message_count(token_id)
+    return jsonify(unread_count)
