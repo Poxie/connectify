@@ -95,10 +95,12 @@
 @media (max-width: 750px) {
     .sidebar {
         width: 100%;
+        border-right: 0;
+        padding-right: 0;
     }
 }
 @media (max-width: 700px) {
     .container {
-        height: calc(100vh - var(--navbar-height) - var(--sidebar-mobile-height));
+        height: calc(100vh - var(--navbar-height) - var(--sidebar-mobile-height) - var(--spacing-primary));
     }
 }
