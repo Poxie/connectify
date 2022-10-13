@@ -80,22 +80,19 @@ def get_my_channels(token_id: int):
     # Creating fetch user channels query
     query = """
     SELECT channels.* FROM recipients
-        INNER JOIN channels ON recipients.channel_id = channels.id
+    INNER JOIN channels ON recipients.channel_id = channels.id
     WHERE recipients.id = %s
+    ORDER BY channels.last_message_timestamp DESC
     """
     values = (token_id,)
 
     # Fetching channels
     channels = db.fetch_all(query, values)
     
-    # Returning if channels is None
-    if not channels:
-        return channels
-    
     # Fetching channel recipients
     for channel in channels:
         channel = hydrate_channel(channel, token_id)
-
+        
     return channels
 
 def create_channel(type: int, token_id: int, recipient_id: int):

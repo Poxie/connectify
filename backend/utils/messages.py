@@ -83,6 +83,11 @@ def create_channel_message(message):
     # Executing insert query
     db.insert(query, values)
 
+    # Updating last message timestamp
+    update_query = "UPDATE channels SET last_message_timestamp = %s WHERE id = %s"
+    update_values = (time.time(), message['channel_id'])
+    db.update(update_query, update_values)
+
     # Fetching created message
     message = get_message_by_id(id)
     

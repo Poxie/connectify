@@ -1,3 +1,4 @@
+import json
 from flask import Blueprint, jsonify, request
 from utils.auth import token_required
 from utils.constants import DIRECT_MESSAGE_CHANNEL_TYPE
