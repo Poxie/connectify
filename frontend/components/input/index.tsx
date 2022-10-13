@@ -25,6 +25,8 @@ export const Input: React.FC<{
 
     // Focusing on mount
     useEffect(() => {
+        if(!focusOnMount) return;
+
         ref.current?.focus();
     }, [focusOnMount]);
 
