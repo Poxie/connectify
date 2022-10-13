@@ -3,7 +3,7 @@ import { Channel, Message } from "../../types"
 
 export type MessagesState = {
     lastChannelId: number | null;
-    channels: {[key: number]: Channel | undefined};
+    channels: Channel[];
     messages: {[key: number]: Message[] | undefined};
     loading: boolean;
 };

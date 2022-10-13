@@ -5,10 +5,10 @@ const selectChannels = (state: RootState) => state.messages.channels;
 const selectId = (_: any, id: number) => id;
 
 export const selectChannelsLoading = (state: RootState) => state.messages.loading;
-export const selectChannelIds = (state: RootState) => Object.keys(state.messages.channels).map(id => parseInt(id))
+export const selectChannelIds = (state: RootState) => state.messages.channels.map(channel => channel.id);
 export const selectChannelById = createSelector(
     [selectChannels, selectId],
-    (channels, id) => channels[id]
+    (channels, id) => channels.find(channel => channel.id === id)
 )
 
 export const selectLastChannelId = (state: RootState) => state.messages.lastChannelId;
@@ -19,10 +19,9 @@ export const selectChannelUnreadCount = createSelector(
 );
 export const selectCombinedUnreadCount = createSelector(
     [selectChannels],
-    channels => 
-        Object.entries(channels)
-            .map(([key, value]) => channels[parseInt(key)]?.unread_count || 0)
-            .reduce((partialSum, a) => partialSum + a, 0)
+    channels => channels
+        .map(channel => channel.unread_count)
+        .reduce((partialSum, a) => partialSum + a, 0)
 )
 
 const selectMessages = (state: RootState) => state.messages.messages;

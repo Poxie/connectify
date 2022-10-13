@@ -4,7 +4,7 @@ import { MessagesState, Reducer } from "./types"
 
 const initialState = {
     lastChannelId: null,
-    channels: {},
+    channels: [],
     messages: {},
     loading: true
 } as MessagesState;
@@ -12,10 +12,7 @@ const initialState = {
 export const messagesReducer: Reducer = (state=initialState, action) => {
     switch(action.type) {
         case SET_CHANNELS: {
-            let channels = {...state.channels};
-            action.payload.forEach((channel: Channel) => {
-                channels[channel.id] = channel
-            });
+            const channels = action.payload;
 
             return {
                 ...state,
@@ -24,8 +21,7 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             }
         }
         case ADD_CHANNEL: {
-            let channels = {...state.channels}
-            channels[action.payload.id] = action.payload;
+            let channels = [...[action.payload], ...state.channels]
 
             return {
                 ...state,

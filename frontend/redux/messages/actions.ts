@@ -1,5 +1,5 @@
 import { Channel, Message } from "../../types";
-import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED } from "./constants";
+import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_FIRST, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED } from "./constants";
 
 export const setChannels = (channels: Channel[]) => ({
     type: SET_CHANNELS,
@@ -8,6 +8,10 @@ export const setChannels = (channels: Channel[]) => ({
 export const addChannel = (channel: Channel) => ({
     type: ADD_CHANNEL,
     payload: channel
+})
+export const setChannelFirst = (channelId: number) => ({
+    type: SET_CHANNEL_FIRST,
+    payload: channelId
 })
 export const setLastChannelId = (channelId: number | null) => ({
     type: SET_LAST_CHANNEL_ID,
