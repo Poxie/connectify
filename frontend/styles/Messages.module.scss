@@ -33,6 +33,9 @@
     padding: var(--spacing-primary);
     width: 100%;
 }
+.list-label {
+    margin-bottom: var(--spacing-primary);
+}
 .message {
     align-self: flex-start;
     position: relative;

@@ -1,5 +1,5 @@
 import styles from '../../styles/Messages.module.scss';
-import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { prependMessages, removeUnreadCount, setLastChannelId, setMessages } from "../../redux/messages/actions";
@@ -25,6 +25,7 @@ export const Messages: React.FC<{
     const list = useRef<HTMLUListElement>(null);
     const loadingMore = useRef(false);
     const hasMessages = useRef(messageIds !== undefined);
+    const [reachedEnd, setReachedEnd] = useState(false);
 
     // Function to fetch messages
     const fetchMessages = useCallback(async (amount=MESSAGES_TO_LOAD, startAt=0) => {
@@ -117,6 +118,8 @@ export const Messages: React.FC<{
         // Checking if scroll is within scroll threshold
         if(scrollFromBottom < PREVENT_AUTO_SCROLL_THRESHOLD) {
             scrollToBottom();
+        } else {
+            setReachedEnd(true);
         }
     }, [list, scrollContainer, messageIds?.length]);
 
@@ -137,6 +140,20 @@ export const Messages: React.FC<{
                             yet.
                         </span>
                     )}
+
+                    {messageIds && messageIds.length !== 0 && reachedEnd && (
+                        <span className={styles['list-label']}>
+                            You have reached the end of the conversation with
+                            {' '}
+                            <Link href={`/users/${recipient.id}`}>
+                                <a>
+                                    <strong>{recipient.display_name || recipient.username}</strong>
+                                </a>
+                            </Link>
+                            .
+                        </span>
+                    )}
+
                     {messageIds && messageIds.map((id, key) => (
                         <Message 
                             id={id}
