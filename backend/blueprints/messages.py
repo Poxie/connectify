@@ -19,7 +19,11 @@ def get_messages(channel_id: int, token_id: int):
         if token_id not in ids:
             return 'Unauthorized.', 401
 
-    messages = get_channel_messages(channel_id)
+    # Getting options to fetch from
+    amount = int(request.args.get('amount') or '50')
+    start_at = int(request.args.get('start_at') or '0')
+
+    messages = get_channel_messages(channel_id, amount=amount, start_at=start_at)
     return jsonify(messages)
 
 @messages.post('/channels/<int:channel_id>/messages')

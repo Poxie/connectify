@@ -35,13 +35,15 @@ def hydrate_message(message):
     return message
 
 # Getting messages
-def get_channel_messages(channel_id: int):
+def get_channel_messages(channel_id: int, amount: int=50, start_at: int=0):
     # Creating select query
-    query = "SELECT * FROM messages WHERE channel_id = %s"
-    values = (channel_id,)
+    query = "SELECT * FROM messages WHERE channel_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
+    values = (channel_id, start_at, start_at + amount)
 
     # Executing query
     messages = db.fetch_all(query, values)
+    if messages:
+        messages = messages[::-1]
 
     # Hydrating messages
     for message in messages:
