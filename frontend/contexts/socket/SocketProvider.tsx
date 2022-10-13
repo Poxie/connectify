@@ -21,7 +21,7 @@ export const SocketProvider: React.FC<{
         if(loading || !profile) return;
 
         // Creating websocket
-        const socket = io('http://localhost:8000', { 
+        const socket = io(process.env.NEXT_PUBLIC_WEBSOCKET_ENDPOINT, { 
             query: { token }
         });
         
