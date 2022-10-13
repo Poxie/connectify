@@ -53,6 +53,10 @@
         color: var(--text-primary);
         border-radius: 6px;
     }
+    .link {
+        color: var(--link-color);
+        text-decoration: underline;
+    }
     &.my-message {
         align-self: flex-end;
 
@@ -61,6 +65,9 @@
         }
         .message-content {
             background-color: var(--color-primary);
+            color: var(--text-light-primary);
+        }
+        .link {
             color: var(--text-light-primary);
         }
         .message-footer {

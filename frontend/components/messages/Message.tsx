@@ -4,6 +4,7 @@ import { useAppSelector } from "../../redux/store";
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { MessageAuthor } from './MessageAuthor';
 import { MessageFooter } from './MessageFooter';
+import { MessageContent } from './MessageContent';
 
 const MINUTES_BETWEEN_MESSAGES = 6
 const SECONDS_IN_A_MINUTE = 60;
@@ -44,11 +45,7 @@ export const Message: React.FC<{
             )}
 
             <div className={styles['message-main']}>
-                <div className={styles['message-content']}>
-                    <span>
-                        {message?.content}
-                    </span>
-                </div>
+                <MessageContent content={message.content} />
                 
                 {hasFooter && (
                     <div className={styles['message-footer']}>
