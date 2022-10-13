@@ -1,5 +1,5 @@
 import { Channel } from "../../types";
-import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_LAST_CHANNEL_ID, SET_MESSAGES } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 const initialState = {
@@ -64,6 +64,30 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             // Replacing channel message array
             messages[channelId] = newMessages;
             
+            return {
+                ...state,
+                messages
+            }
+        }
+        case SET_MESSAGE_FAILED: {
+            // Extracting payload values
+            const { channelId, messageId } = action.payload;
+
+            // Creating new messages object
+            const messages = {...state.messages};
+
+            // Updating correct message
+            const newMessages = state.messages[channelId]?.map(message => {
+                if(message.id === messageId) {
+                    message = {...message};
+                    message.failed = true;
+                }
+                return message;
+            })
+
+            // Replacing channel message array
+            messages[channelId] = newMessages;
+
             return {
                 ...state,
                 messages

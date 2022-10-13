@@ -49,4 +49,5 @@ export type Message = {
     timestamp: number;
     loading?: boolean;
     tempId?: number;
+    failed?: boolean;
 }
