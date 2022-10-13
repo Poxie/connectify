@@ -136,6 +136,8 @@
 }
 
 .empty {
+    padding: 0 var(--spacing-primary);
+    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
