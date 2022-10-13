@@ -9,6 +9,7 @@ import { Message } from "./Message";
 import { User } from '../../types';
 import Link from 'next/link';
 
+const PREVENT_AUTO_SCROLL_THRESHOLD = 200;
 const UPDATE_SCROLL_THRESHOLD = 400;
 const MESSAGES_TO_LOAD = 50;
 export const Messages: React.FC<{
@@ -20,8 +21,10 @@ export const Messages: React.FC<{
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
     const lastChannelId = useAppSelector(selectLastChannelId);
+    const scrollContainer = useRef<HTMLDivElement>(null);
     const list = useRef<HTMLUListElement>(null);
     const loadingMore = useRef(false);
+    const hasMessages = useRef(messageIds !== undefined);
 
     // Function to fetch messages
     const fetchMessages = useCallback(async (amount=MESSAGES_TO_LOAD, startAt=0) => {
@@ -46,10 +49,10 @@ export const Messages: React.FC<{
 
         // Listening to message list scroll
         const onScroll = async () => {
-            if(!list.current) return;
+            if(!scrollContainer.current) return;
 
             // Checking if scroll meets threshold
-            const scroll = list.current.scrollTop;
+            const scroll = scrollContainer.current.scrollTop;
             if(scroll < UPDATE_SCROLL_THRESHOLD) {
                 if(loadingMore.current) return;
                 loadingMore.current = true;
@@ -66,8 +69,8 @@ export const Messages: React.FC<{
         }
 
         // Handling event listeners
-        list.current?.addEventListener('scroll', onScroll)
-        return () => list.current?.removeEventListener('scroll', onScroll);
+        scrollContainer.current?.addEventListener('scroll', onScroll)
+        return () => scrollContainer.current?.removeEventListener('scroll', onScroll);
     }, [messageIds?.length]);
 
     // Updating last channelId
@@ -91,38 +94,60 @@ export const Messages: React.FC<{
             })
     }, [unreadCount, channelId, patch]);
 
-    // Scrolling to bottom on render
+    // Scrolling to bottom
+    const scrollToBottom = useCallback(() => {
+        if(!list.current || !scrollContainer.current) return;
+        scrollContainer.current.scrollTo({ top: list.current.clientHeight })
+    }, [list, scrollContainer]);
+
+    // Scrolling to bottom on render or new messages
     useEffect(() => {
-        if(!list.current) return;
-        list.current.scrollTo({ top: list.current.scrollHeight });
-    }, [list, messageIds?.length]);
+        if(!scrollContainer.current || !list.current) return;
+
+        // Scrolling to bottom on render
+        if(messageIds && !hasMessages.current) {
+            hasMessages.current = true;
+            return scrollToBottom();
+        }
+        
+        // Getting scroll from bottom
+        const { scrollHeight, scrollTop, clientHeight } = scrollContainer.current;
+        const scrollFromBottom = scrollHeight - scrollTop - clientHeight;
+        
+        // Checking if scroll is within scroll threshold
+        if(scrollFromBottom < PREVENT_AUTO_SCROLL_THRESHOLD) {
+            scrollToBottom();
+        }
+    }, [list, scrollContainer, messageIds?.length]);
 
     return(
         <div className={styles['list-container']}>
-            <ul className={styles['list']} ref={list}>
-                {messageIds && !messageIds?.length && (
-                    <span>
-                        You don't have any messages with 
-                        {' '}
-                        <Link href={`/users/${recipient.id}`}>
-                            <a>
-                                <strong>{recipient.display_name || recipient.username}</strong>
-                            </a>
-                        </Link>
-                        {' '}
-                        yet.
-                    </span>
-                )}
-                {messageIds && messageIds.map((id, key) => (
-                    <Message 
-                        id={id}
-                        prevId={messageIds.slice(key - 1, key)[0]}
-                        nextId={messageIds.slice(key + 1, key + 2)[0]}
-                        channelId={channelId}
-                        key={id}
-                    />
-                ))}
-            </ul>
+            <div className={styles['scroll-container']} ref={scrollContainer}>
+                <ul className={styles['list']} ref={list}>
+                    {messageIds && !messageIds?.length && (
+                        <span>
+                            You don't have any messages with 
+                            {' '}
+                            <Link href={`/users/${recipient.id}`}>
+                                <a>
+                                    <strong>{recipient.display_name || recipient.username}</strong>
+                                </a>
+                            </Link>
+                            {' '}
+                            yet.
+                        </span>
+                    )}
+                    {messageIds && messageIds.map((id, key) => (
+                        <Message 
+                            id={id}
+                            prevId={messageIds.slice(key - 1, key)[0]}
+                            nextId={messageIds.slice(key + 1, key + 2)[0]}
+                            channelId={channelId}
+                            key={id}
+                        />
+                    ))}
+                </ul>
+            </div>
         </div>
     )
 }
