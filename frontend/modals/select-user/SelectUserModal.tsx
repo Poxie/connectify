@@ -72,7 +72,7 @@ export const SelectUserModal = () => {
     }
 
     return(
-        <>
+        <div className={styles['container']}>
             <ModalHeader>
                 Select User
             </ModalHeader>
@@ -85,12 +85,14 @@ export const SelectUserModal = () => {
                 <span className={styles['label']}>
                     Current direct messages
                 </span>
-                {channelIds.map(channelId => (
-                    <SelectUserChannel 
-                        id={channelId}
-                        key={channelId} 
-                    />
-                ))}
+                <ul className={styles['items']}>
+                    {channelIds.map(channelId => (
+                        <SelectUserChannel 
+                            id={channelId}
+                            key={channelId} 
+                        />
+                    ))}
+                </ul>
                 </>
             )}
             {results.length !== 0 && (
@@ -104,6 +106,6 @@ export const SelectUserModal = () => {
                     ))}
                 </ul>
             )}
-        </>
+        </div>
     )
 }
