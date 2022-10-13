@@ -3,6 +3,7 @@ import styles from './Input.module.scss';
 
 export const Input: React.FC<{
     inputClassName?: string;
+    containerClassName?: string;
     labelClassName?: string;
     placeholder?: string;
     onChange?: (text: string) => void;
@@ -14,7 +15,7 @@ export const Input: React.FC<{
     label?: string;
     name?: string;
     textArea?: boolean;
-}> = ({ inputClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, focusOnMount, label, name, textArea=false }) => {
+}> = ({ inputClassName, containerClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, focusOnMount, label, name, textArea=false }) => {
     const [value, setValue] = useState(defaultValue || '');
     const ref = useRef<any>(null);
 
@@ -68,31 +69,31 @@ export const Input: React.FC<{
         className: inputClassName
     }
     return(
-        <>
-        {label && (
-            <label 
-                htmlFor={name} 
-                className={labelClassName}
-            >
-                {label}
-            </label>
-        )}
-        {textArea ? (
-            <textarea
-                style={{ 
-                    minHeight: 90,
-                    maxHeight: 300
-                }}
-                ref={ref}
-                {...properties}
-            />
-        ) : (
-            <input
-                type="text"
-                ref={ref}
-                {...properties}
-            />
-        )}
-        </>
+        <div className={containerClassName}>
+            {label && (
+                <label 
+                    htmlFor={name} 
+                    className={labelClassName}
+                >
+                    {label}
+                </label>
+            )}
+            {textArea ? (
+                <textarea
+                    style={{ 
+                        minHeight: 90,
+                        maxHeight: 300
+                    }}
+                    ref={ref}
+                    {...properties}
+                />
+            ) : (
+                <input
+                    type="text"
+                    ref={ref}
+                    {...properties}
+                />
+            )}
+        </div>
     )
 }
