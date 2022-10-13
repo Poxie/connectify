@@ -23,9 +23,13 @@ export const Message: React.FC<{
     const hasAuthor = prevMessage?.author_id !== message.author_id;
     const hasFooter = nextMessage?.author_id !== message.author_id;
 
+    // Checking if message failed
+    const failed = message.failed;
+
     const className = [
         styles['message'],
-        isMyMessage ? styles['my-message'] : ''
+        isMyMessage ? styles['my-message'] : '',
+        failed ? styles['failed'] : ''
     ].join(' ');
     return(
         <div className={className}>
@@ -42,9 +46,14 @@ export const Message: React.FC<{
                 
                 {hasFooter && (
                     <div className={styles['message-footer']}>
-                        {message.loading && (
+                        {message.loading && !failed && (
                             <span>
                                 Sending...
+                            </span>
+                        )}
+                        {failed && (
+                            <span>
+                                Failed to send.
                             </span>
                         )}
                         {!message.loading && (

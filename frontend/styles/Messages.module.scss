@@ -60,6 +60,11 @@
             text-align: right;
         }
     }
+    &.failed {
+        .message-content {
+            background-color: red;
+        }
+    }
 }
 .avatar {
     position: absolute;

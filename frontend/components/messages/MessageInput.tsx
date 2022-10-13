@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useSocket } from '../../contexts/socket/SocketProvider';
-import { addMessage } from '../../redux/messages/actions';
+import { addMessage, setMessageFailed } from '../../redux/messages/actions';
 import styles from '../../styles/Messages.module.scss';
 import { Message, User } from '../../types';
 import Button from '../button';
@@ -49,6 +49,10 @@ export const MessageInput: React.FC<{
                 recipient_id: recipientId,
                 tempId,
             }));
+        })
+        .catch(error => {
+            // Updating temp message with failed attribute
+            dispatch(setMessageFailed(channelId, tempId));
         })
     }
 
