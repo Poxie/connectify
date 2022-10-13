@@ -10,7 +10,7 @@ export const SidebarTab: React.FC<{
     path: string;
     notificationCount?: number;
 }> = ({ text, neutralIcon, activeIcon, path, notificationCount }) => {
-    const currentPath = useRouter().pathname;
+    const currentPath = useRouter().asPath;
     const active = currentPath.startsWith(path);
 
     const className = [
