@@ -10,7 +10,7 @@ import { User } from '../../types';
 import Link from 'next/link';
 
 const PREVENT_AUTO_SCROLL_THRESHOLD = 200;
-const UPDATE_SCROLL_THRESHOLD = 400;
+const UPDATE_SCROLL_THRESHOLD = 600;
 const MESSAGES_TO_LOAD = 50;
 export const Messages: React.FC<{
     channelId: number;
