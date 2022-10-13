@@ -9,11 +9,11 @@ import { SettingsActiveIcon } from "../../assets/icons/SettingsActiveIcon"
 import { SettingsNeutralIcon } from "../../assets/icons/SettingsNeutralIcon"
 import { SidebarTab } from "./SidebarTab"
 import { useAppSelector } from '../../redux/store';
-import { selectCombinedUnreadCount, selectLastChannelId } from '../../redux/messages/hooks';
+import { selectTotalUnreadCount, selectLastChannelId } from '../../redux/messages/hooks';
 import { useRouter } from 'next/router';
 
 export const SidebarTabs = () => {
-    const totalUnreadCount = useAppSelector(selectCombinedUnreadCount);
+    const totalUnreadCount = useAppSelector(selectTotalUnreadCount);
     const lastChannelId = useAppSelector(selectLastChannelId);
 
     const tabs = [

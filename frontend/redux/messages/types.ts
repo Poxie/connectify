@@ -5,6 +5,7 @@ export type MessagesState = {
     lastChannelId: number | null;
     channels: Channel[];
     messages: {[key: number]: Message[] | undefined};
+    totalUnreadCount: number;
     loading: boolean;
 };
 
