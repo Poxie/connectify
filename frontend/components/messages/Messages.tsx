@@ -24,7 +24,7 @@ export const Messages: React.FC<{
     const scrollContainer = useRef<HTMLDivElement>(null);
     const list = useRef<HTMLUListElement>(null);
     const loadingMore = useRef(false);
-    const hasMessages = useRef(messageIds !== undefined);
+    const shouldScroll = useRef(messageIds === undefined);
     const [reachedEnd, setReachedEnd] = useState(false);
 
     // Function to fetch messages
@@ -76,6 +76,9 @@ export const Messages: React.FC<{
 
     // Updating last channelId
     useEffect(() => {
+        // On channel change, scroll to bottom
+        shouldScroll.current = true;
+
         // Checking if last channel is same channel
         if(channelId === lastChannelId) return;
 
@@ -106,8 +109,8 @@ export const Messages: React.FC<{
         if(!scrollContainer.current || !list.current) return;
 
         // Scrolling to bottom on render
-        if(messageIds && !hasMessages.current) {
-            hasMessages.current = true;
+        if(messageIds && shouldScroll.current) {
+            shouldScroll.current = false;
             return scrollToBottom();
         }
         
