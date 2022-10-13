@@ -1,14 +1,16 @@
 import styles from '../../styles/Messages.module.scss';
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { removeUnreadCount, setLastChannelId, setMessages } from "../../redux/messages/actions";
+import { prependMessages, removeUnreadCount, setLastChannelId, setMessages } from "../../redux/messages/actions";
 import { selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
 import { User } from '../../types';
 import Link from 'next/link';
 
+const UPDATE_SCROLL_THRESHOLD = 400;
+const MESSAGES_TO_LOAD = 50;
 export const Messages: React.FC<{
     channelId: number;
     recipient: User;
@@ -19,6 +21,13 @@ export const Messages: React.FC<{
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
     const lastChannelId = useAppSelector(selectLastChannelId);
     const list = useRef<HTMLUListElement>(null);
+    const loadingMore = useRef(false);
+
+    // Function to fetch messages
+    const fetchMessages = useCallback(async (amount=MESSAGES_TO_LOAD, startAt=0) => {
+        const messages = await get(`/channels/${channelId}/messages?amount=${amount}&start_at=${startAt}`);
+        return messages;
+    }, [channelId]);
 
     // Fetching channel messages
     useEffect(() => {
@@ -26,11 +35,40 @@ export const Messages: React.FC<{
         if(messageIds || loading) return;
 
         // Getting messages
-        get(`/channels/${channelId}/messages`)
-            .then(messages => {
-                dispatch(setMessages(channelId, messages));
-            })
+        fetchMessages().then(messages => {
+            dispatch(setMessages(channelId, messages));
+        })
     }, [channelId, messageIds, get, loading]);
+
+    // Fetching more messages on scroll
+    useEffect(() => {
+        if(!messageIds?.length) return;
+
+        // Listening to message list scroll
+        const onScroll = async () => {
+            if(!list.current) return;
+
+            // Checking if scroll meets threshold
+            const scroll = list.current.scrollTop;
+            if(scroll < UPDATE_SCROLL_THRESHOLD) {
+                if(loadingMore.current) return;
+                loadingMore.current = true;
+
+                // Fetching and displaying new messages
+                const messages = await fetchMessages(MESSAGES_TO_LOAD, messageIds.length);
+                dispatch(prependMessages(channelId, messages));
+
+                // If messages are returned, allow re-fetch on scroll
+                if(messages.length) {
+                    loadingMore.current = false;
+                }
+            }
+        }
+
+        // Handling event listeners
+        list.current?.addEventListener('scroll', onScroll)
+        return () => list.current?.removeEventListener('scroll', onScroll);
+    }, [messageIds?.length]);
 
     // Updating last channelId
     useEffect(() => {
