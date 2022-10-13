@@ -1,5 +1,5 @@
 import { Channel } from "../../types";
-import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 const initialState = {
@@ -41,6 +41,21 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
         case SET_MESSAGES: {
             let messages = {...state.messages};
             messages[action.payload.channelId] = action.payload.messages;
+
+            return {
+                ...state,
+                messages
+            }
+        }
+        case PREPEND_MESSAGES: {
+            const { channelId, messages: messagesToAdd } = action.payload;
+
+            // Prepending messages to channel message array
+            let messages = {...state.messages};
+            messages[channelId] = [
+                ...messagesToAdd,
+                ...(messages[channelId] || [])
+            ]
 
             return {
                 ...state,
