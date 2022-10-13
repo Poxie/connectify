@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client/build/esm/socket';
-import { addChannel, addMessage, increaseUnreadCount } from '../../redux/messages/actions';
+import { addChannel, addMessage, setChannelFirst } from '../../redux/messages/actions';
 import { useAuth } from '../auth/AuthProvider';
 import { SocketContext as SocketContextType } from './types';
 
@@ -34,12 +34,8 @@ export const SocketProvider: React.FC<{
         // Socket direct messages
         socket.on('direct_message', message => {
             console.log('direct message:', message);
-            dispatch(addMessage(message.channel_id, message));
-            
-            // If user is not author, update unread count
-            if(message.author_id !== profile.id) {
-                dispatch(increaseUnreadCount(message.channel_id));
-            }
+            dispatch(addMessage(message.channel_id, message, message.author_id !== profile.id));
+            dispatch(setChannelFirst(message.channel_id))
         })
 
         // Socket channel created

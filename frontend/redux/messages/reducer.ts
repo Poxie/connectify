@@ -1,5 +1,5 @@
 import { Channel } from "../../types";
-import { ADD_CHANNEL, ADD_MESSAGE, INCREASE_UNREAD_COUNT, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_FIRST, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 const initialState = {
@@ -60,7 +60,7 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
         }
         case ADD_MESSAGE: {
             // Extracting payload values
-            const { channelId, message } = action.payload;
+            const { channelId, message, shouldIncreaseUnread } = action.payload;
 
             // If prev messages arent loaded, dont add message
             if(!state.messages[channelId]) return state;
@@ -74,10 +74,30 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
 
             // Replacing channel message array
             messages[channelId] = newMessages;
+
+
+            // Updating channel position and increasing unread count
+
+            // Removing channel from array
+            let affectedChannel: Channel | undefined;
+            const channels = state.channels.filter(channel => {
+                if(channel.id === channelId) affectedChannel = channel;
+                return channel.id !== channelId;
+            })
+            if(!affectedChannel) return state;
+
+            // Checking if channel should increase unread count
+            if(shouldIncreaseUnread) {
+                affectedChannel.unread_count++;
+            }
+
+            // Adding channel to start of array
+            channels.unshift(affectedChannel);
             
             return {
                 ...state,
-                messages
+                messages,
+                channels
             }
         }
         case SET_MESSAGE_FAILED: {
@@ -105,27 +125,13 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             }
         }
         case REMOVE_UNREAD_COUNT: {
-            const channels = {...state.channels};
-            channels[action.payload] = {
-                ...(channels[action.payload] || {}),
-                unread_count: 0
-            } as Channel;
-
-            return {
-                ...state,
-                channels
-            }
-        }
-        case INCREASE_UNREAD_COUNT: {
-            const channels = {...state.channels};
-            const channel = channels[action.payload.channelId];
-            if(!channel) return state;
-
-            // Updating channel unread count
-            channels[action.payload.channelId] = {
-                ...(channel || {}),
-                unread_count: channel.unread_count + action.payload.amount
-            };
+            const channels = state.channels.map(channel => {
+                if(channel.id === action.payload) {
+                    channel = {...channel};
+                    channel.unread_count = 0;
+                }
+                return channel
+            })
 
             return {
                 ...state,
