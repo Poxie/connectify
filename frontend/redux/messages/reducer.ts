@@ -89,13 +89,13 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             // Replacing channel message array
             messages[channelId] = newMessages;
 
-
+            
             // Updating channel position and increasing unread count
 
             // Removing channel from array
             let affectedChannel: Channel | undefined;
             const channels = state.channels.filter(channel => {
-                if(channel.id === channelId) affectedChannel = channel;
+                if(channel.id === channelId) affectedChannel = {...channel};
                 return channel.id !== channelId;
             })
             if(!affectedChannel) return state;
