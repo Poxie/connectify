@@ -69,7 +69,7 @@ export const Messages: React.FC<{
                 // If messages are not returned, stop scroll
                 if(!messages.length) {
                     setReachedEnd(true);
-                    scrollContainer.current.removeEventListener('scroll', onScroll);
+                    scrollContainer.current?.removeEventListener('scroll', onScroll);
                 }
             }
         }
