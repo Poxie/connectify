@@ -65,6 +65,8 @@ export const Messages: React.FC<{
                 // If messages are returned, allow re-fetch on scroll
                 if(messages.length) {
                     loadingMore.current = false;
+                } else {
+                    setReachedEnd(true);
                 }
             }
         }
@@ -121,8 +123,6 @@ export const Messages: React.FC<{
         // Checking if scroll is within scroll threshold
         if(scrollFromBottom < PREVENT_AUTO_SCROLL_THRESHOLD) {
             scrollToBottom();
-        } else {
-            setReachedEnd(true);
         }
     }, [list, scrollContainer, messageIds?.length]);
 
