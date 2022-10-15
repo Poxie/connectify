@@ -62,11 +62,13 @@ export const Messages: React.FC<{
                 const messages = await fetchMessages(MESSAGES_TO_LOAD, messageIds.length);
                 dispatch(prependMessages(channelId, messages));
 
-                // If messages are returned, allow re-fetch on scroll
-                if(messages.length) {
-                    loadingMore.current = false;
-                } else {
+                // Updating current loading state
+                loadingMore.current = false;
+
+                // If messages are not returned, stop scroll
+                if(!messages.length) {
                     setReachedEnd(true);
+                    scrollContainer.current.removeEventListener('scroll', onScroll);
                 }
             }
         }
@@ -81,9 +83,8 @@ export const Messages: React.FC<{
         // On channel change, scroll to bottom
         shouldScroll.current = true;
 
-        // Resetting states
+        // Resetting values
         setReachedEnd(false);
-        loadingMore.current = false;
 
         // Checking if last channel is same channel
         if(channelId === lastChannelId) return;
