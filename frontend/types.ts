@@ -39,6 +39,7 @@ export type Channel = {
     type: number;
     recipients: User[];
     unread_count: number;
+    typing?: number;
 }
 export type Message = {
     id: number;

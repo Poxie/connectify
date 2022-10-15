@@ -1,5 +1,5 @@
 import { Channel } from "../../types";
-import { ADD_CHANNEL, ADD_MESSAGE, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_FIRST, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED, SET_TOTAL_UNREAD_COUNT } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_FIRST, SET_CHANNEL_TYPING, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED, SET_TOTAL_UNREAD_COUNT } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 const initialState = {
@@ -33,6 +33,23 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
             return {
                 ...state,
                 lastChannelId: action.payload
+            }
+        }
+        case SET_CHANNEL_TYPING: {
+            const { channelId, type } = action.payload;
+
+            // Updating channel property
+            const channels = state.channels.map(channel => {
+                if(channel.id === channelId) {
+                    channel = {...channel};
+                    channel.typing = type === 'reset' ? 0 : (channel.typing || 0) + 1;
+                }
+                return channel;
+            })
+
+            return {
+                ...state,
+                channels
             }
         }
         case SET_MESSAGES: {

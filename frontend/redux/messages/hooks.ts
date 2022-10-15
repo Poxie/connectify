@@ -12,6 +12,10 @@ export const selectChannelById = createSelector(
 )
 
 export const selectLastChannelId = (state: RootState) => state.messages.lastChannelId;
+export const selectChannelTyping = createSelector(
+    [selectChannelById],
+    channel => channel?.typing
+)
 
 export const selectChannelUnreadCount = createSelector(
     [selectChannelById],
