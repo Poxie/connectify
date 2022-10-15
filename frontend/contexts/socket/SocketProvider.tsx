@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client/build/esm/socket';
-import { addChannel, addMessage, setChannelFirst } from '../../redux/messages/actions';
+import { addChannel, addMessage, setChannelFirst, setChannelTyping } from '../../redux/messages/actions';
 import { useAuth } from '../auth/AuthProvider';
 import { SocketContext as SocketContextType } from './types';
 
@@ -27,7 +27,7 @@ export const SocketProvider: React.FC<{
         
         // Socket connection events
         socket.on('connect', () => {
-            console.log('CONNECTED')
+            console.log('CONNECTED:', socket.id)
             setSocket(socket);
         })
 
@@ -41,6 +41,12 @@ export const SocketProvider: React.FC<{
             console.log('direct message:', message);
             dispatch(addMessage(message.channel_id, message, message.author_id !== profile.id));
             dispatch(setChannelFirst(message.channel_id))
+        })
+
+        // Socket channel typing
+        socket.on('channel_typing', channelId => {
+            console.log('channel typing:', channelId)
+            dispatch(setChannelTyping(channelId, 'increase'));
         })
 
         // Socket channel created
