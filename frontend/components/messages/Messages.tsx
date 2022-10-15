@@ -8,6 +8,7 @@ import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
 import { User } from '../../types';
 import Link from 'next/link';
+import { Loader } from '../loader';
 
 const PREVENT_AUTO_SCROLL_THRESHOLD = 200;
 const UPDATE_SCROLL_THRESHOLD = 600;
@@ -134,44 +135,51 @@ export const Messages: React.FC<{
     return(
         <div className={styles['list-container']}>
             <div className={styles['scroll-container']} ref={scrollContainer}>
-                <ul className={styles['list']} ref={list}>
-                    {messageIds && !messageIds?.length && (
-                        <span>
-                            You don't have any messages with 
-                            {' '}
-                            <Link href={`/users/${recipient.id}`}>
-                                <a>
-                                    <strong>{recipient.display_name || recipient.username}</strong>
-                                </a>
-                            </Link>
-                            {' '}
-                            yet.
-                        </span>
-                    )}
+                {!messageIds && (
+                    <div className={styles['loading']}>
+                        <Loader />
+                    </div>
+                )}
+                {messageIds && (
+                    <ul className={styles['list']} ref={list}>
+                        {!messageIds?.length && (
+                            <span>
+                                You don't have any messages with 
+                                {' '}
+                                <Link href={`/users/${recipient.id}`}>
+                                    <a>
+                                        <strong>{recipient.display_name || recipient.username}</strong>
+                                    </a>
+                                </Link>
+                                {' '}
+                                yet.
+                            </span>
+                        )}
 
-                    {messageIds && messageIds.length !== 0 && reachedEnd && (
-                        <span className={styles['list-label']}>
-                            You have reached the end of the conversation with
-                            {' '}
-                            <Link href={`/users/${recipient.id}`}>
-                                <a>
-                                    <strong>{recipient.display_name || recipient.username}</strong>
-                                </a>
-                            </Link>
-                            .
-                        </span>
-                    )}
+                        {messageIds.length !== 0 && reachedEnd && (
+                            <span className={styles['list-label']}>
+                                You have reached the end of the conversation with
+                                {' '}
+                                <Link href={`/users/${recipient.id}`}>
+                                    <a>
+                                        <strong>{recipient.display_name || recipient.username}</strong>
+                                    </a>
+                                </Link>
+                                .
+                            </span>
+                        )}
 
-                    {messageIds && messageIds.map((id, key) => (
-                        <Message 
-                            id={id}
-                            prevId={messageIds.slice(key - 1, key)[0]}
-                            nextId={messageIds.slice(key + 1, key + 2)[0]}
-                            channelId={channelId}
-                            key={id}
-                        />
-                    ))}
-                </ul>
+                        {messageIds && messageIds.map((id, key) => (
+                            <Message 
+                                id={id}
+                                prevId={messageIds.slice(key - 1, key)[0]}
+                                nextId={messageIds.slice(key + 1, key + 2)[0]}
+                                channelId={channelId}
+                                key={id}
+                            />
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     )

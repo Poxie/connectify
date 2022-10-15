@@ -4,6 +4,11 @@
     flex-direction: column;
     padding-bottom: var(--spacing-primary);
 }
+.loading {
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
 .header {
     padding: 0 var(--spacing-primary) var(--spacing-primary);
     border-bottom: 2px solid var(--background-tertiary);
