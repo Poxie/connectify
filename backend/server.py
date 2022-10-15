@@ -28,6 +28,22 @@ def direct_message(socket_id, message):
     if recipient_id in clients:
         recipient_socket_id = clients[recipient_id]
         server.emit('direct_message', message, room=recipient_socket_id)
+
+@server.event
+def channel_typing(socket_id, data):
+    # Making sure necessary properties are present
+    if 'recipient_id' not in data or 'channel_id' not in data:
+        return print('ids are missing in typing data', data)
+
+    # Getting essential ids
+    recipient_id = data['recipient_id']
+    channel_id = data['channel_id']
+
+    # Getting recipient socket id
+    if recipient_id in clients:
+        recipient_socket_id = clients[recipient_id]
+        server.emit('channel_typing', channel_id, room=recipient_socket_id)
+        print('sending to', recipient_socket_id)
     
 @server.event
 def DM_CHANNEL_CREATED(message):
