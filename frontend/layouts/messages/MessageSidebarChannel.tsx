@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { selectChannelById, selectChannelUnreadCount } from '../../redux/messages/hooks';
 import { useAppSelector } from '../../redux/store';
+import { MessagesSidebarTyping } from './MessageSidebarTyping';
 import styles from './MessagesLayout.module.scss';
 
 export const MessageSidebarChannel: React.FC<{
@@ -41,9 +42,12 @@ export const MessageSidebarChannel: React.FC<{
                                 />
                             )}
                         </div>
-                        <span>
-                            {name}
-                        </span>
+                        <div className={styles['text']}>
+                            <span>
+                                {name}
+                            </span>
+                            <MessagesSidebarTyping channelId={id} />
+                        </div>
                     </div>
                     {unreadCount !== 0 && (
                         <span className={styles['unread-count']}>

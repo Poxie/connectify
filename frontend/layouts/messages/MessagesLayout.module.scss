@@ -45,11 +45,12 @@
     justify-content: space-between;
     transition: .15s background-color;
     
-    &:hover {
+    &:hover, &.active {
         background-color: var(--background-tertiary);
-    }
-    &.active {
-        background-color: var(--background-tertiary);
+
+        .typing-indicator {
+            --background-color: var(--background-primary);
+        }
     }
     &:active {
         background-color: var(--background-quaternary);
@@ -62,6 +63,11 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-primary);
+
+    .text {
+        display: flex;
+        flex-direction: column;
+    }
 }
 .tab-avatar {
     overflow: hidden;
@@ -90,6 +96,48 @@
     width: 100px;
     background-color: var(--background-tertiary);
     border-radius: 5px;
+}
+
+// Typing indicator
+.typing-indicator {
+    --background-color: var(--background-tertiary);
+    background-color: var(--background-color);
+    height: 22px;
+    width: 40px;
+    border-radius: 13px;
+    display: flex;
+    flex-flow: row nowrap;
+    animation: 2s bulge infinite ease-out;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    transition: background-color .15s;
+    
+    span {
+        height: 6px;
+        width: 6px;
+        margin: 0 1px;
+        background-color: #9E9EA1;
+        display: block;
+        border-radius: 50%;
+        opacity: 0.4;
+
+        @for $i from 1 through 3 {
+            &:nth-of-type(#{$i}) {
+                animation: 1s blink infinite ($i * .3333s);
+            }
+        }
+    }
+}
+@keyframes blink {
+    50% {
+        opacity: 1;
+    }
+}
+@keyframes bulge {
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 @media (max-width: 750px) {
