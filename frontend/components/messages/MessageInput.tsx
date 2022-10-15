@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useSocket } from '../../contexts/socket/SocketProvider';
@@ -17,7 +17,9 @@ export const MessageInput: React.FC<{
     const { socket } = useSocket();
     const dispatch = useDispatch();
     const [content, setContent] = useState('');
+    const sendTypingEvent = useRef(true);
 
+    // Sending message
     const send = () => {
         if(!content) return;
 
@@ -56,12 +58,32 @@ export const MessageInput: React.FC<{
         })
     }
 
+    // Handling input chane
+    const onChange = (text: string) => {
+        // Sending typing indicator
+        if(sendTypingEvent.current) {
+            socket?.emit('channel_typing', ({
+                recipient_id: recipientId,
+                channel_id: channelId
+            }))
+            
+            // Making sure not to spam typing events
+            sendTypingEvent.current = false;
+            setTimeout(() => {
+                sendTypingEvent.current = true;
+            }, 3000);
+        }
+
+        // Updating content
+        setContent(text);
+    }
+
     return(
         <div className={styles['input-container']}>
             <Input 
                 placeholder={`Message ${channelName}`}
                 inputClassName={styles['input']}
-                onChange={setContent}
+                onChange={onChange}
                 defaultValue={content}
                 focusOnMount={true}
                 onSubmit={send}
