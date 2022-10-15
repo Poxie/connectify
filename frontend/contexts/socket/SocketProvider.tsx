@@ -22,7 +22,7 @@ export const SocketProvider: React.FC<{
 
         // Creating websocket
         const socket = io(process.env.NEXT_PUBLIC_WEBSOCKET_ENDPOINT, { 
-            query: { token }
+            auth: { token }
         });
         
         // Socket connection events
@@ -31,8 +31,13 @@ export const SocketProvider: React.FC<{
             setSocket(socket);
         })
 
+        // Socket disconnect events
+        socket.on('disconnect', (reason, description) => {
+            console.log('DISCONNECTED:', reason)
+        })
+
         // Socket direct messages
-        socket.on('direct_message', message => {
+        socket.on('direct_message', (message) => {
             console.log('direct message:', message);
             dispatch(addMessage(message.channel_id, message, message.author_id !== profile.id));
             dispatch(setChannelFirst(message.channel_id))
