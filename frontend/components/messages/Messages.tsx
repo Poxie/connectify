@@ -81,6 +81,10 @@ export const Messages: React.FC<{
         // On channel change, scroll to bottom
         shouldScroll.current = true;
 
+        // Resetting states
+        setReachedEnd(false);
+        loadingMore.current = false;
+
         // Checking if last channel is same channel
         if(channelId === lastChannelId) return;
 
