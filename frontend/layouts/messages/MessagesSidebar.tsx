@@ -7,6 +7,7 @@ import { AddIcon } from "../../assets/icons/AddIcon";
 import { useModal } from "../../contexts/modal/ModalProvider";
 import { SelectUserModal } from "../../modals/select-user/SelectUserModal";
 import Button from '../../components/button';
+import { Tooltip } from '../../components/tooltip/Tooltip';
 
 export const MessagesSidebar = () => {
     const { setModal } = useModal();
@@ -36,9 +37,12 @@ export const MessagesSidebar = () => {
                     Direct Messages
                 </span>
 
-                <div onClick={openConvoModal}>
+                <Tooltip 
+                    text={'Create conversation'}
+                    onClick={openConvoModal}
+                >
                     <AddIcon />
-                </div>
+                </Tooltip>
             </div>
 
             {!channels.length && (
