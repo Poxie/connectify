@@ -34,8 +34,7 @@ def get_channel(channel_id: int, token_id: int):
         return 'Channel does not exist.', 404
 
     # Checking if user has access to channel
-    recipient_ids = [recipient['id'] for recipient in channel['recipients']]
-    if token_id not in recipient_ids:
+    if token_id not in channel['recipient_ids']:
         return 'Unauthorized.', 401
 
     return jsonify(channel)
