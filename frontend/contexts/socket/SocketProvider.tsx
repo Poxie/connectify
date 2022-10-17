@@ -44,9 +44,21 @@ export const SocketProvider: React.FC<{
         })
 
         // Socket channel typing
-        socket.on('channel_typing', channelId => {
+        const typingChannels: {[channelId: number]: NodeJS.Timeout} = {};
+        socket.on('channel_typing', ({ channel_id: channelId, state }) => {
             console.log('channel typing:', channelId)
-            dispatch(setChannelTyping(channelId, 'increase'));
+            dispatch(setChannelTyping(channelId, state === 'start' ? 'increase' : 'reset'));
+
+            // Checking if timeout to cancel typing should reset
+            if(typingChannels[channelId]) {
+                clearTimeout(typingChannels[channelId]);
+            }
+
+            // Resetting channel typing state
+            const timeout = setTimeout(() => {
+                dispatch(setChannelTyping(channelId, 'reset'))
+            }, 5000);
+            typingChannels[channelId] = timeout;
         })
 
         // Socket channel created

@@ -51,6 +51,13 @@ export const MessageInput: React.FC<{
                 recipient_id: recipientId,
                 tempId,
             }));
+
+            // Sending stop typing event
+            socket?.emit('channel_typing', ({
+                recipient_id: recipientId,
+                channel_id: channelId,
+                state: 'stop'
+            }))
         })
         .catch(error => {
             // Updating temp message with failed attribute
@@ -64,7 +71,8 @@ export const MessageInput: React.FC<{
         if(sendTypingEvent.current) {
             socket?.emit('channel_typing', ({
                 recipient_id: recipientId,
-                channel_id: channelId
+                channel_id: channelId,
+                state: 'start'
             }))
             
             // Making sure not to spam typing events

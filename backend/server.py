@@ -38,12 +38,12 @@ def channel_typing(socket_id, data):
     # Getting essential ids
     recipient_id = data['recipient_id']
     channel_id = data['channel_id']
+    state = data['state']
 
     # Getting recipient socket id
     if recipient_id in clients:
         recipient_socket_id = clients[recipient_id]
-        server.emit('channel_typing', channel_id, room=recipient_socket_id)
-        print('sending to', recipient_socket_id)
+        server.emit('channel_typing', ({'channel_id': channel_id,'state': state}), room=recipient_socket_id)
     
 @server.event
 def DM_CHANNEL_CREATED(message):
