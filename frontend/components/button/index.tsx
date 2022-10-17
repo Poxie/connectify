@@ -17,7 +17,8 @@ export default function Button({ children, style, onClick, href, ariaLabel, targ
     className = [
         className,
         styles['container'],
-        styles[type]
+        styles[type],
+        disabled ? styles['disabled'] : ''
     ].join(' ');
 
     const props = {
