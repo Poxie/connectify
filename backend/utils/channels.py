@@ -44,27 +44,37 @@ def hydrate_channel(channel, token_id):
             del recipient['password']
 
     # Adding channel properties
-    if channel and recipients:
-        new_recipients = []
-        all_recipient_ids = []
-        unread_count = 0
+    if channel:
+        # Adding latest messages
+        message_query = "SELECT * FROM messages WHERE channel_id = %s ORDER BY timestamp DESC"
+        message_values = (channel['id'],)
 
-        for recipient in recipients:
-            # Adding to complete recipient list
-            all_recipient_ids.append(recipient['id'])
+        # Fetching message
+        message = db.fetch_one(message_query, message_values)
+        channel['last_message'] = message
 
-            # Adding unread_count if recipient is fetching user
-            if recipient['id'] == token_id:
-                unread_count = recipient['unread_count']
+        # Adding channel recipients
+        if recipients:
+            new_recipients = []
+            all_recipient_ids = []
+            unread_count = 0
 
-            # Else adding recipient to recipient list
-            else:
-                new_recipients.append(recipient)
+            for recipient in recipients:
+                # Adding to complete recipient list
+                all_recipient_ids.append(recipient['id'])
 
-        # Updating channel properties
-        channel['recipients'] = new_recipients
-        channel['recipient_ids'] = all_recipient_ids
-        channel['unread_count'] = unread_count
+                # Adding unread_count if recipient is fetching user
+                if recipient['id'] == token_id:
+                    unread_count = recipient['unread_count']
+
+                # Else adding recipient to recipient list
+                else:
+                    new_recipients.append(recipient)
+
+            # Updating channel properties
+            channel['recipients'] = new_recipients
+            channel['recipient_ids'] = all_recipient_ids
+            channel['unread_count'] = unread_count
 
     # Returning channel
     return channel
