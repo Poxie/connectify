@@ -100,6 +100,10 @@ def get_unread_message_count(user_id: int):
     values = (user_id,)
 
     # Fetching count
-    count = db.fetch_one(query, values)
+    data = db.fetch_one(query, values)
 
-    return count
+    # If not count, set count as 0
+    if data and 'count' in data and not data['count']:
+        data = {'count': 0}
+
+    return data
