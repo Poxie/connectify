@@ -8,15 +8,22 @@
     flex-direction: column;
     gap: 4px;
     padding-right: var(--spacing-primary);
+    padding-bottom: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
     min-width: 280px;
     width: 280px;
+    max-height: 100%;
+    overflow: auto;
 }
 .sidebar-header {
-    margin-bottom: 5px;
+    padding-bottom: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: var(--background-primary);
+    z-index: 14;
+    position: sticky;
+    top: 0;
 
     span  {
         font-weight: 600;
