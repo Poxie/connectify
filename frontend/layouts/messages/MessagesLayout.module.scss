@@ -75,12 +75,15 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-primary);
-    max-width: calc(100% - var(--avatar-width) - var(--spacing-primary) - 20px);
+
+    // 20px to leave space for notification
+    max-width: calc(100% - 20px);
 
     .text {
         display: flex;
         flex-direction: column;
         max-width: 100%;
+        overflow: hidden;
     }
     .tab-text-main {
         display: flex;
@@ -105,15 +108,15 @@
     background-color: var(--background-tertiary);
 }
 .tab-text-bottom {
-    overflow: hidden;
     width: 100%;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 .last-message {
     font-size: 14px;
     margin-top: 4px;
-    display: block;
     white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .unread-count {
     --dimensions: 22px;
@@ -140,7 +143,7 @@
 .typing-indicator {
     --background-color: var(--background-tertiary);
     background-color: var(--background-color);
-    height: 18px;
+    height: 16px;
     width: 40px;
     border-radius: 13px;
     display: flex;
