@@ -19,7 +19,8 @@ export const MessageSidebarChannel: React.FC<{
 
     // Determining tab display
     const recipient = channel.recipients[0];
-    const name = channel.name || recipient.display_name || recipient.username
+    const name = channel.name || recipient.display_name || `@${recipient.username}`;
+    const username = recipient.display_name ? recipient.username : null;
     const image = channel.icon || `${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${recipient.avatar}`;
     const ariaLabel = `${name} (direct message)`;
 
@@ -43,9 +44,16 @@ export const MessageSidebarChannel: React.FC<{
                             )}
                         </div>
                         <div className={styles['text']}>
-                            <span>
-                                {name}
-                            </span>
+                            <div className={styles['tab-text-main']}>
+                                <span className={styles['display-name']}>
+                                    {name}
+                                </span>
+                                {username && (
+                                    <span>
+                                        @{username}
+                                    </span>
+                                )}
+                            </div>
                             <MessagesSidebarTyping channelId={id} />
                         </div>
                     </div>

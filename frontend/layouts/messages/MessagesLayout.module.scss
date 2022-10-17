@@ -9,7 +9,7 @@
     gap: 4px;
     padding-right: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
-    min-width: 240px;
+    min-width: 280px;
 }
 .sidebar-header {
     margin-bottom: 5px;
@@ -77,6 +77,18 @@
     .text {
         display: flex;
         flex-direction: column;
+    }
+    .tab-text-main {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 14px;
+        color: var(--text-secondary);
+    }
+    .display-name {
+        font-weight: 600;
+        font-size: 16px;
+        color: var(--text-primary);
     }
 }
 .tab-avatar {
