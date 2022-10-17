@@ -3,17 +3,13 @@
     height: calc(100vh - var(--navbar-height) - var(--spacing-primary));
 }
 .sidebar {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
     padding-right: var(--spacing-primary);
-    padding-bottom: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
     min-width: 280px;
     width: 280px;
     max-height: 100%;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 .sidebar-header {
     padding-bottom: 5px;
@@ -53,6 +49,11 @@
         margin-top: 10px;
         justify-content: center;
     }
+}
+.tabs {
+    overflow: auto;
+    max-height: 100%;
+    padding-bottom: var(--spacing-primary);
 }
 .tab {
     --avatar-width: 32px;
