@@ -1,17 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useAuth } from '../../contexts/auth/AuthProvider';
 import { selectChannelById, selectChannelUnreadCount } from '../../redux/messages/hooks';
 import { useAppSelector } from '../../redux/store';
-import { MessagesSidebarTyping } from './MessageSidebarTyping';
+import { ChannelBottom } from './ChannelBottom';
 import styles from './MessagesLayout.module.scss';
 
 export const MessageSidebarChannel: React.FC<{
     id: number;
 }> = ({ id }) => {
     const asPath = useRouter().asPath;
-    const { profile } = useAuth();
     const channel = useAppSelector(state => selectChannelById(state, id));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, id));
     if(!channel) return null;
@@ -57,18 +55,7 @@ export const MessageSidebarChannel: React.FC<{
                                 )}
                             </div>
 
-                            <div className={styles['tab-text-bottom']}>
-                                {channel.last_message && (
-                                    <span className={styles['last-message']}>
-                                        {channel.last_message.author_id === profile?.id && (
-                                            'You: '
-                                        )}
-                                        {channel.last_message?.content}
-                                    </span>
-                                )}
-
-                                <MessagesSidebarTyping channelId={id} />
-                            </div>
+                            <ChannelBottom channelId={id} />
                         </div>
                     </div>
                     {unreadCount !== 0 && (

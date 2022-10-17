@@ -17,6 +17,11 @@ export const selectChannelTyping = createSelector(
     channel => channel?.typing
 )
 
+export const selectChannelLastMessage = createSelector(
+    [selectChannelById],
+    channel => channel?.last_message
+)
+
 export const selectChannelUnreadCount = createSelector(
     [selectChannelById],
     channel => channel?.unread_count
