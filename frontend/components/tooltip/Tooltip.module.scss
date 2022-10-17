@@ -4,7 +4,6 @@
 
     &::after {
         --extra-spacing: 15px;
-        top: calc(-100% - var(--extra-spacing));
         background-color: var(--tooltip-background-primary);
         padding: 6px 10px;
         border-radius: 6px;
@@ -24,5 +23,17 @@
         transition-delay: var(--delay);
         transform: scale(1) translateX(-50%);
         opacity: 1;
+    }
+
+    // Positioning tooltip
+    &.top {
+        &::after {
+            top: calc(-100% - var(--extra-spacing));
+        }
+    }
+    &.bottom {
+        &::after {
+            top: calc(100% + var(--extra-spacing));
+        }
     }
 }

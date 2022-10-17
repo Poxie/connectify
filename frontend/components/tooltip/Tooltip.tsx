@@ -4,12 +4,14 @@ import styles from './Tooltip.module.scss';
 export const Tooltip: React.FC<{
     children: ReactElement;
     text: string;
+    position?: 'top' | 'bottom';
     delay?: number;
     className?: string;
     onClick?: () => void;
-}> = ({ children, className, onClick, text, delay=0 }) => {
+}> = ({ children, className, onClick, text, position='top', delay=0 }) => {
     className = [
         styles['container'],
+        styles[position],
         className
     ].join(' ');
     return(
