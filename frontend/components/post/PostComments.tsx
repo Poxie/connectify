@@ -22,15 +22,23 @@ export const PostComments: React.FC<{
 
             <AddCommentInput postId={postId} />
             
-            <ul className={styles['comment-container']}>
-                {commentIds?.map(id => (
-                    <PostComment 
-                        id={id}
-                        postId={postId}
-                        key={id}
-                    />
-                ))}
-            </ul>
+            {!commentIds.length && (
+                <span>
+                    This post has no comments. Be the first one to post one!
+                </span>
+            )}
+
+            {commentIds.length !== 0 && (
+                <ul className={styles['comment-container']}>
+                    {commentIds?.map(id => (
+                        <PostComment 
+                            id={id}
+                            postId={postId}
+                            key={id}
+                        />
+                    ))}
+                </ul>
+            )}
         </div>
     )
 }
