@@ -1,4 +1,5 @@
 .container {
+    --delay: 0ms;
     position: relative;
 
     &::after {
@@ -20,6 +21,7 @@
         pointer-events: none;
     }
     &:hover::after {
+        transition-delay: var(--delay);
         transform: scale(1) translateX(-50%);
         opacity: 1;
     }
