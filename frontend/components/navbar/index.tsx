@@ -4,7 +4,7 @@ import { NavbarRight } from './NavbarRight';
 
 export const Navbar = () => {
     return(
-        <header>
+        <header className={styles['container']}>
             <nav className={styles['content']}>
                 <NavbarHeader />
                 <NavbarRight />

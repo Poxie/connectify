@@ -1,4 +1,6 @@
 .container {
+    position: sticky;
+    top: var(--navbar-height);
     height: calc(100vh - var(--navbar-height));
     padding-right: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);

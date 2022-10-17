@@ -1,3 +1,9 @@
+.container {
+    position: sticky;
+    z-index: 1414;
+    background-color: var(--background-primary);
+    top: 0;
+}
 .content {
     padding: 20px 0;
     width: var(--width-main);
