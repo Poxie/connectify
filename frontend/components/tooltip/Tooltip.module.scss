@@ -1,0 +1,25 @@
+.container {
+    position: relative;
+
+    &::after {
+        --extra-spacing: 15px;
+        top: calc(-100% - var(--extra-spacing));
+        background-color: var(--tooltip-background-primary);
+        padding: 6px 10px;
+        border-radius: 6px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%) scale(.7);
+        opacity: 0;
+        font-size: 14px;
+        font-weight: 600;
+        content: attr(data-tooltip);
+        white-space: nowrap;
+        transition: transform, opacity;
+        transition-duration: 200ms;
+    }
+    &:hover::after {
+        transform: scale(1) translateX(-50%);
+        opacity: 1;
+    }
+}
