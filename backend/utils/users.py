@@ -6,6 +6,8 @@ from utils.followers import get_user_follower_count, get_follower
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
+DEFAULT_AVATAR_COUNT = 4
+
 # Hydrating user
 def hydrate_user(user, token_id):
     # Fetching user follower count
@@ -95,9 +97,12 @@ def create_user(username: str, password: str):
     # Creating unique id
     id = create_user_id()
 
+    # Getting random avatar
+    avatar = f'default{randrange(0, DEFAULT_AVATAR_COUNT)}.png'
+
     # Creating insert query
-    query = "INSERT INTO users (id, username, password) VALUES (%s, %s, %s)"
-    values = (id, username, hashed_password)
+    query = "INSERT INTO users (id, username, password, avatar) VALUES (%s, %s, %s, %s)"
+    values = (id, username, hashed_password, avatar)
 
     # Creating user
     db.insert(query, values)
