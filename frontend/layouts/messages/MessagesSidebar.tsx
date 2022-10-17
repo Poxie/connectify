@@ -6,6 +6,7 @@ import { MessageSidebarChannelLoading } from "./MessageSidebarChannelLoading";
 import { AddIcon } from "../../assets/icons/AddIcon";
 import { useModal } from "../../contexts/modal/ModalProvider";
 import { SelectUserModal } from "../../modals/select-user/SelectUserModal";
+import Button from '../../components/button';
 
 export const MessagesSidebar = () => {
     const { setModal } = useModal();
@@ -39,6 +40,20 @@ export const MessagesSidebar = () => {
                     <AddIcon />
                 </div>
             </div>
+
+            {!channels.length && (
+                <div className={styles['sidebar-empty']}>
+                    <span>
+                        You don't have any conversations yet. Start one now!
+                    </span>
+                    <Button 
+                        className={styles['empty-button']}
+                        onClick={openConvoModal}
+                    >
+                        Start conversation
+                    </Button>
+                </div>
+            )}
 
             {channels.map(id => (
                 <MessageSidebarChannel 

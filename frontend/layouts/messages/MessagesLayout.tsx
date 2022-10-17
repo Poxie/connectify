@@ -6,7 +6,7 @@ import { useScreenType } from '../../hooks/useScreenType';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/store';
-import { selectChannelIds } from '../../redux/messages/hooks';
+import { selectChannelIds, selectChannelsLoading } from '../../redux/messages/hooks';
 import { setChannels } from '../../redux/messages/actions';
 const MessagesSidebar = dynamic(() => import('./MessagesSidebar').then(res => res.MessagesSidebar), { ssr: false });
 
@@ -18,23 +18,25 @@ export const MessagesLayout: React.FC<{
     const screenType = useScreenType();
     const dispatch = useDispatch();
     const channels = useAppSelector(selectChannelIds);
+    const channelsLoading = useAppSelector(selectChannelsLoading);
 
     // Fetching message channels
     useEffect(() => {
-        if(loading || channels.length) return;
+        if(loading || !channelsLoading || channels.length) return;
 
         // Getting channels
         get(`/users/@me/channels`)
             .then(channels => {
                 dispatch(setChannels(channels));
             })
-    }, [loading, get, channels]);
+    }, [loading, get, channels, channelsLoading]);
 
     return(
         <div className={styles['container']}>
             {(!channelId || screenType === 'large') && (
                 <MessagesSidebar />
             )}
+            
             {children}
         </div>
     )

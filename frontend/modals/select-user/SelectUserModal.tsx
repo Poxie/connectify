@@ -86,14 +86,22 @@ export const SelectUserModal = () => {
                 <span className={styles['label']}>
                     Current direct messages
                 </span>
-                <ul className={styles['items']}>
-                    {channelIds.map(channelId => (
-                        <SelectUserChannel 
-                            id={channelId}
-                            key={channelId} 
-                        />
-                    ))}
-                </ul>
+
+                {!channelIds.length && (
+                    <span style={{paddingLeft: `var(--spacing-primary)`}}>
+                        Current direct messages will be displayed here.
+                    </span>
+                )}
+                {channelIds.length !== 0 && (
+                    <ul className={styles['items']}>
+                        {channelIds.map(channelId => (
+                            <SelectUserChannel 
+                                id={channelId}
+                                key={channelId} 
+                            />
+                        ))}
+                    </ul>
+                )}
                 </>
             )}
             {results.length !== 0 && (
