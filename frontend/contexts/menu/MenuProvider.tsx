@@ -1,4 +1,4 @@
-import React, { ReactElement, RefObject, useState } from 'react';
+import React, { ReactElement, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { Menu } from '../../menu/Menu';
 import { Context, MenuGroup } from './types';
 
@@ -11,18 +11,36 @@ export const MenuProvider: React.FC<{
 }> = ({ children }) => {
     const [groups, setGroups] = useState<MenuGroup[]>([]);
     const [dimensions, setDimensions] = useState({ top: 0, left: 0, width: 0, height: 0 });
+    const elementRef = useRef<HTMLElement | null>(null);
 
+    // Getting ref dimensions
+    const _setDimensions = useCallback(() => {
+        if(!elementRef.current) return;
+        const { left, top, width, height } = elementRef.current.getBoundingClientRect();
+        setDimensions({ left, top, width, height });
+    }, [elementRef.current]);
+
+    // Setting menu
     const _setMenu = (menuGroups: MenuGroup[], ref: RefObject<HTMLElement>) => {
         if(!ref.current) return;
 
         // Setting menu groups
         setGroups(menuGroups);
         
-        // Getting ref dimensions
-        const { left, top, width, height } = ref.current.getBoundingClientRect();
-        setDimensions({ left, top, width, height });
+        // Setting dimensions
+        elementRef.current = ref.current;
+        _setDimensions();
     }
 
+    // Updating menu on resize
+    useEffect(() => {
+        if(!elementRef.current) return;
+
+        window.addEventListener('resize', _setDimensions);
+        return () => window.removeEventListener('resize', _setDimensions);
+    }, [elementRef.current]);
+
+    // Closing menu
     const close = () => {
         setGroups([]);
     }
