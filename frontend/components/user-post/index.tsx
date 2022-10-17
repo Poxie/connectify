@@ -24,7 +24,7 @@ export const UserPost: React.FC<{
     onPostUnlike
 }) => {
     return(
-        <div className={styles['container']}>
+        <li className={styles['container']}>
             <UserPostHeader 
                 user={author}
                 timestamp={timestamp}
@@ -43,6 +43,6 @@ export const UserPost: React.FC<{
             <Link href={`/posts/${id}`}>
                 <a aria-label="Go to post" className={styles['post-link']}/>
             </Link>
-        </div>
+        </li>
     )
 });

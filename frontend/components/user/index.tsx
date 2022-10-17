@@ -32,7 +32,7 @@ export const UserProfile = () => {
 
     // Returning while user posts are loading
     if(!postIds) return(
-        <div className={styles['posts']}>
+        <div className={styles['post-container']}>
             {Array.from(Array(4)).map((_, key) => (
                 <UserPostSkeleton key={key} />
             ))}
@@ -40,19 +40,23 @@ export const UserProfile = () => {
     );
 
     return(
-        <div className={styles['posts']}>
+        <>
             {postIds.length === 0 && (
                 <span className={styles['empty']}>
                     User has not posted anything.
                 </span>
             )}
 
-            {postIds.map(postId => (
-                <ProfilePost 
-                    postId={postId}
-                    key={postId}
-                />
-            ))}
-        </div>
+            {postIds.length !== 0 && (
+                <ul className={styles['post-container']}>
+                    {postIds.map(postId => (
+                        <ProfilePost 
+                            postId={postId}
+                            key={postId}
+                        />
+                    ))}
+                </ul>
+            )}
+        </>
     )
 }

@@ -32,7 +32,7 @@ export const LikedPosts = () => {
 
     // Returning while user posts are loading
     if(!postIds) return(
-        <div className={styles['posts']}>
+        <div className={styles['post-container']}>
             {Array.from(Array(4)).map((_, key) => (
                 <UserPostSkeleton key={key} />
             ))}
@@ -40,19 +40,23 @@ export const LikedPosts = () => {
     );
 
     return(
-        <div className={styles['posts']}>
+        <>
             {postIds.length === 0 && (
                 <span className={styles['empty']}>
                     User has not liked any posts.
                 </span>
             )}
 
-            {postIds.map(id => (
-                <ProfilePost 
-                    postId={id}
-                    key={id}
-                />
-            ))}
-        </div>
+            {postIds.length !== 0 && (
+                <ul className={styles['post-container']}>
+                    {postIds.map(id => (
+                        <ProfilePost 
+                            postId={id}
+                            key={id}
+                        />
+                    ))}
+                </ul>
+            )}
+        </>
     )
 }
