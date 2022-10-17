@@ -23,6 +23,9 @@ def create_channel_id() -> int:
 
 # Hydarating channel
 def hydrate_channel(channel, token_id):
+    if not channel:
+        return channel
+
     # Getting channel recipients
     recipient_query = """
     SELECT * FROM recipients
@@ -92,7 +95,7 @@ def get_my_channels(token_id: int):
     # Fetching channel recipients
     for channel in channels:
         channel = hydrate_channel(channel, token_id)
-        
+
     return channels
 
 def create_channel(type: int, token_id: int, recipient_id: int):
