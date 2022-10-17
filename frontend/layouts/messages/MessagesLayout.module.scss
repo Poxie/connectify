@@ -10,6 +10,7 @@
     padding-right: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
     min-width: 280px;
+    width: 280px;
 }
 .sidebar-header {
     margin-bottom: 5px;
@@ -47,6 +48,7 @@
     }
 }
 .tab {
+    --avatar-width: 32px;
     padding: 8px 10px;
     border-radius: var(--border-radius-primary);
     text-align: unset;
@@ -73,10 +75,12 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-primary);
+    max-width: calc(100% - var(--avatar-width) - var(--spacing-primary));
 
     .text {
         display: flex;
         flex-direction: column;
+        max-width: 100%;
     }
     .tab-text-main {
         display: flex;
@@ -94,10 +98,20 @@
 .tab-avatar {
     overflow: hidden;
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: var(--avatar-width);
+    min-width: var(--avatar-width);
+    height: var(--avatar-width);
     position: relative;
     background-color: var(--background-tertiary);
+}
+.tab-text-bottom {
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+}
+.last-message {
+    font-size: 14px;
+    white-space: nowrap;
 }
 .unread-count {
     --dimensions: 22px;
