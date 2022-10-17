@@ -46,9 +46,13 @@ def hydrate_channel(channel, token_id):
     # Adding channel properties
     if channel and recipients:
         new_recipients = []
+        all_recipient_ids = []
         unread_count = 0
 
         for recipient in recipients:
+            # Adding to complete recipient list
+            all_recipient_ids.append(recipient['id'])
+
             # Adding unread_count if recipient is fetching user
             if recipient['id'] == token_id:
                 unread_count = recipient['unread_count']
@@ -59,6 +63,7 @@ def hydrate_channel(channel, token_id):
 
         # Updating channel properties
         channel['recipients'] = new_recipients
+        channel['recipient_ids'] = all_recipient_ids
         channel['unread_count'] = unread_count
 
     # Returning channel
