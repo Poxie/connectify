@@ -46,7 +46,7 @@ def channel_typing(socket_id, data):
         server.emit('channel_typing', ({'channel_id': channel_id,'state': state}), room=recipient_socket_id)
     
 @server.event
-def DM_CHANNEL_CREATED(message):
+def dm_channel_created(socket_id, message):
     # Making sure ids are present
     if 'recipient_id' not in message:
         return print('recipient_id is missing in message', message)
@@ -62,7 +62,7 @@ def DM_CHANNEL_CREATED(message):
     if recipient_id in clients:
         # Sending channel create event
         recipient_socket_id = clients[recipient_id]
-        server.emit('DM_CHANNEL_CREATED', message['channel_id'], room=recipient_socket_id)
+        server.emit('dm_channel_created', message['channel_id'], room=recipient_socket_id)
 
 @server.event
 def connect(socket_id, environ, auth):

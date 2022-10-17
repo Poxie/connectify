@@ -62,7 +62,7 @@ export const SocketProvider: React.FC<{
         })
 
         // Socket channel created
-        socket.on('DM_CHANNEL_CREATED', async channelId => {
+        socket.on('dm_channel_created', async channelId => {
             console.log('dm channel:', channelId);
             const channel = await get(`/channels/${channelId}`);
             dispatch(addChannel(channel));

@@ -60,7 +60,7 @@ export const SelectUserModal = () => {
                     dispatch(addChannel(channel));
                     
                     // Sending channel creation event to recipient
-                    socket?.emit('DM_CHANNEL_CREATED', ({
+                    socket?.emit('dm_channel_created', ({
                         recipient_id: user.id,
                         channel_id: channel.id
                     }));
