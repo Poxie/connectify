@@ -1,5 +1,4 @@
 import styles from './EditProfileModal.module.scss';
-import { Modal } from "../Modal"
 import { ModalHeader } from "../ModalHeader"
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { Input } from '../../components/input';
@@ -81,6 +80,11 @@ export const EditProfileModal = () => {
                     <span className={styles['name']}>
                         {tempUser?.display_name || tempUser?.username}
                     </span>
+                    {tempUser?.bio && (
+                        <span className={styles['bio']}>
+                            {tempUser.bio}
+                        </span>
+                    )}
                     <span className={styles['followers']}>
                         {tempUser?.follower_count} followers
                     </span>
