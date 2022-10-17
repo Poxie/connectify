@@ -162,6 +162,17 @@
     .header {
         padding-left: 0;
     }
+    .list {
+        padding: var(--spacing-primary) 0;
+        padding-bottom: 0;
+    }
+    .input-container {
+        padding: 0;
+
+        .input-button {
+            right: 10px;
+        }
+    }
 }
 @media (max-width: 700px) {
     .container {
