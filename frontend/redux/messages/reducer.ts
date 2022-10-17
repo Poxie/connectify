@@ -122,6 +122,9 @@ export const messagesReducer: Reducer = (state=initialState, action) => {
                 affectedChannel.unread_count++;
             }
 
+            // Updating channel last message
+            affectedChannel.last_message = message;
+
             // Determining new totalUnreadCount
             const totalUnreadCount = shouldIncreaseUnread ? state.totalUnreadCount + 1 : state.totalUnreadCount;
 
