@@ -108,7 +108,7 @@ export const EditProfileModal = () => {
                 onCancel={cancel}
                 confirmLabel={'Save Changes'}
                 onConfirm={confirm}
-                disabled={disabled}
+                confirmDisabled={disabled}
             />
         </>
     )

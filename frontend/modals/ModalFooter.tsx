@@ -6,20 +6,21 @@ export const ModalFooter: React.FC<{
     onConfirm: () => void;
     cancelLabel: string;
     onCancel: () => void;
-    disabled?: boolean;
-}> = ({ confirmLabel, onConfirm, cancelLabel, onCancel, disabled=false }) => {
+    confirmDisabled?: boolean;
+    cancelDisabled?: boolean;
+}> = ({ confirmLabel, onConfirm, cancelLabel, onCancel, confirmDisabled=false, cancelDisabled=false }) => {
     return(
         <div className={styles['footer']}>
             <Button 
                 onClick={onCancel}
                 type={'transparent'}
-                disabled={disabled}
+                disabled={cancelDisabled}
             >
                 {cancelLabel}
             </Button>
             <Button
                 onClick={onConfirm}
-                disabled={disabled}
+                disabled={confirmDisabled}
             >
                 {confirmLabel}
             </Button>

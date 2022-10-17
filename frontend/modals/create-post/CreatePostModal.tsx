@@ -39,7 +39,7 @@ export const CreatePostModal = () => {
             onCancel={close}
             confirmLabel={'Preview'}
             onConfirm={previewPost}
-            disabled={disabled}
+            confirmDisabled={disabled}
         />
         </>
     )
