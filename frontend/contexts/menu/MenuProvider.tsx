@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import React, { ReactElement, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { Menu } from '../../menu/Menu';
 import { Context, MenuGroup } from './types';
@@ -53,12 +54,14 @@ export const MenuProvider: React.FC<{
         <MenuContext.Provider value={value}>
             {children}
 
-            {groups.length !== 0 && (
-                <Menu 
-                    groups={groups}
-                    dimensions={dimensions}
-                />
-            )}
+            <AnimatePresence>
+                {groups.length !== 0 && (
+                    <Menu 
+                        groups={groups}
+                        dimensions={dimensions}
+                    />
+                )}
+            </AnimatePresence>
         </MenuContext.Provider>
     )
 }

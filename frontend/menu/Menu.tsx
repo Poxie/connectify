@@ -3,6 +3,7 @@ import { MenuGroup as MenuGroupType } from "../contexts/menu/types"
 import { MenuGroup } from "./MenuGroup";
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useMenu } from '../contexts/menu/MenuProvider';
+import { motion } from 'framer-motion';
 
 const SPACE_FROM_ELEMENT = 10;
 export const Menu: React.FC<{
@@ -41,7 +42,11 @@ export const Menu: React.FC<{
     }, [ref.current]);
 
     return(
-        <div 
+        <motion.div 
+            initial={{ opacity: 0, translateY: 10 }}
+            exit={{ opacity: 0, translateY: 10 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ duration: .25 }}
             className={styles['container']}
             style={{ left: position.left, top: position.top }}
             ref={ref}
@@ -52,6 +57,6 @@ export const Menu: React.FC<{
                     key={key}
                 />
             ))}
-        </div>
+        </motion.div>
     )
 }
