@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setPost } from '../../redux/posts/actions';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { addUserPostId } from '../../redux/users/actions';
 
 export const PreviewPostModal: React.FC<{
     title: string;
@@ -21,6 +22,7 @@ export const PreviewPostModal: React.FC<{
     const [disabled, setDisabled] = useState(false);
 
     const createPost = async () => {
+        if(!profile) return;
         setDisabled(true);
 
         // Creating post
@@ -30,7 +32,10 @@ export const PreviewPostModal: React.FC<{
         }).catch(() => {
             setDisabled(false);
         })
+
+        // Updating redux
         dispatch(setPost(createdPost));
+        dispatch(addUserPostId(profile.id, createdPost.id));
 
         // Navigating to created post
         router.push(`/posts/${createdPost.id}`);

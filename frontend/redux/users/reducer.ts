@@ -1,5 +1,5 @@
 import { User } from "../../types";
-import { ADD_USER_FOLLOW, REMOVE_USER_FOLLOW, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS } from "./constants";
+import { ADD_USER_FOLLOW, ADD_USER_POST_ID, REMOVE_USER_FOLLOW, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS } from "./constants";
 import { UsersReducer, UsersState } from "./types"
 
 const initialState = {
@@ -88,6 +88,25 @@ export const usersReducer: UsersReducer = (state=initialState, action) => {
 
             // Setting user likedIds
             user.likedIds = postIds;
+
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    [userId]: user
+                }
+            }
+        }
+        case ADD_USER_POST_ID: {
+            const { userId, postId } = action.payload;
+
+            // Fetching user
+            let user = state.users[userId];
+            if(!user) return state;
+            user = {...user};
+            
+            // Prepending postId
+            user.postIds = [...[postId], ...(user.postIds || [])]
 
             return {
                 ...state,
