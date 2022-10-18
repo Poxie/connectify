@@ -8,7 +8,8 @@ export const AppearanceTheme: React.FC<{
 }> = ({ theme }) => {
     const { setTheme, theme: currentTheme } = useTheme();
 
-    const title = `${theme.slice(0,1).toUpperCase() + theme.slice(1)} theme`;
+    const processedTitle = `${theme.slice(0,1).toUpperCase() + theme.slice(1)}`.replaceAll('-', ' ');
+    const title = `${processedTitle} theme`;
     
     const active = theme === currentTheme;
     const className = [
