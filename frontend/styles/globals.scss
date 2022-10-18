@@ -16,11 +16,11 @@
   --sidebar-mobile-height: 67px;
 }
 
-[theme="light"], [data-theme="light"] {
+[theme="light"], [data-theme="light"], [data-theme="light-contrast"], [theme="light-contrast"] {
   --background-primary: #fff;
   --background-secondary: #F5F5F5;
   --background-tertiary: #e9e5fb;
-  --background-quaternary: #e0d9ff;
+  --background-quaternary: #e9e5fb;
   --tooltip-background-primary: #e9e5fb;
   --menu-background: #e9e5fb;
   --menu-separator-background: #cabffc;
@@ -30,6 +30,15 @@
   --input-text: #606770;
   --text-primary: #131313;
   --text-secondary: #606770;
+}
+[theme="light-contrast"] ,[data-theme="light-contrast"] {
+  --background-secondary: #e4e4e4;
+  --background-tertiary: #d1c8fa;
+  --background-quaternary: #c8bef8;
+  --menu-item-background-hover: #c9bdff;
+  --menu-item-background-active: #b7a8fa;
+  --tooltip-background-primary: #d1c8fa;
+  --text-secondary: #2f3236;
 }
 [theme="dark"], [data-theme="dark"] {
   --background-primary: #0e1015;
