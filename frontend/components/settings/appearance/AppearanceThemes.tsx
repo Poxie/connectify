@@ -1,21 +1,15 @@
-import { useState } from "react"
-import { useTheme } from "../../../contexts/theme/ThemeProvider";
+import styles from '../../../styles/Appearance.module.scss';
+import { AppearanceTheme } from './AppearanceTheme';
 
 const getActiveTheme = () => {
     if(typeof window === 'undefined') return 'light';
     return localStorage.getItem('theme') || 'light';
 }
 export const AppearanceThemes = () => {
-    const { theme, setTheme } = useTheme();
-
     return(
-        <div>
-            <div onClick={() => setTheme('light')}>
-                light
-            </div>
-            <div onClick={() => setTheme('dark')}>
-                dark
-            </div>
+        <div className={styles['themes']}>
+            <AppearanceTheme theme={'light'} />
+            <AppearanceTheme theme={'dark'} />
         </div>
     )
 }
