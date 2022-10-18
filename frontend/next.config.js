@@ -9,6 +9,11 @@ module.exports = {
         source: '/',
         destination: '/home',
         permanent: true
+      },
+      {
+        source: '/settings',
+        destination: '/settings/appearance',
+        permanent: true
       }
     ]
   }
