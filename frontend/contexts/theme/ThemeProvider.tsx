@@ -7,7 +7,7 @@ export const useTheme = () => React.useContext(ThemeContext);
 
 // Getting active theme
 const DEFAULT_THEME = 'light';
-const ALLOWED_THEMES = ['light', 'ligh-contrast', 'dark'];
+const ALLOWED_THEMES = ['light', 'light-contrast', 'dark'];
 const getActiveTheme = () => {
     const theme = localStorage.getItem('theme') || '';
     
