@@ -9,6 +9,7 @@ export const AppearanceThemes = () => {
     return(
         <div className={styles['themes']}>
             <AppearanceTheme theme={'light'} />
+            <AppearanceTheme theme={'light-contrast'} />
             <AppearanceTheme theme={'dark'} />
         </div>
     )
