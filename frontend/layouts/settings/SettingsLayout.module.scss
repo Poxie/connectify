@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+}
+.sidebar {
+    width: 220px;
+    height: calc(100vh - var(--navbar-height) - var(--spacing-primary));
+    border-right: 1px solid var(--background-tertiary);
+    padding-right: var(--spacing-primary);
+    margin-right: var(--spacing-primary);
+
+    h2 {
+        margin: 0;
+        font-size: 20px;
+    }
+}
+.tabs {
+    margin-top: var(--spacing-primary);
+    display: grid;
+    gap: 4px;
+}
+.tab {
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: block;
+
+    &:hover {
+        background-color: var(--background-secondary);
+    }
+    &:active, &.active {
+        background-color: var(--background-tertiary);
+    }
+}
