@@ -1,19 +1,7 @@
 :root {
   --color-primary: #008FA2;
   --color-secondary: #006F7E;
-  --background-primary: #fff;
-  --background-secondary: #F5F5F5;
-  --background-tertiary: #e9e5fb;
-  --background-quaternary: #e0d9ff;
-  --tooltip-background-primary: #e9e5fb;
   --color-red: #cc0000;
-  --menu-background: #e9e5fb;
-  --menu-separator-background: #cabffc;
-  --menu-item-background-hover: #d7ceff;
-  --menu-item-background-active: #cabeff;
-  --input-background: #e9e5fb;
-  --text-primary: #131313;
-  --text-secondary: #606770;
   --text-light-primary: #fff;
   --text-light-secondary: #cccccc;
   --link-color: #0087bd;
@@ -26,6 +14,37 @@
   --spacing-primary: 15px;
   --navbar-height: 82px;
   --sidebar-mobile-height: 67px;
+}
+
+body[theme="light"] {
+  --background-primary: #fff;
+  --background-secondary: #F5F5F5;
+  --background-tertiary: #e9e5fb;
+  --background-quaternary: #e0d9ff;
+  --tooltip-background-primary: #e9e5fb;
+  --menu-background: #e9e5fb;
+  --menu-separator-background: #cabffc;
+  --menu-item-background-hover: #d7ceff;
+  --menu-item-background-active: #cabeff;
+  --input-background: #e9e5fb;
+  --input-text: #606770;
+  --text-primary: #131313;
+  --text-secondary: #606770;
+}
+body[theme="dark"] {
+  --background-primary: #0e1015;
+  --background-secondary: #18191f;
+  --background-tertiary: #1e2027;
+  --background-quaternary: #23262e;
+  --tooltip-background-primary: #1e2027;
+  --menu-background: #1e2027;
+  --menu-separator-background: #23262e;
+  --menu-item-background-hover: #18191f;
+  --menu-item-background-active: #0e1015;
+  --input-background: #1e2027;
+  --input-text: #8b949e;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
 }
 
 html,
