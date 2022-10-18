@@ -9,7 +9,6 @@ export const useTheme = () => React.useContext(ThemeContext);
 const DEFAULT_THEME = 'light';
 const ALLOWED_THEMES = ['light', 'dark'];
 const getActiveTheme = () => {
-    if(typeof window === 'undefined') return DEFAULT_THEME;
     const theme = localStorage.getItem('theme') || '';
     
     // Checking if theme is valid
@@ -22,13 +21,18 @@ const getActiveTheme = () => {
 export const ThemeProvider: React.FC<{
     children: ReactElement;
 }> = ({ children }) => {
-    const [theme, setTheme] = useState<Theme>(getActiveTheme());
+    const [theme, setTheme] = useState<Theme>(DEFAULT_THEME);
 
     // Function to store and update theme
     const updateTheme = (theme: Theme) => {
         setTheme(theme);
         localStorage.setItem('theme', theme);
     }
+
+    // Setting theme on client mount
+    useLayoutEffect(() => {
+        setTheme(getActiveTheme());
+    }, []);
 
     // Updating theme colors
     useLayoutEffect(() => {
