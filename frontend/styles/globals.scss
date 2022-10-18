@@ -16,7 +16,7 @@
   --sidebar-mobile-height: 67px;
 }
 
-body[theme="light"] {
+[theme="light"], [data-theme="light"] {
   --background-primary: #fff;
   --background-secondary: #F5F5F5;
   --background-tertiary: #e9e5fb;
@@ -31,7 +31,7 @@ body[theme="light"] {
   --text-primary: #131313;
   --text-secondary: #606770;
 }
-body[theme="dark"] {
+[theme="dark"], [data-theme="dark"] {
   --background-primary: #0e1015;
   --background-secondary: #18191f;
   --background-tertiary: #1e2027;
@@ -71,6 +71,7 @@ button {
   color: inherit;
   outline: none;
   border: none;
+  text-align: inherit;
   background-color: transparent;
   font-family: inherit;
   cursor: pointer;
