@@ -5,12 +5,6 @@
         padding-left: var(--spacing-primary) !important;
     }
 }
-.title {
-    font-size: 20px;
-    margin: 0;
-    padding-bottom: var(--spacing-primary);
-    border-bottom: 1px solid var(--background-tertiary);
-}
 .themes {
     --row-count: 3;
     display: grid;
