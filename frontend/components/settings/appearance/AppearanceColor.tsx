@@ -10,6 +10,10 @@ export const AppearanceColor: React.FC<{
 }> = ({ id, primaryColor, secondaryColor }) => {
     const { setColor, color: activeColor } = useTheme();
 
+    // Setting up aria label
+    const ariaLabel = `Select theme color ${id}`;
+
+    // Determining active and className
     const active = activeColor === id;
     const className = [
         styles['color'],
@@ -23,6 +27,7 @@ export const AppearanceColor: React.FC<{
                 backgroundColor: primaryColor,
                 borderColor: secondaryColor
             }}
+            aria-label={ariaLabel}
         >
             {active && (
                 <CheckIcon />
