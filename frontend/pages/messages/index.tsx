@@ -8,6 +8,7 @@ import { SelectUserModal } from '../../modals/select-user/SelectUserModal';
 import { useDispatch } from 'react-redux';
 import { setLastChannelId } from '../../redux/messages/actions';
 import { useScreenType } from '../../hooks/useScreenType';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Messages: NextPageWithLayout = () => {
     const { setModal } = useModal();
@@ -50,5 +51,11 @@ Messages.getLayout = (page: ReactElement) => (
         {page}
     </MessagesLayout>
 )
+
+export const getServerSideProps = async ({ locale }: any) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ['common']))
+    }
+})
 
 export default Messages;

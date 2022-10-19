@@ -1,3 +1,4 @@
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 import { MessagesPage } from "../../components/messages/MessagesPage"
 import { MessagesLayout } from "../../layouts/messages/MessagesLayout"
@@ -12,5 +13,11 @@ MessagesChannel.getLayout = (page: ReactElement) => (
         {page}
     </MessagesLayout>
 )
+
+export const getServerSideProps = async ({ locale }: any) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ['common']))
+    }
+})
 
 export default MessagesChannel;

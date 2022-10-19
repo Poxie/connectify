@@ -1,3 +1,4 @@
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ReactElement } from "react";
 import { UserProfile } from "../../../components/user";
 import { UserLayout } from "../../../layouts/user/UserLayout";
@@ -12,5 +13,11 @@ User.getLayout = (page: ReactElement) => (
         {page}
     </UserLayout>
 )
+
+export const getServerSideProps = async ({ locale }: any) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ['common']))
+    }
+})
 
 export default User;

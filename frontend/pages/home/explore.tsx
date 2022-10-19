@@ -1,3 +1,4 @@
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ReactElement } from "react";
 import { HomeLayout } from "../../layouts/home/HomeLayout";
 import { NextPageWithLayout } from "../_app";
@@ -14,5 +15,11 @@ Explore.getLayout = (page: ReactElement) => (
         {page}
     </HomeLayout>
 )
+
+export const getServerSideProps = async ({ locale }: any) => ({
+    props: {
+        ...(await serverSideTranslations(locale, ['common']))
+    }
+})
 
 export default Explore;
