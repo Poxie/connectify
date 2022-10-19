@@ -9,6 +9,7 @@ import { AnimatePresence } from 'framer-motion';
 import { setPosts } from '../../../redux/posts/actions';
 import { setFeedPostIds } from '../../../redux/feed/actions';
 import { Post } from '../../../types';
+import { FeedEmpty } from './FeedEmpty';
 
 export const Feed = () => {
     const { get, loading } = useAuth();
@@ -34,6 +35,9 @@ export const Feed = () => {
                         key={key}
                     />
                 ))}
+                {!loading && postIds.length === 0 && (
+                    <FeedEmpty />
+                )}
             </AnimatePresence>
 
             <AnimatePresence>

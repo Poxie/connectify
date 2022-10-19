@@ -1,4 +1,9 @@
 {
     "yourFeed": "Ditt flöde",
-    "explore": "Utforska"
+    "explore": "Utforska",
+
+    "feedEmptyHeader": "Ditt flöde är tomt :(",
+    "feedEmptyMessage": "Om du följer användare kommer deras statusuppdateringar att visas här. Vi rekommenderar att du använder vårt utforskarläge för att hitta saker du kan vara intresserad av!",
+    "exploreMode": "Utforskarläge",
+    "searchMode": "Sökläge"
 }

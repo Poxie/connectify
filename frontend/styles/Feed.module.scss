@@ -3,3 +3,21 @@
     display: grid;
     gap: var(--spacing-primary);
 }
+.empty {
+    padding: var(--spacing-primary);
+    background-color: var(--background-secondary);
+    border: 2px solid var(--background-tertiary);
+    border-radius: var(--border-radius-primary);
+
+    h2 {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+}
+.buttons {
+    display: flex;
+    gap: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
+    font-size: 14px;
+}
