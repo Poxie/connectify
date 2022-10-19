@@ -1,0 +1,6 @@
+.container {
+    flex: 1;
+    &>* {
+        padding-left: var(--spacing-primary) !important;
+    }
+}
