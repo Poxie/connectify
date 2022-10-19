@@ -22,7 +22,7 @@ export const NavbarProfile: React.FC<User> = ({ avatar }) => {
             [
                 [
                     { text: t('navbar.profile'), href: `/users/${profile?.id}` },
-                    { text: t('navbar.settings'), href: `/settings` }
+                    { text: t('navbar.settings'), href: `/settings/appearance` }
                 ],
                 [
                     { text: t('navbar.signOut'), onClick: logout, type: 'danger' }
