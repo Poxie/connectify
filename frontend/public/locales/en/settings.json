@@ -1,0 +1,22 @@
+{
+    "header": "Settings",
+    "appearance": "Appearance",
+    "language": "Language",
+    
+    "themes": {
+        "header": "Themes",
+        "light": "Light theme",
+        "light-contrast": "Light contrast theme",
+        "dark": "Dark theme"
+    },
+    "colors": {
+        "header": "Colors",
+        "blue": "blue",
+        "orange": "orange",
+        "purple": "purple",
+        "red": "red",
+        "pink": "pink"
+    },
+
+    "displayLanguage": "Display language"
+}

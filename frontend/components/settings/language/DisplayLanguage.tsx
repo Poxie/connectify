@@ -5,6 +5,7 @@ export const DisplayLanguage = () => {
     const changeLocale = (locale: string) => {
         const { pathname, asPath, query } = router;
         router.replace({ pathname, query }, asPath, { locale });
+        localStorage.setItem('locale', locale);
     }
 
     return(

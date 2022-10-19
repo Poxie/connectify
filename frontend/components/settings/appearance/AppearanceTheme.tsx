@@ -2,14 +2,15 @@ import styles from '../../../styles/Appearance.module.scss';
 import { useTheme } from "../../../contexts/theme/ThemeProvider";
 import { Theme } from "../../../contexts/theme/types"
 import { AppearanceThemePreview } from './AppearanceThemePreview';
+import { useTranslation } from 'next-i18next';
 
 export const AppearanceTheme: React.FC<{
     theme: Theme;
 }> = ({ theme }) => {
+    const { t } = useTranslation('settings');
     const { setTheme, theme: currentTheme } = useTheme();
 
-    const processedTitle = `${theme.slice(0,1).toUpperCase() + theme.slice(1)}`.replaceAll('-', ' ');
-    const title = `${processedTitle} theme`;
+    const title = t(`themes.${theme}`);
     
     const active = theme === currentTheme;
     const className = [

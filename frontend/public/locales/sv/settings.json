@@ -1,0 +1,22 @@
+{
+    "header": "Inställningar",
+    "appearance": "Utseende",
+    "language": "Språk",
+    
+    "themes": {
+        "header": "Teman",
+        "light": "Ljust tema",
+        "light-contrast": "Ljus kontrast tema",
+        "dark": "Mörkt tema"
+    },
+    "colors": {
+        "header": "Färger",
+        "blue": "blå",
+        "orange": "orange",
+        "purple": "lila",
+        "red": "röd",
+        "pink": "rosa"
+    },
+
+    "displayLanguage": "Visnings språk"
+}

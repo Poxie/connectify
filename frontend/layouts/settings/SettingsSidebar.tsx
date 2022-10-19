@@ -1,15 +1,17 @@
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from './SettingsLayout.module.scss';
 
-const TABS = ['Appearance', 'Language'];
+const TABS = ['appearance', 'language'];
 export const SettingsSidebar = () => {
+    const { t } = useTranslation('settings');
     const path = useRouter().asPath;
 
     return(
         <div className={styles['sidebar']}>
             <h2>
-                Settings
+                {t('header')}
             </h2>
 
             <ul className={styles['tabs']}>
@@ -24,7 +26,7 @@ export const SettingsSidebar = () => {
                         <li key={tab}>
                             <Link href={`/settings/${tab.toLowerCase()}`}>
                                 <a className={className}>
-                                    {tab}
+                                    {t(tab)}
                                 </a> 
                             </Link>
                         </li>
