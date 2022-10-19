@@ -13,4 +13,8 @@
     background-color: var(--background-secondary);
     border: 2px solid var(--background-quaternary);
     border-radius: 6px;
+
+    option {
+        font-size: 16px;
+    }
 }
