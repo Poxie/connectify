@@ -18,10 +18,10 @@ export const SidebarTabs = () => {
     const lastChannelId = useAppSelector(selectLastChannelId);
 
     const tabs = [
-        { text: t('sidebar.home'), path: '/home', activeIcon: <HomeActiveIcon />, neutralIcon: <HomeNeutralIcon /> },
-        { text: t('sidebar.messages'), path: `/messages${lastChannelId ? '/' + lastChannelId : ''}`, activeIcon: <MessagesActiveIcon />, neutralIcon: <MessagesNeutralIcon />, notificationCount: totalUnreadCount },
-        { text: t('sidebar.notifications'), path: '/notifications', activeIcon: <NotificationActiveIcon />, neutralIcon: <NotificationNeutralIcon /> },
-        { text: t('sidebar.settings'), path: '/settings', activeIcon: <SettingsActiveIcon />, neutralIcon: <SettingsNeutralIcon /> }
+        { text: t('sidebar.home'), path: '/home', basePath: '/home', activeIcon: <HomeActiveIcon />, neutralIcon: <HomeNeutralIcon /> },
+        { text: t('sidebar.messages'), path: `/messages${lastChannelId ? '/' + lastChannelId : ''}`, basePath: `/messages`, activeIcon: <MessagesActiveIcon />, neutralIcon: <MessagesNeutralIcon />, notificationCount: totalUnreadCount },
+        { text: t('sidebar.notifications'), path: '/notifications', basePath: '/notifications', activeIcon: <NotificationActiveIcon />, neutralIcon: <NotificationNeutralIcon /> },
+        { text: t('sidebar.settings'), path: '/settings/appearance', basePath: '/settings', activeIcon: <SettingsActiveIcon />, neutralIcon: <SettingsNeutralIcon /> }
     ]
 
     return(

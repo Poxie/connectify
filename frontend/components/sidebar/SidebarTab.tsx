@@ -8,10 +8,11 @@ export const SidebarTab: React.FC<{
     neutralIcon: ReactElement;
     activeIcon: ReactElement;
     path: string;
+    basePath: string;
     notificationCount?: number;
-}> = ({ text, neutralIcon, activeIcon, path, notificationCount }) => {
+}> = ({ text, neutralIcon, activeIcon, path, basePath, notificationCount }) => {
     const currentPath = useRouter().asPath;
-    const active = currentPath.startsWith(path);
+    const active = currentPath.startsWith(basePath);
 
     const className = [
         styles['tab'],
