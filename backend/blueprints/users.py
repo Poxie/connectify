@@ -113,13 +113,14 @@ def get_user_likes(user_id: int, token_id: Union[int, None]=None):
 
 # Getting user by search
 @users.get('/users/search')
-def get_user_by_search():
+@token_optional
+def get_user_by_search(token_id: Union[int, None]):
     query = request.args.get('query')
     if not query:
         return 'Query is a required parameter.', 400
 
     # Getting users by search
-    users = get_users_by_username(query)
+    users = get_users_by_username(query, token_id)
 
     return jsonify(users)
 
