@@ -13,16 +13,12 @@ export const AppearanceColor: React.FC<{
     // Setting up aria label
     const ariaLabel = `Select theme color ${id}`;
 
-    // Determining active and className
+    // Checking if active
     const active = activeColor === id;
-    const className = [
-        styles['color'],
-        active ? styles['active'] : ''
-    ].join(' ');
     return(
         <button
             onClick={() => setColor(id)} 
-            className={className}
+            className={styles['color']}
             style={{ 
                 backgroundColor: primaryColor,
                 borderColor: secondaryColor

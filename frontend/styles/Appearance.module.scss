@@ -97,10 +97,6 @@
     justify-content: center;
     align-items: center;
 
-    &.active {
-        border-color: var(--text-light-secondary) !important;
-    }
-
     svg {
         width: 40%;
         display: block;
