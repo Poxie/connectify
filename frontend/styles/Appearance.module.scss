@@ -81,3 +81,20 @@
     border-radius: 6px;
     height: 12px;
 }
+
+.colors {
+    --row-count: 5;
+    display: grid;
+    gap: var(--spacing-primary);
+    grid-template-columns: repeat(var(--row-count), 1fr);
+}
+.color {
+    border: 4px solid;
+    border-radius: var(--border-radius-primary);
+    padding: var(--spacing-primary);
+    aspect-ratio: 3 / 2;
+
+    &.active {
+        border-color: var(--text-light-secondary) !important;
+    }
+}

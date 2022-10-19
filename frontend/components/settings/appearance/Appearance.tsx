@@ -1,5 +1,6 @@
 import styles from '../../../styles/Appearance.module.scss';
 import { SettingsSection } from '../SettingsSection';
+import { AppearanceColors } from './AppearanceColors';
 import { AppearanceThemes } from './AppearanceThemes';
 
 export const Appearance = () => {
@@ -10,6 +11,9 @@ export const Appearance = () => {
             </h2>
             <SettingsSection title={'Themes'}>
                 <AppearanceThemes />
+            </SettingsSection>
+            <SettingsSection title={'Colors'}>
+                <AppearanceColors />
             </SettingsSection>
         </div>
     )
