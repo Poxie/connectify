@@ -25,12 +25,17 @@ export const SelectUserModal = () => {
     const { socket } = useSocket();
     const { pushModal, close } = useModal();
     const [query, setQuery] = useState('');
+    const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<User[]>([]);
     const channelIds = useAppSelector(selectChannelIds);
 
     // Fetching results on query change
     useEffect(() => {
-        if(!query) return setResults([]);
+        if(!query) {
+            setLoading(false);
+            return setResults([]);
+        }
+        setLoading(true);
 
         // Fetching users
         get(`/users/search?query=${query}`)
@@ -38,6 +43,7 @@ export const SelectUserModal = () => {
                 // Making sure logged in user is not present
                 const filteredUsers = users.filter(user => user.id !== profile?.id);
                 setResults(filteredUsers);
+                setLoading(false);
             })
     }, [query]);
 
@@ -83,7 +89,7 @@ export const SelectUserModal = () => {
                 placeholder={t('searchForUser')}
                 containerClassName={styles['search-input']}
             />
-            {!results.length && (
+            {!query && (
                 <>
                 <span className={styles['label']}>
                     {t('currentDirectMessages')}
@@ -105,6 +111,11 @@ export const SelectUserModal = () => {
                     </ul>
                 )}
                 </>
+            )}
+            {query && !loading && results.length === 0 && (
+                <span className={styles['label']}>
+                    {t('noResults')}
+                </span>
             )}
             {results.length !== 0 && (
                 <>

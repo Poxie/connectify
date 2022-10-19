@@ -35,5 +35,6 @@
     "currentDirectMessages": "Nuvarande meddelanden",
     "emptyCurrentDirectMessages": "Skapade konversationer kommer visas här.",
     "showingResults": "Visar {{amount}} resultat",
+    "noResults": "Inga resultat hittades.",
     "createConversationWith": "Skapa konversation med"
 }
