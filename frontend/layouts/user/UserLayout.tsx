@@ -11,20 +11,20 @@ import { UserTabs } from "./UserTabs";
 export const UserLayout: React.FC<{
     children: any;
 }> = ({ children }) => {
-    const { get } = useAuth();
+    const { get, loading } = useAuth();
     const dispatch = useDispatch();
     const { userId } = useRouter().query as { userId: string };
     const user = useAppSelector(state => selectUserById(state, parseInt(userId)));
 
     // Fetching user on mount
     useEffect(() => {
-        if(!userId || user) return;
+        if(!userId || user || loading) return;
 
         get(`/users/${userId}`)
             .then(user => {
                 dispatch(setUser(user));
             })
-    }, [user, userId]);
+    }, [user, userId, loading]);
 
     return(
         <>
