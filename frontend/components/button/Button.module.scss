@@ -24,13 +24,13 @@
     }
     &.default {
         color: var(--text-light-primary);
-        background-color: var(--button-background-primary);
+        background-color: var(--color-primary);
 
         svg {
             fill: var(--text-light-primary);
         }
         &:hover:not(.disabled) {
-            background-color: var(--button-background-primary-hover);
+            background-color: var(--color-secondary);
         }
     }
     &.secondary {
