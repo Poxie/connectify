@@ -53,6 +53,10 @@
 .input-container {
     position: relative;
 }
+.loader {
+    display: flex;
+    justify-content: center;
+}
 .results {
     max-height: 350px;
     overflow: auto;

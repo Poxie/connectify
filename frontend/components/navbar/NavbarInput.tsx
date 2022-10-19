@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/auth/AuthProvider";
 import { User } from "../../types";
 import { Input } from "../input"
 import { SearchResult } from './SearchResult';
+import { Loader } from '../loader';
 
 export const NavbarInput = () => {
     const { get, loading: authLoading } = useAuth();
@@ -50,6 +51,18 @@ export const NavbarInput = () => {
             />
             {query && resultsShowing && (
                 <div className={styles['results']}>
+                    {!results.length && loading && (
+                        <div className={styles['loader']} aria-label="Loading">
+                            <Loader />
+                        </div>
+                    )}
+
+                    {!results.length && !loading && (
+                        <span>
+                            No results were found.
+                        </span>
+                    )}
+
                     {results.map(user => (
                         <SearchResult 
                             {...user}
