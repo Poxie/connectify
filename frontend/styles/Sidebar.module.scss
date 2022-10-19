@@ -34,10 +34,10 @@
     }
 
     &.active {
-        color: var(--text-primary);
+        color: var(--color-primary);
 
         svg {
-            fill: var(--text-primary);
+            fill: var(--color-primary);
         }
     }
 }
