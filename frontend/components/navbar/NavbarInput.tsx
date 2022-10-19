@@ -1,12 +1,12 @@
 import styles from '../../styles/Navbar.module.scss';
-import { useEffect, useState } from "react";
+import React, { RefObject, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { User } from "../../types";
 import { Input } from "../input"
 import { SearchResult } from './SearchResult';
 import { Loader } from '../loader';
 
-export const NavbarInput = () => {
+export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
     const { get, loading: authLoading } = useAuth();
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<User[]>([]);
@@ -38,11 +38,21 @@ export const NavbarInput = () => {
     const handleBlur = () => {
         setTimeout(() => {
             setResultsShowing(false);
+            (ref as RefObject<HTMLDivElement>)?.current?.classList.remove(styles['active']);
         }, 150);
     }
 
+    // Closing input on smaller devices
+    const onBackdropClick = () => {
+        (ref as RefObject<HTMLDivElement>)?.current?.classList.toggle(styles['active']);
+    }
+
     return(
-        <div className={styles['input-container']}>
+        <div className={styles['input-container']} ref={ref}>
+            <div 
+                className={styles['backdrop']}
+                onClick={onBackdropClick}
+            />
             <Input 
                 onFocus={() => setResultsShowing(true)}
                 onBlur={handleBlur}
@@ -73,4 +83,4 @@ export const NavbarInput = () => {
             )}
         </div>
     )
-}
+});

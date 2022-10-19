@@ -1,5 +1,7 @@
 import { useTranslation } from 'next-i18next';
+import { RefObject } from 'react';
 import { AddIcon } from '../../assets/icons/AddIcon';
+import { SearchIcon } from '../../assets/icons/SearchIcon';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { CreatePostModal } from '../../modals/create-post/CreatePostModal';
@@ -8,7 +10,9 @@ import { Tooltip } from '../tooltip/Tooltip';
 import { NavbarLoginButton } from './NavbarLoginButton';
 import { NavbarProfile } from './NavbarProfile';
 
-export const NavbarRight = () => {
+export const NavbarRight: React.FC<{
+    inputContainer: RefObject<HTMLDivElement>;
+}> = ({ inputContainer }) => {
     const { t } = useTranslation('common');
     const { loading, profile } = useAuth();
     const { setModal } = useModal();
@@ -18,11 +22,30 @@ export const NavbarRight = () => {
         setModal(<CreatePostModal />);
     }
 
+    // Opening search
+    const openSearch = () => {
+        inputContainer.current?.classList?.toggle(styles['active']);
+    }
+
     // If loading profile, return null
     if(loading) return null;
 
+    // Creating classNames
+    const searchClassName = [
+        styles['button'],
+        styles['search-button']
+    ].join(' ');
     return(
         <div className={styles['right']}>
+            <Tooltip
+                text={'Search'}
+                position={'bottom'}
+                className={searchClassName}
+                onClick={openSearch}
+            >
+                <SearchIcon />
+            </Tooltip>
+
             <Tooltip 
                 text={t('navbar.createPost')}
                 position={'bottom'}

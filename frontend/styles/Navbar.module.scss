@@ -1,6 +1,6 @@
 .container {
     position: sticky;
-    z-index: 1414;
+    z-index: 14141413;
     background-color: var(--background-primary);
     top: 0;
 }
@@ -53,6 +53,12 @@
 .input-container {
     position: relative;
 }
+.search-button {
+    display: none;
+}
+.backdrop {
+    display: none;
+}
 .loader {
     display: flex;
     justify-content: center;
@@ -104,5 +110,57 @@
 @media (max-width: 700px) {
     .site-name {
         font-size: 20px;
+    }
+    .content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .search-button {
+        display: block;
+    }
+    .input-container {
+        --height: 79px;
+        position: fixed;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--height);
+        padding: var(--spacing-primary);
+        z-index: 14;
+        top: calc(-1 * var(--height));
+        transition: top .3s;
+        display: block;
+
+        &>div {
+            pointer-events: all;
+            position: relative;
+            z-index: 1;
+        }
+
+        .backdrop {
+            display: block;
+            pointer-events: none !important;
+            background-color: rgba(0,0,0,.4);
+            transition: opacity .3s;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0;
+        }
+
+        &.active {
+            top: 0;
+
+            .backdrop {
+                pointer-events: all !important;
+                opacity: 1;
+            }
+        }
+    }
+    .results {
+        top: var(--spacing-primary);
     }
 }
