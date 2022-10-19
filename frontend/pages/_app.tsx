@@ -1,6 +1,7 @@
 import '../styles/globals.scss'
 import styles from '../styles/Main.module.scss';
 import type { AppProps } from 'next/app'
+import { appWithTranslation } from 'next-i18next';
 import { AuthProvider } from '../contexts/auth/AuthProvider'
 import { Navbar } from '../components/navbar'
 import { Sidebar } from '../components/sidebar'
@@ -49,4 +50,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     </ThemeProvider>
   )
 }
-export default wrapper.withRedux(MyApp);
+export default wrapper.withRedux(appWithTranslation(MyApp));

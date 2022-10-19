@@ -1,3 +1,5 @@
+const { i18n } = require('./next-i18next.config');
+
 module.exports = {
   reactStrictMode: true,
   images: {
@@ -16,5 +18,6 @@ module.exports = {
         permanent: true
       }
     ]
-  }
+  },
+  i18n
 }
