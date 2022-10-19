@@ -1,6 +1,7 @@
 import styles from '../../../styles/Appearance.module.scss';
 import { Color } from "../../../contexts/theme/types"
 import { useTheme } from '../../../contexts/theme/ThemeProvider';
+import { CheckIcon } from '../../../assets/icons/CheckIcon';
 
 export const AppearanceColor: React.FC<{
     id: Color;
@@ -22,6 +23,10 @@ export const AppearanceColor: React.FC<{
                 backgroundColor: primaryColor,
                 borderColor: secondaryColor
             }}
-        />
+        >
+            {active && (
+                <CheckIcon />
+            )}
+        </button>
     )
 }
