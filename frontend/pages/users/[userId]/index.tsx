@@ -16,7 +16,7 @@ User.getLayout = (page: ReactElement) => (
 
 export const getServerSideProps = async ({ locale }: any) => ({
     props: {
-        ...(await serverSideTranslations(locale, ['common']))
+        ...(await serverSideTranslations(locale, ['common', 'user']))
     }
 })
 

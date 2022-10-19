@@ -1,0 +1,15 @@
+{
+    "directMessages": "Meddelanden",
+    "emptyChannels": "Du har inga meddelanden ännu. Starta en nu!",
+    "startConversation": "Starta konversation",
+    "chooseDirectMessage": {
+        "header": "Välj ett meddelande",
+        "message": "Välj en av dina meddelanden eller skapa en ny"
+    },
+    "directMessage": {
+        "header": "Meddelanden med",
+        "inputPlaceholder": "Skicka till",
+        "inputButtonText": "Skicka"
+    },
+    "you": "Du:"
+}

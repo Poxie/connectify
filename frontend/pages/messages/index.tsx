@@ -9,8 +9,10 @@ import { useDispatch } from 'react-redux';
 import { setLastChannelId } from '../../redux/messages/actions';
 import { useScreenType } from '../../hooks/useScreenType';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const Messages: NextPageWithLayout = () => {
+    const { t } = useTranslation('messages');
     const { setModal } = useModal();
     const dispatch = useDispatch();
     const screenType = useScreenType();
@@ -31,16 +33,16 @@ const Messages: NextPageWithLayout = () => {
     return(
         <div className={styles['empty']}>
             <h2>
-                Choose a direct message
+                {t('chooseDirectMessage.header')}
             </h2>
             <span>
-                Choose an existing direct message or create a new one.
+                {t('chooseDirectMessage.message')}
             </span>
             <Button 
                 className={styles['conversation-button']}
                 onClick={openModal}
             >
-                Start conversation
+                {t('startConversation')}
             </Button>
         </div>
     )
@@ -54,7 +56,7 @@ Messages.getLayout = (page: ReactElement) => (
 
 export const getServerSideProps = async ({ locale }: any) => ({
     props: {
-        ...(await serverSideTranslations(locale, ['common']))
+        ...(await serverSideTranslations(locale, ['common', 'messages']))
     }
 })
 

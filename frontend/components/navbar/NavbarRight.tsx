@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { AddIcon } from '../../assets/icons/AddIcon';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
@@ -8,6 +9,7 @@ import { NavbarLoginButton } from './NavbarLoginButton';
 import { NavbarProfile } from './NavbarProfile';
 
 export const NavbarRight = () => {
+    const { t } = useTranslation('common');
     const { loading, profile } = useAuth();
     const { setModal } = useModal();
 
@@ -22,7 +24,7 @@ export const NavbarRight = () => {
     return(
         <div className={styles['right']}>
             <Tooltip 
-                text={'Create post'}
+                text={t('navbar.createPost')}
                 position={'bottom'}
                 className={styles['button']}
                 onClick={openCreatePost}

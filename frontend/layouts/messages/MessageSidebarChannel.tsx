@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,6 +10,7 @@ import styles from './MessagesLayout.module.scss';
 export const MessageSidebarChannel: React.FC<{
     id: number;
 }> = ({ id }) => {
+    const { t } = useTranslation('messages');
     const asPath = useRouter().asPath;
     const channel = useAppSelector(state => selectChannelById(state, id));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, id));
@@ -22,7 +24,7 @@ export const MessageSidebarChannel: React.FC<{
     const name = channel.name || recipient.display_name || `@${recipient.username}`;
     const username = recipient.display_name ? recipient.username : null;
     const image = channel.icon || `${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${recipient.avatar}`;
-    const ariaLabel = `${name} (direct message)`;
+    const ariaLabel = `${name} (${t('directMessageAriaLabel')})`;
 
     // Creating tab className
     const className = [

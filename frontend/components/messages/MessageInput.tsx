@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../contexts/auth/AuthProvider';
@@ -13,6 +14,7 @@ export const MessageInput: React.FC<{
     channelId: number;
     recipientId: number;
 }> = ({ channelName, channelId, recipientId }) => {
+    const { t } = useTranslation('messages');
     const { post, profile } = useAuth();
     const { socket } = useSocket();
     const dispatch = useDispatch();
@@ -89,7 +91,7 @@ export const MessageInput: React.FC<{
     return(
         <div className={styles['input-container']}>
             <Input 
-                placeholder={`Message ${channelName}`}
+                placeholder={`${t('directMessage.inputPlaceholder')} ${channelName}`}
                 inputClassName={styles['input']}
                 onChange={onChange}
                 defaultValue={content}
@@ -100,7 +102,7 @@ export const MessageInput: React.FC<{
                 className={styles['input-button']}
                 onClick={send}
             >
-                Send
+                {t('directMessage.inputButtonText')}
             </Button>
         </div>
     )

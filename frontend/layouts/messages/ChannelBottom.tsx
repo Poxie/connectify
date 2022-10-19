@@ -3,10 +3,12 @@ import { useAuth } from "../../contexts/auth/AuthProvider";
 import { selectChannelLastMessage, selectChannelTyping } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { MessagesSidebarTyping } from './MessageSidebarTyping';
+import { useTranslation } from 'next-i18next';
 
 export const ChannelBottom: React.FC<{
     channelId: number;
 }> = ({ channelId }) => {
+    const { t } = useTranslation('messages');
     const { profile } = useAuth();
     const typing = useAppSelector(state => selectChannelTyping(state, channelId));
     const lastMessage = useAppSelector(state => selectChannelLastMessage(state, channelId));
@@ -16,7 +18,7 @@ export const ChannelBottom: React.FC<{
             {lastMessage && !typing && (
                 <span className={styles['last-message']}>
                     {lastMessage.author_id === profile?.id && (
-                        'You: '
+                        `${t('you')}: `
                     )}
                     {lastMessage?.content}
                 </span>

@@ -1,13 +1,15 @@
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import styles from './HomeLayout.module.scss';
 
 const tabs = [
-    { text: 'Your feed', path: '/home' },
-    { text: 'Explore', path: '/home/explore' }
+    { text: 'yourFeed', path: '/home' },
+    { text: 'explore', path: '/home/explore' }
 ]
 const tabPaths = tabs.map(tab => tab.path);
 export const HomeLayoutTabs = () => {
+    const { t } = useTranslation('home');
     const router = useRouter();
     const path = router.pathname;
     const tabIndex = tabPaths.indexOf(path);
@@ -40,7 +42,7 @@ export const HomeLayoutTabs = () => {
                         key={path}
                     >
                         <button onClick={() => changeTab(path)}>
-                            {text}
+                            {t(text)}
                         </button>
                     </li>
                 )

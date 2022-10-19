@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ArrowIcon } from '../../assets/icons/ArrowIcon';
@@ -10,6 +11,7 @@ import { User } from '../../types';
 export const MessagesHeader: React.FC<{
     recipient: User;
 }> = ({ recipient }) => {
+    const { t } = useTranslation('messages');
     const screenType = useScreenType();
     const router = useRouter();
 
@@ -30,7 +32,7 @@ export const MessagesHeader: React.FC<{
             )}
 
             <span>
-                Direct messages with
+                {t('directMessage.header')}
             </span>
                 
             <HasPopout popout={<UserPopout {...recipient} />}>

@@ -10,8 +10,10 @@ import { selectUserExists, selectUserHasLoadedLikedPosts, selectUserLikedIds } f
 import { Post } from "../../types";
 import { UserPostSkeleton } from "../user-post/UserPostSkeleton";
 import { ProfilePost } from './ProfilePost';
+import { useTranslation } from 'next-i18next';
 
 export const LikedPosts = () => {
+    const { t } = useTranslation('user');
     const { get } = useAuth();
     const dispatch = useDispatch();
     const { userId } = useRouter().query as { userId: string };
@@ -43,7 +45,7 @@ export const LikedPosts = () => {
         <>
             {postIds.length === 0 && (
                 <span className={styles['empty']}>
-                    User has not liked any posts.
+                    {t('noLikedPosts')}
                 </span>
             )}
 

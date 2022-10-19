@@ -4,5 +4,22 @@
         "messages": "Messages",
         "notifications": "Notifications",
         "settings": "Settings"
-    }
+    },
+
+    "navbar": {
+        "profile": "Profile",
+        "settings": "Settings",
+        "createPost": "Create post",
+        "signOut": "Log out",
+        "signIn": "Sign in"
+    },
+
+    "cancel": "Cancel",
+
+    "likes": "Likes",
+    "posts": "Posts",
+    "comments": "Comments",
+    "followers": "Followers",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
 }

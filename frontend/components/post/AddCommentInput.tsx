@@ -5,10 +5,13 @@ import { Input } from "../input"
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useDispatch } from 'react-redux';
 import { addPostComment } from '../../redux/posts/actions';
+import { useTranslation } from 'next-i18next';
 
 export const AddCommentInput: React.FC<{
     postId: number;
 }> = ({ postId }) => {
+    const { t } = useTranslation('common');
+    const { t: g } = useTranslation('post');
     const { post } = useAuth();
     const dispatch = useDispatch();
     const [expanded, setExpanded] = useState(false);
@@ -45,7 +48,7 @@ export const AddCommentInput: React.FC<{
     return(
         <div className={styles['add-comment']}>
             <Input 
-                placeholder={'Add comment...'} 
+                placeholder={g('addComment')} 
                 defaultValue={value}
                 onChange={setValue}
                 onFocus={open}
@@ -56,13 +59,13 @@ export const AddCommentInput: React.FC<{
                         type={'transparent'}
                         onClick={close}
                     >
-                        Cancel
+                        {t('cancel')}
                     </Button>
                     <Button 
                         onClick={addComment}
                         disabled={disabled}
                     >
-                        Add Comment
+                        {g('addComment')}
                     </Button>
                 </div>
             )}

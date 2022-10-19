@@ -5,11 +5,14 @@ import { PostComment } from './PostComment';
 import { PostCommentSkeleton } from './PostCommentSkeleton';
 import { Input } from '../input';
 import { AddCommentInput } from './AddCommentInput';
+import { useTranslation } from 'next-i18next';
 
 export const PostComments: React.FC<{
     postId: number;
     comment_count: number;
 }> = ({ postId, comment_count }) => {
+    const { t } = useTranslation('common');
+    const { t: g } = useTranslation('post');
     const commentIds = useAppSelector(state => selectCommentIds(state, postId));
 
     if(!commentIds) return <PostCommentSkeleton />;
@@ -17,14 +20,14 @@ export const PostComments: React.FC<{
     return(
         <div className={styles['comments']}>
             <span className={styles['comments-header']}>
-                {comment_count} comments
+                {comment_count} {t('comments')}
             </span>
 
             <AddCommentInput postId={postId} />
             
             {!commentIds.length && (
                 <span>
-                    This post has no comments. Be the first one to post one!
+                    {g('noPosts')}
                 </span>
             )}
 

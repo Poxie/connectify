@@ -10,8 +10,10 @@ import { selectUserExists, selectUserHasLoadedPosts, selectUserPostIds } from ".
 import { Post } from "../../types";
 import { ProfilePost } from "./ProfilePost";
 import { UserPostSkeleton } from '../user-post/UserPostSkeleton';
+import { useTranslation } from 'next-i18next';
 
 export const UserProfile = () => {
+    const { t } = useTranslation();
     const { get } = useAuth();
     const dispatch = useDispatch();
     const { userId } = useRouter().query as { userId: string };
@@ -43,7 +45,7 @@ export const UserProfile = () => {
         <>
             {postIds.length === 0 && (
                 <span className={styles['empty']}>
-                    User has not posted anything.
+                    {t('noPosts')}
                 </span>
             )}
 

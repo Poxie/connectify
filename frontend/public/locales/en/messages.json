@@ -1,0 +1,16 @@
+{
+    "directMessages": "Direct Messages",
+    "emptyChannels": "You don't have any conversations yet. Start one now!",
+    "startConversation": "Start conversation",
+    "chooseDirectMessage": {
+        "header": "Choose a direct message",
+        "message": "Choose an existing direct message or create a new one"
+    },
+    "directMessage": {
+        "header": "Direct messages with",
+        "inputPlaceholder": "Message",
+        "inputButtonText": "Send"
+    },
+    "directMessageAriaLabel": "direct message",
+    "you": "You:"
+}

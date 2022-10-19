@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { CommentNeutralIcon } from '../../assets/icons/CommentNeutralIcon';
@@ -15,6 +16,7 @@ export const UserPostFooter: React.FC<{
     onPostLike: (id: number) => void;
     onPostUnlike: (id: number) => void;
 }> = ({ id, has_liked, like_count, comment_count, onPostLike, onPostUnlike }) => {
+    const { t } = useTranslation();
     const { post, destroy } = useAuth();
     const router = useRouter();
 
@@ -40,12 +42,12 @@ export const UserPostFooter: React.FC<{
             <UserPostFooterButton 
                 onClick={has_liked ? unlike : like}
                 icon={has_liked ? <HeartActiveIcon /> : <HeartNeutralIcon />}
-                text={`${like_count} likes`}
+                text={`${like_count} ${t('likes')}`}
             />
             <UserPostFooterButton 
                 onClick={goToPost}
                 icon={<CommentNeutralIcon />}
-                text={`${comment_count} comments`}
+                text={`${comment_count} ${t('comments')}`}
             />
         </div>
     )

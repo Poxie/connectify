@@ -4,8 +4,10 @@ import { User } from "../../types"
 import { useMenu } from '../../contexts/menu/MenuProvider';
 import { useRef } from 'react';
 import { useAuth } from '../../contexts/auth/AuthProvider';
+import { useTranslation } from 'next-i18next';
 
 export const NavbarProfile: React.FC<User> = ({ avatar }) => {
+    const { t } = useTranslation('common');
     const { profile } = useAuth();
     const { setMenu } = useMenu();
     const ref = useRef<HTMLDivElement>(null);
@@ -19,11 +21,11 @@ export const NavbarProfile: React.FC<User> = ({ avatar }) => {
         setMenu(
             [
                 [
-                    { text: 'Profile', href: `/users/${profile?.id}` },
-                    { text: 'Settings', href: `/settings` }
+                    { text: t('navbar.profile'), href: `/users/${profile?.id}` },
+                    { text: t('navbar.settings'), href: `/settings` }
                 ],
                 [
-                    { text: 'Log out', onClick: logout, type: 'danger' }
+                    { text: t('navbar.signOut'), onClick: logout, type: 'danger' }
                 ]
             ],
             ref

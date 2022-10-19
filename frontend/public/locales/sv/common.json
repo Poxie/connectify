@@ -4,5 +4,22 @@
         "messages": "Meddelanden",
         "notifications": "Notifikationer",
         "settings": "Inställningar"
-    }
+    },
+
+    "navbar": {
+        "profile": "Profil",
+        "settings": "Inställningar",
+        "createPost": "Skapa inlägg",
+        "signOut": "Logga ut",
+        "signIn": "Logga in"
+    },
+
+    "cancel": "Avbryt",
+
+    "likes": "Gillningar",
+    "posts": "Inlägg",
+    "comments": "Kommentarer",
+    "followers": "Följare",
+    "follow": "Följ",
+    "unfollow": "Avfölj"
 }

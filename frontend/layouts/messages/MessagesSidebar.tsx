@@ -8,8 +8,10 @@ import { useModal } from "../../contexts/modal/ModalProvider";
 import { SelectUserModal } from "../../modals/select-user/SelectUserModal";
 import Button from '../../components/button';
 import { Tooltip } from '../../components/tooltip/Tooltip';
+import { useTranslation } from 'next-i18next';
 
 export const MessagesSidebar = () => {
+    const { t } = useTranslation('messages');
     const { setModal } = useModal();
     const channels = useAppSelector(selectChannelIds);
     const channelsLoading = useAppSelector(selectChannelsLoading);
@@ -34,11 +36,11 @@ export const MessagesSidebar = () => {
         <div className={styles['sidebar']}>
             <div className={styles['sidebar-header']}>
                 <span>
-                    Direct Messages
+                    {t('directMessages')}
                 </span>
 
                 <Tooltip 
-                    text={'Create conversation'}
+                    text={t('createConversation')}
                     onClick={openConvoModal}
                 >
                     <AddIcon />
@@ -48,13 +50,13 @@ export const MessagesSidebar = () => {
             {!channels.length && (
                 <div className={styles['sidebar-empty']}>
                     <span>
-                        You don't have any conversations yet. Start one now!
+                        {t('emptyChannels')}
                     </span>
                     <Button 
                         className={styles['empty-button']}
                         onClick={openConvoModal}
                     >
-                        Start conversation
+                        {t('startConversation')}
                     </Button>
                 </div>
             )}
