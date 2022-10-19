@@ -29,3 +29,17 @@
         background-color: var(--background-tertiary);
     }
 }
+
+@media (max-width: 500px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        height: unset;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--background-tertiary);
+        padding-bottom: var(--spacing-primary);
+        margin-bottom: var(--spacing-primary);
+    }
+}

@@ -97,3 +97,27 @@
         fill: var(--text-light-secondary);
     }
 }
+
+@media (max-width: 1050px) {
+    .themes {
+        --row-count: 2;
+    }
+    .colors {
+        --row-count: 3;
+    }
+}
+@media (max-width: 840px) {
+    .themes {
+        --row-count: 1;
+    }
+    .colors {
+        --row-count: 2;
+    }
+}
+@media (max-width: 500px) {
+    .container {
+        &>* {
+            padding-left: 0 !important;
+        }
+    }
+}
