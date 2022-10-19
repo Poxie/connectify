@@ -1,21 +1,36 @@
+import styles from '../../../styles/Language.module.scss';
 import { useRouter } from "next/router"
+import { ChangeEvent } from "react";
 
+const LOCALES = [
+    { id: 'en', text: 'English' },
+    { id: 'sv', text: 'Svenska' }
+]
 export const DisplayLanguage = () => {
     const router = useRouter();
-    const changeLocale = (locale: string) => {
+    const changeLocale = (e: ChangeEvent<HTMLSelectElement>) => {
+        const locale = e.target.value;
         const { pathname, asPath, query } = router;
         router.replace({ pathname, query }, asPath, { locale });
         localStorage.setItem('locale', locale);
     }
 
     return(
-        <div>
-            <span onClick={() => changeLocale('en')}>
-                en
-            </span>
-            <span onClick={() => changeLocale('sv')}>
-                sv
-            </span>
-        </div>
+        <>
+            <select 
+                className={styles['select']}
+                onChange={changeLocale} 
+                value={router.locale}
+            >
+                {LOCALES.map(locale => (
+                    <option 
+                        value={locale.id}
+                        key={locale.id} 
+                    >
+                        {locale.text}
+                    </option>
+                ))}
+            </select>
+        </>
     )
 }

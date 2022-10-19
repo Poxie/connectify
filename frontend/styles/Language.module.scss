@@ -4,3 +4,13 @@
         padding-left: var(--spacing-primary) !important;
     }
 }
+.select {
+    width: 100%;
+    padding: 12px 10px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: var(--background-secondary);
+    border: 2px solid var(--background-quaternary);
+    border-radius: 6px;
+}
