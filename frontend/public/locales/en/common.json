@@ -15,9 +15,25 @@
     },
 
     "cancel": "Cancel",
+    "create": "Create",
+    "goBack": "Go back",
 
     "likes": "Likes",
     "posts": "Posts",
     "comments": "Comments",
-    "followers": "Followers"
+    "followers": "Followers",
+    "goToProfile": "Go to profile",
+    
+    "postTitle": "Title",
+    "postContent": "Content",
+    "preview": "Preview",
+    "previewPost": "Preview post",
+    "createPost": "Create post",
+
+    "selectUserHeader": "Select User",
+    "searchForUser": "Search for user",
+    "currentDirectMessages": "Current direct messages",
+    "emptyCurrentDirectMessages": "Current direct messages will be displayed here.",
+    "showingResults": "Showing {{amount}} results",
+    "createConversationWith": "Create conversation with"
 }

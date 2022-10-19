@@ -10,11 +10,13 @@ import { setPost } from '../../redux/posts/actions';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { addUserPostId } from '../../redux/users/actions';
+import { useTranslation } from 'next-i18next';
 
 export const PreviewPostModal: React.FC<{
     title: string;
     content: string;
 }> = ({ title, content }) => {
+    const { t } = useTranslation('common');
     const router = useRouter();
     const dispatch = useDispatch();
     const { profile, post } = useAuth();
@@ -45,7 +47,7 @@ export const PreviewPostModal: React.FC<{
     return(
         <>
         <ModalHeader>
-            Preview post
+            {t('previewPost')}
         </ModalHeader>
 
         <div className={styles['preview']}>
@@ -74,9 +76,9 @@ export const PreviewPostModal: React.FC<{
         </div>
 
         <ModalFooter 
-            cancelLabel={'Go back'}
+            cancelLabel={t('goBack')}
             onCancel={goBack}
-            confirmLabel={'Create post'}
+            confirmLabel={t('createPost')}
             onConfirm={createPost}
             confirmDisabled={disabled}
         />

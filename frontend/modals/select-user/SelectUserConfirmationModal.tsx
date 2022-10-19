@@ -5,11 +5,13 @@ import { User } from "../../types"
 import { ModalFooter } from "../ModalFooter";
 import { ModalHeader } from "../ModalHeader";
 import { SelectedUser } from './SelectedUser';
+import { useTranslation } from 'next-i18next';
 
 export const SelectUserConfirmationModal: React.FC<{
     user: User;
     onConfirm: () => void;
 }> = ({ user, onConfirm }) => {
+    const { t } = useTranslation('common');
     const { goBack } = useModal();
 
     if(!user) return null;
@@ -17,7 +19,7 @@ export const SelectUserConfirmationModal: React.FC<{
     return(
         <>
         <ModalHeader>
-            Create conversation with {user.display_name || user.username}?
+            {t('createConversationWith')} {user.display_name || user.username}?
         </ModalHeader>
 
         <SelectedUser 
@@ -26,9 +28,9 @@ export const SelectUserConfirmationModal: React.FC<{
         />
 
         <ModalFooter 
-            cancelLabel={'Go back'}
+            cancelLabel={t('goBack')}
             onCancel={goBack}
-            confirmLabel={'Create'}
+            confirmLabel={t('create')}
             onConfirm={onConfirm}
         />
         </>

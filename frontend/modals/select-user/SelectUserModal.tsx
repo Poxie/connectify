@@ -15,8 +15,10 @@ import { selectChannelIds } from '../../redux/messages/hooks';
 import { SelectUserChannel } from './SelectUserChannel';
 import { useDispatch } from 'react-redux';
 import { addChannel } from '../../redux/messages/actions';
+import { useTranslation } from 'next-i18next';
 
 export const SelectUserModal = () => {
+    const { t } = useTranslation('common');
     const router = useRouter();
     const dispatch = useDispatch();
     const { get, post, profile } = useAuth();
@@ -74,22 +76,22 @@ export const SelectUserModal = () => {
     return(
         <div className={styles['container']}>
             <ModalHeader>
-                Select User
+                {t('selectUserHeader')}
             </ModalHeader>
             <Input 
                 onChange={setQuery}
-                placeholder={'Search for user...'}
+                placeholder={t('searchForUser')}
                 containerClassName={styles['search-input']}
             />
             {!results.length && (
                 <>
                 <span className={styles['label']}>
-                    Current direct messages
+                    {t('currentDirectMessages')}
                 </span>
 
                 {!channelIds.length && (
                     <span style={{paddingLeft: `var(--spacing-primary)`}}>
-                        Current direct messages will be displayed here.
+                        {t('emptyCurrentDirectMessages')}
                     </span>
                 )}
                 {channelIds.length !== 0 && (
@@ -107,7 +109,7 @@ export const SelectUserModal = () => {
             {results.length !== 0 && (
                 <>
                 <span className={styles['label']}>
-                    Showing {results.length} results
+                    {t('showingResults', { amount: results.length })}
                 </span>
                 <ul className={styles['items']}>
                     {results.map(user => (

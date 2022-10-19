@@ -15,9 +15,25 @@
     },
 
     "cancel": "Avbryt",
+    "create": "Skapa",
+    "goBack": "Gå tillbaka",
 
     "likes": "Gillningar",
     "posts": "Inlägg",
     "comments": "Kommentarer",
-    "followers": "Följare"
+    "followers": "Följare",
+    "goToProfile": "Gå till profil",
+    
+    "postTitle": "Titel",
+    "postContent": "Innehåll",
+    "preview": "Förhandsvisa",
+    "previewPost": "Förhandsvisa",
+    "createPost": "Skapa inlägg",
+
+    "selectUserHeader": "Välj användare",
+    "searchForUser": "Sök efter användare",
+    "currentDirectMessages": "Nuvarande meddelanden",
+    "emptyCurrentDirectMessages": "Skapade konversationer kommer visas här.",
+    "showingResults": "Visar {{amount}} resultat",
+    "createConversationWith": "Skapa konversation med"
 }

@@ -5,8 +5,10 @@ import { useRef, useState } from 'react';
 import { ModalFooter } from '../ModalFooter';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { PreviewPostModal } from './PreviewPostModal';
+import { useTranslation } from 'next-i18next';
 
 export const CreatePostModal = () => {
+    const { t } = useTranslation('common');
     const { close, pushModal } = useModal();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState(''); 
@@ -27,23 +29,23 @@ export const CreatePostModal = () => {
     return(
         <>
         <ModalHeader>
-            Create post
+            {t('createPost')}
         </ModalHeader>
         <div className={styles['content']}>
             <Input 
-                placeholder={'Title'}
+                placeholder={t('postTitle')}
                 onChange={setTitle}
             />
             <Input 
-                placeholder={'Content'}
+                placeholder={t('postContent')}
                 textArea={true}
                 onChange={setContent}
             />
         </div>
         <ModalFooter 
-            cancelLabel={'Cancel'}
+            cancelLabel={t('cancel')}
             onCancel={close}
-            confirmLabel={'Preview'}
+            confirmLabel={t('preview')}
             onConfirm={previewPost}
             confirmDisabled={disabled}
         />

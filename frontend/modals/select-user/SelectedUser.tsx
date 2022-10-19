@@ -1,11 +1,13 @@
 import styles from './SelectUserModal.module.scss';
 import { User } from "../../types"
 import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
 
 export const SelectedUser: React.FC<{
     user: User;
     cancel: () => void;
 }> = ({ user, cancel }) => {
+    const { t } = useTranslation('common');
     return(
         <div className={styles['selected']}>
             <div className={styles['selected-main']}>
@@ -23,7 +25,7 @@ export const SelectedUser: React.FC<{
                 </span>
             </div>
             <button onClick={cancel}>
-                Cancel
+                {t('cancel')}
             </button>
         </div>
     )

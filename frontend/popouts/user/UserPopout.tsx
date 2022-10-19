@@ -6,8 +6,10 @@ import Button from '../../components/button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { User } from '../../types';
+import { useTranslation } from 'next-i18next';
 
 export const UserPopout: React.FC<User> = (user) => {
+    const { t } = useTranslation('common');
     const currentPath = useRouter().asPath;
     const userPath = `/users/${user.id}`;
 
@@ -42,7 +44,7 @@ export const UserPopout: React.FC<User> = (user) => {
                     </Link>
                     <div className={styles['stats']}>
                         <span>
-                            {user?.follower_count} followers
+                            {user?.follower_count} {t('followers')}
                         </span>
                     </div>
                 </div>
@@ -55,7 +57,7 @@ export const UserPopout: React.FC<User> = (user) => {
                         type={'secondary'}
                         href={userPath}
                     >
-                        Go to profile
+                        {t('goToProfile')}
                     </Button>
                 </div>
             )}
