@@ -3,5 +3,7 @@
     "noPosts": "User has not posted anything yet.",
     "likedPosts": "Liked posts",
     "noLikedPosts": "User has not liked any posts.",
-    "editProfile": "Edit profile"
+    "editProfile": "Edit profile",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
 }

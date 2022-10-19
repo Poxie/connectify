@@ -8,10 +8,12 @@ import { selectUserById } from "../../redux/users/selectors";
 import Button from '../../components/button';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { EditProfileModal } from '../../modals/edit-profile/EditProfileModal';
+import { useTranslation } from 'next-i18next';
 
 export const UserHeaderButtons: React.FC<{
     userId: number;
 }> = ({ userId }) => {
+    const { t } = useTranslation('user');
     const dispatch = useDispatch();
     const { setModal } = useModal();
     const { post, destroy } = useAuth();
@@ -52,7 +54,7 @@ export const UserHeaderButtons: React.FC<{
                     type={user.is_following ? 'secondary' : 'default'}
                     className={styles['header-button']}
                 >
-                    {user.is_following ? 'Unfollow' : 'Follow'}
+                    {user.is_following ? t('unfollow') : t('follow')}
                 </Button>
             ) : (
                 <Button 
@@ -60,7 +62,7 @@ export const UserHeaderButtons: React.FC<{
                     onClick={editProfile}
                     className={styles['header-button']}
                 >
-                    Edit Profile
+                    {t('editProfile')}
                 </Button>
             )}
         </div>

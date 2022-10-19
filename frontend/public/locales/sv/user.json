@@ -3,5 +3,7 @@
     "noPosts": "Användaren har inte lagt upp något ännu.",
     "likedPosts": "Gillade inlägg",
     "noLikedPosts": "Användaren har inte gillat några inlägg.",
-    "editProfile": "Redigera profil"
+    "editProfile": "Redigera profil",
+    "follow": "Följ",
+    "unfollow": "Avfölj"
 }

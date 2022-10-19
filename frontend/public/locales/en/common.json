@@ -19,7 +19,5 @@
     "likes": "Likes",
     "posts": "Posts",
     "comments": "Comments",
-    "followers": "Followers",
-    "follow": "Follow",
-    "unfollow": "Unfollow"
+    "followers": "Followers"
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '../../redux/store';
@@ -7,6 +8,7 @@ import { UserHeaderButtons } from "./UserHeaderButtons";
 import { UserHeaderSkeleton } from './UserHeaderSkeleton';
 
 export const UserHeader = () => {
+    const { t } = useTranslation('common');
     const { userId } = useRouter().query as { userId: string };
     const user = useAppSelector(state => selectUserById(state, parseInt(userId)));
     if(!user) return <UserHeaderSkeleton />;
@@ -42,7 +44,7 @@ export const UserHeader = () => {
                         )}
                         <div className={styles['user-stats']}>
                             <span>
-                                {user.follower_count} followers
+                                {user.follower_count} {t('followers')}
                             </span>
                         </div>
                     </div>
