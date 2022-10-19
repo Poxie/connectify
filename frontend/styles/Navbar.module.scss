@@ -10,9 +10,9 @@
     max-width: var(--width-max);
     margin: 0 auto;
     border-bottom: 2px solid var(--background-tertiary);
-    display: flex;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 1fr 2fr 1fr;
 }
 .site-name {
     font-size: 30px;
@@ -22,6 +22,7 @@
 .right {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: var(--spacing-primary);
 }
 .button {
@@ -47,6 +48,53 @@
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+}
+
+.input-container {
+    position: relative;
+}
+.results {
+    max-height: 350px;
+    overflow: auto;
+    background-color: var(--background-secondary);
+    border: 2px solid var(--background-tertiary);
+    border-radius: var(--border-radius-primary);
+    position: absolute;
+    width: 100%;
+    top: calc(100% + var(--spacing-primary) / 2);
+    padding: 8px;
+}
+.result {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-primary);
+    border-radius: var(--border-radius-secondary);
+    transition: background-color .15s;
+    cursor: pointer;
+    padding: 8px 10px;
+
+    &:hover {
+        background-color: var(--background-tertiary);
+    }
+}
+.result-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.result-name {
+    font-weight: 600;
+}
+.result-username {
+    display: inline-block;
+    margin-left: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+.result-followers {
+    color: var(--text-secondary);
+    font-size: 14px;
 }
 
 @media (max-width: 700px) {
