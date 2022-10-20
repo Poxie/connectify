@@ -40,7 +40,7 @@ export const MessagesSidebar = () => {
                 </span>
 
                 <HasTooltip 
-                    tooltip={t('createConversation')}
+                    tooltip={t('startConversation')}
                     onClick={openConvoModal}
                 >
                     <AddIcon />
