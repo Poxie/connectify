@@ -52,6 +52,20 @@
     font-weight: 600;
     opacity: .8;
 }
+.options {
+    svg {
+        width: 30px;
+        padding: 6px;
+        fill: var(--text-secondary);
+        cursor: pointer;
+        border-radius: 6px;
+        display: block;
+
+        &:hover {
+            background-color: var(--background-tertiary);
+        }
+    }
+}
 .content {
     color: var(--text-secondary);
 }

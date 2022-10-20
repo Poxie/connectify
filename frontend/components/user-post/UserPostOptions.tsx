@@ -1,6 +1,8 @@
+import styles from './UserPost.module.scss';
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { OptionsIcon } from "../../assets/icons/OptionsIcon";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useMenu } from "../../contexts/menu/MenuProvider";
 import { MenuGroup } from "../../contexts/menu/types";
@@ -56,10 +58,11 @@ export const UserPostOptions: React.FC<{
 
     return(
         <button 
+            className={styles['options']}
             onClick={onClick}
             ref={ref}
         >
-            options
+            <OptionsIcon />
         </button>
     )
 }
