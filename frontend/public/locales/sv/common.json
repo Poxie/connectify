@@ -31,6 +31,7 @@
     "createPost": "Skapa inlägg",
 
     "search": "Sök",
+    "signIn": "Logga in",
 
     "selectUserHeader": "Välj användare",
     "searchForUser": "Sök efter användare",
@@ -38,5 +39,8 @@
     "emptyCurrentDirectMessages": "Skapade konversationer kommer visas här.",
     "showingResults": "Visar {{amount}} resultat",
     "noResults": "Inga resultat hittades.",
-    "createConversationWith": "Skapa konversation med"
+    "createConversationWith": "Skapa konversation med",
+
+    "notLoggedInHeader": "Du behöver logga in för den här funktionen.",
+    "notLoggedInMessage": "Logga in för att få den bästa möjliga upplevelsen. Användaruppdatteringar som du följer kommer att visas här."
 }

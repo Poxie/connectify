@@ -1,4 +1,5 @@
 import styles from '../../../styles/Feed.module.scss';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../contexts/auth/AuthProvider";
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
@@ -10,6 +11,7 @@ import { setPosts } from '../../../redux/posts/actions';
 import { setFeedPostIds } from '../../../redux/feed/actions';
 import { Post } from '../../../types';
 import { FeedEmpty } from './FeedEmpty';
+import { LoginPrompt } from '../../login-prompt/LoginPrompt';
 
 export const Feed = () => {
     const { get, token, loading } = useAuth();
@@ -46,8 +48,21 @@ export const Feed = () => {
                         key={key}
                     />
                 ))}
-                {!feedLoading && postIds.length === 0 && (
+
+                {/* User logged in, but feed is empty */}
+                {!feedLoading && token && postIds.length === 0 && (
                     <FeedEmpty />
+                )}
+
+                {/* User is not logged in */}
+                {!loading && !token && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: .35 }}
+                    >
+                        <LoginPrompt />
+                    </motion.div>
                 )}
             </AnimatePresence>
 

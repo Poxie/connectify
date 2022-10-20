@@ -30,7 +30,8 @@
     "previewPost": "Preview post",
     "createPost": "Create post",
 
-    "search": "Sök",
+    "search": "Search",
+    "signIn": "Login",
 
     "selectUserHeader": "Select User",
     "searchForUser": "Search for user",
@@ -38,5 +39,8 @@
     "emptyCurrentDirectMessages": "Current direct messages will be displayed here.",
     "showingResults": "Showing {{amount}} results",
     "noResults": "No results were found.",
-    "createConversationWith": "Create conversation with"
+    "createConversationWith": "Create conversation with",
+
+    "notLoggedInHeader": "You have to login to use this feature.",
+    "notLoggedInMessage": "Login in order to get the most out of your experience. Updates from users you follow will appear here."
 }

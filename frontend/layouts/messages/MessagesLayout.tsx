@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/store';
 import { selectChannelIds, selectChannelsLoading } from '../../redux/messages/hooks';
 import { setChannels } from '../../redux/messages/actions';
+import { LoginPrompt } from '../../components/login-prompt/LoginPrompt';
 const MessagesSidebar = dynamic(() => import('./MessagesSidebar').then(res => res.MessagesSidebar), { ssr: false });
 
 export const MessagesLayout: React.FC<{
@@ -36,6 +37,12 @@ export const MessagesLayout: React.FC<{
                 dispatch(setChannels(channels));
             })
     }, [loading, token, get, channels, channelsLoading]);
+
+    if(!loading && !token) {
+        return(
+            <LoginPrompt />
+        )
+    }
 
     return(
         <div className={styles['container']}>
