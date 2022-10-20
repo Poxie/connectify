@@ -66,6 +66,7 @@ export const Post = () => {
             <UserPostHeader 
                 user={author}
                 timestamp={timestamp}
+                postId={id}
             />
             <PostTitle title={title} />
             <PostContent content={content} />
