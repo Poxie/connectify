@@ -23,8 +23,13 @@
 }
 .header {
     display: flex;
-    gap: 10px;
     align-items: center;
+    justify-content: space-between;
+}
+.header-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .author-avatar {
     height: 25px;

@@ -27,6 +27,7 @@ export const UserPost: React.FC<{
         <li className={styles['container']}>
             <UserPostHeader 
                 user={author}
+                postId={id}
                 timestamp={timestamp}
             />
             <UserPostContent 
