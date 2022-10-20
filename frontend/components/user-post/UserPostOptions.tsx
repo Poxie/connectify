@@ -10,6 +10,7 @@ import { removePost } from "../../redux/posts/actions";
 import { selectPostById } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
 import { useTranslation } from 'next-i18next';
+import { removeUserPostId } from '../../redux/users/actions';
 
 export const UserPostOptions: React.FC<{
     postId: number;
@@ -46,6 +47,7 @@ export const UserPostOptions: React.FC<{
                             await router.replace(`/users/${profile?.id}`);
                         }
                         dispatch(removePost(postId));
+                        dispatch(removeUserPostId(profile?.id, postId));
                     })
             }
 
