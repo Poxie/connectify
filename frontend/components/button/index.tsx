@@ -2,8 +2,9 @@ import Link from 'next/link';
 import React, { AnchorHTMLAttributes } from 'react';
 import styles from './Button.module.scss';
 
-export default function Button({ children, style, onClick, href, ariaLabel, target, external=false, disabled=false, className='', type='default' }: {
+export default function Button({ children, style, onClick, href, ariaLabel, target, buttonType='button', external=false, disabled=false, className='', type='default' }: {
     children: any;
+    buttonType?: 'button' | 'submit';
     type?: 'default' | 'secondary' | 'hollow' | 'transparent';
     className?: string;
     style?: React.CSSProperties;
@@ -47,7 +48,10 @@ export default function Button({ children, style, onClick, href, ariaLabel, targ
             </Link>
         )
     ) : (
-        <button {...props}>
+        <button 
+            type={buttonType}
+            {...props}
+        >
             {children}
         </button>
     )
