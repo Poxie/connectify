@@ -1,0 +1,14 @@
+.content {
+    padding: var(--spacing-primary);
+    padding-top: 0;
+}
+.inputs {
+    display: grid;
+    gap: var(--spacing-primary);
+    padding: calc(var(--spacing-primary) * 2) 0;
+}
+.options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
