@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { User } from '../../types';
-import { AuthContext as AuthContextType } from './types';
+import { AuthContext as AuthContextType, ExtendedError } from './types';
 
 const AuthContext = React.createContext({} as AuthContextType);
 
@@ -80,7 +80,9 @@ export const AuthProvider: React.FC<{
                     return res.json()
                 }
                 // Else throw error
-                throw new Error(await res.text())
+                const error = new Error(await res.text()) as ExtendedError;
+                error.code = res.status;
+                throw error;
             })
             .then(data => data)
         )
@@ -101,7 +103,9 @@ export const AuthProvider: React.FC<{
                     return res.json()
                 }
                 // Else throw error
-                throw new Error(await res.text())
+                const error = new Error(await res.text()) as ExtendedError;
+                error.code = res.status;
+                throw error;
             })
         )
     }, [token]);
@@ -127,7 +131,9 @@ export const AuthProvider: React.FC<{
                     return res.json()
                 }
                 // Else throw error
-                throw new Error(await res.text())
+                const error = new Error(await res.text()) as ExtendedError;
+                error.code = res.status;
+                throw error;
             })
             .then(data => data)
         )

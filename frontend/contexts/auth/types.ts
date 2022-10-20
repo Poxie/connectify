@@ -10,3 +10,7 @@ export type AuthContext = {
     profile: null | User;
     setProfile: (user: User) => void;
 }
+
+export type ExtendedError = Error & {
+    code: number;
+}
