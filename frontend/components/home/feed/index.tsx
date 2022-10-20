@@ -15,15 +15,19 @@ export const Feed = () => {
     const { get, loading } = useAuth();
     const dispatch = useAppDispatch();
     const postIds = useAppSelector(selectFeedPostIds);
+    const [feedLoading, setFeedLoading] = useState(true);
 
     // Initial fetch for feed posts 
     useEffect(() => {
         if(loading || postIds.length) return;
 
+        setFeedLoading(true);
+
         get(`/feed`)
             .then((posts: Post[]) => {
                 dispatch(setFeedPostIds(posts.map(post => post.id)));
                 dispatch(setPosts(posts));
+                setFeedLoading(false);
             })
     }, [get, loading]);
 
@@ -35,7 +39,7 @@ export const Feed = () => {
                         key={key}
                     />
                 ))}
-                {!loading && postIds.length === 0 && (
+                {!feedLoading && postIds.length === 0 && (
                     <FeedEmpty />
                 )}
             </AnimatePresence>
