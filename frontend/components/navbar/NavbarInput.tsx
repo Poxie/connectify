@@ -58,6 +58,7 @@ export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
                 onBlur={handleBlur}
                 placeholder={'Search for user'}
                 onChange={setQuery}
+                inputClassName={styles['input']}
             />
             {query && resultsShowing && (
                 <div className={styles['results']}>

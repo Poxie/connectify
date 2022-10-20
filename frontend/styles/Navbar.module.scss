@@ -53,6 +53,9 @@
 .input-container {
     position: relative;
 }
+.input {
+    padding: 9px !important;
+}
 .search-button {
     display: none;
 }
@@ -130,6 +133,10 @@
         top: calc(-1 * var(--height));
         transition: top .3s;
         display: block;
+
+        .input {
+            padding: var(--spacing-primary) !important;
+        }
 
         &>div {
             pointer-events: all;
