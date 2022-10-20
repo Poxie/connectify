@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
@@ -12,6 +13,7 @@ export const UserPostOptions: React.FC<{
 }> = ({ postId }) => {
     const { profile, destroy } = useAuth();
     const { setMenu } = useMenu();
+    const router = useRouter();
     const dispatch = useDispatch();
     const ref = useRef<HTMLButtonElement>(null);
     const post = useAppSelector(state => selectPostById(state, postId));
@@ -35,7 +37,10 @@ export const UserPostOptions: React.FC<{
             // Deleting post
             const deletePost = () => {
                 destroy(`/posts/${postId}`)
-                    .then(() => {
+                    .then(async () => {
+                        if(router.asPath === `/posts/${postId}`) {
+                            await router.replace(`/users/${profile?.id}`);
+                        }
                         dispatch(removePost(postId));
                     })
             }
