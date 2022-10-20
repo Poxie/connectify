@@ -1,4 +1,4 @@
-import os
+import os, jwt
 from random import randrange
 from typing import Union
 from database import db
@@ -107,10 +107,10 @@ def create_user(username: str, password: str):
     # Creating user
     db.insert(query, values)
 
-    # Fetching created user
-    user = get_user_by_id(id)
+    # Creating token for user
+    token = jwt.encode({ 'id': id }, os.getenv('JWT_SECRET_KEY') or '')
 
-    return user
+    return token
 
 # Function to bulk get users by username
 def get_users_by_username(username: str, token_id: Union[int, None]=None):

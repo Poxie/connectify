@@ -37,11 +37,11 @@ def create_new_user():
 
     # Creating user
     try:
-        user = create_user(username, password)
+        token = create_user(username, password)
     except ValueError as e:
         return str(e), 409
 
-    return jsonify(user)
+    return jsonify({ 'token': token })
 
 # Update user
 @users.patch('/users/<int:user_id>')
