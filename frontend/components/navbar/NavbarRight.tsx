@@ -5,6 +5,7 @@ import { SearchIcon } from '../../assets/icons/SearchIcon';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { CreatePostModal } from '../../modals/create-post/CreatePostModal';
+import { LoginModal } from '../../modals/login/LoginModal';
 import styles from '../../styles/Navbar.module.scss';
 import { Tooltip } from '../tooltip/Tooltip';
 import { NavbarLoginButton } from './NavbarLoginButton';
@@ -14,11 +15,17 @@ export const NavbarRight: React.FC<{
     inputContainer: RefObject<HTMLDivElement>;
 }> = ({ inputContainer }) => {
     const { t } = useTranslation('common');
-    const { loading, profile } = useAuth();
+    const { loading, token, profile } = useAuth();
     const { setModal } = useModal();
 
     // Open create post modal
     const openCreatePost = () => {
+        // If user is not logged in
+        if(!token) {
+            setModal(<LoginModal />);
+            return;
+        }
+
         setModal(<CreatePostModal />);
     }
 

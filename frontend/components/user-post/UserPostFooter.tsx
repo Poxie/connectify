@@ -5,6 +5,8 @@ import { CommentNeutralIcon } from '../../assets/icons/CommentNeutralIcon';
 import { HeartActiveIcon } from '../../assets/icons/HeartActiveIcon';
 import { HeartNeutralIcon } from '../../assets/icons/HeartNeutralIcon';
 import { useAuth } from '../../contexts/auth/AuthProvider';
+import { useModal } from '../../contexts/modal/ModalProvider';
+import { LoginModal } from '../../modals/login/LoginModal';
 import styles from './UserPost.module.scss';
 import { UserPostFooterButton } from './UserPostFooterButton';
 
@@ -17,15 +19,22 @@ export const UserPostFooter: React.FC<{
     onPostUnlike: (id: number) => void;
 }> = ({ id, has_liked, like_count, comment_count, onPostLike, onPostUnlike }) => {
     const { t } = useTranslation();
-    const { post, destroy } = useAuth();
+    const { setModal } = useModal();
+    const { token, post, destroy } = useAuth();
     const router = useRouter();
 
     // Handling like and unlike
     const like = useCallback(() => {
+        // If user is not logged in
+        if(!token) {
+            setModal(<LoginModal />);
+            return;
+        }
+
         onPostLike(id);
         post(`/posts/${id}/likes`)
             .catch(console.error);
-    }, [post, id]);
+    }, [token, post, id]);
     const unlike = useCallback(() => {
         onPostUnlike(id);
         destroy(`/posts/${id}/likes`)

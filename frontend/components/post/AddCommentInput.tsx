@@ -12,11 +12,22 @@ export const AddCommentInput: React.FC<{
 }> = ({ postId }) => {
     const { t } = useTranslation('common');
     const { t: g } = useTranslation('post');
-    const { post } = useAuth();
+    const { post, token, loading } = useAuth();
     const dispatch = useDispatch();
     const [expanded, setExpanded] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [value, setValue] = useState('');
+
+    // If user is not logged in
+    if(!token && !loading) {
+        return(
+            <div className={styles['add-comment']}>
+                <span>
+                    You need to login to comment.
+                </span>
+            </div>
+        )
+    }
 
     // Function to create comment
     const addComment = () => {

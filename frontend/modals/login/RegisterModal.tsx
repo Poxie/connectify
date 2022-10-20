@@ -99,6 +99,7 @@ export const RegisterModal = () => {
                     <button 
                         onClick={goBack}
                         type={'button'}
+                        className={styles['change-option']}
                     >
                         Already have an account?
                     </button>

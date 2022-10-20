@@ -9,6 +9,7 @@ import Button from '../../components/button';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { EditProfileModal } from '../../modals/edit-profile/EditProfileModal';
 import { useTranslation } from 'next-i18next';
+import { LoginModal } from '../../modals/login/LoginModal';
 
 export const UserHeaderButtons: React.FC<{
     userId: number;
@@ -16,12 +17,18 @@ export const UserHeaderButtons: React.FC<{
     const { t } = useTranslation('user');
     const dispatch = useDispatch();
     const { setModal } = useModal();
-    const { post, destroy } = useAuth();
+    const { post, destroy, token } = useAuth();
     const [disabled, setDisabled] = useState(false);
     const user = useAppSelector(state => selectUserById(state, userId));
     if(!user) return null;
 
     const follow = () => {
+        // If user is not logged in
+        if(!token) {
+            setModal(<LoginModal />);
+            return;
+        }
+
         setDisabled(true);
         
         post(`/followers/${userId}/`, {'test': 'yey'})

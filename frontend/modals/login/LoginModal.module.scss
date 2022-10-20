@@ -12,3 +12,11 @@
     align-items: center;
     justify-content: space-between;
 }
+.change-option {
+    color: var(--text-secondary);
+    transition: color .2s;
+
+    &:hover {
+        color: var(--text-primary);
+    }
+}

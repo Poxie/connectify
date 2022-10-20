@@ -92,6 +92,7 @@ export const LoginModal = () => {
                     <button 
                         onClick={register}
                         type={'button'}
+                        className={styles['change-option']}
                     >
                         Don't have an account?
                     </button>
