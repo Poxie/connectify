@@ -13,7 +13,7 @@ import { UserPostSkeleton } from '../user-post/UserPostSkeleton';
 import { useTranslation } from 'next-i18next';
 
 export const UserProfile = () => {
-    const { t } = useTranslation();
+    const { t } = useTranslation('user');
     const { get } = useAuth();
     const dispatch = useDispatch();
     const { userId } = useRouter().query as { userId: string };
