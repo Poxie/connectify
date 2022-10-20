@@ -5,8 +5,10 @@ import { Input } from '../../components/input';
 import Button from '../../components/button';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 export const RegisterModal = () => {
+    const { t } = useTranslation('common');
     const { post } = useAuth();
     const { goBack } = useModal();
     const [error, setError] = useState('');
@@ -58,32 +60,32 @@ export const RegisterModal = () => {
     return(
         <>
         <ModalHeader>
-            Create a {process.env.NEXT_PUBLIC_WEBSITE_NAME} account
+            {t('registerHeader', {websiteName: process.env.NEXT_PUBLIC_WEBSITE_NAME})}
         </ModalHeader>
         <div className={styles['content']}>
             <span>
-                Create an account to get the most out of the experience. Interact with others and be part of many, many features!
+                {t('registerSubHeader')}
             </span>
 
             <form onSubmit={register}>
                 <div className={styles['inputs']}>
                     <Input 
-                        placeholder={'Useranme'}
+                        placeholder={t('username')}
+                        label={t('username')}
                         name={'username'}
-                        label={'Username'}
                         onChange={setUsername}
                     />
                     <Input 
-                        placeholder={'Password'}
+                        placeholder={t('password')}
+                        label={t('password')}
                         name={'password'}
-                        label={'Password'}
                         type={'password'}
                         onChange={setPassword}
                     />
                     <Input 
-                        placeholder={'Repeat password'}
+                        placeholder={t('repeatPassword')}
+                        label={t('repeatPassword')}
                         name={'repeat-password'}
-                        label={'Repeat password'}
                         type={'password'}
                         onChange={setRepeatPassword}
                     />
@@ -101,13 +103,13 @@ export const RegisterModal = () => {
                         type={'button'}
                         className={styles['change-option']}
                     >
-                        Already have an account?
+                        {t('alreadyHaveAnAccount')}
                     </button>
                     <Button 
                         disabled={disabled}
                         buttonType={'submit'}
                     >
-                        Create account
+                        {t('createAccount')}
                     </Button>
                 </div>
             </form>

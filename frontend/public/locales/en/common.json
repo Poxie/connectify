@@ -31,7 +31,7 @@
     "createPost": "Create post",
 
     "search": "Search",
-    "signIn": "Login",
+    "signIn": "Sign in",
 
     "selectUserHeader": "Select User",
     "searchForUser": "Search for user",
@@ -42,5 +42,16 @@
     "createConversationWith": "Create conversation with",
 
     "notLoggedInHeader": "You have to login to use this feature.",
-    "notLoggedInMessage": "Login in order to get the most out of your experience. Updates from users you follow will appear here."
+    "notLoggedInMessage": "Login in order to get the most out of your experience. Updates from users you follow will appear here.",
+
+    "loginHeader": "Sign into",
+    "loginSubHeader": "Login to get the full experience. Create and interact with posts, follow users, and start conversations!",
+    "registerHeader": "Create a {{websiteName}} account",
+    "registerSubHeader": "Create an account to get the most out of the experience. Interact with others and be part of many, many features!",
+    "username": "Username",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "dontHaveAnAccount": "Don't have an account?",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "createAccount": "Create account"
 }

@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { RegisterModal } from './RegisterModal';
+import { useTranslation } from 'next-i18next';
 
 export const LoginModal = () => {
+    const { t } = useTranslation('common');
     const { post } = useAuth();
     const { pushModal } = useModal();
     const [error, setError] = useState('');
@@ -59,25 +61,25 @@ export const LoginModal = () => {
     return(
         <>
         <ModalHeader>
-            Sign into {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+            {t('loginHeader')} {process.env.NEXT_PUBLIC_WEBSITE_NAME}
         </ModalHeader>
         <div className={styles['content']}>
             <span>
-                Login to get the full experience. Create and interact with posts, follow users, and start conversations!
+                {t('loginSubHeader')}
             </span>
 
             <form onSubmit={login}>
                 <div className={styles['inputs']}>
                     <Input 
-                        placeholder={'Username'}
-                        label={'Username'}
+                        placeholder={t('username')}
+                        label={t('username')}
                         onChange={setUsername}
                         name={'username'}
                     />
                     <Input 
                         type={'password'}
-                        placeholder={'Password'}
-                        label={'Password'}
+                        placeholder={t('password')}
+                        label={t('password')}
                         onChange={setPassword}
                         name={'password'}
                     />
@@ -94,13 +96,13 @@ export const LoginModal = () => {
                         type={'button'}
                         className={styles['change-option']}
                     >
-                        Don't have an account?
+                        {t('alreadyHaveAnAccount')}
                     </button>
                     <Button
                         disabled={disabled}
                         buttonType={'submit'}
                     >
-                        Sign in
+                        {t('signIn')}
                     </Button>
                 </div>
             </form>
