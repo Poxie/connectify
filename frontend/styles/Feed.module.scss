@@ -21,3 +21,15 @@
     margin-top: var(--spacing-primary);
     font-size: 14px;
 }
+
+@media (max-width: 550px) {
+    .buttons>* {
+        flex: 1;
+        justify-content: center;
+    }
+}
+@media (max-width: 450px) {
+    .buttons {
+        flex-direction: column;
+    }
+}
