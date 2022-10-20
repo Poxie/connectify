@@ -1,5 +1,5 @@
 import { Comment, Post } from "../../types";
-import { ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
+import { ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
 import { PostsReducer } from "./types"
 
 const initialState = {
@@ -17,6 +17,17 @@ export const postsReducer: PostsReducer = (state=initialState, action) => {
                     ...state.posts,
                     [post.id]: post
                 }
+            }
+        }
+        case REMOVE_POST: {
+            const postId = action.payload;
+
+            const posts = {...state.posts};
+            delete posts[postId];
+
+            return {
+                ...state,
+                posts
             }
         }
         case SET_POST_COMMENTS: {
