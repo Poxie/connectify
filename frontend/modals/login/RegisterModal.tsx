@@ -1,30 +1,34 @@
 import styles from './LoginModal.module.scss';
 import { ModalHeader } from "../ModalHeader"
+import { useModal } from '../../contexts/modal/ModalProvider';
 import { Input } from '../../components/input';
 import Button from '../../components/button';
-import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/auth/AuthProvider';
-import { useModal } from '../../contexts/modal/ModalProvider';
-import { RegisterModal } from './RegisterModal';
+import React, { useEffect, useState } from 'react';
 
-export const LoginModal = () => {
+export const RegisterModal = () => {
     const { post } = useAuth();
-    const { pushModal } = useModal();
+    const { goBack } = useModal();
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const disabled = !username || !password || loading || !!error;
+    const [repeatPassword, setRepeatPassword] = useState('');
+    const disabled = !username || !password || !repeatPassword || !!error || loading;
 
-    // Function to login
-    const login = (e: React.FormEvent) => {
+    // Function to create account
+    const register = (e: React.FormEvent) => {
         e.preventDefault();
+
         if(disabled) return;
+        if(password !== repeatPassword) {
+            setError('Passwords don\'t match.');
+            return;
+        }
 
         setLoading(true);
 
-        // Making login request
-        post(`/login`, {
+        post(`/users`, {
             username,
             password
         })
@@ -45,42 +49,45 @@ export const LoginModal = () => {
         })
     }
 
-    // Function to register account
-    const register = () => {
-        pushModal(<RegisterModal />);
-    }
-
-    // Resetting error
+    // Resetting errors on typing
     useEffect(() => {
         if(!error) return;
         setError('');
-    }, [username, password]);
+    }, [username, password, repeatPassword]);
 
     return(
         <>
         <ModalHeader>
-            Sign into {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+            Create a {process.env.NEXT_PUBLIC_WEBSITE_NAME} account
         </ModalHeader>
         <div className={styles['content']}>
             <span>
-                Login to get the full experience. Create and interact with posts, follow users, and start conversations!
+                Create an account to get the most out of the experience. Interact with others and be part of many, many features!
             </span>
 
-            <form onSubmit={login}>
+            <form onSubmit={register}>
                 <div className={styles['inputs']}>
                     <Input 
-                        placeholder={'Username'}
+                        placeholder={'Useranme'}
+                        name={'username'}
                         label={'Username'}
                         onChange={setUsername}
-                        name={'username'}
                     />
                     <Input 
-                        type={'password'}
                         placeholder={'Password'}
-                        label={'Password'}
-                        onChange={setPassword}
                         name={'password'}
+                        label={'Password'}
+                        type={'password'}
+                        onChange={setPassword}
                     />
+                    <Input 
+                        placeholder={'Repeat password'}
+                        name={'repeat-password'}
+                        label={'Repeat password'}
+                        type={'password'}
+                        onChange={setRepeatPassword}
+                    />
+
                     {error && (
                         <span>
                             {error}
@@ -90,16 +97,16 @@ export const LoginModal = () => {
 
                 <div className={styles['options']}>
                     <button 
-                        onClick={register}
+                        onClick={goBack}
                         type={'button'}
                     >
-                        Don't have an account?
+                        Already have an account?
                     </button>
-                    <Button
+                    <Button 
                         disabled={disabled}
                         buttonType={'submit'}
                     >
-                        Sign in
+                        Create account
                     </Button>
                 </div>
             </form>
