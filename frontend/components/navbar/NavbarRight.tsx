@@ -7,7 +7,7 @@ import { useModal } from '../../contexts/modal/ModalProvider';
 import { CreatePostModal } from '../../modals/create-post/CreatePostModal';
 import { LoginModal } from '../../modals/login/LoginModal';
 import styles from '../../styles/Navbar.module.scss';
-import { Tooltip } from '../tooltip/Tooltip';
+import { HasTooltip } from '../tooltip/HasTooltip';
 import { NavbarLoginButton } from './NavbarLoginButton';
 import { NavbarProfile } from './NavbarProfile';
 
@@ -44,23 +44,23 @@ export const NavbarRight: React.FC<{
     ].join(' ');
     return(
         <div className={styles['right']}>
-            <Tooltip
-                text={t('search')}
+            <HasTooltip
+                tooltip={t('search')}
                 position={'bottom'}
                 className={searchClassName}
                 onClick={openSearch}
             >
                 <SearchIcon />
-            </Tooltip>
+            </HasTooltip>
 
-            <Tooltip 
-                text={t('navbar.createPost')}
+            <HasTooltip 
+                tooltip={t('navbar.createPost')}
                 position={'bottom'}
                 className={styles['button']}
                 onClick={openCreatePost}
             >
                 <AddIcon />
-            </Tooltip>
+            </HasTooltip>
 
             {profile ? (
                 <NavbarProfile {...profile} />

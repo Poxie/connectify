@@ -7,8 +7,8 @@ import { AddIcon } from "../../assets/icons/AddIcon";
 import { useModal } from "../../contexts/modal/ModalProvider";
 import { SelectUserModal } from "../../modals/select-user/SelectUserModal";
 import Button from '../../components/button';
-import { Tooltip } from '../../components/tooltip/Tooltip';
 import { useTranslation } from 'next-i18next';
+import { HasTooltip } from '../../components/tooltip/HasTooltip';
 
 export const MessagesSidebar = () => {
     const { t } = useTranslation('messages');
@@ -39,12 +39,12 @@ export const MessagesSidebar = () => {
                     {t('directMessages')}
                 </span>
 
-                <Tooltip 
-                    text={t('createConversation')}
+                <HasTooltip 
+                    tooltip={t('createConversation')}
                     onClick={openConvoModal}
                 >
                     <AddIcon />
-                </Tooltip>
+                </HasTooltip>
             </div>
 
             {!channels.length && (
