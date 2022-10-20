@@ -6,18 +6,18 @@ import styles from '../../styles/Sidebar.module.scss';
 import { SidebarTabs } from './SidebarTabs';
 
 export const Sidebar = () => {
-    const { get, loading } = useAuth();
+    const { get, token, loading } = useAuth();
     const dispatch = useDispatch();
 
     // Fetching message unread count
     useEffect(() => {
-        if(loading) return;
+        if(loading || !token) return;
 
         get(`/users/@me/unread_messages`)
             .then(data => {
                 dispatch(setTotalUnreadCount(parseInt(data.count)));
             })
-    }, [loading, get]);
+    }, [loading, token, get]);
 
     return(
         <div className={styles['container']}>

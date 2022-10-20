@@ -14,7 +14,7 @@ export const MessagesLayout: React.FC<{
     children: ReactElement;
 }> = ({ children }) => {
     const { channelId } = useRouter().query;
-    const { get, loading } = useAuth();
+    const { get, token, loading } = useAuth();
     const screenType = useScreenType();
     const dispatch = useDispatch();
     const channels = useAppSelector(selectChannelIds);
@@ -24,12 +24,18 @@ export const MessagesLayout: React.FC<{
     useEffect(() => {
         if(loading || !channelsLoading || channels.length) return;
 
+        // User is not logged in
+        if(!token) {
+            dispatch(setChannels([]));
+            return;
+        }
+
         // Getting channels
         get(`/users/@me/channels`)
             .then(channels => {
                 dispatch(setChannels(channels));
             })
-    }, [loading, get, channels, channelsLoading]);
+    }, [loading, token, get, channels, channelsLoading]);
 
     return(
         <div className={styles['container']}>

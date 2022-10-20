@@ -12,7 +12,7 @@ import { Post } from '../../../types';
 import { FeedEmpty } from './FeedEmpty';
 
 export const Feed = () => {
-    const { get, loading } = useAuth();
+    const { get, token, loading } = useAuth();
     const dispatch = useAppDispatch();
     const postIds = useAppSelector(selectFeedPostIds);
     const [feedLoading, setFeedLoading] = useState(true);
@@ -20,6 +20,13 @@ export const Feed = () => {
     // Initial fetch for feed posts 
     useEffect(() => {
         if(loading || postIds.length) return;
+        
+        // User is not logged in
+        if(!token) {
+            setFeedLoading(false);
+            dispatch(setFeedPostIds([]));
+            return
+        }
 
         setFeedLoading(true);
 
@@ -29,7 +36,7 @@ export const Feed = () => {
                 dispatch(setPosts(posts));
                 setFeedLoading(false);
             })
-    }, [get, loading]);
+    }, [get, token, loading]);
 
     return(
         <div className={styles['container']}>
