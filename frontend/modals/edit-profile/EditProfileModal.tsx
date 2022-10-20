@@ -12,8 +12,10 @@ import { useAppSelector } from '../../redux/store';
 import { selectUserById } from '../../redux/users/selectors';
 import { EditProfileBanner } from './EditProfileBanner';
 import { EditProfileAvatar } from './EditProfileAvatar';
+import { useTranslation } from 'next-i18next';
 
 export const EditProfileModal = () => {
+    const { t } = useTranslation('common');
     const { profile, patch } = useAuth();
     const { close } = useModal();
     const dispatch = useDispatch();
@@ -64,7 +66,7 @@ export const EditProfileModal = () => {
     return(
         <>
             <ModalHeader>
-                Edit Profile
+                {t('editProfile')}
             </ModalHeader>
             <EditProfileBanner 
                 updateProperty={updateProperty}
@@ -86,21 +88,21 @@ export const EditProfileModal = () => {
                         </span>
                     )}
                     <span className={styles['followers']}>
-                        {tempUser?.follower_count} followers
+                        {tempUser?.follower_count} {t('followers')}
                     </span>
                 </div>
             </div>
             <div className={styles['input-container']}>
                 <Input 
                     labelClassName={styles['label']}
-                    placeholder={'Select a name to go by...'}
-                    label={'Display name'}
+                    placeholder={t('displayNamePlaceholder')}
+                    label={t('displayName')}
                     defaultValue={tempUser?.display_name || ''}
                     onChange={name => updateProperty('display_name', name)}
                 />
                 <Input 
                     labelClassName={styles['label']}
-                    placeholder={'Type a few words about yourself!'}
+                    placeholder={t('bioPlaceholder')}
                     label={'Bio'}
                     defaultValue={tempUser?.bio || ''}
                     onChange={bio => updateProperty('bio', bio)}
@@ -108,9 +110,9 @@ export const EditProfileModal = () => {
                 />
             </div>
             <ModalFooter 
-                cancelLabel={'Close'}
+                cancelLabel={t('close')}
                 onCancel={cancel}
-                confirmLabel={'Save Changes'}
+                confirmLabel={t('saveChanges')}
                 onConfirm={confirm}
                 confirmDisabled={disabled}
             />

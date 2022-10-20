@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import React, { useRef } from 'react';
 import { User } from '../../types';
@@ -7,6 +8,7 @@ export const EditProfileAvatar: React.FC<{
     updateProperty: (key: keyof User, value: any) => void;
     avatar: File | string | null;
 }> = ({ updateProperty, avatar }) => {
+    const { t } = useTranslation('common');
     const input = useRef<HTMLInputElement>(null);
 
     const openFileSelector = () => {
@@ -36,6 +38,7 @@ export const EditProfileAvatar: React.FC<{
         <div 
             className={className} 
             onClick={openFileSelector}
+            data-hover-text={t('changeAvatar')}
         >
             {url && (
                 <Image 

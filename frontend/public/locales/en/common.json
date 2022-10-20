@@ -56,5 +56,14 @@
     "repeatPassword": "Repeat password",
     "dontHaveAnAccount": "Don't have an account?",
     "alreadyHaveAnAccount": "Already have an account?",
-    "createAccount": "Create account"
+    "createAccount": "Create account",
+    
+    "editProfile": "Edit Profile",
+    "changeBanner": "Change banner",
+    "changeAvatar": "Change avatar",
+    "displayName": "Display name",
+    "displayNamePlaceholder": "Select a name to go by...",
+    "bio": "Bio",
+    "bioPlaceholder": "Type a few words about yourself!",
+    "saveChanges": "Save Changes"
 }

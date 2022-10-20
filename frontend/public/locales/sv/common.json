@@ -56,5 +56,14 @@
     "repeatPassword": "Upprepa lösenord",
     "dontHaveAnAccount": "Har du inget konto?",
     "alreadyHaveAnAccount": "Har du redan ett konto?",
-    "createAccount": "Skapa konto"
+    "createAccount": "Skapa konto",
+    
+    "editProfile": "Redigera Profil",
+    "changeBanner": "Ändra banner",
+    "changeAvatar": "Ändra profilbild",
+    "displayName": "Visningsnamn",
+    "displayNamePlaceholder": "Välj ett namn...",
+    "bio": "Bio",
+    "bioPlaceholder": "Skriv lite om dig själv!",
+    "saveChanges": "Spara Ändringar"
 }

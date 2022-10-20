@@ -29,11 +29,11 @@
         }
     }
     &::after {
+        content: attr(data-hover-text);
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
-        content: 'Change banner';
         opacity: 0;
         transition: opacity .3s;
         font-weight: 600;
@@ -66,7 +66,7 @@
     }
 
     &::after {
-        content: 'Change Avatar';
+        content: attr(data-hover-text);
         position: absolute;
         top: 0;
         left: 0;

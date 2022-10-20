@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useRef } from 'react';
 import { User } from '../../types';
 import styles from './EditProfileModal.module.scss';
@@ -6,6 +7,7 @@ export const EditProfileBanner: React.FC<{
     updateProperty: (key: keyof User, value: any) => void;
     banner: File | string | null;
 }> = ({ updateProperty, banner }) => {
+    const { t } = useTranslation('common');
     const input = useRef<HTMLInputElement>(null);
 
     const openFileSelector = () => {
@@ -35,6 +37,7 @@ export const EditProfileBanner: React.FC<{
             className={className} 
             onClick={openFileSelector}
             style={{ backgroundImage: `url(${url})` }}
+            data-hover-text={t('changeBanner')}
         >
             <input 
                 onChange={handleChange}
