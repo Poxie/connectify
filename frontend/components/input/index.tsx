@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { HTMLInputTypeAttribute, useEffect, useRef, useState } from "react";
 import styles from './Input.module.scss';
 
 export const Input: React.FC<{
+    type?: HTMLInputTypeAttribute;
     inputClassName?: string;
     containerClassName?: string;
     labelClassName?: string;
@@ -15,7 +16,7 @@ export const Input: React.FC<{
     label?: string;
     name?: string;
     textArea?: boolean;
-}> = ({ inputClassName, containerClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, focusOnMount, label, name, textArea=false }) => {
+}> = ({ inputClassName, containerClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, focusOnMount, label, name, type="text", textArea=false }) => {
     const [value, setValue] = useState(defaultValue || '');
     const ref = useRef<any>(null);
 
@@ -65,6 +66,7 @@ export const Input: React.FC<{
         onFocus,
         value,
         name,
+        type,
         id: name,
         className: inputClassName
     }
