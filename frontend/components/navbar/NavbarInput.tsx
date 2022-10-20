@@ -5,8 +5,10 @@ import { User } from "../../types";
 import { Input } from "../input"
 import { SearchResult } from './SearchResult';
 import { Loader } from '../loader';
+import { useTranslation } from 'next-i18next';
 
 export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
+    const { t } = useTranslation('common');
     const { get, loading: authLoading } = useAuth();
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<User[]>([]);
@@ -56,7 +58,7 @@ export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
             <Input 
                 onFocus={() => setResultsShowing(true)}
                 onBlur={handleBlur}
-                placeholder={'Search for user'}
+                placeholder={t('searchForUser')}
                 onChange={setQuery}
                 inputClassName={styles['input']}
             />
@@ -70,7 +72,7 @@ export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
 
                     {!results.length && !loading && (
                         <span>
-                            No results were found.
+                            {t('noResults')}
                         </span>
                     )}
 

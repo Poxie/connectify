@@ -38,7 +38,7 @@ export const NavbarRight: React.FC<{
     return(
         <div className={styles['right']}>
             <Tooltip
-                text={'Search'}
+                text={t('search')}
                 position={'bottom'}
                 className={searchClassName}
                 onClick={openSearch}

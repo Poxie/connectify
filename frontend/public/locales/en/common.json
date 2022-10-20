@@ -11,7 +11,7 @@
         "settings": "Settings",
         "createPost": "Create post",
         "signOut": "Log out",
-        "signIn": "Sign in"
+        "signIn": "Sign in",
     },
 
     "cancel": "Cancel",
@@ -30,10 +30,13 @@
     "previewPost": "Preview post",
     "createPost": "Create post",
 
+    "search": "Sök",
+
     "selectUserHeader": "Select User",
     "searchForUser": "Search for user",
     "currentDirectMessages": "Current direct messages",
     "emptyCurrentDirectMessages": "Current direct messages will be displayed here.",
     "showingResults": "Showing {{amount}} results",
+    "noResults": "No results were found.",
     "createConversationWith": "Create conversation with"
 }
