@@ -114,7 +114,7 @@ def get_user_likes(user_id: int, token_id: Union[int, None]=None):
 # Getting user by search
 @users.get('/users/search')
 @token_optional
-def get_user_by_search(token_id: Union[int, None]):
+def get_user_by_search(token_id: Union[int, None]=None):
     query = request.args.get('query')
     if not query:
         return 'Query is a required parameter.', 400
