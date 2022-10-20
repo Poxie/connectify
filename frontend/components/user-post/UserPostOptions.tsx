@@ -9,10 +9,12 @@ import { MenuGroup } from "../../contexts/menu/types";
 import { removePost } from "../../redux/posts/actions";
 import { selectPostById } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
+import { useTranslation } from 'next-i18next';
 
 export const UserPostOptions: React.FC<{
     postId: number;
 }> = ({ postId }) => {
+    const { t } = useTranslation('common');
     const { profile, destroy } = useAuth();
     const { setMenu } = useMenu();
     const router = useRouter();
@@ -30,7 +32,7 @@ export const UserPostOptions: React.FC<{
         // Creating menu groups
         const groups: MenuGroup[] = [
             [
-                { text: 'Copy link', onClick: copyLink }
+                { text: t('copyLink'), onClick: copyLink }
             ]
         ]
 
@@ -49,7 +51,7 @@ export const UserPostOptions: React.FC<{
 
             // Unshifting delete options
             groups.unshift([
-                { text: 'Delete post', onClick: deletePost, type: 'danger' }
+                { text: t('deletePost'), onClick: deletePost, type: 'danger' }
             ])
         }
 

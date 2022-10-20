@@ -23,6 +23,9 @@
     "comments": "Kommentarer",
     "followers": "Följare",
     "goToProfile": "Gå till profil",
+
+    "copyLink": "Kopiera länk",
+    "deletePost": "Ta bort inlägg",
     
     "postTitle": "Titel",
     "postContent": "Innehåll",

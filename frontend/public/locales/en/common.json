@@ -23,6 +23,9 @@
     "comments": "Comments",
     "followers": "Followers",
     "goToProfile": "Go to profile",
+
+    "copyLink": "Copy link",
+    "deletePost": "Delete post",
     
     "postTitle": "Title",
     "postContent": "Content",
