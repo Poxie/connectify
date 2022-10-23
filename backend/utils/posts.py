@@ -1,3 +1,4 @@
+import re
 import time
 from database import db
 from random import randrange
@@ -48,6 +49,9 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
 
 # Getting many posts by many user ids
 def get_posts_by_user_ids(user_ids: List[int], amount: int, start_at: int, token_id: Union[int, None]=None):
+    if not len(user_ids):
+        return []
+
     # Getting all posts from followed users
     where_values = [f'author_id = {id}' for id in user_ids]
     where_clause = ' or '.join(where_values)
