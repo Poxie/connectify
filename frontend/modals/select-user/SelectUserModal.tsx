@@ -19,10 +19,8 @@ import { useTranslation } from 'next-i18next';
 
 export const SelectUserModal = () => {
     const { t } = useTranslation('common');
-    const router = useRouter();
     const dispatch = useDispatch();
     const { get, post, profile } = useAuth();
-    const { socket } = useSocket();
     const { pushModal, close } = useModal();
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
@@ -52,31 +50,9 @@ export const SelectUserModal = () => {
         pushModal(
             <SelectUserConfirmationModal 
                 user={user}
-                onConfirm={() => onConfirm(user)}
+                channelIds={channelIds}
             />
         );
-    }
-
-    // Confirming selection
-    const onConfirm = (user: User) => {
-        post(`/users/@me/channels`, {
-            recipient_id: user.id
-        })
-            .then(channel => {
-                // If channel was created, add to redux
-                if(!channelIds.includes(channel.id)) {
-                    dispatch(addChannel(channel));
-                    
-                    // Sending channel creation event to recipient
-                    socket?.emit('dm_channel_created', ({
-                        recipient_id: user.id,
-                        channel_id: channel.id
-                    }));
-                }
-
-                router.push(`/messages/${channel.id}`);
-                close();
-            })
     }
 
     return(
