@@ -32,8 +32,9 @@ export const PreviewPostModal: React.FC<{
             content,
             title
         }).catch(() => {
-            setDisabled(false);
+            // setDisabled(false);
         })
+        if(!createdPost) return;
 
         // Updating redux
         dispatch(setPost(createdPost));
@@ -80,7 +81,7 @@ export const PreviewPostModal: React.FC<{
             onCancel={goBack}
             confirmLabel={t('createPost')}
             onConfirm={createPost}
-            confirmDisabled={disabled}
+            confirmLoading={disabled}
         />
         </>
     )

@@ -1,4 +1,5 @@
 import Button from '../components/button';
+import { Loader } from '../components/loader';
 import styles from '../styles/Modal.module.scss';
 
 export const ModalFooter: React.FC<{
@@ -6,9 +7,13 @@ export const ModalFooter: React.FC<{
     onConfirm: () => void;
     cancelLabel: string;
     onCancel: () => void;
+    confirmLoading?: boolean;
     confirmDisabled?: boolean;
     cancelDisabled?: boolean;
-}> = ({ confirmLabel, onConfirm, cancelLabel, onCancel, confirmDisabled=false, cancelDisabled=false }) => {
+}> = ({ confirmLabel, onConfirm, cancelLabel, onCancel, confirmLoading=false, confirmDisabled=false, cancelDisabled=false }) => {
+    const className = [
+        confirmLoading ? styles['loading'] : ''
+    ].join(' ');
     return(
         <div className={styles['footer']}>
             <Button 
@@ -20,9 +25,10 @@ export const ModalFooter: React.FC<{
             </Button>
             <Button
                 onClick={onConfirm}
-                disabled={confirmDisabled}
+                disabled={confirmDisabled || confirmLoading}
+                className={className}
             >
-                {confirmLabel}
+                {!confirmLoading ? confirmLabel : <Loader />}
             </Button>
         </div>
     )
