@@ -1,5 +1,6 @@
+from calendar import c
 import re
-from utils.users import get_user_by_id
+from utils.users import get_user_by_id, add_user_notification
 from database import db
 from random import randrange
 import time
@@ -71,13 +72,14 @@ def create_channel_message(message):
     id = create_message_id()
 
     # Creating insert query
+    created_at = time.time()
     query = "INSERT INTO messages (id, channel_id, author_id, content, timestamp) VALUES (%s, %s, %s, %s, %s)"
     values = (
         id,
         message['channel_id'],
         message['author_id'],
         message['content'],
-        time.time()
+        created_at
     )
 
     # Executing insert query
@@ -85,11 +87,20 @@ def create_channel_message(message):
 
     # Updating last message timestamp
     update_query = "UPDATE channels SET last_message_timestamp = %s WHERE id = %s"
-    update_values = (time.time(), message['channel_id'])
+    update_values = (created_at, message['channel_id'])
     db.update(update_query, update_values)
 
     # Fetching created message
     message = get_message_by_id(id)
+
+    # Creating notification for recipient
+    if message:
+        add_user_notification(
+            reference_id=id,
+            user_reference_id=message['author_id'],
+            created_at=created_at,
+            type=2
+        )
     
     return message
 
