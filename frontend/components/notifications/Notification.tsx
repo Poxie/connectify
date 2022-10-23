@@ -24,17 +24,18 @@ export const Notification: React.FC<{
         notification.unread ? styles['unread'] : ''
     ].join(' ');
     return(
-        <Link href={path}>
-            <a className={className}>
-                <NotificationHeader 
-                    user={notification.user_reference}
-                    created_at={notification.created_at}
-                    type={notification.type}
-                />
-                <NotificationContent 
-                    reference={notification.reference}
-                />
-            </a>
-        </Link>
+        <div className={className}>
+            <Link href={path}>
+                <a className={styles['notification-link']}></a>
+            </Link>
+            <NotificationHeader 
+                user={notification.user_reference}
+                created_at={notification.created_at}
+                type={notification.type}
+            />
+            <NotificationContent 
+                reference={notification.reference}
+            />
+        </div>
     )
 }
