@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from utils.auth import token_required
 from utils.users import get_user_by_id
 from utils.notifications import get_user_notifications, get_user_notification_count, reset_user_notification_count
@@ -31,8 +31,11 @@ def get_my_feed(token_id: int):
 @me.get('/notifications')
 @token_required
 def get_my_notifications(token_id: int):
+    amount = int(request.args.get('amount') or '50')
+    start_at = int(request.args.get('start_at') or '0')
+
     # Getting notifications
-    notifications = get_user_notifications(token_id)
+    notifications = get_user_notifications(token_id, amount, start_at)
     return jsonify(notifications)
 
 @me.get('/notifications_count')

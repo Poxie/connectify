@@ -1,4 +1,4 @@
-import { SET_NOTIFICATIONS, SET_NOTIFICATION_COUNT } from "./constants";
+import { ADD_NOTIFICATIONS, SET_NOTIFICATIONS, SET_NOTIFICATION_COUNT } from "./constants";
 import { NotificationsReducer } from "./types";
 
 const initialState = {
@@ -24,6 +24,14 @@ export const notificationReducer: NotificationsReducer = (state=initialState, ac
             return {
                 ...state,
                 unreadCount: count
+            }
+        }
+        case ADD_NOTIFICATIONS: {
+            const newNotifications = action.payload;
+
+            return {
+                ...state,
+                notifications: [...state.notifications, ...newNotifications]
             }
         }
         default:

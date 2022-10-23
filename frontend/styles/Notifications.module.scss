@@ -79,6 +79,11 @@
 .notification-content {
     font-size: 18px;
 }
+.end {
+    display: block;
+    text-align: center;
+    padding: var(--spacing-primary);
+}
 
 .skeleton {
     height: 104px;

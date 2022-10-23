@@ -7,10 +7,10 @@ from utils.users import get_user_by_id
 from utils.messages import get_message_by_id
 
 # Function to get user notifications
-def get_user_notifications(user_id: int):
-    # Creating query
-    query = "SELECT * FROM notifications WHERE user_id = %s ORDER BY created_at DESC"
-    values = (user_id,)
+def get_user_notifications(user_id: int, amount: int, start_at: int):
+    # Creating select query
+    query = "SELECT * FROM notifications WHERE user_id = %s ORDER BY created_at DESC LIMIT %s, %s"
+    values = (user_id, start_at, amount)
 
     # Fetching notifications
     notifs = db.fetch_all(query, values)
