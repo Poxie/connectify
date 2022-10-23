@@ -5,6 +5,7 @@ import { setNotificationCount, setNotifications } from "../../redux/notification
 import { selectNotificationsLoading, selectNotificationIds, selectUnreadCount } from "../../redux/notifications/selectors"
 import { useAppSelector } from "../../redux/store"
 import { Notification } from "./Notification";
+import { NotificationSkeleton } from "./NotificationSkeleton";
 
 export const Notifications = () => {
     const { token, get, patch, loading } = useAuth();
@@ -32,6 +33,16 @@ export const Notifications = () => {
                 dispatch(setNotificationCount(0));
             })
     }, [notificationsLoading, notificationIds, notificationCount]);
+
+    if(notificationsLoading) {
+        return(
+            <>
+            {Array.from(Array(6)).map((_, key) => (
+                <NotificationSkeleton key={key} />
+            ))}
+            </>
+        )
+    }
 
     return(
         <>
