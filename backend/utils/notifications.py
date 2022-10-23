@@ -35,7 +35,7 @@ def get_user_notifications(user_id: int):
         
         # If notification type is message
         elif type == 2:
-            refernece = get_message_by_id(reference_id)
+            reference = get_message_by_id(reference_id)
             user_reference = get_user_by_id(user_reference_id)
 
         # Appending notification
