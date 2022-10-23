@@ -92,7 +92,7 @@ export const Notifications = () => {
                 header={t('emptyHeader')}
                 message={t('emptyMessage')}
                 buttons={[
-                    { text: 'Start conversation', type: 'default', path: '/messages' }
+                    { text: t('startConversation'), type: 'default', path: '/messages' }
                 ]}
             />
         )

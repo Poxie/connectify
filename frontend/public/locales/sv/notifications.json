@@ -7,5 +7,6 @@
 
     "reachedEnd": "Du har nått slutet av dina notifikationer.",
     "emptyHeader": "Du har inga notifikationer ännu.",
-    "emptyMessage": "Inlägg från användare som du följser kommer att visas här. Meddelanden du får kommer också att hamna här, så starta några konversationer!"
+    "emptyMessage": "Inlägg från användare som du följser kommer att visas här. Meddelanden du får kommer också att hamna här, så starta några konversationer!",
+    "startConversation": "Starta konversation"
 }
