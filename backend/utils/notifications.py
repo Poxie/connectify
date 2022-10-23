@@ -63,3 +63,10 @@ def get_user_notification_count(user_id: int):
         data = {'count': 0}
 
     return data
+
+# Resetting user notification count
+def reset_user_notification_count(user_id: int):
+    query = "UPDATE notifications SET unread = 0 WHERE user_id = %s AND unread = 1"
+    values = (user_id,)
+
+    db.update(query, values)

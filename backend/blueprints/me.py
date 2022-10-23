@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from utils.auth import token_required
 from utils.users import get_user_by_id
-from utils.notifications import get_user_notifications, get_user_notification_count
+from utils.notifications import get_user_notifications, get_user_notification_count, reset_user_notification_count
 from utils.followers import get_user_followees
 from utils.posts import get_posts_by_user_ids
 
@@ -40,3 +40,9 @@ def get_my_notifications(token_id: int):
 def get_my_notification_count(token_id: int):
     count = get_user_notification_count(token_id)
     return jsonify(count)
+
+@me.patch('/notifications/reset')
+@token_required
+def reset_my_notifications(token_id: int):
+    reset_user_notification_count(token_id)
+    return jsonify({'count': 0})
