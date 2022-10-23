@@ -8,9 +8,11 @@ import { useAppSelector } from "../../redux/store"
 import { Notification } from "./Notification";
 import { NotificationSkeleton } from "./NotificationSkeleton";
 import { LoginPrompt } from '../login-prompt/LoginPrompt';
+import { useTranslation } from 'next-i18next';
 
 const SCROLL_THRESHOLD = 500;
 export const Notifications = () => {
+    const { t } = useTranslation('notifications');
     const { token, get, patch, loading } = useAuth();
     const dispatch = useDispatch();
     const notificationCount = useAppSelector(selectUnreadCount);
@@ -94,7 +96,7 @@ export const Notifications = () => {
 
             {reachedEnd && (
                 <span className={styles['end']}>
-                    You reached the end of your notifications.
+                    {t('reachedEnd')}
                 </span>
             )}
         </>

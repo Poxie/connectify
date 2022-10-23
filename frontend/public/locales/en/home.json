@@ -5,5 +5,7 @@
     "feedEmptyHeader": "Your feed is empty :(",
     "feedEmptyMessage": "If you follow users, their status updates will be displayed here. We recommend you use our explore mode to find things you may have interest in!",
     "exploreMode": "Enter explore mode",
-    "searchMode": "Enter search mode"
+    "searchMode": "Enter search mode",
+
+    "reachedEnd": "You have reached the end of your feed."
 }

@@ -3,5 +3,7 @@
     "from": "från",
 
     "newMessage": "Nytt meddelande",
-    "newPost": "Nytt inlägg"
+    "newPost": "Nytt inlägg",
+
+    "reachedEnd": "Du har nått slutet av dina notifikationer."
 }

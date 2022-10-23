@@ -3,5 +3,7 @@
     "from": "from",
 
     "newMessage": "New message",
-    "newPost": "New post"
+    "newPost": "New post",
+
+    "reachedEnd": "You have reached the end of your notifications."
 }

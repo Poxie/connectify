@@ -12,9 +12,11 @@ import { addFeedPostIds, setFeedPostIds } from '../../../redux/feed/actions';
 import { Post } from '../../../types';
 import { FeedEmpty } from './FeedEmpty';
 import { LoginPrompt } from '../../login-prompt/LoginPrompt';
+import { useTranslation } from 'next-i18next';
 
 const SCROLL_THRESHOLD = 500;
 export const Feed = () => {
+    const { t } = useTranslation('home');
     const { get, token, loading } = useAuth();
     const dispatch = useAppDispatch();
     const postIds = useAppSelector(selectFeedPostIds);
@@ -106,7 +108,7 @@ export const Feed = () => {
 
             {reachedEnd && (
                 <span className={styles['end']}>
-                    You have reached the end of your feed.
+                    {t('reachedEnd')}
                 </span>
             )}
         </div>
