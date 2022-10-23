@@ -3,10 +3,10 @@ import styles from '../../styles/Navbar.module.scss';
 
 export const NavbarHeader = () => {
     return(
-        <Link href="/">
-            <span className={styles['site-name']}>
+        <Link href="/home">
+            <a className={styles['site-name']}>
                 {process.env.NEXT_PUBLIC_WEBSITE_NAME}
-            </span>
+            </a>
         </Link>
     )
 }
