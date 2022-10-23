@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from utils.auth import token_required
 from utils.users import get_user_by_id
+from utils.notifications import get_user_notifications, get_user_notification_count
 from utils.followers import get_user_followees
 from utils.posts import get_posts_by_user_ids
 
@@ -26,3 +27,16 @@ def get_my_feed(token_id: int):
     posts = sorted(posts, key=lambda d: d['timestamp'], reverse=True)
 
     return posts
+
+@me.get('/notifications')
+@token_required
+def get_my_notifications(token_id: int):
+    # Getting notifications
+    notifications = get_user_notifications(token_id)
+    return jsonify(notifications)
+
+@me.get('/notifications_count')
+@token_required
+def get_my_notification_count(token_id: int):
+    count = get_user_notification_count(token_id)
+    return jsonify(count)
