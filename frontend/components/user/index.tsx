@@ -35,7 +35,7 @@ export const UserProfile = () => {
     // Returning while user posts are loading
     if(!postIds) return(
         <div className={styles['post-container']}>
-            {Array.from(Array(4)).map((_, key) => (
+            {Array.from(Array(2)).map((_, key) => (
                 <UserPostSkeleton key={key} />
             ))}
         </div>
