@@ -171,14 +171,17 @@ def update_unread_count(channel_id: int, recipient_id: int, count: int):
         """
         notif_values = (channel_id,)
 
+        print(notif_query, notif_values)
         notifs = db.fetch_all(notif_query, notif_values)
         
         notif_ids = [notif['id'] for notif in notifs]
         where_values = [f'id = {id}' for id in notif_ids]
         where_query = ' or '.join(where_values)
 
-        update_query = "UPDATE notifications SET unread = 0 WHERE " + where_query
-        db.update(update_query)
+        if where_query:
+            update_query = "UPDATE notifications SET unread = 0 WHERE " + where_query
+            print(update_query)
+            db.update(update_query)
 
     # Creating update query
     query = "UPDATE recipients SET unread_count = %s WHERE channel_id = %s AND id = %s"
