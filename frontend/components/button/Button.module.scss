@@ -35,6 +35,7 @@
 
         // Changing loader color
         &>div {
+            --size: 25px;
             border-color: var(--background-light-primary);
             border-top-color: var(--color-primary);
         }
