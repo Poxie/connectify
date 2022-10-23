@@ -22,9 +22,13 @@ export const NotificationHeader: React.FC<{
     const minutesAgo = diff / 60;
     const hoursAgo = (minutesAgo / 60);
     const daysAgo = (hoursAgo / 24);
+    const weeksAgo = (daysAgo / 7);
 
     let format: Intl.RelativeTimeFormatUnit, time;
-    if(daysAgo > 1) {
+    if(daysAgo > 14) {
+        format = 'weeks';
+        time = weeksAgo;
+    } else if(daysAgo > 1) {
         format = 'days';
         time = daysAgo;
     } else if(hoursAgo > 1) {
