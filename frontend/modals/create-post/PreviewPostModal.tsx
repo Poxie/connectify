@@ -32,7 +32,7 @@ export const PreviewPostModal: React.FC<{
             content,
             title
         }).catch(() => {
-            // setDisabled(false);
+            setDisabled(false);
         })
         if(!createdPost) return;
 
