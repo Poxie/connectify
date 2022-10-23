@@ -47,12 +47,23 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
     return post
 
 # Getting many posts by many user ids
-def get_posts_by_user_ids(user_ids: List[int], token_id: Union[int, None]=None):
+def get_posts_by_user_ids(user_ids: List[int], amount: int, start_at: int, token_id: Union[int, None]=None):
     # Getting all posts from followed users
-    posts = []
-    for id in user_ids:
-        user_posts = get_posts_by_user_id(id, token_id)
-        posts = posts + user_posts
+    where_values = [f'author_id = {id}' for id in user_ids]
+    where_clause = ' or '.join(where_values)
+
+    query = f"""
+    SELECT posts.* FROM users
+    INNER JOIN posts ON users.id = posts.author_id
+    WHERE {where_clause} ORDER BY timestamp DESC LIMIT %s, %s
+    """
+    values = (start_at, amount)
+
+    posts = db.fetch_all(query, values) or []
+
+    # Hydrating posts
+    for post in posts:
+        post = hydrate_post(post, token_id)
 
     return posts
 
