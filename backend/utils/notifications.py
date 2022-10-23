@@ -18,6 +18,7 @@ def get_user_notifications(user_id: int):
     # Creating new notification objects
     notifications = []
     for notif in notifs:
+        id = notif['id']
         type = notif['type']
         reference_id = notif['reference_id']
         user_reference_id = notif['user_reference_id']
@@ -41,6 +42,7 @@ def get_user_notifications(user_id: int):
         # Appending notification
         if reference and user_reference:
             notifications.append({
+                'id': id,
                 'reference': reference,
                 'user_reference': user_reference,
                 'type': type,
