@@ -55,7 +55,7 @@ def get_user_notifications(user_id: int):
 
 # Getting user notification count
 def get_user_notification_count(user_id: int):
-    query = "SELECT COUNT(*) AS count FROM notifications WHERE user_id = %s"
+    query = "SELECT COUNT(*) AS count FROM notifications WHERE user_id = %s AND unread = 1"
     values = (user_id,)
 
     data = db.fetch_one(query, values)
