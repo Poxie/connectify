@@ -31,6 +31,10 @@ def get_messages(channel_id: int, token_id: int):
 def add_message(channel_id: int, token_id: int):
     content = request.form.get('content')
 
+    # Making sure message cannot be empty
+    if not content:
+        return 'Content is a required field.', 400
+
     # Checking if channel exists
     channel = get_channel_by_id(channel_id)
     if not channel:
