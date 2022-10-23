@@ -21,6 +21,12 @@
     margin-top: var(--spacing-primary);
     font-size: 14px;
 }
+.end {
+    display: block;
+    text-align: center;
+    padding: var(--spacing-primary);
+    padding-top: 0;
+}
 
 @media (max-width: 550px) {
     .buttons>* {
