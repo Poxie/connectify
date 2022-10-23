@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '../../styles/Notifications.module.scss';
@@ -8,11 +9,13 @@ export const NotificationHeader: React.FC<{
     created_at: number;
     type: Notification['type']
 }> = ({ user, created_at, type }) => {
+    const { t } = useTranslation('notifications');
+
     let headerText = '';
     if(type === 0) {
-        headerText = 'New post created'
+        headerText = t('newPost');
     } else if(type === 2) {
-        headerText = 'New message';
+        headerText = t('newMessage');
     }
 
     const diff = Date.now() / 1000 - created_at
@@ -59,7 +62,7 @@ export const NotificationHeader: React.FC<{
                 </div>
                 <div className={styles['header-bottom']}>
                     <span>
-                        by
+                        {t('from')}
                         {' '}
                         <Link href={`/users/${user.id}`}>
                             {user.display_name || user.username}
