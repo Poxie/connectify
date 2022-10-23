@@ -7,8 +7,13 @@ export const MessageSidebarChannelLoading = () => {
     ].join(' ');
     return(
         <div className={className}>
-            <div className={styles['tab-avatar']} />
-            <div className={styles['loading-text']} />
+            <div className={styles['main']}>
+                <div className={styles['tab-avatar']} />
+                <div className={styles['text-main']}>
+                    <div className={styles['loading-top-text']} />
+                    <div className={styles['loading-bottom-text']} />
+                </div>
+            </div>
         </div>
     )
 }

@@ -24,11 +24,17 @@ export const MessagesSidebar = () => {
     // Showing loading skeleton
     if(channelsLoading) {
         return(
-            <ul className={styles['sidebar']}>
-                {Array.from(Array(8)).map((_, key) => (
-                    <MessageSidebarChannelLoading key={key} />
-                ))}
-            </ul>
+            <div className={styles['sidebar']} aria-hidden="true">
+                <div className={styles['sidebar-header']}>
+                    <div className={styles['sidebar-header-text']} />
+                    <div className={styles['sidebar-header-button']} />
+                </div>
+                <ul className={styles['tabs']}>
+                    {Array.from(Array(8)).map((_, key) => (
+                        <MessageSidebarChannelLoading key={key} />
+                    ))}
+                </ul>
+            </div>
         )
     }
 
