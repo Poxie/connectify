@@ -9,7 +9,7 @@ from utils.messages import get_message_by_id
 # Function to get user notifications
 def get_user_notifications(user_id: int):
     # Creating query
-    query = "SELECT * FROM notifications WHERE user_id = %s"
+    query = "SELECT * FROM notifications WHERE user_id = %s ORDER BY created_at DESC"
     values = (user_id,)
 
     # Fetching notifications
