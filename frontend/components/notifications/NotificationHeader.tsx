@@ -35,7 +35,8 @@ export const NotificationHeader: React.FC<{
         time = diff;
     }
 
-    const relativeTime = new Intl.RelativeTimeFormat().format(-Math.round(time), format);
+    const locale = typeof window !== 'undefined' ? localStorage.getItem('locale') || 'en' : 'en';
+    const relativeTime = new Intl.RelativeTimeFormat(locale).format(-Math.round(time), format);
     return(
         <div className={styles['notification-header']}>
             <Link href={`/users/${user.id}`}>
