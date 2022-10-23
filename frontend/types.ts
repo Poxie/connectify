@@ -53,3 +53,12 @@ export type Message = {
     tempId?: number;
     failed?: boolean;
 }
+
+export type Notification = {
+    id: number;
+    reference: Message | Post;
+    user_reference: User;
+    type: 0 | 2;
+    unread: boolean;
+    created_at: number;
+}
