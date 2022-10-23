@@ -11,16 +11,18 @@ import { SidebarTab } from "./SidebarTab"
 import { useAppSelector } from '../../redux/store';
 import { selectTotalUnreadCount, selectLastChannelId } from '../../redux/messages/hooks';
 import { useTranslation } from 'next-i18next';
+import { selectUnreadCount } from '../../redux/notifications/selectors';
 
 export const SidebarTabs = () => {
     const { t } = useTranslation('common');
-    const totalUnreadCount = useAppSelector(selectTotalUnreadCount);
+    const messageUnreadCount = useAppSelector(selectTotalUnreadCount);
+    const notificationUnreadCount = useAppSelector(selectUnreadCount);
     const lastChannelId = useAppSelector(selectLastChannelId);
 
     const tabs = [
         { text: t('sidebar.home'), path: '/home', basePath: '/home', activeIcon: <HomeActiveIcon />, neutralIcon: <HomeNeutralIcon /> },
-        { text: t('sidebar.messages'), path: `/messages${lastChannelId ? '/' + lastChannelId : ''}`, basePath: `/messages`, activeIcon: <MessagesActiveIcon />, neutralIcon: <MessagesNeutralIcon />, notificationCount: totalUnreadCount },
-        { text: t('sidebar.notifications'), path: '/notifications', basePath: '/notifications', activeIcon: <NotificationActiveIcon />, neutralIcon: <NotificationNeutralIcon /> },
+        { text: t('sidebar.messages'), path: `/messages${lastChannelId ? '/' + lastChannelId : ''}`, basePath: `/messages`, activeIcon: <MessagesActiveIcon />, neutralIcon: <MessagesNeutralIcon />, notificationCount: messageUnreadCount },
+        { text: t('sidebar.notifications'), path: '/notifications', basePath: '/notifications', activeIcon: <NotificationActiveIcon />, neutralIcon: <NotificationNeutralIcon />, notificationCount: notificationUnreadCount },
         { text: t('sidebar.settings'), path: '/settings/appearance', basePath: '/settings', activeIcon: <SettingsActiveIcon />, neutralIcon: <SettingsNeutralIcon /> }
     ]
 
