@@ -7,6 +7,7 @@ import { selectNotificationsLoading, selectNotificationIds, selectUnreadCount } 
 import { useAppSelector } from "../../redux/store"
 import { Notification } from "./Notification";
 import { NotificationSkeleton } from "./NotificationSkeleton";
+import { LoginPrompt } from '../login-prompt/LoginPrompt';
 
 const SCROLL_THRESHOLD = 500;
 export const Notifications = () => {
@@ -67,6 +68,10 @@ export const Notifications = () => {
                 dispatch(setNotificationCount(0));
             })
     }, [notificationsLoading, notificationIds, notificationCount]);
+
+    if(!loading && !token) {
+        return <LoginPrompt />;
+    }
 
     if(notificationsLoading) {
         return(
