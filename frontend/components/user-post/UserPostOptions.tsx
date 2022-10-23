@@ -40,15 +40,18 @@ export const UserPostOptions: React.FC<{
         // If user is author, allow delete post
         if(isAuthor) {
             // Deleting post
-            const deletePost = () => {
-                destroy(`/posts/${postId}`)
-                    .then(async () => {
-                        if(router.asPath === `/posts/${postId}`) {
-                            await router.replace(`/users/${profile?.id}`);
-                        }
-                        dispatch(removePost(postId));
-                        dispatch(removeUserPostId(profile?.id, postId));
-                    })
+            const deletePost = async () => {
+                const data = await destroy(`/posts/${postId}`)
+                if(!data || !profile?.id) return;
+
+                // If user is on post, redirect to profile
+                if(router.asPath === `/posts/${postId}`) {
+                    await router.replace(`/users/${profile?.id}`);
+                }
+                
+                // Removing post from redux
+                dispatch(removePost(postId));
+                dispatch(removeUserPostId(profile?.id, postId));
             }
 
             // Unshifting delete options
