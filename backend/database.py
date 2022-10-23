@@ -56,7 +56,7 @@ class Database():
         self.__reset()
 
     # Function to update
-    def update(self, query, values):
+    def update(self, query, values=None):
         self.cursor.execute(query, values)
         self.__commit()
         self.__reset()

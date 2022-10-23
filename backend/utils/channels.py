@@ -161,6 +161,25 @@ def create_channel(type: int, token_id: int, recipient_id: int):
 
 # Updating recipient unread
 def update_unread_count(channel_id: int, recipient_id: int, count: int):
+    # Updating notifications for channel
+    if count == 0:
+        notif_query = """
+        SELECT notifications.id FROM messages
+        INNER JOIN notifications ON messages.id = notifications.reference_id
+        INNER JOIN channels ON channels.id = messages.channel_id
+        WHERE channels.id = %s AND notifications.unread = 1
+        """
+        notif_values = (channel_id,)
+
+        notifs = db.fetch_all(notif_query, notif_values)
+        
+        notif_ids = [notif['id'] for notif in notifs]
+        where_values = [f'id = {id}' for id in notif_ids]
+        where_query = ' or '.join(where_values)
+
+        update_query = "UPDATE notifications SET unread = 0 WHERE " + where_query
+        db.update(update_query)
+
     # Creating update query
     query = "UPDATE recipients SET unread_count = %s WHERE channel_id = %s AND id = %s"
     values = (count, channel_id, recipient_id)
