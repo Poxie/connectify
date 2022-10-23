@@ -4,7 +4,7 @@ from random import randrange
 from typing import Union, List
 from utils.likes import get_post_like_count, get_post_like
 from utils.comments import get_post_comment_count
-from utils.users import get_user_by_id
+from utils.users import get_user_by_id, add_user_notification
 
 # Hydrating posts with extra attributes
 def hydrate_post(post, token_id: Union[int, None]=None):
@@ -97,13 +97,14 @@ def create_post(post):
     id = create_post_id()
 
     # Creating insert query
+    created_at = time.time()
     query = "INSERT INTO posts (id, author_id, title, content, timestamp) VALUES (%s, %s, %s, %s, %s)"
     values = (
         id,
         post['author_id'],
         post['title'],
         post['content'],
-        time.time()
+        created_at
     )
 
     # Creating post
@@ -111,6 +112,15 @@ def create_post(post):
 
     # Fetching created post
     post = get_post_by_id(id)
+
+    # Creating notification for following users
+    if post:
+        add_user_notification(
+            reference_id=id, 
+            user_reference_id=post['author_id'],
+            type=0,
+            created_at=created_at
+        )
 
     return post
 
