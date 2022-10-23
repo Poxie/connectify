@@ -1,4 +1,4 @@
-import { SET_FEED_POST_IDS } from "./constants"
+import { ADD_FEED_POST_IDS, SET_FEED_POST_IDS } from "./constants"
 import { FeedState, Reducer } from "./types"
 
 const initialState = {
@@ -12,6 +12,12 @@ export const feedReducer: Reducer = (state=initialState, action) => {
             return {
                 ...state,
                 postIds: action.payload
+            }
+        }
+        case ADD_FEED_POST_IDS: {
+            return {
+                ...state,
+                postIds: [...state.postIds, ...action.payload]
             }
         }
         default:

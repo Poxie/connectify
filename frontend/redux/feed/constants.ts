@@ -1,1 +1,2 @@
 export const SET_FEED_POST_IDS = 'SET_FEED_POST_IDS';
+export const ADD_FEED_POST_IDS = 'ADD_FEED_POST_IDS';
