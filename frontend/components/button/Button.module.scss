@@ -32,6 +32,12 @@
         &:hover:not(.disabled) {
             background-color: var(--color-secondary);
         }
+
+        // Changing loader color
+        &>div {
+            border-color: var(--background-light-primary);
+            border-top-color: var(--color-primary);
+        }
     }
     &.secondary {
         color: var(--text-secondary);
