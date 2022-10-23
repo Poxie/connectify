@@ -33,12 +33,16 @@ export const MenuProvider: React.FC<{
         _setDimensions();
     }
 
-    // Updating menu on resize
+    // Updating menu on resize and scroll
     useEffect(() => {
         if(!elementRef.current) return;
 
         window.addEventListener('resize', _setDimensions);
-        return () => window.removeEventListener('resize', _setDimensions);
+        window.addEventListener('scroll', _setDimensions);
+        return () => {
+            window.removeEventListener('resize', _setDimensions);
+            window.removeEventListener('scroll', _setDimensions);
+        }
     }, [elementRef.current]);
 
     // Closing menu
