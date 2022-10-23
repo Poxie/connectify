@@ -25,6 +25,22 @@
         left: 50%;
         transform: translateX(-50%);
     }
+
+    &.unread {
+        &:before {
+            --size: 8px;
+            content: '';
+            background-color: var(--color-primary);
+            border: 4px solid var(--background-primary);
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            position: absolute;
+            left: calc(-1 * var(--size));
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
 }
 .notification-header {
     display: flex;

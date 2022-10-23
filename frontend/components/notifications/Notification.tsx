@@ -18,9 +18,14 @@ export const Notification: React.FC<{
     } else if(notification.type === 2) {
         path = `/messages/${(notification.reference as Message).channel_id}`
     }
+
+    const className = [
+        styles['notification'],
+        notification.unread ? styles['unread'] : ''
+    ].join(' ');
     return(
         <Link href={path}>
-            <a className={styles['notification']}>
+            <a className={className}>
                 <NotificationHeader 
                     user={notification.user_reference}
                     created_at={notification.created_at}
