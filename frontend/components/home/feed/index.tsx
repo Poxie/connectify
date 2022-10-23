@@ -10,9 +10,10 @@ import { AnimatePresence } from 'framer-motion';
 import { setPosts } from '../../../redux/posts/actions';
 import { addFeedPostIds, setFeedPostIds } from '../../../redux/feed/actions';
 import { Post } from '../../../types';
-import { FeedEmpty } from './FeedEmpty';
 import { LoginPrompt } from '../../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
+import { EmptyPrompt } from '../../empty-prompt/EmptyPrompt';
+import Button from '../../button';
 
 const SCROLL_THRESHOLD = 500;
 export const Feed = () => {
@@ -87,7 +88,14 @@ export const Feed = () => {
 
                 {/* User logged in, but feed is empty */}
                 {!feedLoading && token && postIds.length === 0 && (
-                    <FeedEmpty />
+                    <EmptyPrompt
+                        header={t('feedEmptyHeader')}
+                        message={t('feedEmptyMessage')}
+                        buttons={[
+                            { text: t('exploreMode'), type: 'default', path: '/home/explore' },
+                            { text: t('searchMode'), type: 'secondary' }
+                        ]}
+                    />
                 )}
 
                 {/* User is not logged in */}

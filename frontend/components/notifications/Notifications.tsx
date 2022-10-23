@@ -9,6 +9,7 @@ import { Notification } from "./Notification";
 import { NotificationSkeleton } from "./NotificationSkeleton";
 import { LoginPrompt } from '../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
+import { EmptyPrompt } from '../empty-prompt/EmptyPrompt';
 
 const SCROLL_THRESHOLD = 500;
 export const Notifications = () => {
@@ -82,6 +83,18 @@ export const Notifications = () => {
                 <NotificationSkeleton key={key} />
             ))}
             </>
+        )
+    }
+
+    if(!notificationsLoading && !notificationIds.length) {
+        return(
+            <EmptyPrompt 
+                header={t('emptyHeader')}
+                message={t('emptyMessage')}
+                buttons={[
+                    { text: 'Start conversation', type: 'default', path: '/messages' }
+                ]}
+            />
         )
     }
 
