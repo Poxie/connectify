@@ -23,13 +23,21 @@ const addNotifications: ReducerAction = (state, action) => {
     })
 }
 
+const setNotificationsReachedEnd: ReducerAction = (state, action) => {
+    return updateObject(state, {
+        reachedEnd: action.payload
+    })
+}
+
 // Creating reducer
 export const notificationReducer = createReducer({
     notifications: [],
     unreadCount: 0,
-    loading: true
+    loading: true,
+    reachedEnd: false
 }, {
     SET_NOTIFICATIONS: setNotifications,
     SET_NOTIFICATION_COUNT: setNotificationCount,
-    ADD_NOTIFICATIONS: addNotifications
+    ADD_NOTIFICATIONS: addNotifications,
+    SET_NOTIFICATIONS_REACHED_END: setNotificationsReachedEnd
 })

@@ -2,8 +2,8 @@ import styles from '../../styles/Notifications.module.scss';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { addNotifications, setNotificationCount, setNotifications } from "../../redux/notifications/actions";
-import { selectNotificationsLoading, selectNotificationIds, selectUnreadCount } from "../../redux/notifications/selectors"
+import { addNotifications, setNotificationCount, setNotifications, setNotificationsReachedEnd } from "../../redux/notifications/actions";
+import { selectNotificationsLoading, selectNotificationIds, selectUnreadCount, selectNotificationsReachedEnd } from "../../redux/notifications/selectors"
 import { useAppSelector } from "../../redux/store"
 import { Notification } from "./Notification";
 import { NotificationSkeleton } from "./NotificationSkeleton";
@@ -19,8 +19,8 @@ export const Notifications = () => {
     const notificationCount = useAppSelector(selectUnreadCount);
     const notificationIds = useAppSelector(selectNotificationIds);
     const notificationsLoading = useAppSelector(selectNotificationsLoading);
+    const reachedEnd = useAppSelector(selectNotificationsReachedEnd);
     const fetching = useRef(false);
-    const [reachedEnd, setReachedEnt] = useState(false);
 
     // Function to fetch notifications
     const getNotifications = useCallback(async (amount=15, startAt=0) => {
@@ -49,7 +49,10 @@ export const Notifications = () => {
 
                 getNotifications(15, notificationIds.length)
                     .then(notifications => {
-                        if(!notifications.length) return setReachedEnt(true);
+                        if(!notifications.length) {
+                            dispatch(setNotificationsReachedEnd(true));
+                            return;
+                        }
 
                         dispatch(addNotifications(notifications))
                         fetching.current = false;
