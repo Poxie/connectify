@@ -6,7 +6,7 @@ const selectId = (_:any, id: number) => id;
 
 export const selectUserById = createSelector(
     [selectUsers, selectId],
-    (users, userId) => users[userId]
+    (users, userId) => users.find(user => user.id === userId)
 )
 export const selectUserExists = createSelector(
     [selectUserById],
