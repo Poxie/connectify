@@ -6,7 +6,7 @@ import { PostCommentSkeleton } from './PostCommentSkeleton';
 import { Input } from '../input';
 import { AddCommentInput } from './AddCommentInput';
 import { useTranslation } from 'next-i18next';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { setPostComments } from '../../redux/posts/actions';
 import { useDispatch } from 'react-redux';
@@ -21,14 +21,17 @@ export const PostComments: React.FC<{
     const commentsAreFetched = useAppSelector(state => selectPostHasLoadedComments(state, postId));
     const commentIds = useAppSelector(state => selectPostCommentIds(state, postId));
     const commentCount = useAppSelector(state => selectPostCommentCount(state, postId));
+    const fetching = useRef(false);
 
     // Fetching post comments
     useEffect(() => {
-        if(loading || commentsAreFetched || commentsAreFetched === undefined) return;
+        if(loading || fetching.current || commentsAreFetched || commentsAreFetched === undefined) return;
 
+        fetching.current = true;
         get(`/posts/${postId}/comments`)
             .then(comments => {
                 dispatch(setPostComments(postId, comments));
+                fetching.current = false;
             })
     }, [get, loading, commentsAreFetched])
 
