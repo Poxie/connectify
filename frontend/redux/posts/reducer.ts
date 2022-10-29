@@ -1,21 +1,8 @@
 import { AnyAction } from "redux";
 import { Comment, Post } from "../../types";
+import { createReducer, updateItemInArray, updateObject } from "../utils";
 import { ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
 import { PostsReducer, PostsState } from "./types"
-
-// Utility functions
-function updateObject<T>(oldObject: T, newObject: Partial<T>): T {
-    return Object.assign({}, oldObject, newObject);
-}
-function updateItemInArray<T>(array: (T & { id: number })[], itemId: number, updateItemCallback: (item: T) => T) {
-    const updatedItems = array.map(item => {
-        if(item.id !== itemId) return item;
-
-        const updatedItem = updateItemCallback(item);
-        return updatedItem;
-    })
-    return updatedItems;
-}
 
 // Reducer actions
 const setPost = (state: PostsState, action: AnyAction) => {
@@ -96,17 +83,6 @@ const removePostLike = (state: PostsState, action: AnyAction) => {
     })
 
     return updateObject(state, { posts: newPosts })
-}
-
-// Function to create reducer
-const createReducer = (initialState: PostsState, handlers: {[key: string]: (state: PostsState, action: AnyAction) => PostsState}) => {
-    return function reducer(state=initialState, action: AnyAction) {
-        if(handlers.hasOwnProperty(action.type)) {
-            return handlers[action.type](state, action);
-        } else {
-            return state;
-        }
-    }
 }
 
 // Creating reducer
