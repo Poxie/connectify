@@ -1,4 +1,6 @@
+import { AnyAction } from "redux";
 import { User } from "../../types";
+import { createReducer } from "../utils";
 import { ADD_USER_FOLLOW, ADD_USER_POST_ID, REMOVE_USER_FOLLOW, REMOVE_USER_POST_ID, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS } from "./constants";
 import { UsersReducer, UsersState } from "./types"
 
@@ -16,88 +18,102 @@ function updateItemInArray<T>(array: (T & { id: number })[], itemId: number, upd
     return updatedItems;
 }
 
-export const usersReducer: UsersReducer = (state={
-    users: []
-}, action) => {
-    switch(action.type) {
-        case SET_USER: {
-            const user: User = action.payload;
+// Reducer actions
+type ReducerAction = (state: UsersState, action: AnyAction) => UsersState;
 
-            const newUsers = state.users.concat(user);
+const setUser: ReducerAction = (state, action) => {
+    const user: User = action.payload;
 
-            return updateObject(state, { users: newUsers });
-        }
-        case ADD_USER_FOLLOW: {
-            const userId: number = action.payload;
+    const newUsers = state.users.concat(user);
 
-            const newUsers = updateItemInArray(state.users, userId, user => {
-                return updateObject(user, {
-                    follower_count: user.follower_count + 1,
-                    is_following: true
-                });
-            });
-
-            return updateObject(state, { users: newUsers });
-        }
-        case REMOVE_USER_FOLLOW: {
-            const userId: number = action.payload;
-
-            const newUsers = updateItemInArray(state.users, userId, user => {
-                return updateObject(user, {
-                    follower_count: user.follower_count - 1,
-                    is_following: false
-                });
-            });
-
-            return updateObject(state, { users: newUsers });
-        }
-        case SET_USER_POST_IDS: {
-            const { userId, postIds }: {
-                userId: number;
-                postIds: number[];
-            } = action.payload;
-
-            const newUsers = updateItemInArray(state.users, userId, user => {
-                return updateObject(user, { postIds });
-            });
-
-            return updateObject(state, { users: newUsers });
-        }
-        case REMOVE_USER_POST_ID: {
-            const { userId, postId } = action.payload;
-
-            const newUsers = updateItemInArray(state.users, userId, user => {
-                return updateObject(user, {
-                    postIds: user.postIds?.filter(id => id !== postId)
-                });
-            });
-
-            return updateObject(state, { users: newUsers });
-        }
-        case SET_USER_LIKED_IDS: {
-            const { userId, postIds }: {
-                userId: number;
-                postIds: number[];
-            } = action.payload;
-
-            const newUsers = updateItemInArray(state.users, userId, user => {
-                return updateObject(user, { likedIds: postIds });
-            });
-
-            return updateObject(state, { users: newUsers });
-        }
-        case ADD_USER_POST_ID: {
-            const { userId, postId } = action.payload;
-
-            const newUsers = updateItemInArray(state.users, userId, user => {
-                return updateObject(user, {
-                    postIds: [...postId, user.postIds]
-                })
-            })
-
-            return updateObject(state, { users: newUsers });
-        }
-        default:
-            return state;
-    }
+    return updateObject(state, { users: newUsers });
 }
+
+const addUserFollow: ReducerAction = (state, action) => {
+    const userId: number = action.payload;
+
+    const newUsers = updateItemInArray(state.users, userId, user => {
+        return updateObject(user, {
+            follower_count: user.follower_count + 1,
+            is_following: true
+        });
+    });
+
+    return updateObject(state, { users: newUsers });
+}
+
+const removeUserFollow: ReducerAction = (state, action) => {
+    const userId: number = action.payload;
+
+    const newUsers = updateItemInArray(state.users, userId, user => {
+        return updateObject(user, {
+            follower_count: user.follower_count - 1,
+            is_following: false
+        });
+    });
+
+    return updateObject(state, { users: newUsers });
+}
+
+const setUserPostIds: ReducerAction = (state, action) => {
+    const { userId, postIds }: {
+        userId: number;
+        postIds: number[];
+    } = action.payload;
+
+    const newUsers = updateItemInArray(state.users, userId, user => {
+        return updateObject(user, { postIds });
+    });
+
+    return updateObject(state, { users: newUsers });
+}
+
+const removeUserPostId: ReducerAction = (state, action) => {
+    const { userId, postId } = action.payload;
+
+    const newUsers = updateItemInArray(state.users, userId, user => {
+        return updateObject(user, {
+            postIds: user.postIds?.filter(id => id !== postId)
+        });
+    });
+
+    return updateObject(state, { users: newUsers });
+}
+
+const setUserLikedIds: ReducerAction = (state, action) => {
+    const { userId, postIds }: {
+        userId: number;
+        postIds: number[];
+    } = action.payload;
+
+    const newUsers = updateItemInArray(state.users, userId, user => {
+        return updateObject(user, { likedIds: postIds });
+    });
+
+    return updateObject(state, { users: newUsers });
+}
+
+const addUserPostId: ReducerAction = (state, action) => {
+    const { userId, postId } = action.payload;
+
+    const newUsers = updateItemInArray(state.users, userId, user => {
+        return updateObject(user, {
+            postIds: [...postId, user.postIds]
+        })
+    })
+
+    return updateObject(state, { users: newUsers });
+}
+
+// Creating reducer
+export const usersReducer = createReducer<UsersState>({
+    users: []
+}, {
+    SET_USER: setUser,
+    ADD_USER_FOLLOW: addUserFollow,
+    REMOVE_USER_FOLLOW: removeUserFollow,
+    SET_USER_POST_IDS: setUserPostIds,
+    REMOVE_USER_POST_ID: removeUserPostId,
+    SET_USER_LIKED_IDS: setUserLikedIds,
+    ADD_USER_POST_ID: addUserPostId
+})
