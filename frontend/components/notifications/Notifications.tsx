@@ -30,11 +30,13 @@ export const Notifications = () => {
 
     // Loading notifications on mount
     useEffect(() => {
-        if(!token || loading || notificationIds.length) return;
+        if(!token || loading || notificationIds.length || fetching.current) return;
 
+        fetching.current = true;
         getNotifications()
             .then(notifications => {
                 dispatch(setNotifications(notifications));
+                fetching.current = false;
             })
     }, [token, get, loading, notificationIds.length]);
 

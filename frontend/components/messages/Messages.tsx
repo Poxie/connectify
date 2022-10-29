@@ -24,7 +24,7 @@ export const Messages: React.FC<{
     const lastChannelId = useAppSelector(selectLastChannelId);
     const scrollContainer = useRef<HTMLDivElement>(null);
     const list = useRef<HTMLUListElement>(null);
-    const loadingMore = useRef(false);
+    const fetching = useRef(false);
     const shouldScroll = useRef(messageIds === undefined);
     const [reachedEnd, setReachedEnd] = useState(false);
 
@@ -37,11 +37,13 @@ export const Messages: React.FC<{
     // Fetching channel messages
     useEffect(() => {
         // Making sure not to make unnecessary requests
-        if(messageIds || loading) return;
+        if(messageIds || loading || fetching.current) return;
 
         // Getting messages
+        fetching.current = true;
         fetchMessages().then(messages => {
             dispatch(setMessages(channelId, messages));
+            fetching.current = false;
         })
     }, [channelId, messageIds, get, loading]);
 
@@ -56,15 +58,15 @@ export const Messages: React.FC<{
             // Checking if scroll meets threshold
             const scroll = scrollContainer.current.scrollTop;
             if(scroll < UPDATE_SCROLL_THRESHOLD) {
-                if(loadingMore.current) return;
-                loadingMore.current = true;
+                if(fetching.current) return;
+                fetching.current = true;
 
                 // Fetching and displaying new messages
                 const messages = await fetchMessages(MESSAGES_TO_LOAD, messageIds.length);
                 dispatch(prependMessages(channelId, messages));
 
                 // Updating current loading state
-                loadingMore.current = false;
+                fetching.current = false;
 
                 // If messages are not returned, stop scroll
                 if(!messages.length) {

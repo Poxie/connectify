@@ -1,6 +1,6 @@
 import styles from './MessagesLayout.module.scss';
 import dynamic from 'next/dynamic';
-import { ReactElement, useEffect } from "react"
+import { ReactElement, useEffect, useRef } from "react"
 import { useRouter } from 'next/router';
 import { useScreenType } from '../../hooks/useScreenType';
 import { useAuth } from '../../contexts/auth/AuthProvider';
@@ -20,10 +20,11 @@ export const MessagesLayout: React.FC<{
     const dispatch = useDispatch();
     const channels = useAppSelector(selectChannelIds);
     const channelsLoading = useAppSelector(selectChannelsLoading);
+    const fetching = useRef(false);
 
     // Fetching message channels
     useEffect(() => {
-        if(loading || !channelsLoading || channels.length) return;
+        if(loading || !channelsLoading || channels.length || fetching.current) return;
 
         // User is not logged in
         if(!token) {
@@ -32,11 +33,13 @@ export const MessagesLayout: React.FC<{
         }
 
         // Getting channels
+        fetching.current = true;
         get(`/users/@me/channels`)
             .then(channels => {
                 dispatch(setChannels(channels));
+                fetching.current = false;
             })
-    }, [loading, token, get, channels, channelsLoading]);
+    }, [loading, token, channels, channelsLoading]);
 
     if(!loading && !token) {
         return(
