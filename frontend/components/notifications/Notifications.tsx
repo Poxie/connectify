@@ -12,6 +12,7 @@ import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../empty-prompt/EmptyPrompt';
 
 const SCROLL_THRESHOLD = 500;
+const FETCH_AMOUNT = 15;
 export const Notifications = () => {
     const { t } = useTranslation('notifications');
     const { token, get, patch, loading } = useAuth();
@@ -23,7 +24,7 @@ export const Notifications = () => {
     const fetching = useRef(false);
 
     // Function to fetch notifications
-    const getNotifications = useCallback(async (amount=15, startAt=0) => {
+    const getNotifications = useCallback(async (amount=FETCH_AMOUNT, startAt=0) => {
         return await get(`/notifications?amount=${amount}&start_at=${startAt}`);
     }, [get]);
 
@@ -47,14 +48,19 @@ export const Notifications = () => {
             if(diffFromBottom < SCROLL_THRESHOLD) {
                 fetching.current = true;
 
-                getNotifications(15, notificationIds.length)
+                getNotifications(FETCH_AMOUNT, notificationIds.length)
                     .then(notifications => {
-                        if(!notifications.length) {
+                        // If notifications are returned, push them
+                        if(notifications.length) {
+                            dispatch(addNotifications(notifications))
+                        }
+
+                        // If no notifications were returned, or less than desired
+                        if(!notifications.length || notifications.length < FETCH_AMOUNT) {
                             dispatch(setNotificationsReachedEnd(true));
                             return;
                         }
 
-                        dispatch(addNotifications(notifications))
                         fetching.current = false;
                     })
             }
