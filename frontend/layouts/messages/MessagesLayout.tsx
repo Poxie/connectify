@@ -6,9 +6,9 @@ import { useScreenType } from '../../hooks/useScreenType';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../redux/store';
-import { selectChannelIds, selectChannelsLoading } from '../../redux/messages/hooks';
 import { setChannels } from '../../redux/messages/actions';
 import { LoginPrompt } from '../../components/login-prompt/LoginPrompt';
+import { selectChannelIds, selectChannelsLoading } from '../../redux/messages/selectors';
 const MessagesSidebar = dynamic(() => import('./MessagesSidebar').then(res => res.MessagesSidebar), { ssr: false });
 
 export const MessagesLayout: React.FC<{

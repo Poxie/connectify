@@ -3,12 +3,12 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { prependMessages, removeUnreadCount, setLastChannelId, setMessages } from "../../redux/messages/actions";
-import { selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
 import { User } from '../../types';
 import Link from 'next/link';
 import { Loader } from '../loader';
+import { selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
 
 const PREVENT_AUTO_SCROLL_THRESHOLD = 200;
 const UPDATE_SCROLL_THRESHOLD = 600;

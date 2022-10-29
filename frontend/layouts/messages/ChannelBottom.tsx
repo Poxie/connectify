@@ -1,9 +1,9 @@
 import styles from './MessagesLayout.module.scss';
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { selectChannelLastMessage, selectChannelTyping } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { MessagesSidebarTyping } from './MessageSidebarTyping';
 import { useTranslation } from 'next-i18next';
+import { selectChannelLastMessage, selectChannelTyping } from '../../redux/messages/selectors';
 
 export const ChannelBottom: React.FC<{
     channelId: number;

@@ -9,9 +9,9 @@ import { SettingsActiveIcon } from "../../assets/icons/SettingsActiveIcon"
 import { SettingsNeutralIcon } from "../../assets/icons/SettingsNeutralIcon"
 import { SidebarTab } from "./SidebarTab"
 import { useAppSelector } from '../../redux/store';
-import { selectTotalUnreadCount, selectLastChannelId } from '../../redux/messages/hooks';
 import { useTranslation } from 'next-i18next';
 import { selectUnreadCount } from '../../redux/notifications/selectors';
+import { selectLastChannelId, selectTotalUnreadCount } from '../../redux/messages/selectors';
 
 export const SidebarTabs = () => {
     const { t } = useTranslation('common');

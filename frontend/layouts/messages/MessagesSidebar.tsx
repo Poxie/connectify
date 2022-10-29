@@ -1,5 +1,4 @@
 import styles from './MessagesLayout.module.scss';
-import { selectChannelIds, selectChannelsLoading } from "../../redux/messages/hooks"
 import { useAppSelector } from "../../redux/store"
 import { MessageSidebarChannel } from "./MessageSidebarChannel";
 import { MessageSidebarChannelLoading } from "./MessageSidebarChannelLoading";
@@ -9,6 +8,7 @@ import { SelectUserModal } from "../../modals/select-user/SelectUserModal";
 import Button from '../../components/button';
 import { useTranslation } from 'next-i18next';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
+import { selectChannelIds, selectChannelsLoading } from '../../redux/messages/selectors';
 
 export const MessagesSidebar = () => {
     const { t } = useTranslation('messages');

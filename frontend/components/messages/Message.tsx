@@ -1,10 +1,10 @@
 import styles from '../../styles/Messages.module.scss';
-import { selectMessageById } from "../../redux/messages/hooks";
 import { useAppSelector } from "../../redux/store";
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { MessageAuthor } from './MessageAuthor';
 import { MessageFooter } from './MessageFooter';
 import { MessageContent } from './MessageContent';
+import { selectMessageById } from '../../redux/messages/selectors';
 
 const MINUTES_BETWEEN_MESSAGES = 6
 const SECONDS_IN_A_MINUTE = 60;

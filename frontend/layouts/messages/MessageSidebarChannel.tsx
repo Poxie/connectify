@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { selectChannelById, selectChannelUnreadCount } from '../../redux/messages/hooks';
+import { selectChannelById, selectChannelUnreadCount } from '../../redux/messages/selectors';
 import { useAppSelector } from '../../redux/store';
 import { ChannelBottom } from './ChannelBottom';
 import styles from './MessagesLayout.module.scss';
