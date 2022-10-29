@@ -53,7 +53,10 @@ const addPostComment = (state: PostsState, action: AnyAction) => {
 }
 
 const setPosts = (state: PostsState, action: AnyAction) => {
-    const posts = action.payload;
+    const posts = action.payload.map((post: Post) => {
+        post.hasCommentsFetched = false;
+        return post;
+    });
     const newPosts = state.posts.concat(posts);
 
     return updateObject(state, { posts: newPosts })
