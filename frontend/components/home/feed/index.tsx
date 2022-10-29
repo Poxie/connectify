@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../contexts/auth/AuthProvider";
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { selectFeedPostIds } from '../../../redux/feed/hooks';
 import { FeedPost } from './FeedPost';
 import { UserPostSkeleton } from '../../user-post/UserPostSkeleton';
 import { AnimatePresence } from 'framer-motion';
@@ -14,6 +13,7 @@ import { LoginPrompt } from '../../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../../empty-prompt/EmptyPrompt';
 import Button from '../../button';
+import { selectFeedPostIds } from '../../../redux/feed/selectors';
 
 const SCROLL_THRESHOLD = 500;
 export const Feed = () => {
