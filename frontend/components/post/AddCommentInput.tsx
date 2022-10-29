@@ -43,7 +43,7 @@ export const AddCommentInput: React.FC<{
         })
             .then(comment => {
                 // Adding comment to post locally
-                dispatch(addPostComment(postId, comment));
+                dispatch(addPostComment(comment));
 
                 // Resetting input value
                 setValue('');

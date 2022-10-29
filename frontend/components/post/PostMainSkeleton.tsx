@@ -1,7 +1,7 @@
 import styles from '../../styles/Post.module.scss';
 import { PostCommentSkeleton } from './PostCommentSkeleton';
 
-export const PostSkeleton = () => {
+export const PostMainSkeleton = () => {
     return(
         <div className={styles['skeleton']} aria-hidden="true">
             <div className={styles['skeleton-header']}>
@@ -14,7 +14,6 @@ export const PostSkeleton = () => {
                 <div className={styles['skeleton-footer-button']} />
                 <div className={styles['skeleton-footer-button']} />
             </div>
-            <PostCommentSkeleton />
         </div>
     )
 }

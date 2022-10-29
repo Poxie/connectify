@@ -3,127 +3,95 @@ import { ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POS
 import { PostsReducer } from "./types"
 
 const initialState = {
-    posts: {}
+    posts: [],
+    comments: []
 }
 
 export const postsReducer: PostsReducer = (state=initialState, action) => {
     switch(action.type) {
         case SET_POST: {
-            const post = action.payload;
+            const post: Post = action.payload;
+            post.hasCommentsFetched = false;
 
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [post.id]: post
-                }
-            }
+            return Object.assign({}, state, {
+                posts: state.posts.concat(post)
+            })
         }
         case REMOVE_POST: {
             const postId = action.payload;
 
-            const posts = {...state.posts};
-            delete posts[postId];
-
-            return {
-                ...state,
-                posts
-            }
+            return Object.assign({}, state, {
+                posts: state.posts.filter(post => post.id !== postId)
+            })
         }
         case SET_POST_COMMENTS: {
             // Destructuring payload
-            const { postId, comments }: {
-                postId: number, 
-                comments: Comment[]
+            const { comments, postId }: {
+                comments: Comment[];
+                postId: number;
             } = action.payload;
 
-            // Getting correct post
-            let post = state.posts[postId];
-            if(!post) return state;
-            post = {...post};
+            return Object.assign({}, state, {
+                posts: state.posts.map(post => {
+                    if(post.id !== postId) return post;
 
-            // Adding comments
-            post.comments = comments;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [postId]: post
-                }
-            }
+                    return Object.assign({}, post, {
+                        hasCommentsFetched: true
+                    })
+                }),
+                comments: state.comments.concat(comments)
+            })
         }
         case ADD_POST_COMMENT: {
-            const { postId, comment }: {
-                postId: number;
-                comment: Comment;
-            } = action.payload;
+            const comment: Comment = action.payload;
 
-            // Getting correct post
-            let post = state.posts[postId];
-            if(!post) return state;
-            post = {...post};
+            return Object.assign({}, state, {
+                // Increasing comment count
+                posts: state.posts.map(post => {
+                    if(post.id !== comment.post_id) return post;
 
-            // Adding comment
-            post.comments = [...[comment], ...(post.comments || [])];
-            post.comment_count++;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [postId]: post
-                }
-            }
+                    return Object.assign({}, post, {
+                        comment_count: post.comment_count + 1
+                    })
+                }),
+                // Adding comment
+                comments: state.comments.concat(comment)
+            })
         }
         case SET_POSTS: {
             const posts: Post[] = action.payload;
-            
-            const newPosts = {
-                ...state.posts,
-            }
-            posts.forEach(post => {
-                newPosts[post.id] = post;
-            })
 
-            return {
-                ...state,
-                posts: newPosts
-            }
+            return Object.assign({}, state, {
+                posts: state.posts.concat(posts)
+            })
         }
         case ADD_POST_LIKE: {
-            let post = state.posts[action.payload];
-            if(!post) return state;
-            post = {...post};
+            const postId = action.payload;
+            
+            return Object.assign({}, state, {
+                posts: state.posts.map(post => {
+                    if(post.id !== postId) return post;
 
-            // Adding like to post
-            post.like_count++;
-            post.has_liked = true;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [post.id]: post
-                }
-            }
+                    return Object.assign({}, post, {
+                        like_count: post.like_count + 1,
+                        has_liked: true
+                    })
+                })
+            })
         }
         case REMOVE_POST_LIKE: {
-            let post = state.posts[action.payload];
-            if(!post) return state;
-            post = {...post};
+            const postId = action.payload;
 
-            // Removing like from post
-            post.like_count--;
-            post.has_liked = false;
+            return Object.assign({}, state, {
+                posts: state.posts.map(post => {
+                    if(post.id !== postId) return post;
 
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [post.id]: post
-                }
-            }
+                    return Object.assign({}, post, {
+                        like_count: post.like_count - 1,
+                        has_liked: !post.has_liked
+                    })
+                })
+            })
         }
         default:
             return state;

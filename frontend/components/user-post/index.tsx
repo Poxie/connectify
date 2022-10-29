@@ -26,15 +26,8 @@ export const UserPost: React.FC<{
                 postId={id}
                 timestamp={timestamp}
             />
-            <UserPostContent 
-                content={content}
-            />
-            <UserPostFooter
-                id={id}
-                like_count={like_count}
-                has_liked={has_liked}
-                comment_count={comment_count}
-            />
+            <UserPostContent content={content} />
+            <UserPostFooter id={id} />
             <Link href={`/posts/${id}`}>
                 <a aria-label="Go to post" className={styles['post-link']}/>
             </Link>

@@ -9,20 +9,20 @@ import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { LoginModal } from '../../modals/login/LoginModal';
 import { addPostLike, removePostLike } from '../../redux/posts/actions';
+import { selectPostStats } from '../../redux/posts/selectors';
+import { useAppSelector } from '../../redux/store';
 import styles from './UserPost.module.scss';
 import { UserPostFooterButton } from './UserPostFooterButton';
 
 export const UserPostFooter: React.FC<{
     id: number;
-    has_liked: boolean;
-    like_count: number;
-    comment_count: number;
-}> = ({ id, has_liked, like_count, comment_count }) => {
+}> = ({ id }) => {
     const { t } = useTranslation();
     const { setModal } = useModal();
     const { token, post, destroy } = useAuth();
     const dispatch = useDispatch();
     const router = useRouter();
+    const stats = useAppSelector(state => selectPostStats(state, id))
 
     // Handling like and unlike
     const like = useCallback(() => {
@@ -47,6 +47,11 @@ export const UserPostFooter: React.FC<{
         router.push(`/posts/${id}`);
     }
 
+    const {
+        has_liked,
+        like_count,
+        comment_count
+    } = stats;
     return(
         <div className={styles['footer']}>
             <UserPostFooterButton 

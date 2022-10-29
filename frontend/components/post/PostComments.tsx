@@ -1,26 +1,43 @@
 import styles from '../../styles/Post.module.scss';
-import { selectCommentIds } from "../../redux/posts/selectors"
+import { selectPostCommentCount, selectPostCommentIds, selectPostHasLoadedComments } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
 import { PostComment } from './PostComment';
 import { PostCommentSkeleton } from './PostCommentSkeleton';
 import { Input } from '../input';
 import { AddCommentInput } from './AddCommentInput';
 import { useTranslation } from 'next-i18next';
+import { useEffect } from 'react';
+import { useAuth } from '../../contexts/auth/AuthProvider';
+import { setPostComments } from '../../redux/posts/actions';
+import { useDispatch } from 'react-redux';
 
 export const PostComments: React.FC<{
     postId: number;
-    comment_count: number;
-}> = ({ postId, comment_count }) => {
+}> = ({ postId }) => {
     const { t } = useTranslation('common');
     const { t: g } = useTranslation('post');
-    const commentIds = useAppSelector(state => selectCommentIds(state, postId));
+    const { loading, get } = useAuth();
+    const dispatch = useDispatch();
+    const commentsAreFetched = useAppSelector(state => selectPostHasLoadedComments(state, postId));
+    const commentIds = useAppSelector(state => selectPostCommentIds(state, postId));
+    const commentCount = useAppSelector(state => selectPostCommentCount(state, postId));
 
-    if(!commentIds) return <PostCommentSkeleton />;
+    // Fetching post comments
+    useEffect(() => {
+        if(loading || commentsAreFetched || commentsAreFetched === undefined) return;
+
+        get(`/posts/${postId}/comments`)
+            .then(comments => {
+                dispatch(setPostComments(postId, comments));
+            })
+    }, [get, loading, commentsAreFetched])
+
+    if(!commentsAreFetched) return <PostCommentSkeleton />;
 
     return(
         <div className={styles['comments']}>
             <span className={styles['comments-header']}>
-                {comment_count} {t('comments')}
+                {commentCount} {t('comments')}
             </span>
 
             <AddCommentInput postId={postId} />

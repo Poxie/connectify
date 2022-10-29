@@ -1,8 +1,9 @@
 import { AnyAction } from 'redux';
-import { Post } from "../../types"
+import { Comment, Post } from "../../types"
 
 export type PostsState = {
-    posts: {[id: string]: Post | undefined};
+    posts: Post[];
+    comments: Comment[];
 }
 
 export type PostsReducer = (state: PostsState, action: AnyAction) => PostsState;

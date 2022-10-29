@@ -21,7 +21,7 @@ export type Post = {
     like_count: number;
     comment_count: number;
     timestamp: number;
-    comments?: Comment[];
+    hasCommentsFetched?: boolean;
 }
 export type Comment = {
     id: number;
