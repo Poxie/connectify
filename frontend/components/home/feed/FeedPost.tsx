@@ -9,16 +9,7 @@ export const FeedPost: React.FC<{
     id: number;
 }> = React.memo(({ id }) => {
     const post = useAppSelector(state => selectPostById(state, id));
-    const dispatch = useAppDispatch();
     if(!post) return null;
-
-    // Updating like and unlike locally
-    const onPostLike = useCallback((id: number) => {
-        dispatch(addPostLike(id));
-    }, []);
-    const onPostUnlike = useCallback((id: number) => {
-        dispatch(removePostLike(id));
-    }, []);
 
     return(
         <motion.div
@@ -27,8 +18,6 @@ export const FeedPost: React.FC<{
         >
             <UserPost 
                 post={post}
-                onPostLike={onPostLike}
-                onPostUnlike={onPostUnlike}
             />
         </motion.div>
     )

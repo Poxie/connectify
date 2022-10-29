@@ -1,12 +1,14 @@
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { CommentNeutralIcon } from '../../assets/icons/CommentNeutralIcon';
 import { HeartActiveIcon } from '../../assets/icons/HeartActiveIcon';
 import { HeartNeutralIcon } from '../../assets/icons/HeartNeutralIcon';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { LoginModal } from '../../modals/login/LoginModal';
+import { addPostLike, removePostLike } from '../../redux/posts/actions';
 import styles from './UserPost.module.scss';
 import { UserPostFooterButton } from './UserPostFooterButton';
 
@@ -15,12 +17,11 @@ export const UserPostFooter: React.FC<{
     has_liked: boolean;
     like_count: number;
     comment_count: number;
-    onPostLike: (id: number) => void;
-    onPostUnlike: (id: number) => void;
-}> = ({ id, has_liked, like_count, comment_count, onPostLike, onPostUnlike }) => {
+}> = ({ id, has_liked, like_count, comment_count }) => {
     const { t } = useTranslation();
     const { setModal } = useModal();
     const { token, post, destroy } = useAuth();
+    const dispatch = useDispatch();
     const router = useRouter();
 
     // Handling like and unlike
@@ -31,12 +32,12 @@ export const UserPostFooter: React.FC<{
             return;
         }
 
-        onPostLike(id);
+        dispatch(addPostLike(id));
         post(`/posts/${id}/likes`)
             .catch(console.error);
     }, [token, post, id]);
     const unlike = useCallback(() => {
-        onPostUnlike(id);
+        dispatch(removePostLike(id));
         destroy(`/posts/${id}/likes`)
             .catch(console.error);
     }, [destroy, id]);

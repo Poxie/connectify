@@ -39,14 +39,6 @@ export const Post = () => {
             })
     }, [post?.id, commentsAreFetched])
 
-    // Handling post like and unlike
-    const onPostLike = (id: number) => {
-        dispatch(addPostLike(id));
-    }
-    const onPostUnlike = (id: number) => {
-        dispatch(removePostLike(id));
-    }
-
     // If post is not present, return null
     if(!post) return <PostSkeleton />;
 
@@ -74,8 +66,6 @@ export const Post = () => {
                 comment_count={comment_count}
                 like_count={like_count}
                 has_liked={has_liked}
-                onPostLike={onPostLike}
-                onPostUnlike={onPostUnlike}
                 id={id}
             />
             <PostComments 

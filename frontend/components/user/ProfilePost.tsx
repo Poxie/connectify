@@ -11,21 +11,11 @@ export const ProfilePost: React.FC<{
     const dispatch = useDispatch();
     const post = useAppSelector(state => selectPostById(state, postId));
 
-    // Updating like and unlike locally
-    const onPostLike = useCallback((id: number) => {
-        dispatch(addPostLike(id));
-    }, []);
-    const onPostUnlike = useCallback((id: number) => {
-        dispatch(removePostLike(id));
-    }, []);
-
     if(!post) return null;
 
     return(
         <UserPost 
             post={post}
-            onPostLike={onPostLike}
-            onPostUnlike={onPostUnlike}
             key={post.id}
         />
     )
