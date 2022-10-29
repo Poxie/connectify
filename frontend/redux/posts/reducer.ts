@@ -98,33 +98,27 @@ const removePostLike = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts })
 }
 
-export const postsReducer: PostsReducer = (state={
-    posts: [],
-    comments: []
-}, action) => {
-    switch(action.type) {
-        case SET_POST: {
-            return setPost(state, action);
-        }
-        case REMOVE_POST: {
-            return removePost(state, action)
-        }
-        case SET_POST_COMMENTS: {
-            return setPostComments(state, action);
-        }
-        case ADD_POST_COMMENT: {
-            return addPostComment(state, action);
-        }
-        case SET_POSTS: {
-            return setPosts(state, action);
-        }
-        case ADD_POST_LIKE: {
-            return addPostLike(state, action);
-        }
-        case REMOVE_POST_LIKE: {
-            return removePostLike(state, action);
-        }
-        default:
+// Function to create reducer
+const createReducer = (initialState: PostsState, handlers: {[key: string]: (state: PostsState, action: AnyAction) => PostsState}) => {
+    return function reducer(state=initialState, action: AnyAction) {
+        if(handlers.hasOwnProperty(action.type)) {
+            return handlers[action.type](state, action);
+        } else {
             return state;
+        }
     }
 }
+
+// Creating reducer
+export const postsReducer = createReducer({
+    posts: [],
+    comments: []
+}, {
+    SET_POST: setPost,
+    REMOVE_POST: removePost,
+    SET_POST_COMMENTS: setPostComments,
+    ADD_POST_COMMENT: addPostComment,
+    SET_POSTS: setPosts,
+    ADD_POST_LIKE: addPostLike,
+    REMOVE_POST_LIKE: removePostLike
+})
