@@ -41,6 +41,7 @@ export type Channel = {
     unread_count: number;
     last_message: Message | null;
     typing?: number;
+    reachedEnd?: boolean;
 }
 export type Message = {
     id: number;

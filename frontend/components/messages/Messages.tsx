@@ -2,13 +2,13 @@ import styles from '../../styles/Messages.module.scss';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { prependMessages, removeUnreadCount, setLastChannelId, setMessages } from "../../redux/messages/actions";
+import { prependMessages, removeUnreadCount, setChannelReachedEnd, setLastChannelId, setMessages } from "../../redux/messages/actions";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
 import { User } from '../../types';
 import Link from 'next/link';
 import { Loader } from '../loader';
-import { selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
+import { selectChannelReachedEnd, selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
 
 const PREVENT_AUTO_SCROLL_THRESHOLD = 200;
 const UPDATE_SCROLL_THRESHOLD = 600;
@@ -21,12 +21,12 @@ export const Messages: React.FC<{
     const { get, patch, loading } = useAuth();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
+    const reachedEnd = useAppSelector(state => selectChannelReachedEnd(state, channelId))
     const lastChannelId = useAppSelector(selectLastChannelId);
     const scrollContainer = useRef<HTMLDivElement>(null);
     const list = useRef<HTMLUListElement>(null);
     const fetching = useRef(false);
     const shouldScroll = useRef(messageIds === undefined);
-    const [reachedEnd, setReachedEnd] = useState(false);
 
     // Function to fetch messages
     const fetchMessages = useCallback(async (amount=MESSAGES_TO_LOAD, startAt=0) => {
@@ -44,6 +44,10 @@ export const Messages: React.FC<{
         fetchMessages().then(messages => {
             dispatch(setMessages(channelId, messages));
             fetching.current = false;
+
+            if(messages.length < MESSAGES_TO_LOAD) {
+                dispatch(setChannelReachedEnd(channelId, true));
+            }
         })
     }, [channelId, messageIds, get, loading]);
 
@@ -69,8 +73,8 @@ export const Messages: React.FC<{
                 fetching.current = false;
 
                 // If messages are not returned, stop scroll
-                if(!messages.length) {
-                    setReachedEnd(true);
+                if(messages.length < MESSAGES_TO_LOAD) {
+                    dispatch(setChannelReachedEnd(channelId, true));
                     scrollContainer.current?.removeEventListener('scroll', onScroll);
                 }
             }
@@ -85,9 +89,6 @@ export const Messages: React.FC<{
     useEffect(() => {
         // On channel change, scroll to bottom
         shouldScroll.current = true;
-
-        // Resetting values
-        setReachedEnd(false);
 
         // Checking if last channel is same channel
         if(channelId === lastChannelId) return;

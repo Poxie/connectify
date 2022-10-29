@@ -151,6 +151,16 @@ const setTotalUnreadCount: ReducerAction = (state, action) => {
     return updateObject(state, { totalUnreadCount: action.payload });
 }
 
+const setChannelReachedEnd: ReducerAction = (state, action) => {
+    const { channelId, state: reachedEnd } = action.payload;
+
+    const channels = updateItemInArray(state.channels, channelId, channel => {
+        return updateObject(channel, { reachedEnd })
+    })
+
+    return updateObject(state, { channels });
+}
+
 // Creating reducer
 export const messagesReducer = createReducer({
     messages: [],
@@ -168,5 +178,6 @@ export const messagesReducer = createReducer({
     ADD_MESSAGE: addMessage,
     SET_MESSAGE_FAILED: setMessageFailed,
     REMOVE_UNREAD_COUNT: removeUnreadCount,
-    SET_TOTAL_UNREAD_COUNT: setTotalUnreadCount
+    SET_TOTAL_UNREAD_COUNT: setTotalUnreadCount,
+    SET_CHANNEL_REACHED_END: setChannelReachedEnd
 })
