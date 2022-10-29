@@ -1,6 +1,6 @@
 import styles from '../../styles/User.module.scss';
 import { useRouter } from "next/router"
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { setPosts } from "../../redux/posts/actions";
@@ -20,15 +20,18 @@ export const UserProfile = () => {
     const userExists = useAppSelector(state => selectUserExists(state, parseInt(userId)));
     const postIds = useAppSelector(state => selectUserPostIds(state, parseInt(userId)));
     const userHasLoadedPosts = useAppSelector(state => selectUserHasLoadedPosts(state, parseInt(userId)));
+    const fetching = useRef(false);
 
     // Fetching user posts
     useEffect(() => {
-        if(!userId || !userExists || userHasLoadedPosts) return;
+        if(!userId || !userExists || userHasLoadedPosts || fetching.current) return;
 
+        fetching.current = true;
         get(`/users/${userId}/posts`)
             .then((posts: Post[]) => {
                 dispatch(setPosts(posts));
                 dispatch(setUserPostIds(parseInt(userId), posts.map(post => post.id)))
+                fetching.current = false;
             })
     }, [userId, userExists, userHasLoadedPosts]);
 

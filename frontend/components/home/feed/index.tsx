@@ -32,7 +32,7 @@ export const Feed = () => {
 
     // Initial fetch for feed posts 
     useEffect(() => {
-        if(loading || postIds.length) return;
+        if(loading || postIds.length || fetching.current) return;
         
         // User is not logged in
         if(!token) {
@@ -43,11 +43,13 @@ export const Feed = () => {
 
         setFeedLoading(true);
 
+        fetching.current = true;
         getFeedPosts()
             .then(posts => {
                 dispatch(setFeedPostIds(posts.map(post => post.id)));
                 dispatch(setPosts(posts));
                 setFeedLoading(false);
+                fetching.current = false;
             })
     }, [get, token, loading]);
 
