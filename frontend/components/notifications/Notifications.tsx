@@ -29,13 +29,13 @@ export const Notifications = () => {
 
     // Loading notifications on mount
     useEffect(() => {
-        if(!token || loading) return;
+        if(!token || loading || notificationIds.length) return;
 
         getNotifications()
             .then(notifications => {
                 dispatch(setNotifications(notifications));
             })
-    }, [token, get, patch, loading]);
+    }, [token, get, loading, notificationIds.length]);
 
     // Loading more notifications on scroll
     useEffect(() => {
