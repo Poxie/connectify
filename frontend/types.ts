@@ -14,6 +14,8 @@ export type User = {
     avatar: null | string | File;
     postIds?: number[];
     likedIds?: number[];
+    postIdsEnd?: boolean;
+    likedIdsEnd?: boolean;
 }
 export type Post = {
     id: number;

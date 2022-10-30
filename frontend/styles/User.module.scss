@@ -102,10 +102,13 @@
     flex-direction: column;
     gap: var(--spacing-primary);
 }
-.empty {
+.empty, .end {
     color: var(--text-secondary);
     display: block;
     text-align: center;
+}
+.end {
+    padding: var(--spacing-primary);
 }
 
 .skeleton-text {
