@@ -23,7 +23,7 @@ export const UserProfile = () => {
     const postIds = useAppSelector(state => selectUserPostIds(state, parseInt(userId)));
     const reachedEnd = useAppSelector(state => selectUserPostsEnd(state, parseInt(userId)));
 
-    // Testing
+    // Fetching posts on mount and scroll
     const scrollCallback: ScrollCallback = (posts: Post[], reachedEnd) => {
         if(reachedEnd) {
             dispatch(setUserReachedEnd(parseInt(userId), 'postIds'));

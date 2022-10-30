@@ -11,6 +11,7 @@ import { Post } from "../../types";
 import { UserPostSkeleton } from "../user-post/UserPostSkeleton";
 import { ProfilePost } from './ProfilePost';
 import { useTranslation } from 'next-i18next';
+import { ScrollCallback, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 10;
@@ -21,87 +22,38 @@ export const LikedPosts = () => {
     const { userId } = useRouter().query as { userId: string };
     const userExists = useAppSelector(state => selectUserExists(state, parseInt(userId)));
     const postIds = useAppSelector(state => selectUserLikedIds(state, parseInt(userId)));
-    const userHasReachedEnd = useAppSelector(state => selectUserLikedPostsEnd(state, parseInt(userId)));
+    const reachedEnd = useAppSelector(state => selectUserLikedPostsEnd(state, parseInt(userId)));
     const userHasLoadedPosts = useAppSelector(state => selectUserHasLoadedLikedPosts(state, parseInt(userId)));
     const fetching = useRef(false);
 
-    // Function to fetch user posts
-    const fetchUserPosts = useCallback(async (amount=FETCH_AMOUNT, startAt=0) => {
-        const posts = await get<Post[]>(`/users/${userId}/likes?amount=${amount}&start_at=${startAt}`);
-        return posts;
-    }, [get, userId]);
-
-    // Fetching user posts
-    useEffect(() => {
-        if(!userId || !userExists || userHasLoadedPosts || fetching.current) return;
-
-        fetching.current = true;
-        fetchUserPosts()
-            .then(posts => {
-                dispatch(setPosts(posts));
-                dispatch(setUserLikedIds(parseInt(userId), posts.map(post => post.id)))
-                
-                // Checking if user reached end
-                if(posts.length < FETCH_AMOUNT) {
-                    dispatch(setUserReachedEnd(parseInt(userId), 'likedIds'));
-                } else {
-                    fetching.current = false;
-                }
-            })
-    }, [userId, userExists, userHasLoadedPosts]);
-
-    // Loading more posts on scroll
-    useEffect(() => {
-        if(userHasReachedEnd) return;
-
-        const onScroll = () => {
-            if(fetching.current || !postIds?.length) return;
-
-            const diffFromBottom = Math.abs(window.scrollY + window.innerHeight - document.body.offsetHeight);
-            
-            if(diffFromBottom < SCROLL_THRESHOLD) {
-                fetching.current = true;
-
-                fetchUserPosts(FETCH_AMOUNT, postIds.length)
-                    .then(posts => {
-                        // If less than desired is fetched
-                        if(!postIds.length || posts.length < FETCH_AMOUNT) {
-                            dispatch(setUserReachedEnd(parseInt(userId), 'likedIds'));
-                            window.removeEventListener('scroll', onScroll);
-                        }
-                        if(!postIds.length) return;
-
-                        // If posts are returned, push them
-                        dispatch(setPosts(posts));
-                        dispatch(addUserLikedIds(parseInt(userId), posts.map(post => post.id)))
-                        if(posts.length === FETCH_AMOUNT) fetching.current = false;
-                    })
-            }
+    // Testing
+    const scrollCallback: ScrollCallback = (posts: Post[], reachedEnd) => {
+        if(reachedEnd) {
+            dispatch(setUserReachedEnd(parseInt(userId), 'likedIds'));
         }
-
-        // Setting up event listeners
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, [postIds?.length, userId, userHasReachedEnd]);
-
-    // Returning while user posts are loading
-    if(!postIds) return(
-        <div className={styles['post-container']}>
-            {Array.from(Array(2)).map((_, key) => (
-                <UserPostSkeleton key={key} />
-            ))}
-        </div>
-    );
+        dispatch(setPosts(posts));
+        dispatch(addUserLikedIds(parseInt(userId), posts.map(post => post.id)))
+    }
+    const { loading } = useInfiniteScroll(
+        `/users/${userId}/likes?amount=${FETCH_AMOUNT}&start_at=${postIds?.length || 0}`,
+        scrollCallback,
+        {
+            fetchAmount: FETCH_AMOUNT,
+            threshold: SCROLL_THRESHOLD,
+            fetchOnMount: !postIds,
+            isAtEnd: reachedEnd
+        }
+    )
 
     return(
         <>
-            {postIds.length === 0 && (
+            {postIds?.length === 0 && (
                 <span className={styles['empty']}>
                     {t('noLikedPosts')}
                 </span>
             )}
 
-            {postIds.length !== 0 && (
+            {postIds && postIds.length !== 0 && (
                 <ul className={styles['post-container']}>
                     {postIds.map(id => (
                         <ProfilePost 
@@ -112,7 +64,15 @@ export const LikedPosts = () => {
                 </ul>
             )}
 
-            {userHasReachedEnd && (
+            {(!postIds || loading) && (
+                <div className={styles['post-container']}>
+                    {Array.from(Array(2)).map((_, key) => (
+                        <UserPostSkeleton key={key} />
+                    ))}
+                </div>
+            )}
+
+            {reachedEnd && (
                 <span className={styles['end']}>
                     {t('likedReachedEnd')}
                 </span>
