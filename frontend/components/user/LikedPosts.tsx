@@ -53,7 +53,7 @@ export const LikedPosts = () => {
     // Loading more posts on scroll
     useEffect(() => {
         if(userHasReachedEnd) return;
-        
+
         const onScroll = () => {
             if(fetching.current || !postIds?.length) return;
 
@@ -114,7 +114,7 @@ export const LikedPosts = () => {
 
             {userHasReachedEnd && (
                 <span className={styles['end']}>
-                    You have reached the end of this user's liked posts.
+                    {t('likedReachedEnd')}
                 </span>
             )}
         </>

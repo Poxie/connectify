@@ -114,7 +114,7 @@ export const UserProfile = () => {
 
             {userHasReachedEnd && (
                 <span className={styles['end']}>
-                    You have reached the end of this user's posts.
+                    {t('postsReachedEnd')}
                 </span>
             )}
         </>

@@ -5,5 +5,8 @@
     "noLikedPosts": "Användaren har inte gillat några inlägg.",
     "editProfile": "Redigera profil",
     "follow": "Följ",
-    "unfollow": "Avfölj"
+    "unfollow": "Avfölj",
+
+    "postsReachedEnd": "Du har nått slutet av denna användares inlägg.",
+    "likedReachedEnd": "Du har nått slutet av denna användares gillade inlägg."
 }

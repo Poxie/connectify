@@ -5,5 +5,8 @@
     "noLikedPosts": "User has not liked any posts.",
     "editProfile": "Edit profile",
     "follow": "Follow",
-    "unfollow": "Unfollow"
+    "unfollow": "Unfollow",
+
+    "reachedEnd": "You have reached the end of this user's posts.",
+    "likedReachedEnd": "You have reached the end of this user's liked posts."
 }
