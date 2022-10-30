@@ -142,8 +142,8 @@ def create_post(post):
 # Function to delete post
 def delete_post(id):
     # Creating delete query
-    query = "DELETE FROM posts WHERE id = %s"
-    values = (id,)
+    query = "DELETE FROM posts WHERE id = %s; DELETE FROM likes WHERE post_id = %s"
+    values = (id, id)
 
     # Executing delete query
     db.delete(query, values)
@@ -158,6 +158,7 @@ def get_user_liked_posts(user_id: int, token_id: Union[int, None]=None, amount=1
 
     # Fetching likes
     likes = db.fetch_all(query, values)
+    print(likes)
 
     # If not likes, return empty list
     posts = []
