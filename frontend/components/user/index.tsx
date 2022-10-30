@@ -40,11 +40,17 @@ export const UserProfile = () => {
             .then(posts => {
                 dispatch(setPosts(posts));
                 dispatch(setUserPostIds(parseInt(userId), posts.map(post => post.id)))
-                fetching.current = false;
+
+                // If less than desired is fetched
+                if(posts.length < FETCH_AMOUNT) {
+                    dispatch(setUserReachedEnd(parseInt(userId), 'postIds'));
+                } else {
+                    fetching.current = false;
+                }
             })
     }, [userId, userExists, userHasLoadedPosts]);
 
-    // Loading more notifications on scroll
+    // Loading more posts on scroll
     useEffect(() => {
         const onScroll = () => {
             if(fetching.current || !postIds?.length) return;
