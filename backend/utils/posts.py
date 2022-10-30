@@ -142,11 +142,15 @@ def create_post(post):
 # Function to delete post
 def delete_post(id):
     # Creating delete query
-    query = "DELETE FROM posts WHERE id = %s; DELETE FROM likes WHERE post_id = %s"
-    values = (id, id)
+    query = "DELETE FROM posts WHERE id = %s"
+    values = (id,)
 
     # Executing delete query
     db.delete(query, values)
+
+    # Deleting likes 
+    like_query = "DELETE FROM likes WHERE post_id = %s"
+    db.delete(like_query, values)
 
     return {}
 
