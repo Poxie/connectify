@@ -9,6 +9,7 @@ import { useAppSelector } from '../../redux/store';
 import { setChannels } from '../../redux/messages/actions';
 import { LoginPrompt } from '../../components/login-prompt/LoginPrompt';
 import { selectChannelIds, selectChannelsLoading } from '../../redux/messages/selectors';
+import { Channel } from '../../types';
 const MessagesSidebar = dynamic(() => import('./MessagesSidebar').then(res => res.MessagesSidebar), { ssr: false });
 
 export const MessagesLayout: React.FC<{
@@ -34,7 +35,7 @@ export const MessagesLayout: React.FC<{
 
         // Getting channels
         fetching.current = true;
-        get(`/users/@me/channels`)
+        get<Channel[]>(`/users/@me/channels`)
             .then(channels => {
                 dispatch(setChannels(channels));
                 fetching.current = false;

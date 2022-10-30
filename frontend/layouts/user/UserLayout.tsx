@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useAppSelector } from "../../redux/store";
 import { setUser } from "../../redux/users/actions";
 import { selectUserById } from "../../redux/users/selectors";
+import { User } from "../../types";
 import { UserHeader } from "./UserHeader";
 import { UserTabs } from "./UserTabs";
 
@@ -22,7 +23,7 @@ export const UserLayout: React.FC<{
         if(!userId || user || loading || fetching.current) return;
 
         fetching.current = true;
-        get(`/users/${userId}`)
+        get<User>(`/users/${userId}`)
             .then(user => {
                 fetching.current = false;
                 dispatch(setUser(user));

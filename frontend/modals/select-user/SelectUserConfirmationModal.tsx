@@ -1,7 +1,7 @@
 import styles from './SelectUserModal.module.scss';
 import Image from "next/image";
 import { useModal } from "../../contexts/modal/ModalProvider";
-import { User } from "../../types"
+import { Channel, User } from "../../types"
 import { ModalFooter } from "../ModalFooter";
 import { ModalHeader } from "../ModalHeader";
 import { SelectedUser } from './SelectedUser';
@@ -29,7 +29,7 @@ export const SelectUserConfirmationModal: React.FC<{
     const onConfirm = async (user: User) => {
         setLoading(true);
 
-        const channel = await post(`/users/@me/channels`, {
+        const channel = await post<Channel>(`/users/@me/channels`, {
             recipient_id: user.id
         }).catch(error => {
             setLoading(false);

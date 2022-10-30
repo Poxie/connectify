@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/auth/AuthProvider"
 import { setPost } from "../../redux/posts/actions"
 import { selectPostMain } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
+import { Post } from "../../types"
 import { UserPostFooter } from "../user-post/UserPostFooter"
 import { UserPostHeader } from "../user-post/UserPostHeader"
 import { PostContent } from "./PostContent"
@@ -21,7 +22,7 @@ export const PostMain: React.FC<{
     useEffect(() => {
         if(loading || post) return;
 
-        get(`/posts/${postId}`)
+        get<Post>(`/posts/${postId}`)
             .then(post => {
                 dispatch(setPost(post));
             })

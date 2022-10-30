@@ -1,3 +1,7 @@
+export type TokenData = {
+    token: string;
+}
+
 export type User = {
     id: number;
     username: string;

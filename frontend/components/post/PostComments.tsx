@@ -10,6 +10,7 @@ import { useEffect, useRef } from 'react';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { setPostComments } from '../../redux/posts/actions';
 import { useDispatch } from 'react-redux';
+import { Comment } from '../../types';
 
 export const PostComments: React.FC<{
     postId: number;
@@ -28,7 +29,7 @@ export const PostComments: React.FC<{
         if(loading || fetching.current || commentsAreFetched || commentsAreFetched === undefined) return;
 
         fetching.current = true;
-        get(`/posts/${postId}/comments`)
+        get<Comment[]>(`/posts/${postId}/comments`)
             .then(comments => {
                 dispatch(setPostComments(postId, comments));
                 fetching.current = false;

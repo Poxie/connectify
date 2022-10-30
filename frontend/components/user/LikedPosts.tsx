@@ -27,8 +27,8 @@ export const LikedPosts = () => {
         if(!userId || !userExists || userHasLoadedPosts || fetching.current) return;
 
         fetching.current = true;
-        get(`/users/${userId}/likes`)
-            .then((posts: Post[]) => {
+        get<Post[]>(`/users/${userId}/likes`)
+            .then(posts => {
                 dispatch(setPosts(posts));
                 dispatch(setUserLikedIds(parseInt(userId), posts.map(post => post.id)))
                 fetching.current = false;

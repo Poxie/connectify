@@ -1,10 +1,10 @@
 import { User } from "../../types";
 
 export type AuthContext = {
-    get: (query: string) => Promise<any>;
-    post: (query: string, body?: Object) => Promise<any>;
-    patch: (query: string, body?: Object) => Promise<any>;
-    destroy: (query: string) => Promise<any>
+    get: <T>(query: string) => Promise<T>;
+    post: <T>(query: string, body?: Object) => Promise<T>;
+    patch: <T>(query: string, body?: Object) => Promise<T>;
+    destroy: <T>(query: string) => Promise<T>
     loading: boolean;
     token: string | null;
     profile: null | User;

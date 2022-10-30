@@ -33,8 +33,8 @@ export const SelectUserModal = () => {
         setLoading(true);
 
         // Fetching users
-        get(`/users/search?query=${query}`)
-            .then((users: User[]) => {
+        get<User[]>(`/users/search?query=${query}`)
+            .then(users => {
                 // Making sure logged in user is not present
                 const filteredUsers = users.filter(user => user.id !== profile?.id);
                 setResults(filteredUsers);

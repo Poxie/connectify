@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useDispatch } from 'react-redux';
 import { addPostComment } from '../../redux/posts/actions';
 import { useTranslation } from 'next-i18next';
+import { Comment } from '../../types';
 
 export const AddCommentInput: React.FC<{
     postId: number;
@@ -38,7 +39,7 @@ export const AddCommentInput: React.FC<{
         setDisabled(true);
 
         // Creating comment
-        post(`/posts/${postId}/comments`, {
+        post<Comment>(`/posts/${postId}/comments`, {
             content: value
         })
             .then(comment => {

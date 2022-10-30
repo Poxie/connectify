@@ -43,7 +43,7 @@ export const MessageInput: React.FC<{
         }));
 
         // Creating message
-        post(`/channels/${channelId}/messages`, {
+        post<Message>(`/channels/${channelId}/messages`, {
             content
         })
         .then(message => {

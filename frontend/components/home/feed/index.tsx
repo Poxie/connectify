@@ -27,7 +27,7 @@ export const Feed = () => {
 
     // Function to get feed posts
     const getFeedPosts = useCallback(async (amount=10, startAt=0) => {
-        return await get(`/feed?amount=${amount}&start_at=${startAt}`) as Promise<Post[]>;
+        return await get<Post[]>(`/feed?amount=${amount}&start_at=${startAt}`);
     }, [get]);
 
     // Initial fetch for feed posts 

@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { RegisterModal } from './RegisterModal';
 import { useTranslation } from 'next-i18next';
+import { TokenData } from '../../types';
 
 export const LoginModal = () => {
     const { t } = useTranslation('common');
@@ -26,7 +27,7 @@ export const LoginModal = () => {
         setLoading(true);
 
         // Making login request
-        post(`/login`, {
+        post<TokenData>(`/login`, {
             username,
             password
         })

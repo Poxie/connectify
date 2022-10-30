@@ -27,8 +27,8 @@ export const UserProfile = () => {
         if(!userId || !userExists || userHasLoadedPosts || fetching.current) return;
 
         fetching.current = true;
-        get(`/users/${userId}/posts`)
-            .then((posts: Post[]) => {
+        get<Post[]>(`/users/${userId}/posts`)
+            .then(posts => {
                 dispatch(setPosts(posts));
                 dispatch(setUserPostIds(parseInt(userId), posts.map(post => post.id)))
                 fetching.current = false;

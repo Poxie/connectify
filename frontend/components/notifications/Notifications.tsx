@@ -10,6 +10,7 @@ import { NotificationSkeleton } from "./NotificationSkeleton";
 import { LoginPrompt } from '../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../empty-prompt/EmptyPrompt';
+import { Notification as NotificationType } from '../../types';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 15;
@@ -25,7 +26,7 @@ export const Notifications = () => {
 
     // Function to fetch notifications
     const getNotifications = useCallback(async (amount=FETCH_AMOUNT, startAt=0) => {
-        return await get(`/notifications?amount=${amount}&start_at=${startAt}`);
+        return await get<NotificationType[]>(`/notifications?amount=${amount}&start_at=${startAt}`);
     }, [get]);
 
     // Loading notifications on mount

@@ -27,7 +27,7 @@ export const AuthProvider: React.FC<{
     useEffect(() => {
         if(!token) return;
 
-        get('/me')
+        get<User>('/me')
             .then(user => {
                 setProfile(user);
             })
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<{
     }, [token]);
 
     // Function to fetch data from API with user authentication.
-    const get = useCallback(async (query: string) => {
+    const get = useCallback(async function<T>(query: string) {
         return(
             fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, {
                 headers: {
@@ -55,12 +55,12 @@ export const AuthProvider: React.FC<{
                 // Else throw error
                 throw new Error(await res.text());
             })
-            .then(data => data)
+            .then((data: T) => data)
         )
     }, [token]);
 
     // Function to post data to API with user authentication.
-    const post = useCallback(async (query: string, body?: Object) => {
+    const post = useCallback(async function<T>(query: string, body?: Object) {
         const formData = new FormData();
         Object.entries(body || {}).forEach(([key, value]) => {
             formData.append(key, value);
@@ -84,12 +84,12 @@ export const AuthProvider: React.FC<{
                 error.code = res.status;
                 throw error;
             })
-            .then(data => data)
+            .then((data: T) => data)
         )
     }, [token]);
 
     // Function to delete data through the API with user authentication.
-    const destroy = useCallback(async (query: string) => {
+    const destroy = useCallback(async function<T>(query: string) {
         return(
             fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, {
                 method: 'DELETE',
@@ -107,11 +107,12 @@ export const AuthProvider: React.FC<{
                 error.code = res.status;
                 throw error;
             })
+            .then((data: T) => data)
         )
     }, [token]);
 
     // Function to patch data on the API with user authentication.
-    const patch = useCallback(async (query: string, body?: Object) => {
+    const patch = useCallback(async function<T>(query: string, body?: Object) {
         const formData = new FormData();
         Object.entries(body || {}).forEach(([key, value]) => {
             formData.append(key, value);
@@ -135,7 +136,7 @@ export const AuthProvider: React.FC<{
                 error.code = res.status;
                 throw error;
             })
-            .then(data => data)
+            .then((data: T) => data)
         )
     }, [token]);
 

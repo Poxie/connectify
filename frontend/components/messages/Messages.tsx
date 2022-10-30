@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/auth/AuthProvider";
 import { prependMessages, removeUnreadCount, setChannelReachedEnd, setLastChannelId, setMessages } from "../../redux/messages/actions";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
-import { User } from '../../types';
+import { Message as MessageType, User } from '../../types';
 import Link from 'next/link';
 import { Loader } from '../loader';
 import { selectChannelReachedEnd, selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
@@ -30,7 +30,7 @@ export const Messages: React.FC<{
 
     // Function to fetch messages
     const fetchMessages = useCallback(async (amount=MESSAGES_TO_LOAD, startAt=0) => {
-        const messages = await get(`/channels/${channelId}/messages?amount=${amount}&start_at=${startAt}`);
+        const messages = await get<MessageType[]>(`/channels/${channelId}/messages?amount=${amount}&start_at=${startAt}`);
         return messages;
     }, [channelId]);
 
