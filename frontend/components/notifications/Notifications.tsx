@@ -11,6 +11,7 @@ import { LoginPrompt } from '../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../empty-prompt/EmptyPrompt';
 import { Notification as NotificationType } from '../../types';
+import { ScrollCallback, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 15;
@@ -23,6 +24,22 @@ export const Notifications = () => {
     const notificationsLoading = useAppSelector(selectNotificationsLoading);
     const reachedEnd = useAppSelector(selectNotificationsReachedEnd);
     const fetching = useRef(false);
+
+    // Testing
+    const scrollCallback: ScrollCallback = (notifications: NotificationType[], reachedEnd) => {
+        dispatch(addNotifications(notifications));
+        if(reachedEnd) {
+            dispatch(setNotificationsReachedEnd(true));
+        }
+    }
+    const { loading: fetchingNotifications } = useInfiniteScroll<NotificationType[]>(
+        `/notifications?amount=${FETCH_AMOUNT}&start_at=${notificationIds.length}`,
+        scrollCallback,
+        {
+            fetchAmount: FETCH_AMOUNT,
+            threshold: SCROLL_THRESHOLD
+        }
+    )
 
     // Function to fetch notifications
     const getNotifications = useCallback(async (amount=FETCH_AMOUNT, startAt=0) => {
@@ -40,41 +57,6 @@ export const Notifications = () => {
                 fetching.current = false;
             })
     }, [token, get, loading, notificationIds.length]);
-
-    // Loading more notifications on scroll
-    useEffect(() => {
-        if(reachedEnd) return;
-
-        const onScroll = () => {
-            if(fetching.current) return;
-
-            const diffFromBottom = Math.abs(window.scrollY + window.innerHeight - document.body.offsetHeight);
-            
-            if(diffFromBottom < SCROLL_THRESHOLD) {
-                fetching.current = true;
-
-                getNotifications(FETCH_AMOUNT, notificationIds.length)
-                    .then(notifications => {
-                        // If notifications are returned, push them
-                        if(notifications.length) {
-                            dispatch(addNotifications(notifications))
-                        }
-
-                        // If no notifications were returned, or less than desired
-                        if(!notifications.length || notifications.length < FETCH_AMOUNT) {
-                            dispatch(setNotificationsReachedEnd(true));
-                            return;
-                        }
-
-                        fetching.current = false;
-                    })
-            }
-        }
-
-        // Setting up event listeners
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, [notificationIds.length, reachedEnd]);
 
     // Updating notification count
     useEffect(() => {
