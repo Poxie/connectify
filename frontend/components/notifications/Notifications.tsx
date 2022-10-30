@@ -24,7 +24,7 @@ export const Notifications = () => {
     const notificationIds = useAppSelector(selectNotificationIds);
     const reachedEnd = useAppSelector(selectNotificationsReachedEnd);
 
-    // Testing
+    // Fetching on mount and scroll
     const scrollCallback: ScrollCallback = (notifications: NotificationType[], reachedEnd) => {
         dispatch(addNotifications(notifications));
         if(reachedEnd) {
@@ -37,7 +37,7 @@ export const Notifications = () => {
         {
             fetchAmount: FETCH_AMOUNT,
             threshold: SCROLL_THRESHOLD,
-            fetchOnMount: true
+            fetchOnMount: notificationIds.length === 0
         }
     )
 
