@@ -6,6 +6,7 @@ type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, opti
     threshold: number;
     fetchAmount: number;
     fetchOnMount?: boolean;
+    isAtEnd?: boolean;
 }) => {
     loading: boolean;
     reachedEnd: boolean;
@@ -15,11 +16,11 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
     const { get, token, loading: tokenLoading } = useAuth();
     const [loading, setLoading] = useState(options.fetchOnMount ? true : false);
     const [reachedEnd, setReachedEnd] = useState(false);
-    const fetching = useRef(options.fetchOnMount ? true : false);
+    const fetching = useRef(options.fetchOnMount || options.isAtEnd);
 
     // Fetching on mount
     useEffect(() => {
-        if(!options.fetchOnMount || !token || tokenLoading) return;
+        if(!options.fetchOnMount || !token || tokenLoading || options.isAtEnd) return;
 
         get(query)
             .then((result: any) => {
@@ -29,7 +30,7 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
                 setReachedEnd(reachedEnd);
                 fetching.current = false;
             })
-    }, [options.fetchOnMount, get, token, tokenLoading]);
+    }, [options.fetchOnMount, options.isAtEnd, get, token, tokenLoading]);
 
     // Handling event listeners
     useEffect(() => {
