@@ -72,7 +72,7 @@ export const LikedPosts = () => {
                 </div>
             )}
 
-            {reachedEnd && (
+            {reachedEnd && postIds?.length !== 0 && (
                 <span className={styles['end']}>
                     {t('likedReachedEnd')}
                 </span>
