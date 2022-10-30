@@ -16,11 +16,17 @@ const addFeedPostIds: ReducerAction = (state, action) => {
     })
 }
 
+const setFeedReachedEnd: ReducerAction = (state, action) => {
+    return updateObject(state, { reachedEnd: action.payload })
+}
+
 // Creating reducer
 export const feedReducer = createReducer({
     postIds: [],
-    loading: true
+    loading: true,
+    reachedEnd: false
 }, {
     SET_FEED_POST_IDS: setFeedPostIds,
-    ADD_FEED_POST_IDS: addFeedPostIds
+    ADD_FEED_POST_IDS: addFeedPostIds,
+    SET_FEED_REACHED_END: setFeedReachedEnd
 })

@@ -7,26 +7,27 @@ import { FeedPost } from './FeedPost';
 import { UserPostSkeleton } from '../../user-post/UserPostSkeleton';
 import { AnimatePresence } from 'framer-motion';
 import { setPosts } from '../../../redux/posts/actions';
-import { addFeedPostIds, setFeedPostIds } from '../../../redux/feed/actions';
+import { addFeedPostIds, setFeedPostIds, setFeedReachedEnd } from '../../../redux/feed/actions';
 import { Post } from '../../../types';
 import { LoginPrompt } from '../../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../../empty-prompt/EmptyPrompt';
 import Button from '../../button';
-import { selectFeedPostIds } from '../../../redux/feed/selectors';
+import { selectFeedPostIds, selectFeedReachedEnd } from '../../../redux/feed/selectors';
 
 const SCROLL_THRESHOLD = 500;
+const FETCH_AMOUNT = 10;
 export const Feed = () => {
     const { t } = useTranslation('home');
     const { get, token, loading } = useAuth();
     const dispatch = useAppDispatch();
     const postIds = useAppSelector(selectFeedPostIds);
+    const reachedEnd = useAppSelector(selectFeedReachedEnd);
     const [feedLoading, setFeedLoading] = useState(true);
-    const [reachedEnd, setReachedEnd] = useState(false);
     const fetching = useRef(false);
 
     // Function to get feed posts
-    const getFeedPosts = useCallback(async (amount=10, startAt=0) => {
+    const getFeedPosts = useCallback(async (amount=FETCH_AMOUNT, startAt=0) => {
         return await get<Post[]>(`/feed?amount=${amount}&start_at=${startAt}`);
     }, [get]);
 
@@ -55,6 +56,8 @@ export const Feed = () => {
 
     // Loading more posts on scroll
     useEffect(() => {
+        if(reachedEnd) return;
+
         const onScroll = () => {
             if(fetching.current) return;
 
@@ -65,11 +68,13 @@ export const Feed = () => {
 
                 getFeedPosts(10, postIds.length)
                     .then(posts => {
-                        if(!posts.length) return setReachedEnd(true);
+                        if(!posts.length || posts.length < FETCH_AMOUNT) {
+                            dispatch(setFeedReachedEnd(true));
+                        }
 
                         dispatch(setPosts(posts));
                         dispatch(addFeedPostIds(posts.map(post => post.id)));
-                        fetching.current = false;
+                        if(posts.length === FETCH_AMOUNT) fetching.current = false;
                     })
             }
         }
@@ -77,7 +82,7 @@ export const Feed = () => {
         // Setting up event listeners
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
-    }, [postIds.length]);
+    }, [postIds.length, reachedEnd]);
 
     return(
         <div className={styles['container']}>
