@@ -15,15 +15,14 @@ import { ScrollCallback, useInfiniteScroll } from '../../hooks/useInfiniteScroll
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 15;
+const PLACEHOLDER_AMOUNT = 4;
 export const Notifications = () => {
     const { t } = useTranslation('notifications');
-    const { token, get, patch, loading } = useAuth();
+    const { token, patch, loading } = useAuth();
     const dispatch = useDispatch();
     const notificationCount = useAppSelector(selectUnreadCount);
     const notificationIds = useAppSelector(selectNotificationIds);
-    const notificationsLoading = useAppSelector(selectNotificationsLoading);
     const reachedEnd = useAppSelector(selectNotificationsReachedEnd);
-    const fetching = useRef(false);
 
     // Testing
     const scrollCallback: ScrollCallback = (notifications: NotificationType[], reachedEnd) => {
@@ -32,31 +31,15 @@ export const Notifications = () => {
             dispatch(setNotificationsReachedEnd(true));
         }
     }
-    const { loading: fetchingNotifications } = useInfiniteScroll<NotificationType[]>(
+    const { loading: notificationsLoading } = useInfiniteScroll<NotificationType[]>(
         `/notifications?amount=${FETCH_AMOUNT}&start_at=${notificationIds.length}`,
         scrollCallback,
         {
             fetchAmount: FETCH_AMOUNT,
-            threshold: SCROLL_THRESHOLD
+            threshold: SCROLL_THRESHOLD,
+            fetchOnMount: true
         }
     )
-
-    // Function to fetch notifications
-    const getNotifications = useCallback(async (amount=FETCH_AMOUNT, startAt=0) => {
-        return await get<NotificationType[]>(`/notifications?amount=${amount}&start_at=${startAt}`);
-    }, [get]);
-
-    // Loading notifications on mount
-    useEffect(() => {
-        if(!token || loading || notificationIds.length || fetching.current) return;
-
-        fetching.current = true;
-        getNotifications()
-            .then(notifications => {
-                dispatch(setNotifications(notifications));
-                fetching.current = false;
-            })
-    }, [token, get, loading, notificationIds.length]);
 
     // Updating notification count
     useEffect(() => {
@@ -70,16 +53,6 @@ export const Notifications = () => {
 
     if(!loading && !token) {
         return <LoginPrompt />;
-    }
-
-    if(notificationsLoading) {
-        return(
-            <>
-            {Array.from(Array(6)).map((_, key) => (
-                <NotificationSkeleton key={key} />
-            ))}
-            </>
-        )
     }
 
     if(!notificationsLoading && !notificationIds.length) {
@@ -102,6 +75,14 @@ export const Notifications = () => {
                     key={id}
                 />
             ))}
+
+            {notificationsLoading && (
+                <>
+                {Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
+                    <NotificationSkeleton key={key} />
+                ))}
+                </>
+            )}
 
             {reachedEnd && (
                 <span className={styles['end']}>
