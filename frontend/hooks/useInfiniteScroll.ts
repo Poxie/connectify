@@ -13,9 +13,9 @@ type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, opti
 
 export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, options) => {
     const { get, token, loading: tokenLoading } = useAuth();
-    const [loading, setLoading] = useState(options.fetchAmount ? true : false);
+    const [loading, setLoading] = useState(options.fetchOnMount ? true : false);
     const [reachedEnd, setReachedEnd] = useState(false);
-    const fetching = useRef(options.fetchAmount ? true : false);
+    const fetching = useRef(options.fetchOnMount ? true : false);
 
     // Fetching on mount
     useEffect(() => {
