@@ -58,6 +58,7 @@ export const UserPostFooter: React.FC<{
                 onClick={has_liked ? unlike : like}
                 icon={has_liked ? <HeartActiveIcon /> : <HeartNeutralIcon />}
                 text={`${like_count} ${t('likes')}`}
+                active={has_liked}
             />
             <UserPostFooterButton 
                 onClick={goToPost}

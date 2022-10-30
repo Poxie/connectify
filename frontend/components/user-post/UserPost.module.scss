@@ -96,6 +96,12 @@
         width: 20px;
         fill: var(--text-secondary);
     }
+
+    &.active {
+        svg {
+            fill: var(--color-primary);
+        }
+    }
 }
 
 // Styles for placeholder skeletons

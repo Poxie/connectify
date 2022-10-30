@@ -5,10 +5,15 @@ export const UserPostFooterButton: React.FC<{
     onClick: () => void;
     icon: ReactElement;
     text: string;
-}> = ({ onClick, icon, text }) => {
+    active?: boolean;
+}> = ({ onClick, icon, text, active }) => {
+    const className = [
+        styles['footer-button'],
+        active ? styles['active'] : ''
+    ].join(' ');
     return(
         <button 
-            className={styles['footer-button']}
+            className={className}
             onClick={onClick}
         >
             {icon}
