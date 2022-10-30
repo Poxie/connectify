@@ -1,7 +1,7 @@
 import { User } from "../../types";
 
 export type AuthContext = {
-    get: <T>(query: string) => Promise<T>;
+    get: <T>(query: string, signal?: AbortSignal) => Promise<T>;
     post: <T>(query: string, body?: Object) => Promise<T>;
     patch: <T>(query: string, body?: Object) => Promise<T>;
     destroy: <T>(query: string) => Promise<T>

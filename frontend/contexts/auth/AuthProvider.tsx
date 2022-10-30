@@ -40,12 +40,13 @@ export const AuthProvider: React.FC<{
     }, [token]);
 
     // Function to fetch data from API with user authentication.
-    const get = useCallback(async function<T>(query: string) {
+    const get = useCallback(async function<T>(query: string, signal?: AbortSignal) {
         return(
             fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${query}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                signal
             })
             .then(async res => {
                 // If request successful, return json data

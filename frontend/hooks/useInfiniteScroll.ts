@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useDebugValue, useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/auth/AuthProvider";
 
 export type ScrollCallback = (result: any, reachedEnd: boolean) => void;
@@ -12,6 +12,7 @@ type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, opti
     reachedEnd: boolean;
 }
 
+// TODO: on route change, two requests are made - fix!
 export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, options) => {
     const { get, token, loading: tokenLoading } = useAuth();
     const [loading, setLoading] = useState(options.fetchOnMount ? true : false);
@@ -20,9 +21,14 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
 
     // Fetching on mount
     useEffect(() => {
-        if(!options.fetchOnMount || !token || tokenLoading || options.isAtEnd) return;
+        if(!options.fetchOnMount || tokenLoading || options.isAtEnd) return;
 
-        get(query)
+        // Making sure to cancel multiple requests
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        fetching.current = true;
+        get(query, signal)
             .then((result: any) => {
                 const reachedEnd = result.length < options.fetchAmount;
                 onRequestFinished(result, reachedEnd);
@@ -30,7 +36,10 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
                 setReachedEnd(reachedEnd);
                 fetching.current = false;
             })
-    }, [options.fetchOnMount, options.isAtEnd, get, token, tokenLoading]);
+
+        // Aborting previous http request
+        return () => controller.abort();
+    }, [tokenLoading]);
 
     // Handling event listeners
     useEffect(() => {
@@ -39,7 +48,7 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
         const onScroll = async () => {
             if(fetching.current) return;
             const diffFromBottom = Math.abs(window.scrollY + window.innerHeight - document.body.offsetHeight);
-                
+            
             if(diffFromBottom < options.threshold) {
                 fetching.current = true;
                 setLoading(true);
