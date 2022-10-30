@@ -1,5 +1,5 @@
 import { User } from "../../types";
-import { ADD_USER_FOLLOW, ADD_USER_POST_ID, ADD_USER_POST_IDS, REMOVE_USER_FOLLOW, REMOVE_USER_POST_ID, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS, SET_USER_REACHED_END } from "./constants";
+import { ADD_USER_FOLLOW, ADD_USER_LIKED_IDS, ADD_USER_POST_ID, ADD_USER_POST_IDS, REMOVE_USER_FOLLOW, REMOVE_USER_POST_ID, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS, SET_USER_REACHED_END } from "./constants";
 
 export const setUser = (user: User) => ({
     type: SET_USER,
@@ -31,6 +31,10 @@ export const removeUserPostId = (userId: number, postId: number) => ({
 })
 export const setUserLikedIds = (userId: number, postIds: number[]) => ({
     type: SET_USER_LIKED_IDS,
+    payload: { userId, postIds }
+})
+export const addUserLikedIds = (userId: number, postIds: number[]) => ({
+    type: ADD_USER_LIKED_IDS,
     payload: { userId, postIds }
 })
 export const setUserReachedEnd = (userId: number, type: 'likedIds' | 'postIds') => ({

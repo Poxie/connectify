@@ -117,6 +117,18 @@ const addUserPostIds: ReducerAction = (state, action) => {
     return updateObject(state, { users: newUsers })
 }
 
+const addUserLikedIds: ReducerAction = (state, action) => {
+    const { userId, postIds } = action.payload;
+
+    const newUsers = updateItemInArray(state.users, userId, user => {
+        return updateObject(user, {
+            likedIds: [...postIds, ...(user.likedIds || [])]
+        })
+    })
+
+    return updateObject(state, { users: newUsers })
+}
+
 const setUserReachedEnd: ReducerAction = (state, action) => {
     const { userId, type }: {
         userId: number;
@@ -144,5 +156,6 @@ export const usersReducer = createReducer<UsersState>({
     SET_USER_LIKED_IDS: setUserLikedIds,
     ADD_USER_POST_ID: addUserPostId,
     ADD_USER_POST_IDS: addUserPostIds,
-    SET_USER_REACHED_END: setUserReachedEnd
+    SET_USER_REACHED_END: setUserReachedEnd,
+    ADD_USER_LIKED_IDS: addUserLikedIds
 })
