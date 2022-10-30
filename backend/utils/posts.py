@@ -151,10 +151,10 @@ def delete_post(id):
     return {}
 
 # Getting user liked posts
-def get_user_liked_posts(user_id: int, token_id: Union[int, None]=None):
+def get_user_liked_posts(user_id: int, token_id: Union[int, None]=None, amount=10, start_at=0):
     # Creating query
-    query = "SELECT post_id FROM likes WHERE user_id = %s ORDER BY timestamp DESC"
-    values = (user_id,)
+    query = "SELECT post_id FROM likes WHERE user_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
+    values = (user_id, start_at, amount)
 
     # Fetching likes
     likes = db.fetch_all(query, values)
