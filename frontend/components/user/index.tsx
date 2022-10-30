@@ -52,6 +52,8 @@ export const UserProfile = () => {
 
     // Loading more posts on scroll
     useEffect(() => {
+        if(userHasReachedEnd) return;
+
         const onScroll = () => {
             if(fetching.current || !postIds?.length) return;
 
@@ -80,7 +82,7 @@ export const UserProfile = () => {
         // Setting up event listeners
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
-    }, [postIds?.length, userId]);
+    }, [postIds?.length, userId, userHasReachedEnd]);
 
     // Returning while user posts are loading
     if(!postIds) return(

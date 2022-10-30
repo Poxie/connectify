@@ -43,6 +43,8 @@ export const Notifications = () => {
 
     // Loading more notifications on scroll
     useEffect(() => {
+        if(reachedEnd) return;
+
         const onScroll = () => {
             if(fetching.current) return;
 
@@ -72,7 +74,7 @@ export const Notifications = () => {
         // Setting up event listeners
         window.addEventListener('scroll', onScroll);
         return () => window.removeEventListener('scroll', onScroll);
-    }, [notificationIds.length]);
+    }, [notificationIds.length, reachedEnd]);
 
     // Updating notification count
     useEffect(() => {
