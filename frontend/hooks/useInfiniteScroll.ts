@@ -53,7 +53,7 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
         const scrollContainer = options.scrollContainer?.current || window;
 
         const onScroll = async () => {
-            if(fetching.current) return;
+            if(fetching.current || options.isAtEnd) return;
             
             let diffFromBottom: number;
             let diffFromTop: number;
