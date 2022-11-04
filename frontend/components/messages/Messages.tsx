@@ -1,5 +1,5 @@
 import styles from '../../styles/Messages.module.scss';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { prependMessages, removeUnreadCount, setChannelReachedEnd, setLastChannelId, setMessages } from "../../redux/messages/actions";
@@ -9,6 +9,7 @@ import { Message as MessageType, User } from '../../types';
 import Link from 'next/link';
 import { Loader } from '../loader';
 import { selectChannelReachedEnd, selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
+import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 const PREVENT_AUTO_SCROLL_THRESHOLD = 200;
 const UPDATE_SCROLL_THRESHOLD = 600;
@@ -18,72 +19,36 @@ export const Messages: React.FC<{
     recipient: User;
 }> = ({ channelId, recipient }) => {
     const dispatch = useDispatch();
-    const { get, patch, loading } = useAuth();
+    const { patch } = useAuth();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
     const reachedEnd = useAppSelector(state => selectChannelReachedEnd(state, channelId))
     const lastChannelId = useAppSelector(selectLastChannelId);
     const scrollContainer = useRef<HTMLDivElement>(null);
     const list = useRef<HTMLUListElement>(null);
-    const fetching = useRef(false);
     const shouldScroll = useRef(messageIds === undefined);
 
-    // Function to fetch messages
-    const fetchMessages = useCallback(async (amount=MESSAGES_TO_LOAD, startAt=0) => {
-        const messages = await get<MessageType[]>(`/channels/${channelId}/messages?amount=${amount}&start_at=${startAt}`);
-        return messages;
-    }, [channelId]);
+    // Fetching messages on mount and scroll
+    const onRequestFinished = (messages: MessageType[], reachedEnd: boolean) => {
+        dispatch(prependMessages(channelId, messages));
 
-    // Fetching channel messages
-    useEffect(() => {
-        // Making sure not to make unnecessary requests
-        if(messageIds || loading || fetching.current) return;
-
-        // Getting messages
-        fetching.current = true;
-        fetchMessages().then(messages => {
-            dispatch(setMessages(channelId, messages));
-            fetching.current = false;
-
-            if(messages.length < MESSAGES_TO_LOAD) {
-                dispatch(setChannelReachedEnd(channelId, true));
-            }
-        })
-    }, [channelId, messageIds, get, loading]);
-
-    // Fetching more messages on scroll
-    useEffect(() => {
-        if(!messageIds?.length) return;
-
-        // Listening to message list scroll
-        const onScroll = async () => {
-            if(!scrollContainer.current) return;
-
-            // Checking if scroll meets threshold
-            const scroll = scrollContainer.current.scrollTop;
-            if(scroll < UPDATE_SCROLL_THRESHOLD) {
-                if(fetching.current) return;
-                fetching.current = true;
-
-                // Fetching and displaying new messages
-                const messages = await fetchMessages(MESSAGES_TO_LOAD, messageIds.length);
-                dispatch(prependMessages(channelId, messages));
-
-                // Updating current loading state
-                fetching.current = false;
-
-                // If messages are not returned, stop scroll
-                if(messages.length < MESSAGES_TO_LOAD) {
-                    dispatch(setChannelReachedEnd(channelId, true));
-                    scrollContainer.current?.removeEventListener('scroll', onScroll);
-                }
-            }
+        if(reachedEnd) {
+            dispatch(setChannelReachedEnd(channelId, true));
         }
-
-        // Handling event listeners
-        scrollContainer.current?.addEventListener('scroll', onScroll)
-        return () => scrollContainer.current?.removeEventListener('scroll', onScroll);
-    }, [messageIds?.length]);
+    }
+    const { loading } = useInfiniteScroll(
+        `/channels/${channelId}/messages?amount=${MESSAGES_TO_LOAD}&start_at=${messageIds?.length || 0}`,
+        onRequestFinished,
+        {
+            fetchAmount: MESSAGES_TO_LOAD,
+            threshold: UPDATE_SCROLL_THRESHOLD,
+            fetchOnMount: !messageIds,
+            direction: 'up',
+            scrollContainer,
+            identifier: channelId,
+            isAtEnd: reachedEnd
+        }
+    )
 
     // Updating last channelId
     useEffect(() => {
