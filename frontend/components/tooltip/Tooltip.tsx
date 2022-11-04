@@ -34,6 +34,10 @@ export const Tooltip: React.FC<{
                 top += refHeight / 2 - height / 2;
                 left -= width + SPACE_FROM_ORIGIN
                 break;
+            case 'right':
+                top += refHeight / 2 - height / 2;
+                left += refWidth + SPACE_FROM_ORIGIN
+                break;
         }
 
         // Checking if position exceeds viewport
@@ -47,11 +51,23 @@ export const Tooltip: React.FC<{
         setTooltipPosition({ top, left });
     }, [refElement.current]);
 
+    const translateY = ['bottom', 'top'].includes(position) ? ANIMATION_SPACING : 0;
+    const translateX = ['left', 'right'].includes(position) ? ANIMATION_SPACING : 0;
     return(
         <motion.div 
-            initial={{ opacity: 0, translateY: position === 'top' ? -ANIMATION_SPACING : ANIMATION_SPACING }}
-            exit={{ opacity: 0, translateY: position === 'top' ? -ANIMATION_SPACING : ANIMATION_SPACING }}
-            animate={{ opacity: 1, translateY: 0 }}
+            initial={{ 
+                opacity: 0, 
+                translateY: position === 'top' ? -translateY : translateY 
+            }}
+            exit={{ 
+                opacity: 0, 
+                translateX: position === 'left' ? -translateX : translateX 
+            }}
+            animate={{ 
+                opacity: 1, 
+                translateY: 0, 
+                translateX: 0,
+            }}
             transition={{ duration: .15 }}
             className={styles['container']}
             style={{...tooltipPosition}}

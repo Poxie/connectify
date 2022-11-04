@@ -42,4 +42,13 @@
             transform: translateY(-50%);
         }
     }
+
+    &:is([data-position="right"]) {
+        &::after {
+            border-right-color: var(--tooltip-background-primary);
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
 }
