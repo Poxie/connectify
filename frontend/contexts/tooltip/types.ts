@@ -1,6 +1,6 @@
 import { ReactElement, RefObject } from "react";
 
-export type TooltipPosition = 'top' | 'bottom';
+export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 
 export type Context = {
     setTooltip: (options: {

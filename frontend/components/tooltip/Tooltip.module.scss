@@ -14,14 +14,14 @@
         content: '';
         border: solid var(--arrow-size) transparent;
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
     }
 
     &:is([data-position="top"]) {
         &::after {
             border-top-color: var(--tooltip-background-primary);
             top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
         }
     }
 
@@ -29,6 +29,17 @@
         &::after {
             border-bottom-color: var(--tooltip-background-primary);
             bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &:is([data-position="left"]) {
+        &::after {
+            border-left-color: var(--tooltip-background-primary);
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
         }
     }
 }

@@ -21,14 +21,20 @@ export const Tooltip: React.FC<{
         let { width, height } = ref.current.getBoundingClientRect();
 
         // Getting preliminary position
-        top = top + (
-            position === 'top' ? (
-                - height - SPACE_FROM_ORIGIN
-            ) : (
-                refHeight + SPACE_FROM_ORIGIN
-            )
-        )
-        left = left - width / 2 + refWidth / 2;
+        switch(position) {
+            case 'top':
+                top -= (height + SPACE_FROM_ORIGIN)
+                left = left - width / 2 + refWidth / 2;
+                break;
+            case 'bottom':
+                top += refHeight + SPACE_FROM_ORIGIN
+                left = left - width / 2 + refWidth / 2;
+                break;
+            case 'left':
+                top += refHeight / 2 - height / 2;
+                left -= width + SPACE_FROM_ORIGIN
+                break;
+        }
 
         // Checking if position exceeds viewport
         if(left + width > window.innerWidth - SPACE_FROM_ORIGIN) {
