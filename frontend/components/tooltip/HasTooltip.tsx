@@ -1,4 +1,4 @@
-import { ReactElement, useRef } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { useTooltip } from "../../contexts/tooltip/TooltipProvider";
 import { TooltipPosition } from "../../contexts/tooltip/types";
 
@@ -26,6 +26,16 @@ export const HasTooltip: React.FC<{
         }
         close();
     }
+
+    // Closing and cancelling on unmount
+    useEffect(() => {
+        return () => {
+            if(timeout.current) {
+                clearTimeout(timeout.current);
+            }
+            close();
+        }
+    }, []);
 
     return(
         <div 
