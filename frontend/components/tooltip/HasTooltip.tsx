@@ -12,11 +12,18 @@ export const HasTooltip: React.FC<{
 }> = ({ children, className, onClick, tooltip, position='top', delay=0 }) => {
     const { setTooltip, close } = useTooltip();
     const ref = useRef<HTMLDivElement>(null);
+    const timeout = useRef<NodeJS.Timeout | null>(null);
 
     const onMouseEnter = () => {
-        setTooltip({ tooltip, position }, ref);
+        timeout.current = setTimeout(() => {
+            setTooltip({ tooltip, position }, ref);
+        }, delay);
     }
     const onMouseLeave = () => {
+        if(timeout.current) {
+            clearTimeout(timeout.current);
+            timeout.current = null;
+        }
         close();
     }
 
