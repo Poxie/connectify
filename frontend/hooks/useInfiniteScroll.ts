@@ -1,12 +1,16 @@
-import { useCallback, useDebugValue, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/auth/AuthProvider";
 
+export type InfiniteScrollDirection = 'down' | 'up';
 export type ScrollCallback = (result: any, reachedEnd: boolean) => void;
 type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, options: {
     threshold: number;
     fetchAmount: number;
     fetchOnMount?: boolean;
     isAtEnd?: boolean;
+    direction?: InfiniteScrollDirection;
+    scrollContainer?: RefObject<HTMLDivElement>;
+    identifier?: number;
 }) => {
     loading: boolean;
     reachedEnd: boolean;
@@ -39,17 +43,44 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
 
         // Aborting previous http request
         return () => controller.abort();
-    }, [tokenLoading]);
+    }, [tokenLoading, options.identifier]);
 
     // Handling event listeners
     useEffect(() => {
         if(!token) return;
 
+        // Selecting correct scroll container
+        const scrollContainer = options.scrollContainer?.current || window;
+
         const onScroll = async () => {
             if(fetching.current) return;
-            const diffFromBottom = Math.abs(window.scrollY + window.innerHeight - document.body.offsetHeight);
             
-            if(diffFromBottom < options.threshold) {
+            let diffFromBottom: number;
+            let diffFromTop: number;
+            if(options.scrollContainer?.current) {
+                const el = options.scrollContainer.current;
+                diffFromBottom = (
+                    el.scrollHeight -
+                    el.scrollTop -
+                    el.offsetHeight
+                )
+                diffFromTop = el.scrollTop;
+            } else {
+                diffFromBottom = Math.abs(window.scrollY + window.innerHeight - document.body.offsetHeight);
+                diffFromTop = window.scrollY;
+            }
+            
+            const fetchDirectionDown = (
+                options.direction !== 'up' && 
+                diffFromBottom < options.threshold &&
+                diffFromBottom > 0
+            );
+            const fetchDirectionUp = (
+                options.direction === 'up' && 
+                diffFromTop < options.threshold && 
+                diffFromTop > 0
+            )
+            if(fetchDirectionDown || fetchDirectionUp) {
                 fetching.current = true;
                 setLoading(true);
                 const result: any = await get(query);
@@ -61,13 +92,13 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
                 setReachedEnd(reachedEnd);
     
                 if(reachedEnd) {
-                    window.removeEventListener('scroll', onScroll);
+                    scrollContainer.removeEventListener('scroll', onScroll);
                 }
             }
         }
 
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
+        scrollContainer.addEventListener('scroll', onScroll);
+        return () => scrollContainer.removeEventListener('scroll', onScroll);
     }, [get, token, tokenLoading, query]);
 
     return {
