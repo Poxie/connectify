@@ -8,4 +8,27 @@
     font-weight: 600;
     white-space: nowrap;
     pointer-events: none;
+
+    &::after {
+        --arrow-size: 6px;
+        content: '';
+        border: solid var(--arrow-size) transparent;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    &:is([data-position="top"]) {
+        &::after {
+            border-top-color: var(--tooltip-background-primary);
+            top: 100%;
+        }
+    }
+
+    &:is([data-position="bottom"]) {
+        &::after {
+            border-bottom-color: var(--tooltip-background-primary);
+            bottom: 100%;
+        }
+    }
 }

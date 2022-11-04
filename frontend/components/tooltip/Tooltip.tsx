@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ReactElement, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { TooltipPosition } from '../../contexts/tooltip/types';
 import styles from './Tooltip.module.scss';
+import { TooltipPosition } from '../../contexts/tooltip/types';
 
 const SPACE_FROM_ORIGIN = 10;
 const ANIMATION_SPACING = 5;
@@ -49,6 +49,7 @@ export const Tooltip: React.FC<{
             transition={{ duration: .15 }}
             className={styles['container']}
             style={{...tooltipPosition}}
+            data-position={position}
             ref={ref}
         >
             {children}
