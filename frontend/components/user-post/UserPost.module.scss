@@ -1,7 +1,6 @@
 .container {
     padding: var(--spacing-primary);
-    background-color: var(--background-secondary);
-    border: 2px solid var(--background-tertiary);
+    border: 2px solid var(--background-secondary);
     border-radius: var(--border-radius-primary);
     display: flex;
     flex-direction: column;
@@ -71,7 +70,7 @@
 }
 .footer {
     padding-top: var(--spacing-primary);
-    border-top: 2px solid var(--background-tertiary);
+    border-top: 1px solid var(--background-secondary);
     display: flex;
     gap: 25px;
 }
@@ -89,7 +88,7 @@
     transition: background-color .2s;
 
     &:hover {
-        background-color: var(--background-tertiary);
+        background-color: var(--background-secondary);
     }
 
     svg {
