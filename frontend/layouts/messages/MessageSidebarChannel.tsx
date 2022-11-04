@@ -2,6 +2,7 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { selectChannelById, selectChannelUnreadCount } from '../../redux/messages/selectors';
 import { useAppSelector } from '../../redux/store';
 import { ChannelBottom } from './ChannelBottom';
@@ -33,40 +34,44 @@ export const MessageSidebarChannel: React.FC<{
     ].join(' ');
     return(
         <li>
-            <Link href={`/messages/${channel.id}`}>
-                <a className={className} aria-label={ariaLabel}>
-                    <div className={styles['tab-main']}>
-                        <div className={styles['tab-avatar']}>
-                            {image && (
-                                <Image 
-                                    src={image}
-                                    layout={'fill'}
-                                    objectFit={'cover'}
-                                />
-                            )}
-                        </div>
-                        <div className={styles['text']}>
-                            <div className={styles['tab-text-main']}>
-                                <span className={styles['display-name']}>
-                                    {name}
-                                </span>
-                                {username && (
-                                    <span>
-                                        @{username}
-                                    </span>
+            <HasTooltip tooltip={name} delay={500} position={'right'}>
+                <Link href={`/messages/${channel.id}`}>
+                    <a className={className} aria-label={ariaLabel}>
+                        <div className={styles['tab-main']}>
+                            <div className={styles['tab-avatar']}>
+                                {image && (
+                                    <Image 
+                                        src={image}
+                                        layout={'fill'}
+                                        objectFit={'cover'}
+                                    />
                                 )}
                             </div>
+                            <div className={styles['text']}>
+                                <div className={styles['tab-text-main']}>
+                                    <div className={styles['display-name']}>
+                                        <span>
+                                            {name}
+                                        </span>
+                                    </div>
+                                    {username && (
+                                        <span>
+                                            @{username}
+                                        </span>
+                                    )}
+                                </div>
 
-                            <ChannelBottom channelId={id} />
+                                <ChannelBottom channelId={id} />
+                            </div>
                         </div>
-                    </div>
-                    {unreadCount !== 0 && (
-                        <span className={styles['unread-count']}>
-                            {unreadCount}
-                        </span>
-                    )}
-                </a>
-            </Link>
+                        {unreadCount !== 0 && (
+                            <span className={styles['unread-count']}>
+                                {unreadCount}
+                            </span>
+                        )}
+                    </a>
+                </Link>
+            </HasTooltip>
         </li>
     )
 }

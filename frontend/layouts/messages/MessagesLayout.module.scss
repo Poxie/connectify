@@ -5,8 +5,8 @@
 .sidebar {
     padding-right: var(--spacing-primary);
     border-right: 2px solid var(--background-tertiary);
-    min-width: 280px;
-    width: 280px;
+    min-width: 320px;
+    width: 320px;
     max-height: 100%;
     display: flex;
     flex-direction: column;
@@ -102,9 +102,17 @@
         color: var(--text-secondary);
     }
     .display-name {
-        font-weight: 600;
-        font-size: 16px;
-        color: var(--text-primary);
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+
+        span {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
     }
 }
 .tab-avatar {
