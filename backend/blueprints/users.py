@@ -108,7 +108,11 @@ def update_user(user_id: int, token_id: int):
 @token_optional
 def get_user_likes(user_id: int, token_id: Union[int, None]=None):
     # TODO: check if user exists before fetching posts
-    posts = get_user_liked_posts(user_id, token_id)
+
+    amount = int(request.args.get('amount') or '10');
+    start_at = int(request.args.get('start_at') or '0');
+
+    posts = get_user_liked_posts(user_id, token_id, amount=amount, start_at=start_at)
     return jsonify(posts)
 
 # Getting user by search

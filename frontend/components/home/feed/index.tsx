@@ -3,89 +3,50 @@ import { motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../contexts/auth/AuthProvider";
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { selectFeedPostIds } from '../../../redux/feed/hooks';
 import { FeedPost } from './FeedPost';
 import { UserPostSkeleton } from '../../user-post/UserPostSkeleton';
 import { AnimatePresence } from 'framer-motion';
 import { setPosts } from '../../../redux/posts/actions';
-import { addFeedPostIds, setFeedPostIds } from '../../../redux/feed/actions';
+import { addFeedPostIds, setFeedPostIds, setFeedReachedEnd } from '../../../redux/feed/actions';
 import { Post } from '../../../types';
 import { LoginPrompt } from '../../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../../empty-prompt/EmptyPrompt';
-import Button from '../../button';
+import { selectFeedPostIds, selectFeedReachedEnd } from '../../../redux/feed/selectors';
+import { ScrollCallback, useInfiniteScroll } from '../../../hooks/useInfiniteScroll';
 
 const SCROLL_THRESHOLD = 500;
+const FETCH_AMOUNT = 10;
+const PLACEHOLDER_AMOUNT = 4;
 export const Feed = () => {
     const { t } = useTranslation('home');
-    const { get, token, loading } = useAuth();
+    const { token, loading } = useAuth();
     const dispatch = useAppDispatch();
     const postIds = useAppSelector(selectFeedPostIds);
-    const [feedLoading, setFeedLoading] = useState(true);
-    const [reachedEnd, setReachedEnd] = useState(false);
-    const fetching = useRef(false);
+    const reachedEnd = useAppSelector(selectFeedReachedEnd);
 
-    // Function to get feed posts
-    const getFeedPosts = useCallback(async (amount=10, startAt=0) => {
-        return await get(`/feed?amount=${amount}&start_at=${startAt}`) as Promise<Post[]>;
-    }, [get]);
-
-    // Initial fetch for feed posts 
-    useEffect(() => {
-        if(loading || postIds.length) return;
-        
-        // User is not logged in
-        if(!token) {
-            setFeedLoading(false);
-            dispatch(setFeedPostIds([]));
-            return
+    // Fetching feed post on mount and scroll
+    const scrollCallback: ScrollCallback = useCallback((posts: Post[], reachedEnd) => {
+        if(reachedEnd) {
+            dispatch(setFeedReachedEnd(true));
         }
-
-        setFeedLoading(true);
-
-        getFeedPosts()
-            .then(posts => {
-                dispatch(setFeedPostIds(posts.map(post => post.id)));
-                dispatch(setPosts(posts));
-                setFeedLoading(false);
-            })
-    }, [get, token, loading]);
-
-    // Loading more posts on scroll
-    useEffect(() => {
-        const onScroll = () => {
-            if(fetching.current) return;
-
-            const diffFromBottom = Math.abs(window.scrollY + window.innerHeight - document.body.offsetHeight);
-            
-            if(diffFromBottom < SCROLL_THRESHOLD) {
-                fetching.current = true;
-
-                getFeedPosts(10, postIds.length)
-                    .then(posts => {
-                        if(!posts.length) return setReachedEnd(true);
-
-                        dispatch(setPosts(posts));
-                        dispatch(addFeedPostIds(posts.map(post => post.id)));
-                        fetching.current = false;
-                    })
-            }
+        dispatch(setPosts(posts));
+        dispatch(addFeedPostIds(posts.map(post => post.id)));
+    }, []);
+    const { loading: feedLoading } = useInfiniteScroll<Post[]>(
+        `/feed?amount=${FETCH_AMOUNT}&start_at=${postIds.length}`,
+        scrollCallback,
+        {
+            threshold: SCROLL_THRESHOLD,
+            fetchAmount: FETCH_AMOUNT,
+            fetchOnMount: postIds.length === 0,
+            isAtEnd: reachedEnd
         }
-
-        // Setting up event listeners
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, [postIds.length]);
+    )
 
     return(
         <div className={styles['container']}>
             <AnimatePresence>
-                {loading && postIds.length === 0 && Array.from(Array(4)).map((_, key) => (
-                    <UserPostSkeleton 
-                        key={key}
-                    />
-                ))}
-
                 {/* User logged in, but feed is empty */}
                 {!feedLoading && token && postIds.length === 0 && (
                     <EmptyPrompt
@@ -113,6 +74,12 @@ export const Feed = () => {
             <AnimatePresence>
                 {postIds.map(id => <FeedPost id={id} key={id} />)}
             </AnimatePresence>
+
+            {feedLoading && Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
+                <UserPostSkeleton 
+                    key={key}
+                />
+            ))}
 
             {reachedEnd && (
                 <span className={styles['end']}>

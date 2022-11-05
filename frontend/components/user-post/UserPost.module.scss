@@ -1,7 +1,6 @@
 .container {
     padding: var(--spacing-primary);
-    background-color: var(--background-secondary);
-    border: 2px solid var(--background-tertiary);
+    border: 2px solid var(--background-secondary);
     border-radius: var(--border-radius-primary);
     display: flex;
     flex-direction: column;
@@ -71,7 +70,7 @@
 }
 .footer {
     padding-top: var(--spacing-primary);
-    border-top: 2px solid var(--background-tertiary);
+    border-top: 1px solid var(--background-secondary);
     display: flex;
     gap: 25px;
 }
@@ -89,29 +88,41 @@
     transition: background-color .2s;
 
     &:hover {
-        background-color: var(--background-tertiary);
+        background-color: var(--background-secondary);
     }
 
     svg {
         width: 20px;
         fill: var(--text-secondary);
     }
+
+    &.active {
+        svg {
+            fill: var(--color-primary);
+        }
+    }
 }
 
 // Styles for placeholder skeletons
 .skeleton {
     @extend .container;
-    height: 139px;
     max-width: 100%;
 }
 .skeleton-flex {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
 }
 .skeleton-text {
     height: 22px;
     background-color: var(--background-tertiary);
     border-radius: 6px;
+}
+.skeleton-avatar {
+    height: 25px;
+    width: 25px;
+    background-color: var(--background-tertiary);
+    border-radius: 50%
 }
 .skeleton-name {
     @extend .skeleton-text;
@@ -121,15 +132,50 @@
     @extend .skeleton-text;
     width: 70px;
 }
+.skeleton-options {
+    border-radius: 5px;
+    background-color: var(--background-tertiary);
+    width: 22px;
+    height: 22px;
+}
 .skeleton-content {
-    @extend .skeleton-text;
-    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    div {
+        @extend .skeleton-text;
+        height: 21px;
+        
+        &:nth-of-type(1) {
+            width: 55px;
+        }
+        &:nth-of-type(2) {
+            width: 75px;
+        }
+        &:nth-of-type(3) {
+            width: 95px;
+        }
+        &:nth-of-type(4) {
+            width: 55px;
+        }
+        &:nth-of-type(5) {
+            width: 65px;
+        }
+        &:nth-of-type(6) {
+            width: 105px;
+        }
+        &:nth-of-type(7) {
+            width: 75px;
+        }
+    }
 }
 .skeleton-footer {
     @extend .skeleton-footer;
     @extend .skeleton-flex;
     align-items: flex-end;
-    flex-grow: 1
+    flex-grow: 1;
+    border-top: 1px solid var(--background-secondary);
+    padding-top: var(--spacing-primary);
 }
 .skeleton-footer-button {
     @extend .skeleton-text;

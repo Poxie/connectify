@@ -1,131 +1,103 @@
+import { AnyAction } from "redux";
 import { Comment, Post } from "../../types";
+import { createReducer, updateItemInArray, updateObject } from "../utils";
 import { ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
-import { PostsReducer } from "./types"
+import { PostsReducer, PostsState } from "./types"
 
-const initialState = {
-    posts: {}
+// Reducer actions
+const setPost = (state: PostsState, action: AnyAction) => {
+    const post: Post = action.payload;
+    post.hasCommentsFetched = false;
+
+    const newPosts = state.posts.concat(post);
+
+    return updateObject(state, { posts: newPosts });
 }
 
-export const postsReducer: PostsReducer = (state=initialState, action) => {
-    switch(action.type) {
-        case SET_POST: {
-            const post = action.payload;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [post.id]: post
-                }
-            }
-        }
-        case REMOVE_POST: {
-            const postId = action.payload;
-
-            const posts = {...state.posts};
-            delete posts[postId];
-
-            return {
-                ...state,
-                posts
-            }
-        }
-        case SET_POST_COMMENTS: {
-            // Destructuring payload
-            const { postId, comments }: {
-                postId: number, 
-                comments: Comment[]
-            } = action.payload;
-
-            // Getting correct post
-            let post = state.posts[postId];
-            if(!post) return state;
-            post = {...post};
-
-            // Adding comments
-            post.comments = comments;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [postId]: post
-                }
-            }
-        }
-        case ADD_POST_COMMENT: {
-            const { postId, comment }: {
-                postId: number;
-                comment: Comment;
-            } = action.payload;
-
-            // Getting correct post
-            let post = state.posts[postId];
-            if(!post) return state;
-            post = {...post};
-
-            // Adding comment
-            post.comments = [...[comment], ...(post.comments || [])];
-            post.comment_count++;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [postId]: post
-                }
-            }
-        }
-        case SET_POSTS: {
-            const posts: Post[] = action.payload;
-            
-            const newPosts = {
-                ...state.posts,
-            }
-            posts.forEach(post => {
-                newPosts[post.id] = post;
-            })
-
-            return {
-                ...state,
-                posts: newPosts
-            }
-        }
-        case ADD_POST_LIKE: {
-            let post = state.posts[action.payload];
-            if(!post) return state;
-            post = {...post};
-
-            // Adding like to post
-            post.like_count++;
-            post.has_liked = true;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [post.id]: post
-                }
-            }
-        }
-        case REMOVE_POST_LIKE: {
-            let post = state.posts[action.payload];
-            if(!post) return state;
-            post = {...post};
-
-            // Removing like from post
-            post.like_count--;
-            post.has_liked = false;
-
-            return {
-                ...state,
-                posts: {
-                    ...state.posts,
-                    [post.id]: post
-                }
-            }
-        }
-        default:
-            return state;
-    }
+const removePost = (state: PostsState, action: AnyAction) => {
+    const newPosts = state.posts.filter(post => post.id !== action.payload);
+    return updateObject(state, { posts: newPosts })
 }
+
+const setPostComments = (state: PostsState, action: AnyAction) => {
+    const { comments, postId }: {
+        comments: Comment[];
+        postId: number;
+    } = action.payload;
+
+    const newPosts = updateItemInArray(state.posts, postId, post => {
+        return updateObject(post, { hasCommentsFetched: true })
+    })
+    const newComments = state.comments.concat(comments);
+
+    return updateObject(state, {
+        posts: newPosts,
+        comments: newComments
+    })
+}
+
+const addPostComment = (state: PostsState, action: AnyAction) => {
+    const comment: Comment = action.payload;
+
+    const newPosts = updateItemInArray(state.posts, comment.post_id, post => {
+        return updateObject(post, {
+            comment_count: post.comment_count + 1
+        })
+    })
+    const newComments = state.comments.concat(comment)
+
+    return updateObject(state, {
+        posts: newPosts,
+        comments: newComments
+    })
+}
+
+const setPosts = (state: PostsState, action: AnyAction) => {
+    const posts = action.payload.map((post: Post) => {
+        post.hasCommentsFetched = false;
+        return post;
+    });
+    const newPosts = state.posts.concat(posts);
+
+    return updateObject(state, { posts: newPosts })
+}
+
+const addPostLike = (state: PostsState, action: AnyAction) => {
+    const postId = action.payload;
+
+    const newPosts = updateItemInArray(state.posts, postId, post => {
+        return updateObject(post, {
+            like_count: post.like_count + 1,
+            has_liked: true
+        })
+    })
+    
+    return updateObject(state, { posts: newPosts });
+}
+
+const removePostLike = (state: PostsState, action: AnyAction) => {
+    const postId = action.payload;
+
+    const newPosts = updateItemInArray(state.posts, postId, post => {
+        return updateObject(post, {
+            like_count: post.like_count - 1,
+            has_liked: false
+        })
+    })
+
+    return updateObject(state, { posts: newPosts })
+}
+
+// Creating reducer
+export const postsReducer = createReducer({
+    posts: [],
+    comments: []
+}, {
+    SET_POST: setPost,
+    REMOVE_POST: removePost,
+    SET_POST_COMMENTS: setPostComments,
+    ADD_POST_COMMENT: addPostComment,
+    SET_POSTS: setPosts,
+    ADD_POST_LIKE: addPostLike,
+    REMOVE_POST_LIKE: removePostLike
+})

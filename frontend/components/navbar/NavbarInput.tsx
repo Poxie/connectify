@@ -29,7 +29,7 @@ export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
         setLoading(true);
 
         // Executing fetch request
-        get(`/users/search?query=${query}`)
+        get<User[]>(`/users/search?query=${query}`)
             .then(users => {
                 setResults(users);
                 setLoading(false);

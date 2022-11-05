@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { addUserPostId } from '../../redux/users/actions';
 import { useTranslation } from 'next-i18next';
+import { Post } from '../../types';
 
 export const PreviewPostModal: React.FC<{
     title: string;
@@ -28,7 +29,7 @@ export const PreviewPostModal: React.FC<{
         setDisabled(true);
 
         // Creating post
-        const createdPost = await post(`/posts`, {
+        const createdPost = await post<Post>(`/posts`, {
             content,
             title
         }).catch(() => {

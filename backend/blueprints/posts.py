@@ -66,13 +66,17 @@ def get_post(id: int, token_id: Union[int, None]=None):
 # Get user posts
 @user_posts.get('/posts')
 @token_optional
-def get_user_post(id: int, token_id: Union[int, None]=None):
+def get_user_posts(id: int, token_id: Union[int, None]=None):
     # Checking if user exists
     user = get_user_by_id(id)
     if not user:
         return 'User does not exist.', 404
 
+    # Getting search parameters
+    amount = int(request.args.get('amount') or '10')
+    start_at = int(request.args.get('start_at') or '0')
+
     # Getting post
-    posts = get_posts_by_user_id(id, token_id)
+    posts = get_posts_by_user_id(id, token_id, amount=amount, start_at=start_at)
 
     return jsonify(posts)

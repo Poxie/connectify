@@ -6,6 +6,7 @@ import Button from '../../components/button';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import { TokenData } from '../../types';
 
 export const RegisterModal = () => {
     const { t } = useTranslation('common');
@@ -30,7 +31,7 @@ export const RegisterModal = () => {
 
         setLoading(true);
 
-        post(`/users`, {
+        post<TokenData>(`/users`, {
             username,
             password
         })

@@ -8,8 +8,6 @@ import Link from 'next/link';
 
 export const UserPost: React.FC<{
     post: Post;
-    onPostLike: (id: number) => void;
-    onPostUnlike: (id: number) => void;
 }> = React.memo(({
     post: {
         id,
@@ -19,9 +17,7 @@ export const UserPost: React.FC<{
         comment_count,
         like_count,
         has_liked,
-    },
-    onPostLike,
-    onPostUnlike
+    }
 }) => {
     return(
         <li className={styles['container']}>
@@ -30,17 +26,8 @@ export const UserPost: React.FC<{
                 postId={id}
                 timestamp={timestamp}
             />
-            <UserPostContent 
-                content={content}
-            />
-            <UserPostFooter
-                id={id}
-                like_count={like_count}
-                has_liked={has_liked}
-                comment_count={comment_count}
-                onPostLike={onPostLike}
-                onPostUnlike={onPostUnlike}
-            />
+            <UserPostContent content={content} />
+            <UserPostFooter id={id} />
             <Link href={`/posts/${id}`}>
                 <a aria-label="Go to post" className={styles['post-link']}/>
             </Link>

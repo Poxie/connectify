@@ -11,11 +11,11 @@ export const removePost = (postId: number) => ({
 })
 export const setPostComments = (postId: number, comments: Comment[]) => ({
     type: SET_POST_COMMENTS,
-    payload: {postId, comments}
+    payload: { postId, comments }
 })
-export const addPostComment = (postId: number, comment: Comment) => ({
+export const addPostComment = (comment: Comment) => ({
     type: ADD_POST_COMMENT,
-    payload: { postId, comment }
+    payload: comment
 })
 export const setPosts = (posts: Post[]) => ({
     type: SET_POSTS,

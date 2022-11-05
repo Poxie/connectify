@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useModal } from "../../contexts/modal/ModalProvider";
-import { selectChannelById } from "../../redux/messages/hooks";
+import { selectChannelById } from "../../redux/messages/selectors";
 import { useAppSelector } from "../../redux/store";
 import { SelectUserItem } from "./SelectUserItem";
 

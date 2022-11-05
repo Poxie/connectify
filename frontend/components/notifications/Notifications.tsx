@@ -2,65 +2,45 @@ import styles from '../../styles/Notifications.module.scss';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { addNotifications, setNotificationCount, setNotifications } from "../../redux/notifications/actions";
-import { selectNotificationsLoading, selectNotificationIds, selectUnreadCount } from "../../redux/notifications/selectors"
+import { addNotifications, setNotificationCount, setNotifications, setNotificationsReachedEnd } from "../../redux/notifications/actions";
+import { selectNotificationsLoading, selectNotificationIds, selectUnreadCount, selectNotificationsReachedEnd } from "../../redux/notifications/selectors"
 import { useAppSelector } from "../../redux/store"
 import { Notification } from "./Notification";
 import { NotificationSkeleton } from "./NotificationSkeleton";
 import { LoginPrompt } from '../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../empty-prompt/EmptyPrompt';
+import { Notification as NotificationType } from '../../types';
+import { ScrollCallback, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 const SCROLL_THRESHOLD = 500;
+const FETCH_AMOUNT = 15;
+const PLACEHOLDER_AMOUNT = 4;
 export const Notifications = () => {
     const { t } = useTranslation('notifications');
-    const { token, get, patch, loading } = useAuth();
+    const { token, patch, loading } = useAuth();
     const dispatch = useDispatch();
     const notificationCount = useAppSelector(selectUnreadCount);
     const notificationIds = useAppSelector(selectNotificationIds);
-    const notificationsLoading = useAppSelector(selectNotificationsLoading);
-    const fetching = useRef(false);
-    const [reachedEnd, setReachedEnt] = useState(false);
+    const reachedEnd = useAppSelector(selectNotificationsReachedEnd);
 
-    // Function to fetch notifications
-    const getNotifications = useCallback(async (amount=15, startAt=0) => {
-        return await get(`/notifications?amount=${amount}&start_at=${startAt}`);
-    }, [get]);
-
-    // Loading notifications on mount
-    useEffect(() => {
-        if(!token || loading) return;
-
-        getNotifications()
-            .then(notifications => {
-                dispatch(setNotifications(notifications));
-            })
-    }, [token, get, patch, loading]);
-
-    // Loading more notifications on scroll
-    useEffect(() => {
-        const onScroll = () => {
-            if(fetching.current) return;
-
-            const diffFromBottom = Math.abs(window.scrollY + window.innerHeight - document.body.offsetHeight);
-            
-            if(diffFromBottom < SCROLL_THRESHOLD) {
-                fetching.current = true;
-
-                getNotifications(15, notificationIds.length)
-                    .then(notifications => {
-                        if(!notifications.length) return setReachedEnt(true);
-
-                        dispatch(addNotifications(notifications))
-                        fetching.current = false;
-                    })
-            }
+    // Fetching on mount and scroll
+    const scrollCallback: ScrollCallback = (notifications: NotificationType[], reachedEnd) => {
+        dispatch(addNotifications(notifications));
+        if(reachedEnd) {
+            dispatch(setNotificationsReachedEnd(true));
         }
-
-        // Setting up event listeners
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
-    }, [notificationIds.length]);
+    }
+    const { loading: notificationsLoading } = useInfiniteScroll<NotificationType[]>(
+        `/notifications?amount=${FETCH_AMOUNT}&start_at=${notificationIds.length}`,
+        scrollCallback,
+        {
+            fetchAmount: FETCH_AMOUNT,
+            threshold: SCROLL_THRESHOLD,
+            fetchOnMount: notificationIds.length === 0,
+            isAtEnd: reachedEnd
+        }
+    )
 
     // Updating notification count
     useEffect(() => {
@@ -74,16 +54,6 @@ export const Notifications = () => {
 
     if(!loading && !token) {
         return <LoginPrompt />;
-    }
-
-    if(notificationsLoading) {
-        return(
-            <>
-            {Array.from(Array(6)).map((_, key) => (
-                <NotificationSkeleton key={key} />
-            ))}
-            </>
-        )
     }
 
     if(!notificationsLoading && !notificationIds.length) {
@@ -106,6 +76,14 @@ export const Notifications = () => {
                     key={id}
                 />
             ))}
+
+            {notificationsLoading && (
+                <>
+                {Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
+                    <NotificationSkeleton key={key} />
+                ))}
+                </>
+            )}
 
             {reachedEnd && (
                 <span className={styles['end']}>

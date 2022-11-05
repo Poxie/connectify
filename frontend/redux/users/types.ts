@@ -2,6 +2,6 @@ import { AnyAction } from "redux";
 import { User } from "../../types"
 
 export type UsersState = {
-    users: {[userId: number]: User | undefined};
+    users: User[];
 }
 export type UsersReducer = (state: UsersState, action: AnyAction) => UsersState;

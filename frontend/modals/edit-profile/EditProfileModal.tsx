@@ -48,7 +48,7 @@ export const EditProfileModal = () => {
         setDisabled(true);
 
         // Updating user
-        patch(`/users/${user?.id}`, {...tempUser})
+        patch<User>(`/users/${user?.id}`, {...tempUser})
             .then(user => {
                 // Making sure not to dispatch user object with file value
                 if(tempUser.banner instanceof File) {

@@ -5,6 +5,7 @@ export type NotificationState = {
     notifications: Notification[];
     unreadCount: number;
     loading: boolean;
+    reachedEnd: boolean;
 }
 
 export type NotificationsReducer = (state: NotificationState, action: AnyAction) => NotificationState;

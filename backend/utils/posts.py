@@ -72,10 +72,10 @@ def get_posts_by_user_ids(user_ids: List[int], amount: int, start_at: int, token
     return posts
 
 # Getting posts by user id
-def get_posts_by_user_id(id: int, token_id: Union[int, None]=None):
+def get_posts_by_user_id(id: int, token_id: Union[int, None]=None, amount=10, start_at=0):
     # Creating query
-    query = "SELECT * FROM posts WHERE author_id = %s ORDER BY timestamp DESC"
-    values = (id,)
+    query = "SELECT * FROM posts WHERE author_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
+    values = (id, start_at, amount)
 
     # Fetching posts
     posts = db.fetch_all(query, values)
@@ -148,16 +148,21 @@ def delete_post(id):
     # Executing delete query
     db.delete(query, values)
 
+    # Deleting likes 
+    like_query = "DELETE FROM likes WHERE post_id = %s"
+    db.delete(like_query, values)
+
     return {}
 
 # Getting user liked posts
-def get_user_liked_posts(user_id: int, token_id: Union[int, None]=None):
+def get_user_liked_posts(user_id: int, token_id: Union[int, None]=None, amount=10, start_at=0):
     # Creating query
-    query = "SELECT post_id FROM likes WHERE user_id = %s"
-    values = (user_id,)
+    query = "SELECT post_id FROM likes WHERE user_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
+    values = (user_id, start_at, amount)
 
     # Fetching likes
     likes = db.fetch_all(query, values)
+    print(likes)
 
     # If not likes, return empty list
     posts = []

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { selectChannelById } from '../../redux/messages/hooks';
+import { selectChannelById } from '../../redux/messages/selectors';
 import { useAppSelector } from '../../redux/store';
 import styles from '../../styles/Messages.module.scss';
 import { MessageInput } from "./MessageInput"

@@ -7,7 +7,7 @@ export const PostComment: React.FC<{
     id: number;
     postId: number;
 }> = ({ id, postId }) => {
-    const comment = useAppSelector(state => selectCommentById(state, postId, id));
+    const comment = useAppSelector(state => selectCommentById(state, id));
     if(!comment) return null;
 
     return(

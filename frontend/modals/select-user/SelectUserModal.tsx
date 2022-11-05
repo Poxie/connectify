@@ -5,17 +5,14 @@ import { useAuth } from "../../contexts/auth/AuthProvider"
 import { User } from "../../types"
 import { ModalHeader } from "../ModalHeader"
 import { SelectUserItem } from "./SelectUserItem"
-import Image from 'next/image';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { SelectUserConfirmationModal } from './SelectUserConfirmationModal';
-import { useRouter } from 'next/router';
-import { useSocket } from '../../contexts/socket/SocketProvider';
 import { useAppSelector } from '../../redux/store';
-import { selectChannelIds } from '../../redux/messages/hooks';
 import { SelectUserChannel } from './SelectUserChannel';
 import { useDispatch } from 'react-redux';
 import { addChannel } from '../../redux/messages/actions';
 import { useTranslation } from 'next-i18next';
+import { selectChannelIds } from '../../redux/messages/selectors';
 
 export const SelectUserModal = () => {
     const { t } = useTranslation('common');
@@ -36,8 +33,8 @@ export const SelectUserModal = () => {
         setLoading(true);
 
         // Fetching users
-        get(`/users/search?query=${query}`)
-            .then((users: User[]) => {
+        get<User[]>(`/users/search?query=${query}`)
+            .then(users => {
                 // Making sure logged in user is not present
                 const filteredUsers = users.filter(user => user.id !== profile?.id);
                 setResults(filteredUsers);

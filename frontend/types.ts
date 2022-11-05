@@ -1,3 +1,7 @@
+export type TokenData = {
+    token: string;
+}
+
 export type User = {
     id: number;
     username: string;
@@ -10,6 +14,8 @@ export type User = {
     avatar: null | string | File;
     postIds?: number[];
     likedIds?: number[];
+    postIdsEnd?: boolean;
+    likedIdsEnd?: boolean;
 }
 export type Post = {
     id: number;
@@ -21,7 +27,7 @@ export type Post = {
     like_count: number;
     comment_count: number;
     timestamp: number;
-    comments?: Comment[];
+    hasCommentsFetched?: boolean;
 }
 export type Comment = {
     id: number;
@@ -41,6 +47,7 @@ export type Channel = {
     unread_count: number;
     last_message: Message | null;
     typing?: number;
+    reachedEnd?: boolean;
 }
 export type Message = {
     id: number;
