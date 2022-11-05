@@ -72,7 +72,7 @@ export const UserProfile = () => {
                 </div>
             )}
 
-            {reachedEnd && (
+            {reachedEnd && postIds?.length !== 0 && (
                 <span className={styles['end']}>
                     {t('postsReachedEnd')}
                 </span>
