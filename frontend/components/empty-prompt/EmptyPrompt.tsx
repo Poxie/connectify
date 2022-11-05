@@ -26,6 +26,7 @@ export const EmptyPrompt: React.FC<{
                     <Button
                         href={button.path}
                         type={button.type}
+                        key={button.path}
                     >
                         {button.text}
                     </Button>
