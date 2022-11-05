@@ -53,14 +53,17 @@ export const PostComments: React.FC<{
                 </span>
             )}
 
-            <Filters 
-                items={[
-                    { text: 'Top', id: 'top' },
-                    { text: 'Latest', id: 'latest' }
-                ]}
-                containerClassName={styles['filters']}
-                onChange={id => setOrderType(id as Comment['orderType'])}
-            />
+            {commentIds.length !== 0 && (
+                <Filters 
+                    items={[
+                        { text: 'Top', id: 'top' },
+                        { text: 'Latest', id: 'latest' }
+                    ]}
+                    defaultActive={orderType}
+                    containerClassName={styles['filters']}
+                    onChange={id => setOrderType(id as Comment['orderType'])}
+                />
+            )}
 
             {commentIds.length !== 0 && (
                 <ul className={styles['comment-container']}>
