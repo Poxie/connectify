@@ -18,7 +18,6 @@ export const selectPostIsFetched = createSelector(
     post => post !== undefined
 )
 
-export const selectPostHasLoadedComments = (state: RootState, postId: number) => state.posts.posts.find(post => post.id === postId)?.hasCommentsFetched
 export const selectCommentIds = createSelector(
     [selectComments, selectId, selectOrderType],
     (comments, postId, orderType) => 
