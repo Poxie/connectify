@@ -3,15 +3,20 @@ import { HeartActiveIcon } from '../../assets/icons/HeartActiveIcon';
 import { HeartNeutralIcon } from '../../assets/icons/HeartNeutralIcon';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { addCommentLike, removeCommentLike } from '../../redux/posts/actions';
+import { selectCommentStats } from '../../redux/posts/selectors';
+import { useAppSelector } from '../../redux/store';
 import styles from '../../styles/Post.module.scss';
 import { PostCommentFooterButton } from './PostCommentFooterButton';
 
 export const PostCommentFooter: React.FC<{
     id: number;
-    has_liked: boolean;
-}> = ({ id, has_liked }) => {
+}> = ({ id }) => {
     const { post, destroy } = useAuth();
     const dispatch = useDispatch();
+    const stats = useAppSelector(state => selectCommentStats(state, id));
+    if(!stats) return null;
+
+    const { has_liked } = stats;
 
     const toggleLike = async () => {
         const path = `/comments/${id}/likes`;

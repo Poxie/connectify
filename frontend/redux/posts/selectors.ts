@@ -18,6 +18,23 @@ export const selectCommentById = createSelector(
     [selectComments, selectId],
     (comments, commentId) => comments.find(comment => comment.id === commentId)
 )
+export const selectCommentAuthor = createSelector(
+    [selectCommentById],
+    comment => comment?.author
+)
+export const selectCommentMain = createSelector(
+    [selectCommentById],
+    comment => comment ? ({
+        content: comment.content,
+        timestamp: comment.timestamp
+    }) : undefined
+)
+export const selectCommentStats = createSelector(
+    [selectCommentById],
+    comment => comment ? ({
+        has_liked: comment.has_liked
+    }) : undefined
+)
 export const selectPostMain = createSelector(
     [selectPostById],
     post => post ? ({

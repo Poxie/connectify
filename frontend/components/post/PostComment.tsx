@@ -1,6 +1,6 @@
 import styles from '../../styles/Post.module.scss';
 import Image from "next/image";
-import { selectCommentById } from "../../redux/posts/selectors";
+import { selectCommentAuthor, selectCommentById, selectCommentMain } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
 import { PostCommentContent } from "./PostCommentContent";
 import { PostCommentFooter } from "./PostCommentFooter";
@@ -11,36 +11,35 @@ export const PostComment: React.FC<{
     id: number;
     postId: number;
 }> = ({ id, postId }) => {
-    const comment = useAppSelector(state => selectCommentById(state, id));
-    if(!comment) return null;
+    const author = useAppSelector(state => selectCommentAuthor(state, id));
+    const main = useAppSelector(state => selectCommentMain(state, id));
+    if(!main || !author) return null;
 
+    const { content, timestamp } = main;
     return(
         <li className={styles['comment']}>
-            <Link href={`/users/${comment.author_id}`}>
+            <Link href={`/users/${author.id}`}>
                 <a className={styles['comment-avatar']}>
                     <Image 
                         width={25}
                         height={25}
                         objectFit={'cover'}
-                        src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${comment.author.avatar}`}
+                        src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${author.avatar}`}
                     />
                 </a>
             </Link>
             <div className={styles['comment-main']}>
                 <div className={styles['comment-header']}>
-                    <Link href={`/users/${comment.author_id}`}>
+                    <Link href={`/users/${author.id}`}>
                         <a className={styles['comment-author']}>
-                            {comment.author.display_name || comment.author.username}
+                            {author.display_name || author.username}
                         </a>
                     </Link>
-                    <UserPostTimestamp timestamp={comment.timestamp} />
+                    <UserPostTimestamp timestamp={timestamp} />
                 </div>
 
-                <PostCommentContent content={comment.content} />
-                <PostCommentFooter 
-                    id={id}
-                    has_liked={comment.has_liked}
-                />
+                <PostCommentContent content={content} />
+                <PostCommentFooter id={id} />
             </div>
         </li>
     )
