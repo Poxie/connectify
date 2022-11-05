@@ -3,6 +3,16 @@
     display: grid;
     gap: 10px;
 }
+.character-length {
+    font-size: 14px;
+    text-align: right;
+    color: var(--text-secondary);
+    font-weight: 700;
+
+    &.error {
+        color: var(--color-red);
+    }
+}
 .preview {
     padding: var(--spacing-primary);
     margin: var(--spacing-primary);
