@@ -32,7 +32,8 @@ export const selectCommentMain = createSelector(
 export const selectCommentStats = createSelector(
     [selectCommentById],
     comment => comment ? ({
-        has_liked: comment.has_liked
+        has_liked: comment.has_liked,
+        like_count: comment.like_count
     }) : undefined
 )
 export const selectPostMain = createSelector(

@@ -39,6 +39,7 @@ export type Comment = {
     content: string;
     timestamp: number;
     has_liked: boolean;
+    like_count: number;
 }
 
 export type Channel = {

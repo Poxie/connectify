@@ -93,7 +93,8 @@ const addCommentLike = (state: PostsState, action: AnyAction) => {
 
     const newComments = updateItemInArray(state.comments, commentId, comment => {
         return updateObject(comment, {
-            has_liked: true
+            has_liked: true,
+            like_count: comment.like_count + 1
         })
     })
 
@@ -105,7 +106,8 @@ const removeCommentLike = (state: PostsState, action: AnyAction) => {
 
     const newComments = updateItemInArray(state.comments, commentId, comment => {
         return updateObject(comment, {
-            has_liked: false
+            has_liked: false,
+            like_count: comment.like_count - 1
         })
     })
 

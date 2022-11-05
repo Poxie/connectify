@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { useDispatch } from 'react-redux';
 import { HeartActiveIcon } from '../../assets/icons/HeartActiveIcon';
 import { HeartNeutralIcon } from '../../assets/icons/HeartNeutralIcon';
@@ -11,12 +12,13 @@ import { PostCommentFooterButton } from './PostCommentFooterButton';
 export const PostCommentFooter: React.FC<{
     id: number;
 }> = ({ id }) => {
+    const { t } = useTranslation('common');
     const { post, destroy } = useAuth();
     const dispatch = useDispatch();
     const stats = useAppSelector(state => selectCommentStats(state, id));
     if(!stats) return null;
 
-    const { has_liked } = stats;
+    const { has_liked, like_count } = stats;
 
     const toggleLike = async () => {
         const path = `/comments/${id}/likes`;
@@ -36,7 +38,7 @@ export const PostCommentFooter: React.FC<{
             <PostCommentFooterButton 
                 icon={has_liked ? <HeartActiveIcon /> : <HeartNeutralIcon />}
                 onClick={toggleLike}
-                text={has_liked ? '1 likes' : '0 likes'}
+                text={`${like_count} ${t('likes')}`}
                 active={has_liked}
             />
         </div>
