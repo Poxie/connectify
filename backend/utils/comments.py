@@ -29,6 +29,10 @@ def hydrate_comment(comment, token_id: Union[int, None]=None):
     author = get_user_by_id(comment['author_id'])
     comment['author'] = author
 
+    # Getting like count
+    count = get_comment_like_count(comment['id'])
+    comment['like_count'] = count
+
     # Adding like status to comment
     comment['has_liked'] = False
     if token_id and select_comment_like(comment['id'], token_id):
@@ -126,3 +130,14 @@ def select_comment_like(comment_id: int, token_id: int):
     like = db.fetch_one(query, values)
 
     return like
+
+def get_comment_like_count(comment_id: int):
+    query = "SELECT COUNT(*) AS count FROM likes WHERE post_id = %s"
+    values = (comment_id,)
+
+    result = db.fetch_one(query, values)
+    count = 0
+    if result and 'count' in result:
+        count = result['count']
+
+    return count
