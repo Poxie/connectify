@@ -10,7 +10,7 @@ type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, opti
     isAtEnd?: boolean;
     direction?: InfiniteScrollDirection;
     scrollContainer?: RefObject<HTMLDivElement>;
-    identifier?: number;
+    identifier?: number | string;
 }) => {
     loading: boolean;
     reachedEnd: boolean;
@@ -32,6 +32,7 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
         const signal = controller.signal;
 
         fetching.current = true;
+        setLoading(true);
         get(query, signal)
             .then((result: any) => {
                 const reachedEnd = result.length < options.fetchAmount;
