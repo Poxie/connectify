@@ -29,6 +29,13 @@ export const selectUserHasLoadedLikedPosts = createSelector(
     user => user?.likedIds !== undefined
 )
 
+export const selectUserStats = createSelector(
+    [selectUserById],
+    user => ({
+        follower_count: user?.follower_count
+    })
+)
+
 export const selectUserPostsEnd = createSelector(
     [selectUserById],
     user => user?.postIdsEnd
