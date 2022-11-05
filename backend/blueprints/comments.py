@@ -1,16 +1,17 @@
 from flask import Blueprint, request, jsonify
 from utils.posts import get_post_by_id
 from utils.comments import get_post_comments, create_post_comment, create_comment_like, destroy_comment_like, select_comment_like
-from utils.auth import token_required
+from utils.auth import token_required, token_optional
 from utils.checks import post_exists
 
 comments = Blueprint('comments', __name__)
 
 @comments.get('/posts/<int:post_id>/comments')
+@token_optional
 @post_exists
-def get_comments(post_id: int):
+def get_comments(post_id: int, token_id: int):
     # Fetching comments
-    comments = get_post_comments(post_id)
+    comments = get_post_comments(post_id, token_id)
     
     return comments
 
@@ -42,7 +43,7 @@ def like_comment(comment_id: int, token_id: int):
         return 'User has already liked this comment.', 409
 
     create_comment_like(comment_id, token_id)
-    return '', 204
+    return jsonify({})
 
 @comments.delete('/comments/<int:comment_id>/likes')
 @token_required

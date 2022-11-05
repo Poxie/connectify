@@ -1,4 +1,5 @@
 import time
+from typing import Union
 from database import db
 from random import randrange
 from utils.users import get_user_by_id
@@ -23,15 +24,20 @@ def create_comment_id() -> int:
     return id
 
 # Hydrating comment objects
-def hydrate_comment(comment):
+def hydrate_comment(comment, token_id: Union[int, None]=None):
     # Getting comment author object
     author = get_user_by_id(comment['author_id'])
     comment['author'] = author
 
+    # Adding like status to comment
+    comment['has_liked'] = False
+    if token_id and select_comment_like(comment['id'], token_id):
+        comment['has_liked'] = True
+
     return comment
 
 # Getting comment by id
-def get_comment_by_id(id: int):
+def get_comment_by_id(id: int, token_id: Union[int, None]=None):
     # Creating query
     query = "SELECT * FROM comments WHERE id = %s"
     values = (id,)
@@ -41,12 +47,12 @@ def get_comment_by_id(id: int):
 
     # Hydrating comment
     if comment:
-        comment = hydrate_comment(comment)
+        comment = hydrate_comment(comment, token_id)
 
     return comment
 
 # Getting post comments
-def get_post_comments(post_id: int):
+def get_post_comments(post_id: int, token_id: Union[int, None]=None):
     # Creating query
     query = "SELECT * FROM comments WHERE post_id = %s ORDER BY timestamp DESC"
     values = (post_id,)
@@ -58,7 +64,7 @@ def get_post_comments(post_id: int):
     for comment in comments:
         if not comment: continue
             
-        comment = hydrate_comment(comment)
+        comment = hydrate_comment(comment, token_id)
 
     return comments
 
