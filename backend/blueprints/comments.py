@@ -11,9 +11,11 @@ comments = Blueprint('comments', __name__)
 @post_exists
 def get_comments(post_id: int, token_id: int):
     order_by = request.args.get('order_by') or 'top'
+    start_at = int(request.args.get('start_at') or '0')
+    amount = int(request.args.get('amount') or '15')
 
     # Fetching comments
-    comments = get_post_comments(post_id, token_id, order_by)
+    comments = get_post_comments(post_id, token_id, order_by, start_at=start_at, amount=amount)
     
     return comments
 
