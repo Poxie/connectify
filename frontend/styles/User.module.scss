@@ -1,6 +1,6 @@
 .header {
-    background-color: var(--background-secondary);
-
+    border: 2px solid var(--background-secondary);
+    border-radius: var(--border-radius-primary) var(--border-radius-primary) 0 0;
     h2 {
         margin: 0;
     }
@@ -12,7 +12,7 @@
 .header-banner {
     height: 260px;
     overflow: hidden;
-    background-color: var(--background-tertiary);
+    background-color: var(--background-secondary);
     border-top-left-radius: var(--border-radius-primary);
     border-top-right-radius: var(--border-radius-primary);
     background-size: cover;
@@ -28,7 +28,7 @@
     margin-right: var(--spacing-primary);
     background-color: var(--background-tertiary);
     border-radius: 50%;
-    border: 6px solid var(--background-secondary);
+    border: 8px solid var(--background-primary);
     overflow: hidden;
 }
 .header-content {
@@ -50,9 +50,10 @@
 }
 .tabs {
     display: flex;
-    background-color: var(--background-secondary);
-    border-top: 1px solid var(--background-tertiary);
-    border-bottom: 1px solid var(--background-tertiary);
+    border: 1px solid var(--background-tertiary);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius-primary) var(--border-radius-primary);
+    overflow: hidden;
     margin-bottom: var(--spacing-primary);
 
     li {
@@ -77,7 +78,7 @@
         }
 
         &:hover {
-            background-color: var(--background-quaternary);
+            background-color: var(--background-secondary);
         }
         
         &.active-tab {
