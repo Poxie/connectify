@@ -8,6 +8,8 @@ export type User = {
     display_name: string | null;
     bio: string;
     follower_count: number;
+    like_count: number;
+    post_count: number;
     is_following: boolean;
     is_self: boolean;
     banner: null | string | File;

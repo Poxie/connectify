@@ -32,7 +32,9 @@ export const selectUserHasLoadedLikedPosts = createSelector(
 export const selectUserStats = createSelector(
     [selectUserById],
     user => ({
-        follower_count: user?.follower_count
+        follower_count: user?.follower_count,
+        like_count: user?.like_count,
+        post_count: user?.post_count
     })
 )
 
