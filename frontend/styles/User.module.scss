@@ -132,11 +132,39 @@
     @extend .skeleton-text;
     height: 32px;
     width: 120px;
+    margin-bottom: 5px
 }
 .header-subtext-skeleton {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    
+    div {
+        @extend .skeleton-text;
+        height: 20px;
+
+        &:nth-of-type(1) {
+            width: 90px;
+        }
+        &:nth-of-type(2) {
+            width: 130px;
+        }
+        &:nth-of-type(3) {
+            width: 50px;
+        }
+        &:nth-of-type(4) {
+            width: 70px;
+        }
+        &:nth-of-type(5) {
+            width: 85px;
+        }
+    }
+}
+.header-stats-skeleton {
     @extend .skeleton-text;
-    height: 21px;
-    width: 90px;
+    height: 36px;
+    width: 200px;
+    margin-top: var(--spacing-primary);
 }
 .header-button-skeleton {
     @extend .skeleton-text;

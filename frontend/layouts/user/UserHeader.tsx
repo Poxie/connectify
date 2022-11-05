@@ -1,6 +1,3 @@
-import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useQueryId } from '../../hooks/useQueryId';
 import { useRequest } from '../../hooks/useRequest';
 import { useAppSelector } from '../../redux/store';
@@ -10,7 +7,6 @@ import styles from '../../styles/User.module.scss';
 import { UserHeaderButtons } from "./UserHeaderButtons";
 import { UserHeaderMain } from './UserHeaderMain';
 import { UserHeaderSkeleton } from './UserHeaderSkeleton';
-import { UserStats } from './UserStats';
 
 export const UserHeader = () => {
     const userId = useQueryId('userId');
