@@ -1,12 +1,12 @@
 import styles from './MessagesLayout.module.scss';
 
-export const MessageSidebarChannelLoading = () => {
+export const MessageSidebarChannelSkeleton = () => {
     const className = [
         styles['tab'],
         styles['loading']
     ].join(' ');
     return(
-        <div className={className}>
+        <li className={className} aria-hidden="true">
             <div className={styles['main']}>
                 <div className={styles['tab-avatar']} />
                 <div className={styles['text-main']}>
@@ -14,6 +14,6 @@ export const MessageSidebarChannelLoading = () => {
                     <div className={styles['loading-bottom-text']} />
                 </div>
             </div>
-        </div>
+        </li>
     )
 }
