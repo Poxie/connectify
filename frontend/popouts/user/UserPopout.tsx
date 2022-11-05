@@ -31,6 +31,7 @@ export const UserPopout: React.FC<User> = (user) => {
                             <Image 
                                 width={75}
                                 height={75}
+                                objectFit={'cover'}
                                 src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`}
                             />
                         )}

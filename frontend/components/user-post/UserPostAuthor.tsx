@@ -15,6 +15,7 @@ export const UserPostAuthor: React.FC<User> = (user) => {
                     {avatar && (
                         <Image 
                             src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${avatar}`}
+                            objectFit={'cover'}
                             width={25}
                             height={25}
                         />

@@ -29,6 +29,7 @@ export const UserHeader = () => {
                         {user.avatar && (
                             <Image 
                                 src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`}
+                                objectFit={'cover'}
                                 width={150}
                                 height={150}
                             />
