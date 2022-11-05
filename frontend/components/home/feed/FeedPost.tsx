@@ -11,14 +11,5 @@ export const FeedPost: React.FC<{
     const post = useAppSelector(state => selectPostById(state, id));
     if(!post) return null;
 
-    return(
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            <UserPost 
-                post={post}
-            />
-        </motion.div>
-    )
+    return <UserPost post={post} />;
 });
