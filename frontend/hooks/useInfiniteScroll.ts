@@ -2,17 +2,21 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/auth/AuthProvider";
 
 export type InfiniteScrollDirection = 'down' | 'up';
-export type ScrollCallback = (result: any, reachedEnd: boolean) => void;
-type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, options: {
-    threshold: number;
-    fetchAmount: number;
-    fetchOnMount?: boolean;
-    isAtEnd?: boolean;
-    direction?: InfiniteScrollDirection;
-    scrollContainer?: RefObject<HTMLDivElement>;
-    identifier?: number | string;
-    standBy?: boolean;
-}) => {
+export type RequestFinished<T> = (result: T, reachedEnd: boolean) => void;
+type InfiniteScroll = <T>(
+    query: string, 
+    onRequestFinished: RequestFinished<T>,
+    options: {
+        threshold: number;
+        fetchAmount: number;
+        fetchOnMount?: boolean;
+        isAtEnd?: boolean;
+        direction?: InfiniteScrollDirection;
+        scrollContainer?: RefObject<HTMLDivElement>;
+        identifier?: number | string;
+        standBy?: boolean;
+    }
+) => {
     loading: boolean;
     reachedEnd: boolean;
 }
