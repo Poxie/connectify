@@ -10,7 +10,7 @@ export const NavbarProfile: React.FC<User> = ({ avatar }) => {
     const { t } = useTranslation('common');
     const { profile } = useAuth();
     const { setMenu } = useMenu();
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLButtonElement>(null);
 
     const openMenu = () => {
         const logout = () => {
@@ -33,7 +33,7 @@ export const NavbarProfile: React.FC<User> = ({ avatar }) => {
     }
 
     return(
-        <div 
+        <button 
             className={styles['avatar']} 
             onClick={openMenu}
             ref={ref}
@@ -43,6 +43,6 @@ export const NavbarProfile: React.FC<User> = ({ avatar }) => {
                 width={32}
                 height={32}
             />
-        </div>
+        </button>
     )
 }
