@@ -100,3 +100,23 @@ def create_post_comment(post_id: int, data):
     comment = get_comment_by_id(id)
     
     return comment
+
+def create_comment_like(comment_id: int, token_id: int):
+    query = "INSERT INTO likes (post_id, user_id, timestamp) VALUES (%s, %s, %s)"
+    values = (comment_id, token_id, time.time())
+
+    db.insert(query, values)
+
+def destroy_comment_like(comment_id: int, token_id: int):
+    query = "DELETE FROM likes WHERE post_id = %s AND user_id = %s"
+    values = (comment_id, token_id)
+
+    db.delete(query, values)
+
+def select_comment_like(comment_id: int, token_id: int):
+    query = "SELECT * FROM likes WHERE post_id = %s AND user_id = %s"
+    values = (comment_id, token_id)
+
+    like = db.fetch_one(query, values)
+
+    return like
