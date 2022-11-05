@@ -24,7 +24,7 @@ type ReducerAction = (state: UsersState, action: AnyAction) => UsersState;
 const setUser: ReducerAction = (state, action) => {
     const user: User = action.payload;
 
-    const newUsers = state.users.concat(user);
+    const newUsers = state.users.filter(u => u.id !== user.id).concat(user);
 
     return updateObject(state, { users: newUsers });
 }

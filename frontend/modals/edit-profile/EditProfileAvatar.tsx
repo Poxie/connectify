@@ -12,7 +12,6 @@ export const EditProfileAvatar: React.FC<{
     const input = useRef<HTMLInputElement>(null);
 
     const openFileSelector = () => {
-        console.log(input.current);
         input.current?.click();
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,15 +34,17 @@ export const EditProfileAvatar: React.FC<{
         url !== undefined ? styles['has-image'] : ''
     ].join(' ');
     return(
-        <div 
+        <button 
             className={className} 
             onClick={openFileSelector}
             data-hover-text={t('changeAvatar')}
+            aria-label={t('changeAvatar')}
         >
             {url && (
                 <Image 
                     width={100}
                     height={100}
+                    objectFit={'cover'}
                     src={url}
                 />
             )}
@@ -52,6 +53,6 @@ export const EditProfileAvatar: React.FC<{
                 type="file"
                 ref={input} 
             />
-        </div>
+        </button>
     )
 }

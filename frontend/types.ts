@@ -8,6 +8,8 @@ export type User = {
     display_name: string | null;
     bio: string;
     follower_count: number;
+    like_count: number;
+    post_count: number;
     is_following: boolean;
     is_self: boolean;
     banner: null | string | File;
@@ -36,6 +38,9 @@ export type Comment = {
     author: User;
     content: string;
     timestamp: number;
+    has_liked: boolean;
+    like_count: number;
+    orderType?: 'top' | 'latest';
 }
 
 export type Channel = {

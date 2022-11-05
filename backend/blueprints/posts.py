@@ -9,6 +9,7 @@ user_posts = Blueprint('user_posts', __name__, url_prefix='/users/<int:id>')
 posts.register_blueprint(user_posts)
 
 # Create user post
+MAX_CHARACTER_LENGTH = 400
 @posts.post('/posts')
 @token_required
 def create_user_post(token_id: int):
@@ -18,6 +19,10 @@ def create_user_post(token_id: int):
     # Checking if required fields are missing
     if not title or not content:
         return 'Required fields may not be empty.', 400
+
+    # Checking if content is too long
+    if len(content) > MAX_CHARACTER_LENGTH:
+        return f'Content may not exceed {MAX_CHARACTER_LENGTH} characters.', 400
 
     # Checking if user exists
     user = get_user_by_id(token_id)

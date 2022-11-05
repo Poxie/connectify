@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useAppSelector } from "../../redux/store";
 import { addUserFollow, removeUserFollow } from "../../redux/users/actions";
-import { selectUserById } from "../../redux/users/selectors";
+import { selectUserById, selectUserStats } from "../../redux/users/selectors";
 import Button from '../../components/button';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { EditProfileModal } from '../../modals/edit-profile/EditProfileModal';
@@ -19,10 +19,10 @@ export const UserHeaderButtons: React.FC<{
     const { setModal } = useModal();
     const { post, destroy, token } = useAuth();
     const [disabled, setDisabled] = useState(false);
-    const user = useAppSelector(state => selectUserById(state, userId));
+    const user = useAppSelector(state => selectUserStats(state, userId));
     if(!user) return null;
 
-    const follow = () => {
+    const toggleFollow = async () => {
         // If user is not logged in
         if(!token) {
             setModal(<LoginModal />);
@@ -30,33 +30,28 @@ export const UserHeaderButtons: React.FC<{
         }
 
         setDisabled(true);
+
+        // Removing following
+        if(user.is_following) {
+            await destroy(`/followers/${userId}/`);
+            dispatch(removeUserFollow(userId));
+            return setDisabled(false);
+        }
         
-        post(`/followers/${userId}/`, {'test': 'yey'})
-            .then(follow => {
-                setDisabled(false);
-                dispatch(addUserFollow(userId));
-            })
-    }
-    const unfollow = () => {
-        setDisabled(true);
-        
-        destroy(`/followers/${userId}/`)
-            .then(follow => {
-                setDisabled(false);
-                dispatch(removeUserFollow(userId));
-            })
+        // Add following
+        await post(`/followers/${userId}/`)
+        dispatch(addUserFollow(userId));
+        setDisabled(false);
     }
 
     // Function to open edit modal
-    const editProfile = () => {
-        setModal(<EditProfileModal />);
-    }
+    const editProfile = () => setModal(<EditProfileModal />);
 
     return(
         <div className={styles['header-buttons']}>
             {!user.is_self ? (
                 <Button
-                    onClick={user.is_following ? unfollow : follow}
+                    onClick={toggleFollow}
                     disabled={disabled}
                     type={user.is_following ? 'secondary' : 'default'}
                     className={styles['header-button']}

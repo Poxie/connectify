@@ -11,12 +11,15 @@ import { selectPostById } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
 import { useTranslation } from 'next-i18next';
 import { removeUserPostId } from '../../redux/users/actions';
+import { useModal } from '../../contexts/modal/ModalProvider';
+import { ConfirmModal } from '../../modals/confirm/ConfirmModal';
 
 export const UserPostOptions: React.FC<{
     postId: number;
 }> = ({ postId }) => {
     const { t } = useTranslation('common');
     const { profile, destroy } = useAuth();
+    const { setModal, close } = useModal();
     const { setMenu } = useMenu();
     const router = useRouter();
     const dispatch = useDispatch();
@@ -42,6 +45,7 @@ export const UserPostOptions: React.FC<{
             // Deleting post
             const deletePost = async () => {
                 const data = await destroy(`/posts/${postId}`)
+                close();
                 if(!data || !profile?.id) return;
 
                 // If user is on post, redirect to profile
@@ -54,9 +58,22 @@ export const UserPostOptions: React.FC<{
                 dispatch(removeUserPostId(profile?.id, postId));
             }
 
+            // Opening confirm modal
+            const confirmDeletion = () => {
+                setModal(
+                    <ConfirmModal 
+                        onCancel={close}
+                        onConfirm={deletePost}
+                        header={t('deletePostHeader')}
+                        subHeader={t('deletePostSubHeader')}
+                        confirmLabel={t('deletePostConfirmLabel')}
+                    />
+                )
+            }
+
             // Unshifting delete options
             groups.unshift([
-                { text: t('deletePost'), onClick: deletePost, type: 'danger' }
+                { text: t('deletePost'), onClick: confirmDeletion, type: 'danger' }
             ])
         }
 
@@ -67,6 +84,7 @@ export const UserPostOptions: React.FC<{
         <button 
             className={styles['options']}
             onClick={onClick}
+            aria-label={t('postOptions')}
             ref={ref}
         >
             <OptionsIcon />

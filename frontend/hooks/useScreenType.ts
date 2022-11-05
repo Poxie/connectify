@@ -8,7 +8,7 @@ const getScreenType = () => {
     const width = window.innerWidth;
 
     if(width < 400) return 'small';
-    if(width < 750) return 'medium';
+    if(width < 700) return 'medium';
     if(width < 1000) return 'largium';
     return 'large';
 }

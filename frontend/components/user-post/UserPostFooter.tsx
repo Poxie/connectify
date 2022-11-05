@@ -1,6 +1,5 @@
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { CommentNeutralIcon } from '../../assets/icons/CommentNeutralIcon';
 import { HeartActiveIcon } from '../../assets/icons/HeartActiveIcon';
@@ -24,25 +23,25 @@ export const UserPostFooter: React.FC<{
     const router = useRouter();
     const stats = useAppSelector(state => selectPostStats(state, id))
 
-    // Handling like and unlike
-    const like = useCallback(() => {
+    const toggleLike = async () => {
         // If user is not logged in
         if(!token) {
             setModal(<LoginModal />);
             return;
         }
 
-        dispatch(addPostLike(id));
-        post(`/posts/${id}/likes`)
-            .catch(console.error);
-    }, [token, post, id]);
-    const unlike = useCallback(() => {
-        dispatch(removePostLike(id));
-        destroy(`/posts/${id}/likes`)
-            .catch(console.error);
-    }, [destroy, id]);
+        // Destroy like
+        if(stats.has_liked) {
+            dispatch(removePostLike(id));
+            destroy(`/posts/${id}/likes`);
+            return
+        }
 
-    // Going to post
+        // Create like
+        dispatch(addPostLike(id));
+        post(`/posts/${id}/likes`);
+    }
+
     const goToPost = () => {
         router.push(`/posts/${id}`);
     }
@@ -55,7 +54,7 @@ export const UserPostFooter: React.FC<{
     return(
         <div className={styles['footer']}>
             <UserPostFooterButton 
-                onClick={has_liked ? unlike : like}
+                onClick={toggleLike}
                 icon={has_liked ? <HeartActiveIcon /> : <HeartNeutralIcon />}
                 text={`${like_count} ${t('likes')}`}
                 active={has_liked}

@@ -13,10 +13,13 @@ export const Notification: React.FC<{
     if(!notification) return null;
 
     let path = '';
-    if(notification.type === 0) {
-        path = `/posts/${notification.reference.id}`
-    } else if(notification.type === 2) {
-        path = `/messages/${(notification.reference as Message).channel_id}`
+    switch(notification.type) {
+        case 0:
+            path = `/posts/${notification.reference.id}`;
+            break;
+        case 2:
+            path = `/messages/${(notification.reference as Message).channel_id}`;
+            break;
     }
 
     const className = [

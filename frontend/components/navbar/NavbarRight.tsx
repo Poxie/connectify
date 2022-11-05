@@ -4,6 +4,7 @@ import { AddIcon } from '../../assets/icons/AddIcon';
 import { SearchIcon } from '../../assets/icons/SearchIcon';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useModal } from '../../contexts/modal/ModalProvider';
+import { useScreenType } from '../../hooks/useScreenType';
 import { CreatePostModal } from '../../modals/create-post/CreatePostModal';
 import { LoginModal } from '../../modals/login/LoginModal';
 import styles from '../../styles/Navbar.module.scss';
@@ -17,6 +18,7 @@ export const NavbarRight: React.FC<{
     const { t } = useTranslation('common');
     const { loading, token, profile } = useAuth();
     const { setModal } = useModal();
+    const screenType = useScreenType();
 
     // Open create post modal
     const openCreatePost = () => {
@@ -44,23 +46,28 @@ export const NavbarRight: React.FC<{
     ].join(' ');
     return(
         <div className={styles['right']}>
-            <HasTooltip
-                tooltip={t('search')}
-                position={'bottom'}
-                className={searchClassName}
+            <button 
+                tabIndex={['small', 'medium'].includes(screenType) ? undefined : -1}
                 onClick={openSearch}
             >
-                <SearchIcon />
-            </HasTooltip>
+                <HasTooltip
+                    tooltip={t('search')}
+                    position={'bottom'}
+                    className={searchClassName}
+                >
+                    <SearchIcon />
+                </HasTooltip>
+            </button>
 
-            <HasTooltip 
-                tooltip={t('navbar.createPost')}
-                position={'bottom'}
-                className={styles['button']}
-                onClick={openCreatePost}
-            >
-                <AddIcon />
-            </HasTooltip>
+            <button onClick={openCreatePost}>
+                <HasTooltip 
+                    tooltip={t('navbar.createPost')}
+                    position={'bottom'}
+                    className={styles['button']}
+                >
+                    <AddIcon />
+                </HasTooltip>
+            </button>
 
             {profile ? (
                 <NavbarProfile {...profile} />

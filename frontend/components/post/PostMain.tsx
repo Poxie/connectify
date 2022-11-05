@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react"
 import { useDispatch } from "react-redux"
 import { useAuth } from "../../contexts/auth/AuthProvider"
+import { usePostId } from "../../hooks/usePostId"
 import { setPost } from "../../redux/posts/actions"
 import { selectPostMain } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
@@ -11,10 +12,9 @@ import { PostContent } from "./PostContent"
 import { PostMainSkeleton } from "./PostMainSkeleton"
 import { PostTitle } from "./PostTitle"
 
-export const PostMain: React.FC<{
-    postId: number;
-}> = ({ postId }) => {
+export const PostMain = () => {
     const { get, loading } = useAuth();
+    const postId = usePostId();
     const post = useAppSelector(state => selectPostMain(state, postId));
     const dispatch = useDispatch();
 
@@ -30,7 +30,6 @@ export const PostMain: React.FC<{
 
     if(!post) return <PostMainSkeleton />;
 
-    // Destructuring properties
     const {
         id,
         author,

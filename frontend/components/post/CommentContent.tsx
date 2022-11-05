@@ -1,6 +1,6 @@
 import styles from '../../styles/Post.module.scss';
 
-export const PostCommentContent: React.FC<{
+export const CommentContent: React.FC<{
     content: string;
 }> = ({ content }) => {
     return(

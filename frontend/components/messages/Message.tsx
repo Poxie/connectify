@@ -36,7 +36,8 @@ export const Message: React.FC<{
     const className = [
         styles['message'],
         isMyMessage ? styles['my-message'] : '',
-        failed ? styles['failed'] : ''
+        failed ? styles['failed'] : '',
+        hasFooter ? styles['has-footer'] : ''
     ].join(' ');
     return(
         <div className={className}>

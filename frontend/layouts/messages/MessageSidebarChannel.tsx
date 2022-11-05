@@ -34,18 +34,20 @@ export const MessageSidebarChannel: React.FC<{
     ].join(' ');
     return(
         <li>
-            <HasTooltip tooltip={name} delay={500} position={'right'}>
+            <HasTooltip 
+                tooltip={name} 
+                delay={500} 
+                position={'right'}
+            >
                 <Link href={`/messages/${channel.id}`}>
                     <a className={className} aria-label={ariaLabel}>
                         <div className={styles['tab-main']}>
                             <div className={styles['tab-avatar']}>
-                                {image && (
-                                    <Image 
-                                        src={image}
-                                        layout={'fill'}
-                                        objectFit={'cover'}
-                                    />
-                                )}
+                                <Image 
+                                    src={image}
+                                    layout={'fill'}
+                                    objectFit={'cover'}
+                                />
                             </div>
                             <div className={styles['text']}>
                                 <div className={styles['tab-text-main']}>

@@ -33,17 +33,18 @@ export const EditProfileBanner: React.FC<{
         url !== undefined ? styles['has-image'] : ''
     ].join(' ');
     return(
-        <div 
+        <button 
             className={className} 
             onClick={openFileSelector}
             style={{ backgroundImage: `url(${url})` }}
             data-hover-text={t('changeBanner')}
+            aria-label={t('changeBanner')}
         >
             <input 
                 onChange={handleChange}
                 type="file"
                 ref={input} 
             />
-        </div>
+        </button>
     )
 }

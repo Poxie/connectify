@@ -15,6 +15,7 @@
     },
 
     "cancel": "Avbryt",
+    "confirm": "Bekräfta",
     "create": "Skapa",
     "goBack": "Gå tillbaka",
     "close": "Stäng",
@@ -25,6 +26,7 @@
     "followers": "Följare",
     "goToProfile": "Gå till profil",
 
+    "postOptions": "Visa inlägg Inställningar",
     "copyLink": "Kopiera länk",
     "deletePost": "Ta bort inlägg",
     
@@ -33,6 +35,7 @@
     "preview": "Förhandsvisa",
     "previewPost": "Förhandsvisa",
     "createPost": "Skapa inlägg",
+    "characters": "karaktärer",
 
     "search": "Sök",
     "signIn": "Logga in",
@@ -66,5 +69,9 @@
     "displayNamePlaceholder": "Välj ett namn...",
     "bio": "Bio",
     "bioPlaceholder": "Skriv lite om dig själv!",
-    "saveChanges": "Spara Ändringar"
+    "saveChanges": "Spara Ändringar",
+
+    "deletePostHeader": "Ta bort det här inlägget?",
+    "deletePostSubHeader": "Är du säker på att du vill ta bort det här inlägget? Du kan inte ångra dig.",
+    "deletePostConfirmLabel": "Ta bort"
 }

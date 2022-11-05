@@ -1,4 +1,5 @@
 import time
+from typing import Union
 from database import db
 from random import randrange
 from utils.users import get_user_by_id
@@ -23,15 +24,24 @@ def create_comment_id() -> int:
     return id
 
 # Hydrating comment objects
-def hydrate_comment(comment):
+def hydrate_comment(comment, token_id: Union[int, None]=None):
     # Getting comment author object
     author = get_user_by_id(comment['author_id'])
     comment['author'] = author
 
+    # Getting like count
+    count = get_comment_like_count(comment['id'])
+    comment['like_count'] = count
+
+    # Adding like status to comment
+    comment['has_liked'] = False
+    if token_id and select_comment_like(comment['id'], token_id):
+        comment['has_liked'] = True
+
     return comment
 
 # Getting comment by id
-def get_comment_by_id(id: int):
+def get_comment_by_id(id: int, token_id: Union[int, None]=None):
     # Creating query
     query = "SELECT * FROM comments WHERE id = %s"
     values = (id,)
@@ -41,15 +51,27 @@ def get_comment_by_id(id: int):
 
     # Hydrating comment
     if comment:
-        comment = hydrate_comment(comment)
+        comment = hydrate_comment(comment, token_id)
 
     return comment
 
 # Getting post comments
-def get_post_comments(post_id: int):
-    # Creating query
-    query = "SELECT * FROM comments WHERE post_id = %s ORDER BY timestamp DESC"
-    values = (post_id,)
+def get_post_comments(post_id: int, token_id: Union[int, None]=None, order_by='top', start_at=0, amount=15):
+    # Fetching top liked comments
+    query = ""
+    if order_by == 'top':
+        query = """
+        SELECT * FROM comments
+        WHERE post_id = %s
+        ORDER BY (
+            SELECT COUNT(*) FROM likes WHERE likes.post_id = comments.id
+        ) DESC
+        LIMIT %s, %s
+        """
+    elif order_by == 'latest':
+        query = "SELECT * FROM comments WHERE post_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
+
+    values = (post_id,start_at, amount)
 
     # Fetching comments
     comments = db.fetch_all(query, values)
@@ -58,7 +80,7 @@ def get_post_comments(post_id: int):
     for comment in comments:
         if not comment: continue
             
-        comment = hydrate_comment(comment)
+        comment = hydrate_comment(comment, token_id)
 
     return comments
 
@@ -100,3 +122,34 @@ def create_post_comment(post_id: int, data):
     comment = get_comment_by_id(id)
     
     return comment
+
+def create_comment_like(comment_id: int, token_id: int):
+    query = "INSERT INTO likes (post_id, user_id, timestamp) VALUES (%s, %s, %s)"
+    values = (comment_id, token_id, time.time())
+
+    db.insert(query, values)
+
+def destroy_comment_like(comment_id: int, token_id: int):
+    query = "DELETE FROM likes WHERE post_id = %s AND user_id = %s"
+    values = (comment_id, token_id)
+
+    db.delete(query, values)
+
+def select_comment_like(comment_id: int, token_id: int):
+    query = "SELECT * FROM likes WHERE post_id = %s AND user_id = %s"
+    values = (comment_id, token_id)
+
+    like = db.fetch_one(query, values)
+
+    return like
+
+def get_comment_like_count(comment_id: int):
+    query = "SELECT COUNT(*) AS count FROM likes WHERE post_id = %s"
+    values = (comment_id,)
+
+    result = db.fetch_one(query, values)
+    count = 0
+    if result and 'count' in result:
+        count = result['count']
+
+    return count

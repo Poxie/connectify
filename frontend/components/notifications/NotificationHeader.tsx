@@ -12,10 +12,13 @@ export const NotificationHeader: React.FC<{
     const { t } = useTranslation('notifications');
 
     let headerText = '';
-    if(type === 0) {
-        headerText = t('newPost');
-    } else if(type === 2) {
-        headerText = t('newMessage');
+    switch(type) {
+        case 0:
+            headerText = t('newPost');
+            break;
+        case 2:
+            headerText = t('newMessage');
+            break;
     }
 
     const diff = Date.now() / 1000 - created_at
@@ -50,6 +53,7 @@ export const NotificationHeader: React.FC<{
                 <a className={styles['notification-avatar']}>
                     <Image 
                         src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${user.avatar}`}
+                        alt={`${user.display_name || user.username}'s avatar`}
                         width={35}
                         height={35}
                     />
