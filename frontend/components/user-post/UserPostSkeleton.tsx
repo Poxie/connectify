@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 export const UserPostSkeleton = () => {
     return(
         <motion.div 
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             className={styles['skeleton']}
             aria-hidden="true"
         >

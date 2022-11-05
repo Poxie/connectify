@@ -20,15 +20,18 @@ const removePost = (state: PostsState, action: AnyAction) => {
 }
 
 const setPostComments = (state: PostsState, action: AnyAction) => {
-    const { comments, postId }: {
+    const { comments, postId, orderType }: {
         comments: Comment[];
         postId: number;
+        orderType: Comment['orderType'];
     } = action.payload;
 
     const newPosts = updateItemInArray(state.posts, postId, post => {
         return updateObject(post, { hasCommentsFetched: true })
     })
-    const newComments = state.comments.concat(comments);
+    const newComments = state.comments.concat(comments.map(comment => (
+        updateObject(comment, { orderType })
+    )));
 
     return updateObject(state, {
         posts: newPosts,
@@ -88,6 +91,32 @@ const removePostLike = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts })
 }
 
+const addCommentLike = (state: PostsState, action: AnyAction) => {
+    const commentId = action.payload;
+
+    const newComments = updateItemInArray(state.comments, commentId, comment => {
+        return updateObject(comment, {
+            has_liked: true,
+            like_count: comment.like_count + 1
+        })
+    })
+
+    return updateObject(state, { comments: newComments });
+}
+
+const removeCommentLike = (state: PostsState, action: AnyAction) => {
+    const commentId = action.payload;
+
+    const newComments = updateItemInArray(state.comments, commentId, comment => {
+        return updateObject(comment, {
+            has_liked: false,
+            like_count: comment.like_count - 1
+        })
+    })
+
+    return updateObject(state, { comments: newComments });
+}
+
 // Creating reducer
 export const postsReducer = createReducer({
     posts: [],
@@ -99,5 +128,7 @@ export const postsReducer = createReducer({
     ADD_POST_COMMENT: addPostComment,
     SET_POSTS: setPosts,
     ADD_POST_LIKE: addPostLike,
-    REMOVE_POST_LIKE: removePostLike
+    REMOVE_POST_LIKE: removePostLike,
+    ADD_COMMENT_LIKE: addCommentLike,
+    REMOVE_COMMENT_LIKE: removeCommentLike
 })

@@ -13,6 +13,7 @@ import { selectUserById } from '../../redux/users/selectors';
 import { EditProfileBanner } from './EditProfileBanner';
 import { EditProfileAvatar } from './EditProfileAvatar';
 import { useTranslation } from 'next-i18next';
+import { UserStats } from '../../layouts/user/UserStats';
 
 export const EditProfileModal = () => {
     const { t } = useTranslation('common');
@@ -40,9 +41,7 @@ export const EditProfileModal = () => {
         })
     }
 
-    const cancel = () => {
-        close();
-    }
+    const cancel = close;
     const confirm = () => {
         if(!tempUser) return;
         setDisabled(true);
@@ -87,9 +86,7 @@ export const EditProfileModal = () => {
                             {tempUser.bio}
                         </span>
                     )}
-                    <span className={styles['followers']}>
-                        {tempUser?.follower_count} {t('followers')}
-                    </span>
+                    <UserStats userId={user?.id as number} />
                 </div>
             </div>
             <div className={styles['input-container']}>

@@ -1,9 +1,9 @@
 import styles from '../../styles/Notifications.module.scss';
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { addNotifications, setNotificationCount, setNotifications, setNotificationsReachedEnd } from "../../redux/notifications/actions";
-import { selectNotificationsLoading, selectNotificationIds, selectUnreadCount, selectNotificationsReachedEnd } from "../../redux/notifications/selectors"
+import { selectNotificationIds, selectUnreadCount, selectNotificationsReachedEnd } from "../../redux/notifications/selectors"
 import { useAppSelector } from "../../redux/store"
 import { Notification } from "./Notification";
 import { NotificationSkeleton } from "./NotificationSkeleton";
@@ -11,7 +11,7 @@ import { LoginPrompt } from '../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../empty-prompt/EmptyPrompt';
 import { Notification as NotificationType } from '../../types';
-import { ScrollCallback, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { RequestFinished, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 15;
@@ -25,7 +25,7 @@ export const Notifications = () => {
     const reachedEnd = useAppSelector(selectNotificationsReachedEnd);
 
     // Fetching on mount and scroll
-    const scrollCallback: ScrollCallback = (notifications: NotificationType[], reachedEnd) => {
+    const onRequestFinished: RequestFinished<NotificationType[]> = (notifications, reachedEnd) => {
         dispatch(addNotifications(notifications));
         if(reachedEnd) {
             dispatch(setNotificationsReachedEnd(true));
@@ -33,7 +33,7 @@ export const Notifications = () => {
     }
     const { loading: notificationsLoading } = useInfiniteScroll<NotificationType[]>(
         `/notifications?amount=${FETCH_AMOUNT}&start_at=${notificationIds.length}`,
-        scrollCallback,
+        onRequestFinished,
         {
             fetchAmount: FETCH_AMOUNT,
             threshold: SCROLL_THRESHOLD,

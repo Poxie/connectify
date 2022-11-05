@@ -2,16 +2,21 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/auth/AuthProvider";
 
 export type InfiniteScrollDirection = 'down' | 'up';
-export type ScrollCallback = (result: any, reachedEnd: boolean) => void;
-type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, options: {
-    threshold: number;
-    fetchAmount: number;
-    fetchOnMount?: boolean;
-    isAtEnd?: boolean;
-    direction?: InfiniteScrollDirection;
-    scrollContainer?: RefObject<HTMLDivElement>;
-    identifier?: number;
-}) => {
+export type RequestFinished<T> = (result: T, reachedEnd: boolean) => void;
+type InfiniteScroll = <T>(
+    query: string, 
+    onRequestFinished: RequestFinished<T>,
+    options: {
+        threshold: number;
+        fetchAmount: number;
+        fetchOnMount?: boolean;
+        isAtEnd?: boolean;
+        direction?: InfiniteScrollDirection;
+        scrollContainer?: RefObject<HTMLDivElement>;
+        identifier?: number | string;
+        standBy?: boolean;
+    }
+) => {
     loading: boolean;
     reachedEnd: boolean;
 }
@@ -25,13 +30,14 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
 
     // Fetching on mount
     useEffect(() => {
-        if(!options.fetchOnMount || tokenLoading || options.isAtEnd) return;
+        if(!options.fetchOnMount || tokenLoading || options.isAtEnd || options.standBy) return;
 
         // Making sure to cancel multiple requests
         const controller = new AbortController();
         const signal = controller.signal;
 
         fetching.current = true;
+        setLoading(true);
         get(query, signal)
             .then((result: any) => {
                 const reachedEnd = result.length < options.fetchAmount;
@@ -43,7 +49,7 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
 
         // Aborting previous http request
         return () => controller.abort();
-    }, [tokenLoading, options.identifier]);
+    }, [tokenLoading, options.identifier, options.standBy]);
 
     // Handling event listeners
     useEffect(() => {

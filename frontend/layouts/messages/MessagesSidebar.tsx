@@ -1,7 +1,6 @@
 import styles from './MessagesLayout.module.scss';
 import { useAppSelector } from "../../redux/store"
 import { MessageSidebarChannel } from "./MessageSidebarChannel";
-import { MessageSidebarChannelLoading } from "./MessageSidebarChannelLoading";
 import { AddIcon } from "../../assets/icons/AddIcon";
 import { useModal } from "../../contexts/modal/ModalProvider";
 import { SelectUserModal } from "../../modals/select-user/SelectUserModal";
@@ -9,34 +8,19 @@ import Button from '../../components/button';
 import { useTranslation } from 'next-i18next';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { selectChannelIds, selectChannelsLoading } from '../../redux/messages/selectors';
+import { MessagesSidebarSkeleton } from './MessagesSidebarSkeleton';
 
 export const MessagesSidebar = () => {
     const { t } = useTranslation('messages');
     const { setModal } = useModal();
-    const channels = useAppSelector(selectChannelIds);
+    const channelIds = useAppSelector(selectChannelIds);
     const channelsLoading = useAppSelector(selectChannelsLoading);
 
     // Function to open start conversation modal
-    const openConvoModal = () => {
-        setModal(<SelectUserModal />);
-    }
+    const openConvoModal = () => setModal(<SelectUserModal />)
 
     // Showing loading skeleton
-    if(channelsLoading) {
-        return(
-            <div className={styles['sidebar']} aria-hidden="true">
-                <div className={styles['sidebar-header']}>
-                    <div className={styles['sidebar-header-text']} />
-                    <div className={styles['sidebar-header-button']} />
-                </div>
-                <ul className={styles['tabs']}>
-                    {Array.from(Array(8)).map((_, key) => (
-                        <MessageSidebarChannelLoading key={key} />
-                    ))}
-                </ul>
-            </div>
-        )
-    }
+    if(channelsLoading) return <MessagesSidebarSkeleton />;
 
     return(
         <div className={styles['sidebar']}>
@@ -45,15 +29,16 @@ export const MessagesSidebar = () => {
                     {t('directMessages')}
                 </span>
 
-                <HasTooltip 
-                    tooltip={t('startConversation')}
-                    onClick={openConvoModal}
-                >
-                    <AddIcon />
-                </HasTooltip>
+                <button onClick={openConvoModal}>
+                    <HasTooltip 
+                        tooltip={t('startConversation')}
+                    >
+                        <AddIcon />
+                    </HasTooltip>
+                </button>
             </div>
 
-            {!channels.length && (
+            {!channelIds.length && (
                 <div className={styles['sidebar-empty']}>
                     <span>
                         {t('emptyChannels')}
@@ -67,14 +52,16 @@ export const MessagesSidebar = () => {
                 </div>
             )}
 
-            <ul className={styles['tabs']}>
-                {channels.map(id => (
-                    <MessageSidebarChannel 
-                        id={id}
-                        key={id}
-                    />
-                ))}
-            </ul>
+            {channelIds.length && (
+                <ul className={styles['tabs']}>
+                    {channelIds.map(id => (
+                        <MessageSidebarChannel 
+                            id={id}
+                            key={id}
+                        />
+                    ))}
+                </ul>
+            )}
         </div>
     )
 }

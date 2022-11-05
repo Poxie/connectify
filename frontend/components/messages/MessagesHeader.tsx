@@ -23,12 +23,12 @@ export const MessagesHeader: React.FC<{
     return(
         <div className={styles['header']}>
             {screenType !== 'large' && (
-                <div 
+                <button 
                     className={styles['back-button']}
                     onClick={goBack}
                 >
                    <ArrowIcon /> 
-                </div>
+                </button>
             )}
 
             <span>

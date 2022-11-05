@@ -29,21 +29,84 @@
     justify-content: flex-end;
     margin-top: var(--spacing-primary);
 }
+.filters {
+    margin-bottom: var(--spacing-primary) !important;
+}
 .comment-container {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-primary);
 }
+.comment {
+    display: flex;
+    margin-bottom: var(--spacing-primary);
+}
+.comment-avatar {
+    border-radius: 50%;
+    width: 25px;
+    min-width: 25px;
+    height: 25px;
+    overflow: hidden;
+    margin-right: var(--spacing-primary);
+}
+.comment-author {
+    transition: color .2s;
+    
+    &:hover {
+        color: var(--text-primary);
+    }
+}
 .comment-header {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    &>* {
+        margin-top: 0;
+    }
 }
 .comment-content {
     font-size: 14px;
     color: var(--text-secondary);
     display: block;
     margin-top: 8px;
+}
+.comment-footer {
+    display: flex;
+    margin-top: 6px;
+}
+.comment-footer-button {
+    border-radius: 8px;
+    border: 1px solid var(--background-secondary);
+    padding: 6px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color .2s, border-color .2s;
+
+    &:hover {
+        background-color: var(--background-secondary);
+    }
+
+    svg {
+        width: 12px;
+        fill: var(--text-secondary);
+        margin-right: 5px;
+        display: block;
+    }
+
+    &.active {
+        border-color: var(--color-primary);
+        background-color: var(--background-secondary);
+
+        svg {
+            fill: var(--color-primary);
+        }
+    }
 }
 
 .skeleton-text {
@@ -145,8 +208,8 @@
     border-top: 1px solid var(--background-tertiary);
 }
 .skeleton-footer-button {
-    width: 100px;
-    height: 24px;
+    width: 70px;
+    height: 26px;
 }
 .skeleton-comments {
     margin-top: var(--spacing-primary);
@@ -155,10 +218,29 @@
 .skeleton-comment-count {
     width: 100px;
     height: 20px;
-    margin: var(--spacing-primary) 0;
+    margin-bottom: var(--spacing-primary);
+}
+.skeleton-comment-input {
+    width: 100%;
+    height: 49px;
+    border-radius: var(--border-radius-primary);
+    background-color: var(--background-tertiary);
 }
 .skeleton-comment {
     padding: 10px 0;
+    display: flex;
+    gap: var(--spacing-primary);
+
+    .skeleton-content {
+        margin-top: 8px;
+
+        div {
+            height: 18px;
+        }
+    }
+    .skeleton-footer-button {
+        margin-top: 5px;
+    }
 }
 .skeleton-comment-header {
     display: flex;

@@ -7,11 +7,12 @@ import { useModal } from '../../contexts/modal/ModalProvider';
 import { PreviewPostModal } from './PreviewPostModal';
 import { useTranslation } from 'next-i18next';
 
+const MAX_CHARACTER_LENGTH = 400;
 export const CreatePostModal = () => {
     const { t } = useTranslation('common');
     const { close, pushModal } = useModal();
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState(''); 
+    const [content, setContent] = useState('');
 
     // Preview post
     const previewPost = () => {
@@ -24,8 +25,12 @@ export const CreatePostModal = () => {
     }
 
     // Determining if post is complete
-    const disabled = !title || !content;
+    const disabled = !title || !content || content.length > MAX_CHARACTER_LENGTH;
 
+    const characterClassName = [
+        styles['character-length'],
+        content.length > MAX_CHARACTER_LENGTH ? styles['error'] : ''
+    ].join(' ');
     return(
         <>
         <ModalHeader>
@@ -41,6 +46,10 @@ export const CreatePostModal = () => {
                 textArea={true}
                 onChange={setContent}
             />
+
+            <span className={characterClassName}>
+                {content.length}/{MAX_CHARACTER_LENGTH} {t('characters')}
+            </span>
         </div>
         <ModalFooter 
             cancelLabel={t('cancel')}

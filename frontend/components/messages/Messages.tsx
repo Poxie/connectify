@@ -9,7 +9,8 @@ import { Message as MessageType, User } from '../../types';
 import Link from 'next/link';
 import { Loader } from '../loader';
 import { selectChannelReachedEnd, selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
-import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { RequestFinished, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { useTranslation } from 'next-i18next';
 
 const PREVENT_AUTO_SCROLL_THRESHOLD = 200;
 const UPDATE_SCROLL_THRESHOLD = 600;
@@ -18,8 +19,9 @@ export const Messages: React.FC<{
     channelId: number;
     recipient: User;
 }> = ({ channelId, recipient }) => {
-    const dispatch = useDispatch();
+    const { t } = useTranslation('messages');
     const { patch } = useAuth();
+    const dispatch = useDispatch();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
     const reachedEnd = useAppSelector(state => selectChannelReachedEnd(state, channelId))
@@ -29,7 +31,7 @@ export const Messages: React.FC<{
     const shouldScroll = useRef(messageIds === undefined);
 
     // Fetching messages on mount and scroll
-    const onRequestFinished = (messages: MessageType[], reachedEnd: boolean) => {
+    const onRequestFinished: RequestFinished<MessageType[]> = (messages, reachedEnd) => {
         dispatch(prependMessages(channelId, messages));
 
         if(reachedEnd) {
@@ -100,6 +102,13 @@ export const Messages: React.FC<{
         }
     }, [list, scrollContainer, messageIds?.length]);
 
+    const recipientLink = (
+        <Link href={`/users/${recipient.id}`}>
+            <a>
+                <strong>{recipient.display_name || recipient.username}</strong>
+            </a>
+        </Link>
+    )
     return(
         <div className={styles['list-container']}>
             <div className={styles['scroll-container']} ref={scrollContainer}>
@@ -108,35 +117,27 @@ export const Messages: React.FC<{
                         <Loader />
                     </div>
                 )}
+                
+                {!loading && !messageIds?.length && (
+                    <span className={styles['list-label']}>
+                        {t('noMessages')}
+                        {' '}
+                        {recipientLink}
+                        {' '}
+                        {t('yet')}
+                    </span>
+                )}
+
+                {messageIds?.length !== 0 && reachedEnd && (
+                    <span className={styles['list-label']}>
+                        {t('reachedEnd')}
+                        {' '}
+                        {recipientLink}
+                    </span>
+                )}
+
                 {messageIds && (
                     <ul className={styles['list']} ref={list}>
-                        {!messageIds?.length && (
-                            <span>
-                                You don't have any messages with 
-                                {' '}
-                                <Link href={`/users/${recipient.id}`}>
-                                    <a>
-                                        <strong>{recipient.display_name || recipient.username}</strong>
-                                    </a>
-                                </Link>
-                                {' '}
-                                yet.
-                            </span>
-                        )}
-
-                        {messageIds.length !== 0 && reachedEnd && (
-                            <span className={styles['list-label']}>
-                                You have reached the end of the conversation with
-                                {' '}
-                                <Link href={`/users/${recipient.id}`}>
-                                    <a>
-                                        <strong>{recipient.display_name || recipient.username}</strong>
-                                    </a>
-                                </Link>
-                                .
-                            </span>
-                        )}
-
                         {messageIds && messageIds.map((id, key) => (
                             <Message 
                                 id={id}

@@ -41,22 +41,6 @@ def delete_follower(follower_id: int, followee_id: int):
 
     return {}
 
-# Getting user follower count
-def get_user_follower_count(user_id: int):
-    # Creating select query
-    query = "SELECT COUNT(*) as follower_count FROM followers WHERE followee_id = %s"
-    values = (user_id,)
-
-    # Fetching follower count
-    data = db.fetch_one(query, values)
-
-    # Determining follower count
-    follower_count = 0
-    if data and 'follower_count' in data:
-        follower_count = data['follower_count']
-        
-    return follower_count
-
 # Getting user followees
 def get_user_followees(id: int):
     # Creating select query

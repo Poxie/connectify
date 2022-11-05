@@ -6,35 +6,13 @@ import { Input } from "../input"
 import { SearchResult } from './SearchResult';
 import { Loader } from '../loader';
 import { useTranslation } from 'next-i18next';
+import { useLiveFetching } from '../../hooks/useLiveFetching';
 
 export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
     const { t } = useTranslation('common');
-    const { get, loading: authLoading } = useAuth();
     const [query, setQuery] = useState('');
-    const [results, setResults] = useState<User[]>([]);
     const [resultsShowing, setResultsShowing] = useState(false);
-    const [loading, setLoading] = useState(false);
-
-    // Fetching users on query change
-    useEffect(() => {
-        if(authLoading) return;
-
-        // Preventing empty requests
-        if(!query) {
-            setLoading(false);
-            setResults([]);
-            return;
-        }
-
-        setLoading(true);
-
-        // Executing fetch request
-        get<User[]>(`/users/search?query=${query}`)
-            .then(users => {
-                setResults(users);
-                setLoading(false);
-            })
-    }, [query, authLoading]);
+    const { loading, data } = useLiveFetching<User[]>(query ? `/users/search?query=${query}` : '');
 
     // Closing results on blur
     const handleBlur = () => {
@@ -64,19 +42,19 @@ export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
             />
             {query && resultsShowing && (
                 <div className={styles['results']}>
-                    {!results.length && loading && (
+                    {!data?.length && loading && (
                         <div className={styles['loader']} aria-label="Loading">
                             <Loader />
                         </div>
                     )}
 
-                    {!results.length && !loading && (
+                    {typeof data === 'object' && !data?.length && !loading && (
                         <span>
                             {t('noResults')}
                         </span>
                     )}
 
-                    {results.map(user => (
+                    {data?.map(user => (
                         <SearchResult 
                             {...user}
                             key={user.id}

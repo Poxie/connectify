@@ -11,5 +11,9 @@
         "inputPlaceholder": "Skicka till",
         "inputButtonText": "Skicka"
     },
-    "you": "Du:"
+    "directMessageAriaLabel": "meddelande",
+    "you": "Du:",
+    "reachedEnd": "Du har nått slutet av konversationen med",
+    "noMessages": "Du har inte några meddelanden med",
+    "yet": "ännu"
 }

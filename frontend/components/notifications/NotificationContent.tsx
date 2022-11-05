@@ -5,8 +5,8 @@ export const NotificationContent: React.FC<{
     reference: Notification['reference'];
 }> = ({ reference }) => {
     return(
-        <div className={styles['notification-content']}>
+        <span className={styles['notification-content']}>
             {reference.content}
-        </div>
+        </span>
     )
 }

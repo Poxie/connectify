@@ -1,6 +1,6 @@
 .header {
-    background-color: var(--background-secondary);
-
+    border: 2px solid var(--background-secondary);
+    border-radius: var(--border-radius-primary) var(--border-radius-primary) 0 0;
     h2 {
         margin: 0;
     }
@@ -12,7 +12,7 @@
 .header-banner {
     height: 260px;
     overflow: hidden;
-    background-color: var(--background-tertiary);
+    background-color: var(--background-secondary);
     border-top-left-radius: var(--border-radius-primary);
     border-top-right-radius: var(--border-radius-primary);
     background-size: cover;
@@ -28,7 +28,7 @@
     margin-right: var(--spacing-primary);
     background-color: var(--background-tertiary);
     border-radius: 50%;
-    border: 6px solid var(--background-secondary);
+    border: 8px solid var(--background-primary);
     overflow: hidden;
 }
 .header-content {
@@ -42,17 +42,30 @@
 .header-text {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: flex-start;
 }
-.user-stats {
+.header-bio {
     margin-top: 5px;
-    font-size: 15px;
+    display: block;
+}
+.stats {
+    margin-top: var(--spacing-primary);
+    font-size: 12px;
+    padding: 10px;
+    background-color: var(--background-secondary);
+    border-radius: var(--border-radius-primary);
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-primary);
 }
 .tabs {
     display: flex;
-    background-color: var(--background-secondary);
-    border-top: 1px solid var(--background-tertiary);
-    border-bottom: 1px solid var(--background-tertiary);
+    border: 1px solid var(--background-tertiary);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius-primary) var(--border-radius-primary);
+    overflow: hidden;
     margin-bottom: var(--spacing-primary);
 
     li {
@@ -77,7 +90,7 @@
         }
 
         &:hover {
-            background-color: var(--background-quaternary);
+            background-color: var(--background-secondary);
         }
         
         &.active-tab {
@@ -119,11 +132,39 @@
     @extend .skeleton-text;
     height: 32px;
     width: 120px;
+    margin-bottom: 5px
 }
 .header-subtext-skeleton {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    
+    div {
+        @extend .skeleton-text;
+        height: 20px;
+
+        &:nth-of-type(1) {
+            width: 90px;
+        }
+        &:nth-of-type(2) {
+            width: 130px;
+        }
+        &:nth-of-type(3) {
+            width: 50px;
+        }
+        &:nth-of-type(4) {
+            width: 70px;
+        }
+        &:nth-of-type(5) {
+            width: 85px;
+        }
+    }
+}
+.header-stats-skeleton {
     @extend .skeleton-text;
-    height: 21px;
-    width: 90px;
+    height: 36px;
+    width: 200px;
+    margin-top: var(--spacing-primary);
 }
 .header-button-skeleton {
     @extend .skeleton-text;
