@@ -3,6 +3,7 @@ from random import randrange
 from typing import Union
 from database import db
 from utils.followers import get_user_follower_count, get_follower
+from utils.likes import get_user_like_count
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
@@ -14,7 +15,9 @@ def hydrate_user(user, token_id):
     follower_count = get_user_follower_count(user['id'])
     user['follower_count'] = follower_count
 
-    # 
+    # Fetching user like count
+    like_count = get_user_like_count(user['id'])
+    user['like_count'] = like_count
 
     # Checking if user is self
     user['is_self'] = False
