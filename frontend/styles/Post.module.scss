@@ -207,8 +207,8 @@
     border-top: 1px solid var(--background-tertiary);
 }
 .skeleton-footer-button {
-    width: 100px;
-    height: 24px;
+    width: 70px;
+    height: 26px;
 }
 .skeleton-comments {
     margin-top: var(--spacing-primary);
@@ -221,6 +221,19 @@
 }
 .skeleton-comment {
     padding: 10px 0;
+    display: flex;
+    gap: var(--spacing-primary);
+
+    .skeleton-content {
+        margin-top: 8px;
+
+        div {
+            height: 18px;
+        }
+    }
+    .skeleton-footer-button {
+        margin-top: 5px;
+    }
 }
 .skeleton-comment-header {
     display: flex;
