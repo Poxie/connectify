@@ -56,9 +56,20 @@ def get_comment_by_id(id: int, token_id: Union[int, None]=None):
     return comment
 
 # Getting post comments
-def get_post_comments(post_id: int, token_id: Union[int, None]=None):
-    # Creating query
-    query = "SELECT * FROM comments WHERE post_id = %s ORDER BY timestamp DESC"
+def get_post_comments(post_id: int, token_id: Union[int, None]=None, order_by='top'):
+    # Fetching top liked comments
+    query = ""
+    if order_by == 'top':
+        query = """
+        SELECT * FROM comments
+        WHERE post_id = %s
+        ORDER BY (
+            SELECT COUNT(*) FROM likes WHERE likes.post_id = comments.id
+        ) DESC
+        """
+    elif order_by == 'latest':
+        query = "SELECT * FROM comments WHERE post_id = %s ORDER BY timestamp DESC"
+
     values = (post_id,)
 
     # Fetching comments

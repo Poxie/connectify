@@ -10,8 +10,10 @@ comments = Blueprint('comments', __name__)
 @token_optional
 @post_exists
 def get_comments(post_id: int, token_id: int):
+    order_by = request.args.get('order_by') or 'top'
+
     # Fetching comments
-    comments = get_post_comments(post_id, token_id)
+    comments = get_post_comments(post_id, token_id, order_by)
     
     return comments
 
