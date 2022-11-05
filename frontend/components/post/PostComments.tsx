@@ -1,11 +1,10 @@
 import styles from '../../styles/Post.module.scss';
-import { selectPostCommentCount, selectPostCommentIds, selectPostHasLoadedComments } from "../../redux/posts/selectors"
+import { selectPostCommentCount, selectPostCommentIds, selectPostHasLoadedComments, selectPostMain } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
 import { PostComment } from './PostComment';
 import { AddCommentInput } from './AddCommentInput';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useRef, useState } from 'react';
-import { useAuth } from '../../contexts/auth/AuthProvider';
+import { useState } from 'react';
 import { setPostComments } from '../../redux/posts/actions';
 import { useDispatch } from 'react-redux';
 import { Comment } from '../../types';
