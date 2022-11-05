@@ -1,44 +1,43 @@
 import styles from '../../styles/User.module.scss';
-import { useRouter } from "next/router"
-import { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useAuth } from "../../contexts/auth/AuthProvider";
 import { setPosts } from "../../redux/posts/actions";
 import { useAppSelector } from "../../redux/store"
 import { addUserPostId, addUserPostIds, setUserPostIds, setUserReachedEnd } from "../../redux/users/actions";
-import { selectUserExists, selectUserHasLoadedPosts, selectUserPostIds, selectUserPostsEnd } from "../../redux/users/selectors";
+import { selectUserExists, selectUserPostIds, selectUserPostsEnd } from "../../redux/users/selectors";
 import { Post } from "../../types";
 import { ProfilePost } from "./ProfilePost";
 import { UserPostSkeleton } from '../user-post/UserPostSkeleton';
 import { useTranslation } from 'next-i18next';
-import { ScrollCallback, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { RequestFinished, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { useQueryId } from '../../hooks/useQueryId';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 10;
 export const UserProfile = () => {
     const { t } = useTranslation('user');
-    const { get } = useAuth();
     const dispatch = useDispatch();
-    const { userId } = useRouter().query as { userId: string };
-    const postIds = useAppSelector(state => selectUserPostIds(state, parseInt(userId)));
-    const reachedEnd = useAppSelector(state => selectUserPostsEnd(state, parseInt(userId)));
+    const userId = useQueryId('userId');
+    const postIds = useAppSelector(state => selectUserPostIds(state, userId));
+    const reachedEnd = useAppSelector(state => selectUserPostsEnd(state, userId));
+    const userExists = useAppSelector(state => selectUserExists(state, userId));
 
     // Fetching posts on mount and scroll
-    const scrollCallback: ScrollCallback = (posts: Post[], reachedEnd) => {
+    const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
         if(reachedEnd) {
-            dispatch(setUserReachedEnd(parseInt(userId), 'postIds'));
+            dispatch(setUserReachedEnd(userId, 'postIds'));
         }
         dispatch(setPosts(posts));
-        dispatch(addUserPostIds(parseInt(userId), posts.map(post => post.id)))
+        dispatch(addUserPostIds(userId, posts.map(post => post.id)))
     }
     const { loading } = useInfiniteScroll<Post[]>(
         `/users/${userId}/posts?amount=${FETCH_AMOUNT}&start_at=${postIds?.length || 0}`,
-        scrollCallback,
+        onRequestFinished,
         {
             fetchAmount: FETCH_AMOUNT,
             threshold: SCROLL_THRESHOLD,
             fetchOnMount: !postIds,
-            isAtEnd: reachedEnd
+            isAtEnd: reachedEnd,
+            standBy: !userExists
         }
     )
 

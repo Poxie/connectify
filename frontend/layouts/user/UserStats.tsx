@@ -8,6 +8,7 @@ export const UserStats: React.FC<{
 }> = ({ userId }) => {
     const { t } = useTranslation('common');
     const stats = useAppSelector(state => selectUserStats(state, userId));
+    if(!stats) return null;
 
     return(
         <div className={styles['stats']}>

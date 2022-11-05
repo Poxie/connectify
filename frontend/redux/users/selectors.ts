@@ -20,22 +20,27 @@ export const selectUserLikedIds = createSelector(
     [selectUserById],
     user => user?.likedIds
 )
-export const selectUserHasLoadedPosts = createSelector(
-    [selectUserById],
-    user => user?.postIds !== undefined
-)
-export const selectUserHasLoadedLikedPosts = createSelector(
-    [selectUserById],
-    user => user?.likedIds !== undefined
-)
 
+export const selectUserDisplay = createSelector(
+    [selectUserById],
+    user => user ? ({
+        id: user.id,
+        display_name: user.display_name,
+        username: user.username,
+        bio: user.bio,
+        avatar: user.avatar,
+        banner: user.banner
+    }) : undefined
+)
 export const selectUserStats = createSelector(
     [selectUserById],
-    user => ({
-        follower_count: user?.follower_count,
-        like_count: user?.like_count,
-        post_count: user?.post_count
-    })
+    user => user ? ({
+        is_self: user.is_self,
+        is_following: user.is_following,
+        follower_count: user.follower_count,
+        like_count: user.like_count,
+        post_count: user.post_count
+    }) : undefined
 )
 
 export const selectUserPostsEnd = createSelector(
