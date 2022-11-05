@@ -59,20 +59,3 @@ def get_post_like(post_id: int, user_id: int):
     like = db.fetch_one(query, values)
 
     return like
-
-# Getting like count
-def get_user_like_count(user_id: int):
-    query = """
-    SELECT COUNT(*) AS count FROM posts
-    JOIN likes ON posts.id = likes.post_id
-    WHERE posts.author_id = %s
-    """
-    values = (user_id,)
-
-    result = db.fetch_one(query, values)
-
-    count = 0
-    if result:
-        count = result['count']
-
-    return count
