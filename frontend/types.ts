@@ -40,6 +40,7 @@ export type Comment = {
     timestamp: number;
     has_liked: boolean;
     like_count: number;
+    orderType?: 'top' | 'latest';
 }
 
 export type Channel = {

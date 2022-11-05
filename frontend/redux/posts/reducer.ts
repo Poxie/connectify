@@ -20,15 +20,18 @@ const removePost = (state: PostsState, action: AnyAction) => {
 }
 
 const setPostComments = (state: PostsState, action: AnyAction) => {
-    const { comments, postId }: {
+    const { comments, postId, orderType }: {
         comments: Comment[];
         postId: number;
+        orderType: Comment['orderType'];
     } = action.payload;
 
     const newPosts = updateItemInArray(state.posts, postId, post => {
         return updateObject(post, { hasCommentsFetched: true })
     })
-    const newComments = state.comments.concat(comments);
+    const newComments = state.comments.concat(comments.map(comment => (
+        updateObject(comment, { orderType })
+    )));
 
     return updateObject(state, {
         posts: newPosts,

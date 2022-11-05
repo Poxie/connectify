@@ -1,17 +1,19 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { Comment } from '../../types';
 import { RootState } from "../store";
 
 const selectId = (_:any, id: number) => id;
 const selectCommentId = (_:any,__:any, commentId: number) => commentId;
+const selectOrderType = (_:any,__:any, orderType: Comment['orderType']) => orderType;
 
 const selectComments = (state: RootState) => state.posts.comments;
 
 export const selectPostById = (state: RootState, postId: number) => state.posts.posts.find(post => post.id === postId);
 export const selectPostHasLoadedComments = (state: RootState, postId: number) => state.posts.posts.find(post => post.id === postId)?.hasCommentsFetched
 export const selectPostCommentIds = createSelector(
-    [selectComments, selectId],
-    (comments, postId) => 
-        comments.filter(comment => comment.post_id === postId)
+    [selectComments, selectId, selectOrderType],
+    (comments, postId, orderType) => 
+        comments.filter(comment => comment.post_id === postId && comment.orderType === orderType)
         .map(comment => comment.id)
 )
 export const selectCommentById = createSelector(

@@ -9,9 +9,9 @@ export const removePost = (postId: number) => ({
     type: REMOVE_POST,
     payload: postId
 })
-export const setPostComments = (postId: number, comments: Comment[]) => ({
+export const setPostComments = (postId: number, comments: Comment[], orderType: Comment['orderType']) => ({
     type: SET_POST_COMMENTS,
-    payload: { postId, comments }
+    payload: { postId, comments, orderType }
 })
 export const addPostComment = (comment: Comment) => ({
     type: ADD_POST_COMMENT,
