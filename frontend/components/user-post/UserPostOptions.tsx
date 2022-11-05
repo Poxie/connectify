@@ -84,6 +84,7 @@ export const UserPostOptions: React.FC<{
         <button 
             className={styles['options']}
             onClick={onClick}
+            aria-label={t('postOptions')}
             ref={ref}
         >
             <OptionsIcon />

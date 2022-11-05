@@ -34,10 +34,11 @@ export const EditProfileAvatar: React.FC<{
         url !== undefined ? styles['has-image'] : ''
     ].join(' ');
     return(
-        <div 
+        <button 
             className={className} 
             onClick={openFileSelector}
             data-hover-text={t('changeAvatar')}
+            aria-label={t('changeAvatar')}
         >
             {url && (
                 <Image 
@@ -52,6 +53,6 @@ export const EditProfileAvatar: React.FC<{
                 type="file"
                 ref={input} 
             />
-        </div>
+        </button>
     )
 }

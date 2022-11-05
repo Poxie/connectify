@@ -41,9 +41,7 @@ export const EditProfileModal = () => {
         })
     }
 
-    const cancel = () => {
-        close();
-    }
+    const cancel = close;
     const confirm = () => {
         if(!tempUser) return;
         setDisabled(true);
