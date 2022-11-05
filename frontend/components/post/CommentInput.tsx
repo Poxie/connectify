@@ -8,7 +8,7 @@ import { addPostComment } from '../../redux/posts/actions';
 import { useTranslation } from 'next-i18next';
 import { Comment } from '../../types';
 
-export const AddCommentInput: React.FC<{
+export const CommentInput: React.FC<{
     postId: number;
 }> = ({ postId }) => {
     const { t } = useTranslation('common');

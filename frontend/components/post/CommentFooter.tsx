@@ -7,9 +7,9 @@ import { addCommentLike, removeCommentLike } from '../../redux/posts/actions';
 import { selectCommentStats } from '../../redux/posts/selectors';
 import { useAppSelector } from '../../redux/store';
 import styles from '../../styles/Post.module.scss';
-import { PostCommentFooterButton } from './PostCommentFooterButton';
+import { CommentFooterButton } from './CommentFooterButton';
 
-export const PostCommentFooter: React.FC<{
+export const CommentFooter: React.FC<{
     id: number;
 }> = ({ id }) => {
     const { t } = useTranslation('common');
@@ -35,7 +35,7 @@ export const PostCommentFooter: React.FC<{
 
     return(
         <div className={styles['comment-footer']}>
-            <PostCommentFooterButton 
+            <CommentFooterButton 
                 icon={has_liked ? <HeartActiveIcon /> : <HeartNeutralIcon />}
                 onClick={toggleLike}
                 text={`${like_count} ${t('likes')}`}

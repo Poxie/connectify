@@ -7,10 +7,19 @@ const selectCommentId = (_:any,__:any, commentId: number) => commentId;
 const selectOrderType = (_:any,__:any, orderType: Comment['orderType']) => orderType;
 
 const selectComments = (state: RootState) => state.posts.comments;
+const selectPosts = (state: RootState) => state.posts.posts;
 
-export const selectPostById = (state: RootState, postId: number) => state.posts.posts.find(post => post.id === postId);
+export const selectPostById = createSelector(
+    [selectPosts, selectId],
+    (posts, id) => posts.find(post => post.id === id)
+)
+export const selectPostIsFetched = createSelector(
+    [selectPostById],
+    post => post !== undefined
+)
+
 export const selectPostHasLoadedComments = (state: RootState, postId: number) => state.posts.posts.find(post => post.id === postId)?.hasCommentsFetched
-export const selectPostCommentIds = createSelector(
+export const selectCommentIds = createSelector(
     [selectComments, selectId, selectOrderType],
     (comments, postId, orderType) => 
         comments.filter(comment => comment.post_id === postId && comment.orderType === orderType)

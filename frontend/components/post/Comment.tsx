@@ -1,16 +1,17 @@
+import React from 'react';
 import styles from '../../styles/Post.module.scss';
 import Image from "next/image";
 import { selectCommentAuthor, selectCommentById, selectCommentMain } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
-import { PostCommentContent } from "./PostCommentContent";
-import { PostCommentFooter } from "./PostCommentFooter";
+import { CommentContent } from "./CommentContent";
+import { CommentFooter } from "./CommentFooter";
 import Link from 'next/link';
 import { UserPostTimestamp } from '../user-post/UserPostTimestamp';
 
-export const PostComment: React.FC<{
+export const Comment: React.FC<{
     id: number;
     postId: number;
-}> = ({ id, postId }) => {
+}> = React.memo(({ id, postId }) => {
     const author = useAppSelector(state => selectCommentAuthor(state, id));
     const main = useAppSelector(state => selectCommentMain(state, id));
     if(!main || !author) return null;
@@ -38,9 +39,9 @@ export const PostComment: React.FC<{
                     <UserPostTimestamp timestamp={timestamp} />
                 </div>
 
-                <PostCommentContent content={content} />
-                <PostCommentFooter id={id} />
+                <CommentContent content={content} />
+                <CommentFooter id={id} />
             </div>
         </li>
     )
-}
+});

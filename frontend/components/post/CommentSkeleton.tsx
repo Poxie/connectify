@@ -1,8 +1,8 @@
 import styles from '../../styles/Post.module.scss';
 
-export const PostCommentSkeleton = () => {
+export const CommentSkeleton = () => {
     return(
-        <div className={styles['skeleton-comment']}>
+        <div className={styles['skeleton-comment']} aria-hidden="true">
             <div className={styles['skeleton-avatar']} />
             <div className={styles['comment-main']}>
                 <div className={styles['comment-header']}>

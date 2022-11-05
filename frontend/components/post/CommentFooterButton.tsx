@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import styles from '../../styles/Post.module.scss';
 
-export const PostCommentFooterButton: React.FC<{
+export const CommentFooterButton: React.FC<{
     icon: ReactElement;
     text: string;
     onClick: () => void;

@@ -11,6 +11,7 @@ type InfiniteScroll = <T>(query: string, onRequestFinished: ScrollCallback, opti
     direction?: InfiniteScrollDirection;
     scrollContainer?: RefObject<HTMLDivElement>;
     identifier?: number | string;
+    standBy?: boolean;
 }) => {
     loading: boolean;
     reachedEnd: boolean;
@@ -25,7 +26,7 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
 
     // Fetching on mount
     useEffect(() => {
-        if(!options.fetchOnMount || tokenLoading || options.isAtEnd) return;
+        if(!options.fetchOnMount || tokenLoading || options.isAtEnd || options.standBy) return;
 
         // Making sure to cancel multiple requests
         const controller = new AbortController();
@@ -44,7 +45,7 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
 
         // Aborting previous http request
         return () => controller.abort();
-    }, [tokenLoading, options.identifier]);
+    }, [tokenLoading, options.identifier, options.standBy]);
 
     // Handling event listeners
     useEffect(() => {
