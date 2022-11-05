@@ -2,41 +2,43 @@ import styles from '../../styles/Post.module.scss';
 import { selectPostCommentCount, selectPostCommentIds, selectPostHasLoadedComments } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
 import { PostComment } from './PostComment';
-import { PostCommentSkeleton } from './PostCommentSkeleton';
-import { Input } from '../input';
 import { AddCommentInput } from './AddCommentInput';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { setPostComments } from '../../redux/posts/actions';
 import { useDispatch } from 'react-redux';
 import { Comment } from '../../types';
+import { Filters } from '../filters/Filters';
+import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { PostCommentSkeleton } from './PostCommentSkeleton';
 
+const FETCH_AMOUNT = 15;
+const SCROLL_THRESHOLD = 400;
 export const PostComments: React.FC<{
     postId: number;
 }> = ({ postId }) => {
     const { t } = useTranslation('common');
     const { t: g } = useTranslation('post');
-    const { loading, get } = useAuth();
     const dispatch = useDispatch();
-    const commentsAreFetched = useAppSelector(state => selectPostHasLoadedComments(state, postId));
-    const commentIds = useAppSelector(state => selectPostCommentIds(state, postId));
+    const [orderType, setOrderType] = useState<Comment['orderType']>('top');
+    const commentIds = useAppSelector(state => selectPostCommentIds(state, postId, orderType));
     const commentCount = useAppSelector(state => selectPostCommentCount(state, postId));
-    const fetching = useRef(false);
 
-    // Fetching post comments
-    useEffect(() => {
-        if(loading || fetching.current || commentsAreFetched || commentsAreFetched === undefined) return;
-
-        fetching.current = true;
-        get<Comment[]>(`/posts/${postId}/comments`)
-            .then(comments => {
-                dispatch(setPostComments(postId, comments));
-                fetching.current = false;
-            })
-    }, [get, loading, commentsAreFetched])
-
-    if(!commentsAreFetched) return <PostCommentSkeleton />;
+    // Test
+    const onRequestFinished = (result: Comment[], reachedEnd: boolean) => {
+        dispatch(setPostComments(postId, result, orderType));
+    }
+    const { loading } = useInfiniteScroll(
+        `/posts/${postId}/comments?amount=${FETCH_AMOUNT}&start_at=${commentIds.length}&order_by=${orderType}`,
+        onRequestFinished,
+        {
+            fetchAmount: FETCH_AMOUNT,
+            threshold: SCROLL_THRESHOLD,
+            fetchOnMount: !commentIds.length,
+            identifier: orderType
+        }
+    )
 
     return(
         <div className={styles['comments']}>
@@ -46,11 +48,20 @@ export const PostComments: React.FC<{
 
             <AddCommentInput postId={postId} />
             
-            {!commentIds.length && (
+            {!commentIds.length && !loading && (
                 <span>
                     {g('noPosts')}
                 </span>
             )}
+
+            <Filters 
+                items={[
+                    { text: 'Top', id: 'top' },
+                    { text: 'Latest', id: 'latest' }
+                ]}
+                containerClassName={styles['filters']}
+                onChange={id => setOrderType(id as Comment['orderType'])}
+            />
 
             {commentIds.length !== 0 && (
                 <ul className={styles['comment-container']}>
@@ -63,6 +74,10 @@ export const PostComments: React.FC<{
                     ))}
                 </ul>
             )}
+
+            {loading && Array.from(Array(4)).map((_,key) => (
+                <PostCommentSkeleton key={key} />
+            ))}
         </div>
     )
 }

@@ -29,6 +29,9 @@
     justify-content: flex-end;
     margin-top: var(--spacing-primary);
 }
+.filters {
+    margin-bottom: var(--spacing-primary) !important;
+}
 .comment-container {
     display: flex;
     flex-direction: column;
