@@ -42,11 +42,23 @@
 .header-text {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: flex-start;
 }
-.user-stats {
+.header-bio {
     margin-top: 5px;
-    font-size: 15px;
+    display: block;
+}
+.stats {
+    margin-top: var(--spacing-primary);
+    font-size: 12px;
+    padding: 10px;
+    background-color: var(--background-secondary);
+    border-radius: var(--border-radius-primary);
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-primary);
 }
 .tabs {
     display: flex;

@@ -6,6 +6,7 @@ import { selectUserById } from '../../redux/users/selectors';
 import styles from '../../styles/User.module.scss';
 import { UserHeaderButtons } from "./UserHeaderButtons";
 import { UserHeaderSkeleton } from './UserHeaderSkeleton';
+import { UserStats } from './UserStats';
 
 export const UserHeader = () => {
     const { t } = useTranslation('common');
@@ -38,15 +39,11 @@ export const UserHeader = () => {
                             {user.display_name || user.username}
                         </h2>
                         {user.bio && (
-                            <span>
+                            <span className={styles['header-bio']}>
                                 {user.bio}
                             </span>
                         )}
-                        <div className={styles['user-stats']}>
-                            <span>
-                                {user.follower_count} {t('followers')}
-                            </span>
-                        </div>
+                        <UserStats userId={parseInt(userId)} />
                     </div>
                 </div>
                 <UserHeaderButtons userId={parseInt(userId)} />
