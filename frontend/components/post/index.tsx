@@ -1,11 +1,9 @@
 import styles from '../../styles/Post.module.scss';
 import { useRouter } from "next/router";
-import { useAuth } from "../../contexts/auth/AuthProvider";
 import { PostComments } from './PostComments';
 import { PostMain } from './PostMain';
 
 export const Post = () => {
-    const { get, loading } = useAuth();
     const { postId } = useRouter().query as { postId: string };
 
     return(

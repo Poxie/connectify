@@ -11,7 +11,7 @@
 .comments {
     padding-top: var(--spacing-primary);
     margin-top: var(--spacing-primary);
-    border-top: 2px solid var(--background-tertiary);
+    border-top: 1px solid var(--background-tertiary);
 }
 .comments-header {
     color: var(--text-secondary);
@@ -19,7 +19,7 @@
     display: block;
 }
 .add-comment {
-    border-bottom: 2px solid var(--background-tertiary);
+    border-bottom: 1px solid var(--background-tertiary);
     margin-bottom: var(--spacing-primary);
     padding-bottom: var(--spacing-primary);
 }
@@ -48,18 +48,17 @@
 
 .skeleton-text {
     background-color: var(--background-tertiary);
-    border-radius: 8px;
-    height: 24px;
+    border-radius: 5px;
+    height: 20px;
 }
 .skeleton-header {
     display: flex;
-    gap: var(--spacing-primary);
+    align-items: center;
+    gap: 10px;
     margin-bottom: var(--spacing-primary)
 }
 .skeleton-author, 
 .skeleton-timestamp, 
-.skeleton-title, 
-.skeleton-content, 
 .skeleton-footer-button,
 .skeleton-comment-count,
 .skeleton-comment-author,
@@ -67,19 +66,76 @@
 .skeleton-comment-content {
     @extend .skeleton-text;
 }
+.skeleton-avatar {
+    background-color: var(--background-tertiary);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+}
 .skeleton-author {
     width: 75px;
 }
 .skeleton-timestamp {
     width: 120px;
 }
+.skeleton-input {
+    height: 49px;
+    border-radius: var(--border-radius-primary);
+    background-color: var(--background-tertiary);
+}
+.skeleton-divider {
+    background-color: var(--background-tertiary);
+    margin-top: var(--spacing-primary);
+    margin-bottom: 5px;
+    height: 1px;
+}
+.skeleton-content, .skeleton-title {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: var(--spacing-primary);
+    gap: 5px;
+
+    div {
+        background-color: var(--background-tertiary);
+        border-radius: 6px;
+        height: 26px;
+    }
+}
 .skeleton-title {
-    width: 400px;
-    height: 30px;
+    margin-bottom: 20px;
+    div {
+        &:nth-of-type(1) {
+            width: 90px;
+        }
+        &:nth-of-type(2) {
+            width: 130px;
+        }
+        &:nth-of-type(3) {
+            width: 110px;
+        }
+    }
 }
 .skeleton-content {
-    width: 600px;
-    margin-top: 25px;
+    div {
+        &:nth-of-type(1) {
+            width: 75px;
+        }
+        &:nth-of-type(2) {
+            width: 55px;
+        }
+        &:nth-of-type(3) {
+            width: 125px;
+        }
+        &:nth-of-type(4) {
+            width: 105px;
+        }
+        &:nth-of-type(5) {
+            width: 65px;
+        }
+        &:nth-of-type(6) {
+            width: 95px;
+        }
+    }
 }
 .skeleton-footer {
     display: flex;
@@ -90,6 +146,7 @@
 }
 .skeleton-footer-button {
     width: 100px;
+    height: 24px;
 }
 .skeleton-comments {
     margin-top: var(--spacing-primary);
