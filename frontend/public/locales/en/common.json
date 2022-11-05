@@ -15,6 +15,7 @@
     },
 
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "create": "Create",
     "goBack": "Go back",
     "close": "Close",
@@ -66,5 +67,9 @@
     "displayNamePlaceholder": "Select a name to go by...",
     "bio": "Bio",
     "bioPlaceholder": "Type a few words about yourself!",
-    "saveChanges": "Save Changes"
+    "saveChanges": "Save Changes",
+
+    "deletePostHeader": "Delete this post?",
+    "deletePostSubHeader": "Are you sure you want to delete this post? It cannot be undone.",
+    "deletePostConfirmLabel": "Delete post"
 }
