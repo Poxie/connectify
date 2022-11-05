@@ -1,5 +1,5 @@
 import { Post, Comment } from "../../types";
-import { ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants";
+import { ADD_COMMENT_LIKE, ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_COMMENT_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants";
 
 export const setPost = (post: Post) => ({
     type: SET_POST,
@@ -27,5 +27,13 @@ export const addPostLike = (id: number) => ({
 })
 export const removePostLike = (id: number) => ({
     type: REMOVE_POST_LIKE,
+    payload: id
+})
+export const addCommentLike = (id: number) => ({
+    type: ADD_COMMENT_LIKE,
+    payload: id
+})
+export const removeCommentLike = (id: number) => ({
+    type: REMOVE_COMMENT_LIKE,
     payload: id
 })
