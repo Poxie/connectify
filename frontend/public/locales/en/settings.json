@@ -17,6 +17,7 @@
         "red": "red",
         "pink": "pink"
     },
+    "selectThemeColor": "Select theme color",
 
     "displayLanguage": "Display language"
 }
