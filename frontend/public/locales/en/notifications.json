@@ -7,6 +7,9 @@
     "newMessage": "New message",
     "newPost": "New post",
 
+    "goToPost": "Gå till inlägg",
+    "goToMessage": "Gå till meddelande",
+
     "reachedEnd": "You have reached the end of your notifications.",
     "emptyHeader": "You don't have any notifications yet.",
     "emptyMessage": "If you follow users, you will be notified of their posts here. Any messages received will also be displayed here, so start a conversation!",

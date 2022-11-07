@@ -21,7 +21,7 @@ export const SidebarTab: React.FC<{
     return(
         <li>
             <Link href={path}>
-                <a className={className}>
+                <a className={className} aria-label={text}>
                     {active ? activeIcon : neutralIcon}
                     <span className={styles['tab-text']}>
                         {text}

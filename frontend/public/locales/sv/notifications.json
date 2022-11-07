@@ -7,6 +7,9 @@
     "newMessage": "Nytt meddelande",
     "newPost": "Nytt inlägg",
 
+    "goToPost": "Gå till inlägg",
+    "goToMessage": "Gå till meddelande",
+
     "reachedEnd": "Du har nått slutet av dina notifikationer.",
     "emptyHeader": "Du har inga notifikationer ännu.",
     "emptyMessage": "Inlägg från användare som du följser kommer att visas här. Meddelanden du får kommer också att hamna här, så starta några konversationer!",
