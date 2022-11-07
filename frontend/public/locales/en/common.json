@@ -73,5 +73,8 @@
 
     "deletePostHeader": "Delete this post?",
     "deletePostSubHeader": "Are you sure you want to delete this post? It cannot be undone.",
-    "deletePostConfirmLabel": "Delete post"
+    "deletePostConfirmLabel": "Delete post",
+
+    "comingSoonHeader": "Coming soon",
+    "comingSoonSubHeader": "This feature is yet to come. Stay tuned, it won't be long until it's live!"
 }

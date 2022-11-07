@@ -1,9 +1,28 @@
+import { GetServerSideProps } from "next";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
 import { Appearance } from "../../components/settings/appearance/Appearance";
 import { SettingsLayout } from "../../layouts/settings/SettingsLayout";
 import { NextPageWithLayout } from "../_app";
 
-const appearancePage: NextPageWithLayout = () => <Appearance />;
+const appearancePage: NextPageWithLayout = () => {
+    const { t } = useTranslation('settings');
+
+    return(
+        <>
+        <Head>
+            <title>
+                {t('appearance')} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+            </title>
+            <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
+            <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/settings/appearance`} />
+        </Head>
+    
+        <Appearance />
+        </>
+    )
+}
 
 appearancePage.getLayout = page => (
     <SettingsLayout>
@@ -11,9 +30,9 @@ appearancePage.getLayout = page => (
     </SettingsLayout>
 )
 
-export const getServerSideProps = async ({ locale }: any) => ({
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
     props: {
-        ...(await serverSideTranslations(locale, ['common', 'settings']))
+        ...(await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'settings']))
     }
 })
 

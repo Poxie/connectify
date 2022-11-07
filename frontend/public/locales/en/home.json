@@ -1,6 +1,12 @@
 {
-    "yourFeed": "Your feed",
-    "explore": "Explore",
+    "feed": {
+        "title": "Your feed",
+        "description": "Be a larger part of the people in your surroundings, and show people who you really are."
+    },
+    "explore": {
+        "title": "Explore",
+        "description": "Explore the world of new people and see what they're up to."
+    },
 
     "feedEmptyHeader": "Your feed is empty :(",
     "feedEmptyMessage": "If you follow users, their status updates will be displayed here. We recommend you use our explore mode to find things you may have interest in!",

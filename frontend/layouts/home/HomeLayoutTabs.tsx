@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './HomeLayout.module.scss';
 
 const tabs = [
-    { text: 'yourFeed', path: '/home' },
-    { text: 'explore', path: '/home/explore' }
+    { text: 'feed.title', path: '/home' },
+    { text: 'explore.title', path: '/home/explore' }
 ]
 const tabPaths = tabs.map(tab => tab.path);
 export const HomeLayoutTabs = () => {

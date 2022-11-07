@@ -1,12 +1,37 @@
+import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import Head from "next/head";
 import { Post } from "../../components/post"
+import { Post as PostType } from "../../types"
 
-export default function PostPage() {
-    return <Post />
+export default function PostPage({ post }: {
+    post: PostType | undefined;
+}) {
+    return(
+        <>
+        <Head>
+            <title>
+                {post?.author.display_name || post?.author.username}: {post?.title} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+            </title>
+            <meta property="og:description" content={post?.content} />
+            <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
+            <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/posts/${post?.id}`} />
+            <meta property="og:type" content="article" />
+        </Head>
+
+        <Post />
+        </>
+    )
 }
 
-export const getServerSideProps = async ({ locale }: any) => ({
-    props: {
-        ...(await serverSideTranslations(locale, ['common', 'post']))
+export const getServerSideProps: GetServerSideProps = async ({ locale, query: { postId } }) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/posts/${postId}`);
+    const post = await res.json();
+
+    return {
+        props: {
+            post,
+            ...(await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'post']))
+        }
     }
-})
+}

@@ -1,6 +1,12 @@
 {
-    "yourFeed": "Ditt flöde",
-    "explore": "Utforska",
+    "feed": {
+        "title": "Ditt flöde",
+        "description": "Var en större del av personerna i din omgivning, och visa folk vem du verkligen är."
+    },
+    "explore": {
+        "title": "Utforska",
+        "description": "Utforska världen av nya personer och upptäck vad de håller på med."
+    },
 
     "feedEmptyHeader": "Ditt flöde är tomt :(",
     "feedEmptyMessage": "Om du följer användare kommer deras statusuppdateringar att visas här. Vi rekommenderar att du använder vårt utforskarläge för att hitta saker du kan vara intresserad av!",

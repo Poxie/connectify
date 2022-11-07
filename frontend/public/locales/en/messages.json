@@ -1,4 +1,6 @@
 {
+    "title": "Messages",
+
     "directMessages": "Direct Messages",
     "emptyChannels": "You don't have any conversations yet. Start one now!",
     "startConversation": "Start conversation",
