@@ -49,6 +49,7 @@ export const NavbarRight: React.FC<{
             <button 
                 tabIndex={['small', 'medium'].includes(screenType) ? undefined : -1}
                 onClick={openSearch}
+                aria-label={t('search')}
             >
                 <HasTooltip
                     tooltip={t('search')}
@@ -59,7 +60,10 @@ export const NavbarRight: React.FC<{
                 </HasTooltip>
             </button>
 
-            <button onClick={openCreatePost}>
+            <button 
+                onClick={openCreatePost}
+                aria-label={t('createPost')}
+            >
                 <HasTooltip 
                     tooltip={t('navbar.createPost')}
                     position={'bottom'}

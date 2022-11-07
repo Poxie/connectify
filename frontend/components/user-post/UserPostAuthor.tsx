@@ -11,15 +11,13 @@ export const UserPostAuthor: React.FC<User> = (user) => {
         <>
         <HasPopout popout={<UserPopout {...user} />}>
             <Link href={`/users/${id}`}>
-                <a className={styles['author-avatar']}>
-                    {avatar && (
-                        <Image 
-                            src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${avatar}`}
-                            objectFit={'cover'}
-                            width={25}
-                            height={25}
-                        />
-                    )}
+                <a className={styles['author-avatar']} aria-label={`${display_name || username}'s avatar`}>
+                    <Image 
+                        src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${avatar}`}
+                        objectFit={'cover'}
+                        width={25}
+                        height={25}
+                    />
                 </a>
             </Link>
         </HasPopout>

@@ -36,6 +36,7 @@ export const NavbarProfile: React.FC<User> = ({ avatar }) => {
         <button 
             className={styles['avatar']} 
             onClick={openMenu}
+            aria-label={t('viewProfileOptions')}
             ref={ref}
         >
             <Image 
