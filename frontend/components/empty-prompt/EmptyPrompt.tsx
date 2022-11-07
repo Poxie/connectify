@@ -22,11 +22,11 @@ export const EmptyPrompt: React.FC<{
                 {message}
             </span>
             <div className={styles['buttons']}>
-                {buttons.map(button => (
+                {buttons.map((button, key) => (
                     <Button
                         href={button.path}
                         type={button.type}
-                        key={button.path}
+                        key={key}
                     >
                         {button.text}
                     </Button>
