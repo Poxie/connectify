@@ -3,7 +3,7 @@ from database import db
 from random import randrange
 from typing import Union
 from utils.constants import DEFAULT_AVATAR_COUNT
-from utils.common import get_user_by_id
+from utils.common import get_user_by_id, create_id
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 
@@ -22,29 +22,6 @@ def get_users_by_username(username: str, token_id: Union[int, None]=None):
     users = [get_user_by_id(user['id']) for user in users]
 
     return users
-
-# Creating new user id
-USER_ID_LENGTH = 10
-def create_user_id():
-    opts = '0123456789'
-    
-    # Creating random id
-    id = ''
-    for i in range(USER_ID_LENGTH):
-        id += opts[randrange(len(opts))]
-    id = int(id)
-
-    # Checking if id already exists
-    query = "SELECT * FROM users WHERE id = %s"
-    values = (id,)
-
-    user = db.fetch_one(query, values)
-
-    if user:
-        return create_user_id()
-
-    # Else return created id
-    return id
 
 """
 Simple function to fetch basic data based on username match.
@@ -76,7 +53,7 @@ def create_user(username: str, password: str):
     hashed_password = f.encrypt(encoded_password)
 
     # Creating unique id
-    id = create_user_id()
+    id = create_id('users')
 
     # Getting random avatar
     avatar = f'default{randrange(0, DEFAULT_AVATAR_COUNT)}.png'
