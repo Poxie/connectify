@@ -1,21 +1,20 @@
-import time
-from random import randrange
 from database import db
-from typing import Union
-from utils.posts import get_post_by_id
-from utils.users import get_user_by_id
-from utils.messages import get_message_by_id
+from utils2.common import get_message_by_id, get_post_by_id, get_user_by_id
 
-# Function to get user notifications
+"""
+Function to fetch user notifications. It returns any notification,
+read or unread. A notification dict is created, which has some
+generic properties, most important: reference and user_reference.
+Those are determined based on the notification type.
+"""
 def get_user_notifications(user_id: int, amount: int, start_at: int):
-    # Creating select query
+    # Fetching notifications
     query = "SELECT * FROM notifications WHERE user_id = %s ORDER BY created_at DESC LIMIT %s, %s"
     values = (user_id, start_at, amount)
 
-    # Fetching notifications
     notifs = db.fetch_all(query, values)
 
-    # Creating new notification objects
+    # Creating new notification dicts
     notifications = []
     for notif in notifs:
         id = notif['id']
@@ -50,21 +49,24 @@ def get_user_notifications(user_id: int, amount: int, start_at: int):
                 'unread': unread == 1
             })
 
-    # Returning notifications
     return notifications
 
-# Getting user notification count
+"""
+Function to get a user's total notification count.
+"""
 def get_user_notification_count(user_id: int):
     query = "SELECT COUNT(*) AS count FROM notifications WHERE user_id = %s AND unread = 1"
     values = (user_id,)
 
     data = db.fetch_one(query, values)
-    if not data or not data['count']:
-        data = {'count': 0}
+
+    data = data if data else {'count': 0}
 
     return data
 
-# Resetting user notification count
+"""
+Function to reset a user's notification count.
+"""
 def reset_user_notification_count(user_id: int):
     query = "UPDATE notifications SET unread = 0 WHERE user_id = %s AND unread = 1"
     values = (user_id,)

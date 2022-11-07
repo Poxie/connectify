@@ -1,0 +1,94 @@
+import jwt, os
+from database import db
+from random import randrange
+from typing import Union
+from utils2.constants import DEFAULT_AVATAR_COUNT
+from utils2.common import get_user_by_id
+from cryptography.fernet import Fernet
+f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
+
+"""
+Function to fetch multiple users based on username search.
+Username must not exactly match to appear, this function checks
+for usernames similar to the username query.
+"""
+def get_users_by_username(username: str, token_id: Union[int, None]=None):
+    query = "SELECT * FROM users WHERE username LIKE CONCAT('%', %s, '%') OR display_name LIKE CONCAT('%', %s, '%')"
+    values = (username, username)
+
+    users = db.fetch_all(query, values)
+
+    # Upgrading users with properties
+    users = [get_user_by_id(user['id']) for user in users]
+
+    return users
+
+# Creating new user id
+USER_ID_LENGTH = 10
+def create_user_id():
+    opts = '0123456789'
+    
+    # Creating random id
+    id = ''
+    for i in range(USER_ID_LENGTH):
+        id += opts[randrange(len(opts))]
+    id = int(id)
+
+    # Checking if id already exists
+    query = "SELECT * FROM users WHERE id = %s"
+    values = (id,)
+
+    user = db.fetch_one(query, values)
+
+    if user:
+        return create_user_id()
+
+    # Else return created id
+    return id
+
+"""
+Simple function to fetch basic data based on username match.
+"""
+def get_user_by_username(username: str, with_password=False):
+    query = "SELECT * FROM users WHERE username = %s"
+    values = (username,)
+
+    user = db.fetch_one(query, values)
+
+    if user and not with_password:
+        del user['password']
+
+    return user
+
+"""
+Creates a new user. When creating an account, only username and
+password are required. Function will return a token, which can be
+used to authenticate for future http requests.
+"""
+def create_user(username: str, password: str):
+    # Checking if username is available
+    username_unavailable = get_user_by_username(username)
+    if username_unavailable:
+        raise ValueError('Username is unavailable.')
+    
+    # Encrypting password
+    encoded_password = password.encode('utf-8')
+    hashed_password = f.encrypt(encoded_password)
+
+    # Creating unique id
+    id = create_user_id()
+
+    # Getting random avatar
+    avatar = f'default{randrange(0, DEFAULT_AVATAR_COUNT)}.png'
+
+    # Creating insert query
+    query = "INSERT INTO users (id, username, password, avatar) VALUES (%s, %s, %s, %s)"
+    values = (id, username, hashed_password, avatar)
+
+    # Creating user
+    db.insert(query, values)
+
+    # Creating token for user
+    token = jwt.encode({ 'id': id }, os.getenv('JWT_SECRET_KEY') or '')
+
+    return token

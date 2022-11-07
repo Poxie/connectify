@@ -2,18 +2,17 @@ import json, os, time
 from typing import Union
 from flask import Blueprint, request, jsonify
 from database import db
-from utils.users import get_user_by_id, create_user, get_users_by_username
-from utils.posts import create_post, get_user_liked_posts
-from utils.auth import token_required, token_optional
-from utils.messages import get_unread_message_count
+from utils2.common import get_user_by_id
+from utils2.posts import get_user_liked_posts
+from utils2.users import get_users_by_username, create_user
+from utils2.auth import token_required, token_optional
+from utils2.messages import get_unread_message_count
 
 users = Blueprint('users', __name__)
 
-# Get user
 @users.get('/users/<int:id>')
 @token_optional
 def get_user(id: int, token_id: Union[int, None]=None):
-    # Getting user
     user = get_user_by_id(id, token_id)
     
     # If user does not exist, throw 404
@@ -22,17 +21,17 @@ def get_user(id: int, token_id: Union[int, None]=None):
 
     return jsonify(user)
 
-# Create user
+
 @users.post('/users')
 def create_new_user():
     username = request.form.get('username')
     password = request.form.get('password')
 
     # If missing fields, return bad request
-    field_suffix = 'is a required field'
+    field_suffix = 'is a required field.'
     if not username:
         return 'Username ' + field_suffix, 400
-    elif not password:
+    if not password:
         return 'Password ' + field_suffix, 400
 
     # Creating user
@@ -43,7 +42,7 @@ def create_new_user():
 
     return jsonify({ 'token': token })
 
-# Update user
+
 @users.patch('/users/<int:user_id>')
 @token_required
 def update_user(user_id: int, token_id: int):
@@ -104,6 +103,7 @@ def update_user(user_id: int, token_id: int):
 
     return jsonify(user)
 
+
 @users.get('/users/<int:user_id>/likes')
 @token_optional
 def get_user_likes(user_id: int, token_id: Union[int, None]=None):
@@ -115,7 +115,7 @@ def get_user_likes(user_id: int, token_id: Union[int, None]=None):
     posts = get_user_liked_posts(user_id, token_id, amount=amount, start_at=start_at)
     return jsonify(posts)
 
-# Getting user by search
+
 @users.get('/users/search')
 @token_optional
 def get_user_by_search(token_id: Union[int, None]=None):
@@ -128,7 +128,7 @@ def get_user_by_search(token_id: Union[int, None]=None):
 
     return jsonify(users)
 
-# Getting user urnead messages
+
 @users.get('/users/@me/unread_messages')
 @token_required
 def get_my_unreads(token_id: int):
