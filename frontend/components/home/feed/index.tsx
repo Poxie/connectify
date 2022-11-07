@@ -42,25 +42,25 @@ export const Feed = () => {
         }
     )
 
+    // Feed is empty
+    if(!postIds.length && reachedEnd) {
+        return(
+            <EmptyPrompt
+                header={t('feedEmptyHeader')}
+                message={t('feedEmptyMessage')}
+                buttons={[
+                    { text: t('exploreMode'), type: 'default', path: '/home/explore' },
+                    { text: t('searchMode'), type: 'secondary' }
+                ]}
+            />
+        )
+    }
+
+    // User is not logged in
+    if(!loading && !token) return <LoginPrompt />;
+
     return(
         <div className={styles['container']}>
-            {/* User logged in, but feed is empty */}
-            {!feedLoading && token && postIds.length === 0 && (
-                <EmptyPrompt
-                    header={t('feedEmptyHeader')}
-                    message={t('feedEmptyMessage')}
-                    buttons={[
-                        { text: t('exploreMode'), type: 'default', path: '/home/explore' },
-                        { text: t('searchMode'), type: 'secondary' }
-                    ]}
-                />
-            )}
-
-            {/* User is not logged in */}
-            {!loading && !token && (
-                <LoginPrompt />
-            )}
-
             {postIds.map(id => <FeedPost id={id} key={id} />)}
 
             <AnimatePresence>
