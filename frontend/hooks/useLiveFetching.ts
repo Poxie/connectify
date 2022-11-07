@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../contexts/auth/AuthProvider";
 
-type UseLiveFetching = <T>(query: string) => {
+type UseLiveFetching = <T>(query: string, shouldFetch?: boolean) => {
     loading: boolean;
     error: null | string;
     data: T | null;
 }
-export const useLiveFetching: UseLiveFetching = <T>(query: string) => {
+export const useLiveFetching: UseLiveFetching = <T>(query: string, shouldFetch=true) => {
     const { get, loading: tokenLoading } = useAuth();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export const useLiveFetching: UseLiveFetching = <T>(query: string) => {
     }, []);
 
     useEffect(() => {
-        if(tokenLoading) return;
+        if(tokenLoading || !shouldFetch) return;
 
         if(!query) {
             setLoading(false);
@@ -45,7 +45,7 @@ export const useLiveFetching: UseLiveFetching = <T>(query: string) => {
             .finally(() => {
                 setLoading(false);
             })
-    }, [query, get, tokenLoading]);
+    }, [query, get, tokenLoading, shouldFetch]);
 
     return { loading, error, data };
 }
