@@ -10,6 +10,8 @@ import { setLastChannelId } from '../../redux/messages/actions';
 import { useScreenType } from '../../hooks/useScreenType';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import Head from 'next/head';
+import { GetServerSideProps } from 'next';
 
 const Messages: NextPageWithLayout = () => {
     const { t } = useTranslation('messages');
@@ -31,6 +33,15 @@ const Messages: NextPageWithLayout = () => {
     if(['small', 'medium'].includes(screenType)) return null;
     
     return(
+        <>
+        <Head>
+            <title>
+                {t('title')} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+            </title>
+            <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
+            <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/messages`} />
+        </Head>
+
         <div className={styles['empty']}>
             <h2>
                 {t('chooseDirectMessage.header')}
@@ -45,6 +56,7 @@ const Messages: NextPageWithLayout = () => {
                 {t('startConversation')}
             </Button>
         </div>
+        </>
     )
 }
 
@@ -54,9 +66,9 @@ Messages.getLayout = (page: ReactElement) => (
     </MessagesLayout>
 )
 
-export const getServerSideProps = async ({ locale }: any) => ({
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
     props: {
-        ...(await serverSideTranslations(locale, ['common', 'messages']))
+        ...(await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'messages']))
     }
 })
 

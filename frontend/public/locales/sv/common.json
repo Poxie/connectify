@@ -73,5 +73,8 @@
 
     "deletePostHeader": "Ta bort det här inlägget?",
     "deletePostSubHeader": "Är du säker på att du vill ta bort det här inlägget? Du kan inte ångra dig.",
-    "deletePostConfirmLabel": "Ta bort"
+    "deletePostConfirmLabel": "Ta bort",
+
+    "comingSoonHeader": "Kommer snart",
+    "comingSoonSubHeader": "Den här funktionen har inte kommit ännu. Håll ögonen öppna, det dröjer inte länge tills den är här!"
 }

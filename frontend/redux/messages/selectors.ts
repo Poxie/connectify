@@ -10,6 +10,10 @@ export const selectChannelById = createSelector(
     [selectChannels, selectId],
     (channels, id) => channels.find(channel => channel.id === id)
 )
+export const selectChannelName = createSelector(
+    [selectChannelById],
+    channel => channel?.recipients[0].display_name || channel?.recipients[0].username
+)
 
 export const selectLastChannelId = (state: RootState) => state.messages.lastChannelId;
 export const selectChannelTyping = createSelector(
