@@ -38,7 +38,8 @@ export const Notifications = () => {
             fetchAmount: FETCH_AMOUNT,
             threshold: SCROLL_THRESHOLD,
             fetchOnMount: notificationIds.length === 0,
-            isAtEnd: reachedEnd
+            isAtEnd: reachedEnd,
+            standBy: !token
         }
     )
 
