@@ -1,7 +1,7 @@
 import os
 import jwt
 from flask import Blueprint, request, jsonify
-from utils.users import get_user_by_username
+from utils2.users import get_user_by_username
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 

@@ -1,15 +1,13 @@
 from typing import Union
 from flask import Blueprint, request, jsonify
-from utils.auth import token_required, token_optional
-from utils.users import get_user_by_id
-from utils.posts import create_post, get_posts_by_user_id, get_post_by_id, delete_post
+from utils2.auth import token_required, token_optional
+from utils2.users import get_user_by_id
+from utils2.common import get_post_by_id
+from utils2.posts import get_user_posts, delete_post, create_post
+from utils2.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH
 
 posts = Blueprint('posts', __name__)
-user_posts = Blueprint('user_posts', __name__, url_prefix='/users/<int:id>')
-posts.register_blueprint(user_posts)
 
-# Create user post
-MAX_CHARACTER_LENGTH = 400
 @posts.post('/posts')
 @token_required
 def create_user_post(token_id: int):
@@ -20,14 +18,13 @@ def create_user_post(token_id: int):
     if not title or not content:
         return 'Required fields may not be empty.', 400
 
-    # Checking if content is too long
-    if len(content) > MAX_CHARACTER_LENGTH:
-        return f'Content may not exceed {MAX_CHARACTER_LENGTH} characters.', 400
+    # Checking if title is too long
+    if len(title) > MAX_TITLE_LENGTH:
+        return f'Title may not exceed {MAX_TITLE_LENGTH} characters.', 400
 
-    # Checking if user exists
-    user = get_user_by_id(token_id)
-    if not user:
-        return 'User does not exist.', 404
+    # Checking if content is too long
+    if len(content) > MAX_CONTENT_LENGTH:
+        return f'Content may not exceed {MAX_CONTENT_LENGTH} characters.', 400
 
     # Creating post
     data = {
@@ -39,7 +36,7 @@ def create_user_post(token_id: int):
 
     return jsonify(post)
 
-# Delete user post
+
 @posts.delete('/posts/<int:id>')
 @token_required
 def delete_user_post(id: int, token_id: int):
@@ -57,7 +54,7 @@ def delete_user_post(id: int, token_id: int):
 
     return jsonify(data)
 
-# Get post by id
+
 @posts.get('/posts/<int:id>')
 @token_optional
 def get_post(id: int, token_id: Union[int, None]=None):
@@ -68,10 +65,10 @@ def get_post(id: int, token_id: Union[int, None]=None):
 
     return jsonify(post)
 
-# Get user posts
-@user_posts.get('/posts')
+
+@posts.get('/users/<int:id>/posts')
 @token_optional
-def get_user_posts(id: int, token_id: Union[int, None]=None):
+def get_posts(id: int, token_id: Union[int, None]=None):
     # Checking if user exists
     user = get_user_by_id(id)
     if not user:
@@ -81,7 +78,6 @@ def get_user_posts(id: int, token_id: Union[int, None]=None):
     amount = int(request.args.get('amount') or '10')
     start_at = int(request.args.get('start_at') or '0')
 
-    # Getting post
-    posts = get_posts_by_user_id(id, token_id, amount=amount, start_at=start_at)
+    posts = get_user_posts(id, token_id, amount=amount, start_at=start_at)
 
     return jsonify(posts)
