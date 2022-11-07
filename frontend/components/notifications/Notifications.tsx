@@ -56,7 +56,7 @@ export const Notifications = () => {
         return <LoginPrompt />;
     }
 
-    if(!notificationsLoading && !notificationIds.length) {
+    if(!notificationIds.length && reachedEnd) {
         return(
             <EmptyPrompt 
                 header={t('emptyHeader')}
@@ -77,7 +77,7 @@ export const Notifications = () => {
                 />
             ))}
 
-            {notificationsLoading && (
+            {notificationsLoading && !reachedEnd && (
                 <>
                 {Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
                     <NotificationSkeleton key={key} />
