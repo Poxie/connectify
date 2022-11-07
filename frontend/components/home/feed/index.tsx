@@ -73,7 +73,7 @@ export const Feed = () => {
                 )}
             </AnimatePresence>
 
-            {reachedEnd && (
+            {reachedEnd && postIds.length !== 0 && (
                 <span className={styles['end']}>
                     {t('reachedEnd')}
                 </span>

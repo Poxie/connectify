@@ -52,7 +52,7 @@ export const MessagesSidebar = () => {
                 </div>
             )}
 
-            {channelIds.length && (
+            {channelIds.length !== 0 && (
                 <ul className={styles['tabs']}>
                     {channelIds.map(id => (
                         <MessageSidebarChannel 
