@@ -36,8 +36,8 @@ yarn-error.log*
 
 # backend
 /backend/__pycache__
-/backend/blueprints/__pycache__
 /backend/utils/__pycache__
+/backend/blueprints/__pycache__
 /backend/venv
 /backend/pyvenv.cfg
 /backend/.env

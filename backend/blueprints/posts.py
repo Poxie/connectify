@@ -1,10 +1,10 @@
 from typing import Union
 from flask import Blueprint, request, jsonify
-from utils2.auth import token_required, token_optional
-from utils2.users import get_user_by_id
-from utils2.common import get_post_by_id
-from utils2.posts import get_user_posts, delete_post, create_post
-from utils2.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH
+from utils.auth import token_required, token_optional
+from utils.users import get_user_by_id
+from utils.common import get_post_by_id
+from utils.posts import get_user_posts, delete_post, create_post
+from utils.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH
 
 posts = Blueprint('posts', __name__)
 

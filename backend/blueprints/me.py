@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
-from utils2.auth import token_required
-from utils2.users import get_user_by_id
-from utils2.notifications import get_user_notifications, get_user_notification_count, reset_user_notification_count
-from utils2.followers import get_user_followees
-from utils2.posts import get_posts_by_users
+from utils.auth import token_required
+from utils.users import get_user_by_id
+from utils.notifications import get_user_notifications, get_user_notification_count, reset_user_notification_count
+from utils.followers import get_user_followees
+from utils.posts import get_posts_by_users
 
 me = Blueprint('me', __name__)
 

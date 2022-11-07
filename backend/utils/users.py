@@ -2,8 +2,8 @@ import jwt, os
 from database import db
 from random import randrange
 from typing import Union
-from utils2.constants import DEFAULT_AVATAR_COUNT
-from utils2.common import get_user_by_id
+from utils.constants import DEFAULT_AVATAR_COUNT
+from utils.common import get_user_by_id
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
 

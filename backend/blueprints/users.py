@@ -2,11 +2,11 @@ import json, os, time
 from typing import Union
 from flask import Blueprint, request, jsonify
 from database import db
-from utils2.common import get_user_by_id
-from utils2.posts import get_user_liked_posts
-from utils2.users import get_users_by_username, create_user
-from utils2.auth import token_required, token_optional
-from utils2.messages import get_unread_message_count
+from utils.common import get_user_by_id
+from utils.posts import get_user_liked_posts
+from utils.users import get_users_by_username, create_user
+from utils.auth import token_required, token_optional
+from utils.messages import get_unread_message_count
 
 users = Blueprint('users', __name__)
 

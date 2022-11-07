@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify
-from utils2.common import get_post_by_id
-from utils2.comments import get_comment_by_id
-from utils2.likes import create_like, delete_like, get_like
-from utils2.auth import token_required
+from utils.common import get_post_by_id
+from utils.comments import get_comment_by_id
+from utils.likes import create_like, delete_like, get_like
+from utils.auth import token_required
 
 post_likes = Blueprint('post_likes', __name__, url_prefix='/posts/<int:post_id>/likes')
 comment_likes = Blueprint('comment_likes', __name__, url_prefix='/comments/<int:comment_id>/likes')

@@ -1,7 +1,7 @@
 from flask import abort
 from typing import Union
 from database import db
-from utils2.common import get_user_by_id, get_message_by_id, create_id
+from utils.common import get_user_by_id, get_message_by_id, create_id
 
 """
 Function to fetch a recipient. The function hydrates the user with user

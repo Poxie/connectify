@@ -2,8 +2,8 @@ import time
 from typing import Union
 from database import db
 from random import randrange
-from utils2.common import create_id, get_user_by_id
-from utils2.likes import get_like, get_like_count
+from utils.common import create_id, get_user_by_id
+from utils.likes import get_like, get_like_count
 
 """
 Function to get a comment by its id.

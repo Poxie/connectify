@@ -1,7 +1,7 @@
 import time
 from database import db
 from typing import Union, List
-from utils2.common import get_post_by_id, add_user_notification, create_id
+from utils.common import get_post_by_id, add_user_notification, create_id
 
 """
 Function to fetch a user's posts. Amount (amount) and pivot position (start_at)

@@ -1,8 +1,8 @@
 import json
 from flask import Blueprint, jsonify, request
-from utils2.auth import token_required
-from utils2.constants import DIRECT_MESSAGE_CHANNEL_TYPE
-from utils2.channels import get_channel_by_id, get_user_channels, create_channel, update_unread_count, increase_unread_count
+from utils.auth import token_required
+from utils.constants import DIRECT_MESSAGE_CHANNEL_TYPE
+from utils.channels import get_channel_by_id, get_user_channels, create_channel, update_unread_count, increase_unread_count
 
 channels = Blueprint('channels', __name__)
 

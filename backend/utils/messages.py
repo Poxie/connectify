@@ -1,7 +1,7 @@
 import time
 from database import db
 from random import randrange
-from utils2.common import get_message_by_id, add_user_notification, create_id
+from utils.common import get_message_by_id, add_user_notification, create_id
 
 """
 Function to fetch channel messages. Amount (amount) and pivot start index (start_at)

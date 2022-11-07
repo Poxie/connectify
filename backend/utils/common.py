@@ -3,7 +3,7 @@ from database import db
 from random import randrange
 from database import db
 from typing import Union
-from utils2.constants import ID_LENGTH
+from utils.constants import ID_LENGTH
 
 def create_id(table: str):
     opts = '1234567890'

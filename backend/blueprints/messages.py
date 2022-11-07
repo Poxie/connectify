@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
-from utils2.channels import get_channel_by_id, increase_unread_count
-from utils2.messages import create_channel_message, get_channel_messages
-from utils2.auth import token_required
+from utils.channels import get_channel_by_id, increase_unread_count
+from utils.messages import create_channel_message, get_channel_messages
+from utils.auth import token_required
 
 messages = Blueprint('messages', __name__)
 

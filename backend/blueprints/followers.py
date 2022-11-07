@@ -1,8 +1,8 @@
 import re
 from flask import Blueprint, jsonify
-from utils2.auth import token_required
-from utils2.users import get_user_by_id
-from utils2.followers import get_follower, create_follower, delete_follower
+from utils.auth import token_required
+from utils.users import get_user_by_id
+from utils.followers import get_follower, create_follower, delete_follower
 
 followers = Blueprint('followers', __name__, url_prefix='/followers/<int:user_id>')
 

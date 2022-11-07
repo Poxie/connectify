@@ -1,5 +1,5 @@
 from database import db
-from utils2.common import get_message_by_id, get_post_by_id, get_user_by_id
+from utils.common import get_message_by_id, get_post_by_id, get_user_by_id
 
 """
 Function to fetch user notifications. It returns any notification,
