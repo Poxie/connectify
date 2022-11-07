@@ -20,6 +20,7 @@ def get_users_by_username(username: str, token_id: Union[int, None]=None):
 
     # Upgrading users with properties
     users = [get_user_by_id(user['id']) for user in users]
+    users.sort(key=lambda x: x['follower_count'] if x else -1, reverse=True)
 
     return users
 
