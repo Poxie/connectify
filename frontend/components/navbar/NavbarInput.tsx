@@ -1,5 +1,5 @@
 import styles from '../../styles/Navbar.module.scss';
-import React, { RefObject, useEffect, useState } from "react";
+import React, { RefObject, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { User } from "../../types";
 import { Input } from "../input"
@@ -8,11 +8,28 @@ import { Loader } from '../loader';
 import { useTranslation } from 'next-i18next';
 import { useLiveFetching } from '../../hooks/useLiveFetching';
 
+const DELAY_UNTIL_REQUEST = 300;
 export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
     const { t } = useTranslation('common');
     const [query, setQuery] = useState('');
+    const [shouldFetch, setShouldFetch] = useState(false);
+    const timeout = useRef<NodeJS.Timeout | null>(null);
     const [resultsShowing, setResultsShowing] = useState(false);
-    const { loading, data } = useLiveFetching<User[]>(query ? `/users/search?query=${query}` : '');
+    const { loading, data } = useLiveFetching<User[]>(query ? `/users/search?query=${query}` : '', shouldFetch);
+
+    // Handling input text change
+    const onChange = (text: string) => {
+        setQuery(text);
+
+        // Preventing spam requests
+        if(timeout.current) clearTimeout(timeout.current);
+        timeout.current = setTimeout(() => {
+            setShouldFetch(true);
+            setTimeout(() => {
+                setShouldFetch(false);
+            });
+        }, DELAY_UNTIL_REQUEST);
+    }
 
     // Closing results on blur
     const handleBlur = () => {
@@ -37,7 +54,7 @@ export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
                 onFocus={() => setResultsShowing(true)}
                 onBlur={handleBlur}
                 placeholder={t('searchForUser')}
-                onChange={setQuery}
+                onChange={onChange}
                 inputClassName={styles['input']}
             />
             {query && resultsShowing && (
