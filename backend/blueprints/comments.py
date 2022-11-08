@@ -1,3 +1,4 @@
+from typing import Union
 from flask import Blueprint, request, jsonify
 from utils.common import get_post_by_id
 from utils.comments import get_post_comments, create_post_comment
@@ -8,7 +9,7 @@ comments = Blueprint('comments', __name__)
 
 @comments.get('/posts/<int:post_id>/comments')
 @token_optional
-def get_comments(post_id: int, token_id: int):
+def get_comments(post_id: int, token_id: Union[int, None]=None):
     # Checking if post exists
     post = get_post_by_id(post_id)
     if not post:
