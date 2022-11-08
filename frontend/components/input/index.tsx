@@ -1,7 +1,7 @@
-import React, { HTMLInputTypeAttribute, useEffect, useRef, useState } from "react";
+import React, { HTMLInputTypeAttribute, Ref, RefObject, useEffect, useImperativeHandle, useRef, useState } from "react";
 import styles from './Input.module.scss';
 
-export const Input: React.FC<{
+type InputProps = {
     type?: HTMLInputTypeAttribute;
     inputClassName?: string;
     containerClassName?: string;
@@ -16,9 +16,12 @@ export const Input: React.FC<{
     label?: string;
     name?: string;
     textArea?: boolean;
-}> = ({ inputClassName, containerClassName, labelClassName, placeholder, defaultValue, onChange, onSubmit, onFocus, onBlur, focusOnMount, label, name, type="text", textArea=false }) => {
+    ref?: Ref<HTMLInputElement>;
+}
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, inputClassName, containerClassName, labelClassName, placeholder, onChange, onSubmit, onBlur, onFocus, focusOnMount, defaultValue, label, name, textArea }, ref) => {
     const [value, setValue] = useState(defaultValue || '');
-    const ref = useRef<any>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     // Updating value on defaultValue change
     useEffect(() => {
@@ -29,7 +32,7 @@ export const Input: React.FC<{
     useEffect(() => {
         if(!focusOnMount) return;
 
-        ref.current?.focus();
+        inputRef.current?.focus();
     }, [focusOnMount]);
 
     // Handling input change
@@ -86,15 +89,15 @@ export const Input: React.FC<{
                         minHeight: 90,
                         maxHeight: 300
                     }}
-                    ref={ref}
+                    ref={inputRef as any}
                     {...properties}
                 />
             ) : (
                 <input
-                    ref={ref}
+                    ref={inputRef}
                     {...properties}
                 />
             )}
         </div>
     )
-}
+});
