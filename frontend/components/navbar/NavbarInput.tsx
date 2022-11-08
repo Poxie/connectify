@@ -1,19 +1,20 @@
 import styles from '../../styles/Navbar.module.scss';
 import React, { RefObject, useEffect, useRef, useState } from "react";
-import { useAuth } from "../../contexts/auth/AuthProvider";
 import { User } from "../../types";
 import { Input } from "../input"
-import { SearchResult } from './SearchResult';
-import { Loader } from '../loader';
 import { useTranslation } from 'next-i18next';
 import { useLiveFetching } from '../../hooks/useLiveFetching';
+import { NavbarResults } from './NavbarResults';
 
 const DELAY_UNTIL_REQUEST = 300;
-export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
+export const NavbarInput: React.FC<{
+    inputRef: RefObject<HTMLInputElement>;
+}> = ({ inputRef }) => {
     const { t } = useTranslation('common');
     const [query, setQuery] = useState('');
     const [shouldFetch, setShouldFetch] = useState(false);
     const timeout = useRef<NodeJS.Timeout | null>(null);
+    const closeTimeout = useRef<NodeJS.Timeout | null>(null);
     const [resultsShowing, setResultsShowing] = useState(false);
     const { loading, data } = useLiveFetching<User[]>(query ? `/users/search?query=${query}` : '', shouldFetch);
 
@@ -31,54 +32,45 @@ export const NavbarInput = React.forwardRef<HTMLDivElement>((props, ref) => {
         }, DELAY_UNTIL_REQUEST);
     }
 
-    // Closing results on blur
-    const handleBlur = () => {
-        setTimeout(() => {
+    // Opening/closing input on focus/blur
+    const onBlur = () => {
+        closeTimeout.current = setTimeout(() => {
             setResultsShowing(false);
-            (ref as RefObject<HTMLDivElement>)?.current?.classList.remove(styles['active']);
+            inputRef.current?.blur();
+            closeTimeout.current = null;
         }, 150);
     }
-
-    // Closing input on smaller devices
-    const onBackdropClick = () => {
-        (ref as RefObject<HTMLDivElement>)?.current?.classList.toggle(styles['active']);
+    const onFocus = () => {
+        if(closeTimeout.current) clearTimeout(closeTimeout.current);
+        setResultsShowing(true);
     }
 
+    const className =[
+        styles['input-container'],
+        resultsShowing ? styles['active'] : ''
+    ].join(' ');
     return(
-        <div className={styles['input-container']} ref={ref}>
+        <div className={className}>
             <div 
                 className={styles['backdrop']}
-                onClick={onBackdropClick}
             />
             <Input 
-                onFocus={() => setResultsShowing(true)}
-                onBlur={handleBlur}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 placeholder={t('searchForUser')}
                 onChange={onChange}
                 inputClassName={styles['input']}
+                ref={inputRef}
             />
             {query && resultsShowing && (
-                <div className={styles['results']}>
-                    {!data?.length && loading && (
-                        <div className={styles['loader']} aria-label="Loading">
-                            <Loader />
-                        </div>
-                    )}
-
-                    {typeof data === 'object' && !data?.length && !loading && (
-                        <span>
-                            {t('noResults')}
-                        </span>
-                    )}
-
-                    {data?.map(user => (
-                        <SearchResult 
-                            {...user}
-                            key={user.id}
-                        />
-                    ))}
-                </div>
+                <NavbarResults 
+                    data={data}
+                    loading={loading}
+                    onFocus={onFocus}
+                    onClick={onBlur}
+                    onBlur={onBlur}
+                />
             )}
         </div>
     )
-});
+}

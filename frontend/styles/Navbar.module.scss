@@ -56,9 +56,6 @@
 .input {
     padding: 9px !important;
 }
-.search-button {
-    display: none;
-}
 .backdrop {
     display: none;
 }
@@ -116,9 +113,6 @@
     }
     .content {
         grid-template-columns: repeat(2, 1fr);
-    }
-    .search-button {
-        display: block;
     }
     .input-container {
         --height: 79px;

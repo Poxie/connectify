@@ -3,12 +3,21 @@ import Link from 'next/link';
 import styles from '../../styles/Navbar.module.scss'
 import { User } from "../../types";
 
-export const SearchResult: React.FC<User> = ({ id, username, display_name, avatar, follower_count }) => {
+export const SearchResult: React.FC<User & {
+    onFocus: () => void;
+    onClick: () => void;
+    onBlur: () => void;
+}> = ({ id, username, display_name, avatar, follower_count, onFocus, onBlur, onClick }) => {
     const name = display_name || username;
     const showUsername = display_name !== null;
     return(
         <Link href={`/users/${id}`}>
-            <a className={styles['result']}>
+            <a 
+                className={styles['result']} 
+                onFocus={onFocus}
+                onClick={onClick}
+                onBlur={onBlur}
+            >
                 <div className={styles['result-avatar']}>
                     <Image 
                         src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${avatar}`}
