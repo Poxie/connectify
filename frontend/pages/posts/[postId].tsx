@@ -25,13 +25,18 @@ export default function PostPage({ post }: {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale, query: { postId } }) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/posts/${postId}`);
+    const translations = await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'post']);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/posts/${postId}`).catch(e => console.error('this is error:', e));
+    if(!res) return {
+        props: { ...translations }
+    };
+
     const post = await res.json();
 
     return {
         props: {
             post,
-            ...(await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'post']))
+            ...translations
         }
     }
 }

@@ -37,13 +37,18 @@ Liked.getLayout = (page: ReactElement) => (
 )
 
 export const getServerSideProps: GetServerSideProps = async ({ locale, query: { userId } }) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/${userId}`);
+    const translations = await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'user']);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/${userId}`).catch(console.error);
+    if(!res) {
+        return { props: { ...translations } };
+    }
+
     const user = await res.json();
 
     return{
         props: {
             user,
-            ...(await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'user']))
+            ...translations
         }
     }
 }
