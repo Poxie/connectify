@@ -119,7 +119,7 @@ likes, comments, etc.
 """
 def delete_post(post_id):
     post_query = "DELETE FROM posts WHERE id = %s"
-    like_query = "DELETE FROM likes WHERE post_id = %s"
+    like_query = "DELETE FROM likes WHERE parent_id = %s"
     comment_query = "DELETE FROM comments WHERE post_id = %s"
 
     values = (post_id,)
