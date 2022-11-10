@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Filters } from "../filters/Filters"
 import styles from '../../styles/Post.module.scss';
-import { usePostId } from "../../hooks/usePostId";
 import { useAppSelector } from "../../redux/store";
 import { selectCommentIds, selectPostIsFetched } from "../../redux/posts/selectors";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
@@ -11,13 +10,14 @@ import { setPostComments } from "../../redux/posts/actions";
 import { Comment } from "./Comment";
 import { CommentSkeleton } from "./CommentSkeleton";
 import { useTranslation } from "next-i18next";
+import { useQueryId } from "../../hooks/useQueryId";
 
 const FETCH_AMOUNT = 15;
 const SCROLL_THRESHOLD = 400;
 const LOADING_SKELETON_COUNT = 4;
 export const CommentContainer = () => {
     const { t } = useTranslation('post');
-    const postId = usePostId();
+    const postId = useQueryId('postId');
     const dispatch = useDispatch();
     const [orderType, setOrderType] = useState<CommentType['orderType']>('top');
     const postIsFetched = useAppSelector(state => selectPostIsFetched(state, postId));

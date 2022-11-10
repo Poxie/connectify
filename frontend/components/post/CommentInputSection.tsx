@@ -1,14 +1,14 @@
 import styles from '../../styles/Post.module.scss';
-import { usePostId } from "../../hooks/usePostId"
 import { selectPostCommentCount } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
 import { CommentInput } from "./CommentInput"
 import { useTranslation } from 'next-i18next';
 import { CommentInputSkeleton } from './CommentInputSkeleton';
+import { useQueryId } from '../../hooks/useQueryId';
 
 export const CommentInputSection = () => {
     const { t } = useTranslation('common');
-    const postId = usePostId();
+    const postId = useQueryId('postId');
     const commentCount = useAppSelector(state => selectPostCommentCount(state, postId));
 
     if(commentCount === undefined) {
