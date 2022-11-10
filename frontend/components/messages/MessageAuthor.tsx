@@ -12,12 +12,11 @@ export const MessageAuthor: React.FC<{
         <HasPopout popout={<UserPopout {...author} />} className={styles['avatar']}>
             <Link href={`/users/${author.id}`}>
                 <a className={styles['author']}>
-                    {author.avatar && (
-                        <Image
-                            src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${author.avatar}`}
-                            layout={'fill'}
-                        />
-                    )}
+                    <Image
+                        src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${author.avatar}`}
+                        alt={`${author.display_name || author.username}'s avatar`}
+                        layout={'fill'}
+                    />
                 </a>
             </Link>
         </HasPopout>

@@ -21,6 +21,7 @@ export const SearchResult: React.FC<User & {
                 <div className={styles['result-avatar']}>
                     <Image 
                         src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${avatar}`}
+                        alt={`${name}'s avatar`}
                         width={50}
                         height={50}
                     />

@@ -41,6 +41,7 @@ export const NavbarProfile: React.FC<User> = ({ avatar }) => {
         >
             <Image 
                 src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${avatar}`}
+                alt={`Your avatar`}
                 width={32}
                 height={32}
             />
