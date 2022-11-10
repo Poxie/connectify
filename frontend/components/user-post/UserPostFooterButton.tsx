@@ -6,7 +6,8 @@ export const UserPostFooterButton: React.FC<{
     icon: ReactElement;
     text: string;
     active?: boolean;
-}> = ({ onClick, icon, text, active }) => {
+    ariaLabel?: string;
+}> = ({ onClick, icon, text, active, ariaLabel }) => {
     const className = [
         styles['footer-button'],
         active ? styles['active'] : ''
@@ -15,6 +16,7 @@ export const UserPostFooterButton: React.FC<{
         <button 
             className={className}
             onClick={onClick}
+            aria-label={ariaLabel}
         >
             {icon}
             

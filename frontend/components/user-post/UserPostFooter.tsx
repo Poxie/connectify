@@ -57,12 +57,14 @@ export const UserPostFooter: React.FC<{
                 onClick={toggleLike}
                 icon={has_liked ? <HeartActiveIcon /> : <HeartNeutralIcon />}
                 text={`${like_count} ${t('likes')}`}
+                ariaLabel={t('likePost')}
                 active={has_liked}
             />
             <UserPostFooterButton 
                 onClick={goToPost}
                 icon={<CommentNeutralIcon />}
                 text={`${comment_count} ${t('comments')}`}
+                ariaLabel={t('goToPost')}
             />
         </div>
     )
