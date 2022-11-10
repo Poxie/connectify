@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useLayoutEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { ALLOWED_COLORS, ALLOWED_THEMES, COLORS, DEFAULT_COLOR, DEFAULT_THEME } from './constants';
 import { Color, Context, Theme } from './types';
 
@@ -47,18 +47,18 @@ export const ThemeProvider: React.FC<{
     }
 
     // Setting theme on client mount
-    useLayoutEffect(() => {
+    useEffect(() => {
         setTheme(getActiveTheme());
         setColor(getActiveColor());
     }, []);
 
     // Updating theme colors
-    useLayoutEffect(() => {
+    useEffect(() => {
         document.body.setAttribute('theme', theme);
     }, [theme]);
 
     // Updating colors
-    useLayoutEffect(() => {
+    useEffect(() => {
         // Getting correct colors
         const colors = COLORS[color];
 
