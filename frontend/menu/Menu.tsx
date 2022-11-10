@@ -1,7 +1,7 @@
 import styles from '../styles/Menu.module.scss';
 import { MenuGroup as MenuGroupType } from "../contexts/menu/types"
 import { MenuGroup } from "./MenuGroup";
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMenu } from '../contexts/menu/MenuProvider';
 import { motion } from 'framer-motion';
 
@@ -15,11 +15,11 @@ export const Menu: React.FC<{
     const ref = useRef<HTMLDivElement>(null);
 
     // Determining new position
-    useLayoutEffect(() => {
+    useEffect(() => {
         if(!ref.current) return;
 
         // Getting current element size
-        const { width, height } = ref.current.getBoundingClientRect();
+        const { width } = ref.current.getBoundingClientRect();
 
         // Calculating new position of element
         let top = dimensions.top + dimensions.height + SPACE_FROM_ELEMENT;
@@ -36,7 +36,7 @@ export const Menu: React.FC<{
                 close();
             }
         }
-        // Bind the event listener
+
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [ref.current]);
