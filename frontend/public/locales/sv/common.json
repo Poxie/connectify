@@ -87,5 +87,8 @@
     "successfulCommentAdd": "Kommentaren har lagts till",
     "errorAddComment": "Ett fel uppstod när kommentaren skulle läggas till",
 
-    "internalError": "Ett internt problem uppstod. Prova igen senare."
+    "internalError": "Ett internt problem uppstod. Prova igen senare.",
+    "unknownError": "Ett okänt fel uppstod. Försök igen senare.",
+
+    "invalidCredentials": "Felaktiga uppgifter."
 }

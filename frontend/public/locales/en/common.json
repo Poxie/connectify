@@ -87,5 +87,8 @@
     "successfulCommentAdd": "Successfully added comment",
     "errorCommentAdd": "Something went wrong while adding comment",
 
-    "internalError": "An internal error occured. Please try again later."
+    "internalError": "An internal error occured. Please try again later.",
+    "unknownError": "An unknown error occured. Please try again later.",
+
+    "invalidCredentials": "Invalid credentials."
 }

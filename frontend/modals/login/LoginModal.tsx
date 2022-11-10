@@ -38,11 +38,11 @@ export const LoginModal = () => {
         })
         .catch(error => {
             if(error.code === 409) {
-                setError(error.message);
+                setError(t('invalidCredentials'));
             } else if(error.code === 500) {
-                setError('Internal error occured.');
+                setError(t('internalError'));
             } else {
-                setError('An error occured. Please try again later.');
+                setError(t('unknownError'));
             }
             setLoading(false);
         })
