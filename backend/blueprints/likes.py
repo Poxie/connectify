@@ -3,6 +3,7 @@ from utils.common import get_post_by_id
 from utils.comments import get_comment_by_id
 from utils.likes import create_like, delete_like, get_like
 from utils.auth import token_required
+from utils.constants import COMMENT_LIKE_TYPE, POST_LIKE_TYPE
 
 post_likes = Blueprint('post_likes', __name__, url_prefix='/posts/<int:post_id>/likes')
 comment_likes = Blueprint('comment_likes', __name__, url_prefix='/comments/<int:comment_id>/likes')
@@ -21,7 +22,7 @@ def add_post_like(post_id: int, token_id: int):
         return 'User has already liked this post.', 409
 
     # Creating like
-    like = create_like(post_id, token_id, 0)
+    like = create_like(post_id, token_id, POST_LIKE_TYPE)
 
     return jsonify(like)
 
@@ -58,7 +59,7 @@ def like_comment(comment_id: int, token_id: int):
     if like:
         return 'User has already liked this comment.', 409
 
-    create_like(comment_id, token_id, 2)
+    create_like(comment_id, token_id, COMMENT_LIKE_TYPE)
     return jsonify({})
 
 
