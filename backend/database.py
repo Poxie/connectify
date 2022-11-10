@@ -59,7 +59,8 @@ class Database():
     
     # Function to reset cursor
     def __reset(self):
-        self.cursor.reset()
+        self.cursor.close()
+        self.cursor = self.db.cursor(buffered=True, dictionary=True)
 
     # Function to insert
     def insert(self, query, values):
