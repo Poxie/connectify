@@ -16,10 +16,8 @@ export const MessagesSidebar = () => {
     const channelIds = useAppSelector(selectChannelIds);
     const channelsLoading = useAppSelector(selectChannelsLoading);
 
-    // Function to open start conversation modal
     const openConvoModal = () => setModal(<SelectUserModal />)
 
-    // Showing loading skeleton
     if(channelsLoading) return <MessagesSidebarSkeleton />;
 
     return(
@@ -29,7 +27,10 @@ export const MessagesSidebar = () => {
                     {t('directMessages')}
                 </span>
 
-                <button onClick={openConvoModal}>
+                <button 
+                    onClick={openConvoModal}
+                    aria-label={t('startConversation')}
+                >
                     <HasTooltip 
                         tooltip={t('startConversation')}
                     >

@@ -5,7 +5,7 @@ import { MessagesSidebarTyping } from './MessageSidebarTyping';
 import { useTranslation } from 'next-i18next';
 import { selectChannelLastMessage, selectChannelTyping } from '../../redux/messages/selectors';
 
-export const ChannelBottom: React.FC<{
+export const MessageSidebarChannelBottom: React.FC<{
     channelId: number;
 }> = ({ channelId }) => {
     const { t } = useTranslation('messages');

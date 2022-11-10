@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { selectChannelById, selectChannelUnreadCount } from '../../redux/messages/selectors';
+import { MessageSidebarChannelBottom } from './MessageSidebarChannelBottom';
 import { useAppSelector } from '../../redux/store';
-import { ChannelBottom } from './ChannelBottom';
 import styles from './MessagesLayout.module.scss';
 
 export const MessageSidebarChannel: React.FC<{
@@ -47,6 +47,7 @@ export const MessageSidebarChannel: React.FC<{
                                     src={image}
                                     layout={'fill'}
                                     objectFit={'cover'}
+                                    alt={`${name} channel icon`}
                                 />
                             </div>
                             <div className={styles['text']}>
@@ -63,7 +64,7 @@ export const MessageSidebarChannel: React.FC<{
                                     )}
                                 </div>
 
-                                <ChannelBottom channelId={id} />
+                                <MessageSidebarChannelBottom channelId={id} />
                             </div>
                         </div>
                         {unreadCount !== 0 && (
