@@ -27,7 +27,7 @@ export const UserPostTimestamp: React.FC<{
         time = diff;
     }
 
-    const locale = typeof window !== 'undefined' ? localStorage.getItem('locale') || 'en' : 'en';
+    const locale = typeof window !== 'undefined' ? localStorage.getItem('locale') || process.env.NEXT_PUBLIC_DEFAULT_LOCALE : process.env.NEXT_PUBLIC_DEFAULT_LOCALE;
     const relativeTime = new Intl.RelativeTimeFormat(locale).format(-Math.round(time), format);
     return(
         <span className={styles['timestamp']}>
