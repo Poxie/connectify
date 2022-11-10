@@ -15,6 +15,10 @@ import { useQueryId } from "../../hooks/useQueryId";
 const FETCH_AMOUNT = 15;
 const SCROLL_THRESHOLD = 400;
 const LOADING_SKELETON_COUNT = 4;
+const FILTERS = [
+    { text: 'Top', id: 'top' },
+    { text: 'Latest', id: 'latest' }
+]
 export const CommentContainer = () => {
     const { t } = useTranslation('post');
     const postId = useQueryId('postId');
@@ -39,16 +43,17 @@ export const CommentContainer = () => {
         }
     )
 
+    const _setOrderType = (type: string) => {
+        setOrderType(type as CommentType['orderType']);
+    }
+
     return(
         <>
             <Filters 
-                items={[
-                    { text: 'Top', id: 'top' },
-                    { text: 'Latest', id: 'latest' }
-                ]}
+                items={FILTERS}
                 defaultActive={orderType}
                 containerClassName={styles['filters']}
-                onChange={id => setOrderType(id as CommentType['orderType'])}
+                onChange={_setOrderType}
             />
 
             {commentIds.length !== 0 && (

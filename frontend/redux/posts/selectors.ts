@@ -18,11 +18,13 @@ export const selectPostIsFetched = createSelector(
     post => post !== undefined
 )
 
-export const selectCommentIds = createSelector(
+const selectFilteredComments = createSelector(
     [selectComments, selectId, selectOrderType],
-    (comments, postId, orderType) => 
-        comments.filter(comment => comment.post_id === postId && comment.orderType === orderType)
-        .map(comment => comment.id)
+    (comments, postId, orderType) => comments.filter(comment => comment.post_id === postId && comment.orderType === orderType)
+);
+export const selectCommentIds = createSelector(
+    [selectFilteredComments],
+    comments => comments.map(comment => comment.id)
 )
 export const selectCommentById = createSelector(
     [selectComments, selectId],
