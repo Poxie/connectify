@@ -16,6 +16,7 @@ export const Comment: React.FC<{
     const main = useAppSelector(state => selectCommentMain(state, id));
     if(!main || !author) return null;
 
+    const name = author.display_name || author.username;
     const { content, timestamp } = main;
     return(
         <li className={styles['comment']}>
@@ -26,6 +27,7 @@ export const Comment: React.FC<{
                         height={25}
                         objectFit={'cover'}
                         src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${author.avatar}`}
+                        alt={`${name}'s avatar`}
                     />
                 </a>
             </Link>
@@ -33,7 +35,7 @@ export const Comment: React.FC<{
                 <div className={styles['comment-header']}>
                     <Link href={`/users/${author.id}`}>
                         <a className={styles['comment-author']}>
-                            {author.display_name || author.username}
+                            {name}
                         </a>
                     </Link>
                     <UserPostTimestamp timestamp={timestamp} />
