@@ -47,7 +47,15 @@ const addPostComment = (state: PostsState, action: AnyAction) => {
             comment_count: post.comment_count + 1
         })
     })
-    const newComments = state.comments.concat(comment)
+
+    const orderTypeComments = [];
+    if(state.comments.find(c => c.orderType === 'latest')) {
+        orderTypeComments.push(updateObject(comment, { orderType: 'latest' }));
+    }
+    if(state.comments.find(c => c.orderType === 'top')) {
+        orderTypeComments.push(updateObject(comment, { orderType: 'top' }))
+    }
+    const newComments = [...orderTypeComments, ...state.comments];
 
     return updateObject(state, {
         posts: newPosts,

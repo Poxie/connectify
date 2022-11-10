@@ -34,13 +34,10 @@ export const CommentInput: React.FC<{
 
     // Function to create comment
     const addComment = () => {
-        // Making sure you can't send empty comment
         if(!value) return;
 
-        // Setting disabled
         setDisabled(true);
 
-        // Creating comment
         post<Comment>(`/posts/${postId}/comments`, {
             content: value
         })
