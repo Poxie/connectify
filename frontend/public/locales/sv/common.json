@@ -78,5 +78,8 @@
     "deletePostConfirmLabel": "Ta bort",
 
     "comingSoonHeader": "Kommer snart",
-    "comingSoonSubHeader": "Den här funktionen har inte kommit ännu. Håll ögonen öppna, det dröjer inte länge tills den är här!"
+    "comingSoonSubHeader": "Den här funktionen har inte kommit ännu. Håll ögonen öppna, det dröjer inte länge tills den är här!",
+
+    "successfulProfileEdit": "Profilen har uppdaterats",
+    "successfulPostDelete": "Inlägget har raderats"
 }

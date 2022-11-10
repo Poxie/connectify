@@ -14,11 +14,13 @@ import { EditProfileBanner } from './EditProfileBanner';
 import { EditProfileAvatar } from './EditProfileAvatar';
 import { useTranslation } from 'next-i18next';
 import { UserStats } from '../../layouts/user/UserStats';
+import { useToast } from '../../contexts/toast/ToastProvider';
 
 export const EditProfileModal = () => {
     const { t } = useTranslation('common');
     const { profile, patch } = useAuth();
     const { close } = useModal();
+    const { setToast } = useToast();
     const dispatch = useDispatch();
     const user = useAppSelector(state => selectUserById(state, profile?.id || 0));
     const [tempUser, setTempUser] = useState<User | undefined>(user);
@@ -59,6 +61,9 @@ export const EditProfileModal = () => {
 
                 dispatch(setUser(tempUser));
                 setDisabled(false);
+
+                // Sending status toast
+                setToast(t('successfulProfileEdit'), 'success');
             })
     }
 

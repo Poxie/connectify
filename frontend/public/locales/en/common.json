@@ -78,5 +78,8 @@
     "deletePostConfirmLabel": "Delete post",
 
     "comingSoonHeader": "Coming soon",
-    "comingSoonSubHeader": "This feature is yet to come. Stay tuned, it won't be long until it's live!"
+    "comingSoonSubHeader": "This feature is yet to come. Stay tuned, it won't be long until it's live!",
+
+    "successfulProfileEdit": "Successfully updated profile",
+    "successfulPostDelete": "Successfully deleted post"
 }

@@ -13,6 +13,7 @@ import { useTranslation } from 'next-i18next';
 import { removeUserPostId } from '../../redux/users/actions';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { ConfirmModal } from '../../modals/confirm/ConfirmModal';
+import { useToast } from '../../contexts/toast/ToastProvider';
 
 export const UserPostOptions: React.FC<{
     postId: number;
@@ -20,6 +21,7 @@ export const UserPostOptions: React.FC<{
     const { t } = useTranslation('common');
     const { profile, destroy } = useAuth();
     const { setModal, close } = useModal();
+    const { setToast } = useToast();
     const { setMenu } = useMenu();
     const router = useRouter();
     const dispatch = useDispatch();
@@ -56,6 +58,9 @@ export const UserPostOptions: React.FC<{
                 // Removing post from redux
                 dispatch(removePost(postId));
                 dispatch(removeUserPostId(profile?.id, postId));
+
+                // Sending success toast
+                setToast(t('successfulPostDelete'), 'success');
             }
 
             // Opening confirm modal
