@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from '../../styles/Messages.module.scss';
 import { useAppSelector } from "../../redux/store";
 import { useAuth } from '../../contexts/auth/AuthProvider';
@@ -8,12 +9,12 @@ import { selectMessageById } from '../../redux/messages/selectors';
 
 const MINUTES_BETWEEN_MESSAGES = 6
 const SECONDS_IN_A_MINUTE = 60;
-export const Message: React.FC<{
+export const Message = React.memo<{
     id: number;
     prevId: number | undefined;
     nextId: number | undefined;
     channelId: number;
-}> = ({ id, prevId, nextId, channelId }) => {
+}>(({ id, prevId, nextId, channelId }) => {
     const { profile } = useAuth();
     const message = useAppSelector(state => selectMessageById(state, channelId, id));
     const prevMessage = useAppSelector(state => selectMessageById(state, channelId, prevId as number));
@@ -68,4 +69,4 @@ export const Message: React.FC<{
             </div>
         </div>
     )
-}
+});
