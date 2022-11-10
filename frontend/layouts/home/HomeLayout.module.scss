@@ -1,6 +1,8 @@
+.tab-container {
+    position: relative;
+}
 .tabs {
     display: flex;
-    position: relative;
     margin-bottom: var(--spacing-primary);
 }
 .tab {

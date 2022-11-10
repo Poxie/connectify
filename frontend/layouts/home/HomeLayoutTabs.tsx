@@ -15,44 +15,43 @@ export const HomeLayoutTabs = () => {
     const tabIndex = tabPaths.indexOf(path);
     const stripe = useRef<HTMLDivElement>(null);
 
-    // Changing tab
     const changeTab = (path: string) => {
         router.push(path, undefined);
     }
 
-    // Updating stripe
+    // Updating active stripe position
     useEffect(() => {
         if(!stripe.current) return;
-
         stripe.current.style.left = `${tabIndex * 50}%`;
     }, [tabIndex]);
 
     return(
-        <ul className={styles['tabs']}>
-            {tabs.map(({ text, path }, index) => {
-                const active = index === tabIndex;
+        <div className={styles['tab-container']}>
+            <ul className={styles['tabs']}>
+                {tabs.map(({ text, path }, index) => {
+                    const active = index === tabIndex;
 
-                const className = [
-                    styles['tab'],
-                    active ? styles['active-tab'] : ''
-                ].join(' ');
-                return(
-                    <li 
-                        className={className} 
-                        key={path}
-                    >
-                        <button onClick={() => changeTab(path)}>
-                            {t(text)}
-                        </button>
-                    </li>
-                )
-            })}
-
+                    const className = [
+                        styles['tab'],
+                        active ? styles['active-tab'] : ''
+                    ].join(' ');
+                    return(
+                        <li 
+                            className={className} 
+                            key={path}
+                        >
+                            <button onClick={() => changeTab(path)}>
+                                {t(text)}
+                            </button>
+                        </li>
+                    )
+                })}
+            </ul>
             <div 
                 className={styles['tab-stripe']}
                 aria-hidden="true"
                 ref={stripe}
             />
-        </ul>
+        </div>
     )
 }
