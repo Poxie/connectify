@@ -21,24 +21,19 @@ type InfiniteScroll = <T>(
     reachedEnd: boolean;
 }
 
-// TODO: on route change, two requests are made - fix!
 export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, options) => {
     const { get, token, loading: tokenLoading } = useAuth();
     const [loading, setLoading] = useState(options.fetchOnMount ? true : false);
     const [reachedEnd, setReachedEnd] = useState(false);
-    const fetching = useRef(options.fetchOnMount || options.isAtEnd);
+    const fetching = useRef(false);
 
     // Fetching on mount
     useEffect(() => {
-        if(!options.fetchOnMount || tokenLoading || options.isAtEnd || options.standBy) return;
-
-        // Making sure to cancel multiple requests
-        const controller = new AbortController();
-        const signal = controller.signal;
+        if(!options.fetchOnMount || tokenLoading || options.isAtEnd || options.standBy || fetching.current) return;
 
         fetching.current = true;
         setLoading(true);
-        get(query, signal)
+        get(query)
             .then((result: any) => {
                 const reachedEnd = result.length < options.fetchAmount;
                 onRequestFinished(result, reachedEnd);
@@ -46,9 +41,6 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
                 setReachedEnd(reachedEnd);
                 fetching.current = false;
             })
-
-        // Aborting previous http request
-        return () => controller.abort();
     }, [tokenLoading, options.identifier, options.standBy]);
 
     // Handling event listeners
