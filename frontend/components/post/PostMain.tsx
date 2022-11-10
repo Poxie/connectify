@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react"
 import { useDispatch } from "react-redux"
 import { useAuth } from "../../contexts/auth/AuthProvider"
 import { useQueryId } from "../../hooks/useQueryId"
+import { useRequest } from "../../hooks/useRequest"
 import { setPost } from "../../redux/posts/actions"
 import { selectPostMain } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
@@ -16,17 +17,7 @@ export const PostMain = () => {
     const { get, loading } = useAuth();
     const postId = useQueryId('postId');
     const post = useAppSelector(state => selectPostMain(state, postId));
-    const dispatch = useDispatch();
-
-    // Fetching post on mount
-    useEffect(() => {
-        if(loading || post) return;
-
-        get<Post>(`/posts/${postId}`)
-            .then(post => {
-                dispatch(setPost(post));
-            })
-    }, [get, loading, post, postId]);
+    useRequest(`/posts/${postId}`, setPost, !post);
 
     if(!post) return <PostMainSkeleton />;
 
