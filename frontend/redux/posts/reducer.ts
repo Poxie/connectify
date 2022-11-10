@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { Comment, Post } from "../../types";
 import { createReducer, updateItemInArray, updateObject } from "../utils";
-import { ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
+import { ADD_COMMENT_LIKE, ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_COMMENT_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
 import { PostsReducer, PostsState } from "./types"
 
 // Reducer actions
@@ -130,13 +130,13 @@ export const postsReducer = createReducer({
     posts: [],
     comments: []
 }, {
-    SET_POST: setPost,
-    REMOVE_POST: removePost,
-    SET_POST_COMMENTS: setPostComments,
-    ADD_POST_COMMENT: addPostComment,
-    SET_POSTS: setPosts,
-    ADD_POST_LIKE: addPostLike,
-    REMOVE_POST_LIKE: removePostLike,
-    ADD_COMMENT_LIKE: addCommentLike,
-    REMOVE_COMMENT_LIKE: removeCommentLike
+    [SET_POST]: setPost,
+    [REMOVE_POST]: removePost,
+    [SET_POST_COMMENTS]: setPostComments,
+    [ADD_POST_COMMENT]: addPostComment,
+    [SET_POSTS]: setPosts,
+    [ADD_POST_LIKE]: addPostLike,
+    [REMOVE_POST_LIKE]: removePostLike,
+    [ADD_COMMENT_LIKE]: addCommentLike,
+    [REMOVE_COMMENT_LIKE]: removeCommentLike
 })

@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { User } from "../../types";
 import { createReducer } from "../utils";
-import { ADD_USER_FOLLOW, ADD_USER_POST_ID, REMOVE_USER_FOLLOW, REMOVE_USER_POST_ID, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS } from "./constants";
+import { ADD_USER_FOLLOW, ADD_USER_LIKED_IDS, ADD_USER_POST_ID, ADD_USER_POST_IDS, REMOVE_USER_FOLLOW, REMOVE_USER_POST_ID, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS, SET_USER_REACHED_END } from "./constants";
 import { UsersReducer, UsersState } from "./types"
 
 // Utility functions
@@ -148,14 +148,14 @@ const setUserReachedEnd: ReducerAction = (state, action) => {
 export const usersReducer = createReducer<UsersState>({
     users: []
 }, {
-    SET_USER: setUser,
-    ADD_USER_FOLLOW: addUserFollow,
-    REMOVE_USER_FOLLOW: removeUserFollow,
-    SET_USER_POST_IDS: setUserPostIds,
-    REMOVE_USER_POST_ID: removeUserPostId,
-    SET_USER_LIKED_IDS: setUserLikedIds,
-    ADD_USER_POST_ID: addUserPostId,
-    ADD_USER_POST_IDS: addUserPostIds,
-    SET_USER_REACHED_END: setUserReachedEnd,
-    ADD_USER_LIKED_IDS: addUserLikedIds
+    [SET_USER]: setUser,
+    [ADD_USER_FOLLOW]: addUserFollow,
+    [REMOVE_USER_FOLLOW]: removeUserFollow,
+    [SET_USER_POST_IDS]: setUserPostIds,
+    [REMOVE_USER_POST_ID]: removeUserPostId,
+    [SET_USER_LIKED_IDS]: setUserLikedIds,
+    [ADD_USER_POST_ID]: addUserPostId,
+    [ADD_USER_POST_IDS]: addUserPostIds,
+    [SET_USER_REACHED_END]: setUserReachedEnd,
+    [ADD_USER_LIKED_IDS]: addUserLikedIds
 })

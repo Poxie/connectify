@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { createReducer, updateObject } from "../utils";
-import { ADD_FEED_POST_IDS, SET_FEED_POST_IDS } from "./constants"
+import { ADD_FEED_POST_IDS, SET_FEED_POST_IDS, SET_FEED_REACHED_END } from "./constants"
 import { FeedState, Reducer } from "./types"
 
 // Reducer actions
@@ -26,7 +26,7 @@ export const feedReducer = createReducer({
     loading: true,
     reachedEnd: false
 }, {
-    SET_FEED_POST_IDS: setFeedPostIds,
-    ADD_FEED_POST_IDS: addFeedPostIds,
-    SET_FEED_REACHED_END: setFeedReachedEnd
+    [SET_FEED_POST_IDS]: setFeedPostIds,
+    [ADD_FEED_POST_IDS]: addFeedPostIds,
+    [SET_FEED_REACHED_END]: setFeedReachedEnd
 })

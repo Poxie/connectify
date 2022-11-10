@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { createReducer, updateObject } from "../utils";
-import { ADD_NOTIFICATIONS, SET_NOTIFICATIONS, SET_NOTIFICATION_COUNT } from "./constants";
+import { ADD_NOTIFICATIONS, SET_NOTIFICATIONS, SET_NOTIFICATIONS_REACHED_END, SET_NOTIFICATION_COUNT } from "./constants";
 import { NotificationsReducer, NotificationState } from "./types";
 
 // Reducer actions
@@ -36,8 +36,8 @@ export const notificationReducer = createReducer({
     loading: true,
     reachedEnd: false
 }, {
-    SET_NOTIFICATIONS: setNotifications,
-    SET_NOTIFICATION_COUNT: setNotificationCount,
-    ADD_NOTIFICATIONS: addNotifications,
-    SET_NOTIFICATIONS_REACHED_END: setNotificationsReachedEnd
+    [SET_NOTIFICATIONS]: setNotifications,
+    [SET_NOTIFICATION_COUNT]: setNotificationCount,
+    [ADD_NOTIFICATIONS]: addNotifications,
+    [SET_NOTIFICATIONS_REACHED_END]: setNotificationsReachedEnd
 })
