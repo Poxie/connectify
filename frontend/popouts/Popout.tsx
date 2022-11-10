@@ -2,6 +2,8 @@ import styles from '../styles/Popout.module.scss';
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from 'react';
 
+const SPACE_FROM_EDGE = 20;
+const SPACE_FROM_ELEMENT = 10;
 export const Popout: React.FC<{
     children: any;
     onMouseEnter: () => void;
@@ -18,16 +20,19 @@ export const Popout: React.FC<{
     useEffect(() => {
         if(!ref.current) return;
 
-        // Getting current popout width
-        const { width } = ref.current.getBoundingClientRect();
+        const { width, height } = ref.current.getBoundingClientRect();
 
-        // Determining popout position
+        // Determining left position
         let left = _left - width + width / 2 + _width / 2;
-        if(left < 15) left = 15;
+        if(left < SPACE_FROM_EDGE) left = SPACE_FROM_EDGE;
         
-        let top = _top + 40;
+        // Determining top position
+        let top = _top + _height + SPACE_FROM_ELEMENT;
+        if(top + height > window.innerHeight) {
+            const overflowAmount = window.innerHeight - top;
+            top = window.innerHeight - overflowAmount - height - SPACE_FROM_EDGE;
+        }
 
-        // Setting popout position
         setLeft(left);
         setTop(top);
     }, [_top, _left]);
@@ -38,7 +43,6 @@ export const Popout: React.FC<{
             style={{
                 left: `${left}px`,
                 top: `${top}px`,
-
             }}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

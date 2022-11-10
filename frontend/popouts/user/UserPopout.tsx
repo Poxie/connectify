@@ -1,6 +1,4 @@
 import styles from './UserPopout.module.scss';
-import { useAppSelector } from "../../redux/store";
-import { selectUserById } from "../../redux/users/selectors";
 import Image from 'next/image';
 import Button from '../../components/button';
 import Link from 'next/link';
@@ -13,13 +11,15 @@ export const UserPopout: React.FC<User> = (user) => {
     const currentPath = useRouter().asPath;
     const userPath = `/users/${user.id}`;
 
+    const name = user.display_name || user.username;
     return(
         <>
             <div 
                 className={styles['banner']}
                 style={{ 
-                    backgroundImage: user?.banner ? `url(${process.env.NEXT_PUBLIC_BANNER_ENDPOINT}${user.banner})` : undefined 
+                    backgroundImage: user.banner ? `url(${process.env.NEXT_PUBLIC_BANNER_ENDPOINT}${user.banner})` : undefined 
                 }}
+                aria-label={`${name}'s banner`}
             />
             <div className={styles['main']}>
                 <Link 
@@ -27,25 +27,24 @@ export const UserPopout: React.FC<User> = (user) => {
                     href={`/users/${user.id}`}
                 >
                     <a className={styles['avatar']}>
-                        {user?.avatar && (
-                            <Image 
-                                width={75}
-                                height={75}
-                                objectFit={'cover'}
-                                src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`}
-                            />
-                        )}
+                        <Image 
+                            width={75}
+                            height={75}
+                            objectFit={'cover'}
+                            src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`}
+                            alt={`${name}'s avatar`}
+                        />
                     </a>
                 </Link>
                 <div className={styles['text']}>
                     <Link href={`/users/${user.id}`}>
                         <a className={styles['name']}>
-                            {user?.display_name || user?.username}
+                            {name}
                         </a>
                     </Link>
                     <div className={styles['stats']}>
                         <span>
-                            {user?.follower_count} {t('followers')}
+                            {user.follower_count} {t('followers')}
                         </span>
                     </div>
                 </div>

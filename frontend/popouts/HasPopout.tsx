@@ -11,7 +11,7 @@ export const HasPopout: React.FC<{
     const { close, setPopout, hoverPopout } = usePopout();
     const ref = useRef<HTMLDivElement>(null);
     const hoveringPopout = useRef(hoverPopout);
-    const hovering = useRef(false);
+    const timeout = useRef<NodeJS.Timeout | null>(null);
 
     // Closing on change of path
     useEffect(close, [pathname]);
@@ -21,25 +21,17 @@ export const HasPopout: React.FC<{
         hoveringPopout.current = hoverPopout;
     }, [hoverPopout]);
 
-    // Opening popout
+    // Checking after 400ms if should open popout
     const onMouseEnter = () => {
-        hovering.current = true;
-
-        // Checking after 400ms if should open popout
-        setTimeout(() => {
-            if(!hovering.current) return;
-
-            setPopout(popout, ref);
-        }, 400);
+        timeout.current = setTimeout(() => setPopout(popout, ref), 400);
     }
     // Closing popout
     const onMouseLeave = () => {
-        hovering.current = false;
+        if(timeout.current) clearTimeout(timeout.current);
 
         // Checking after 400ms if should close popout
         setTimeout(() => {
-            if(hoveringPopout.current || hovering.current) return;
-
+            if(hoveringPopout.current) return;
             close();
         }, 400);
     }
