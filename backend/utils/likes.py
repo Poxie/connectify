@@ -5,11 +5,12 @@ from database import db
 Function to create like based on parent_id and user_id, currently allows
 parnet_id to be of type post and comment.
 """
-def create_like(parent_id: int, user_id: int):
-    query = "INSERT INTO likes (parent_id, user_id, timestamp) VALUES (%s, %s, %s)"
+def create_like(parent_id: int, user_id: int, type: int):
+    query = "INSERT INTO likes (parent_id, user_id, type, timestamp) VALUES (%s, %s, %s, %s)"
     values = (
         parent_id,
         user_id,
+        type,
         time.time()
     )
 

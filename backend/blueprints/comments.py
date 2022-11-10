@@ -2,7 +2,6 @@ from typing import Union
 from flask import Blueprint, request, jsonify
 from utils.common import get_post_by_id
 from utils.comments import get_post_comments, create_post_comment
-from utils.likes import get_like, create_like, delete_like
 from utils.auth import token_required, token_optional
 
 comments = Blueprint('comments', __name__)

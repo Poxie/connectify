@@ -29,7 +29,7 @@ can be used for pagination. token_id can be used to personalize the posts, i.e.,
 adding has_liked, is_following, etc.
 """
 def get_user_liked_posts(user_id: int, token_id: Union[int, None]=None, amount=10, start_at=0):
-    query = "SELECT parent_id FROM likes WHERE user_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
+    query = "SELECT parent_id FROM likes WHERE user_id = %s AND type = 0 ORDER BY timestamp DESC LIMIT %s, %s"
     values = (user_id, start_at, amount)
 
     # Fetching likes

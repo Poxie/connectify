@@ -44,7 +44,7 @@ class Database():
             cursor.execute('CREATE TABLE IF NOT EXISTS followers (follower_id BIGINT(20), followee_id BIGINT(20), timestamp BIGINT(20))')
             cursor.execute('CREATE TABLE IF NOT EXISTS posts (id BIGINT(20), author_id BIGINT(20), title VARCHAR(255), content VARCHAR(255), timestamp BIGINT(20))')
             cursor.execute('CREATE TABLE IF NOT EXISTS comments (id BIGINT(20), author_id BIGINT(20), post_id BIGINT(20), content VARCHAR(255), timestamp BIGINT(20))')
-            cursor.execute('CREATE TABLE IF NOT EXISTS likes (user_id BIGINT(20), parent_id BIGINT(20), timestamp BIGINT(20))')
+            cursor.execute('CREATE TABLE IF NOT EXISTS likes (user_id BIGINT(20), parent_id BIGINT(20), type BIGINT(20), timestamp BIGINT(20))')
             cursor.execute('CREATE TABLE IF NOT EXISTS channels (id BIGINT(20), type INT(4), last_message_timestamp BIGINT(20) DEFAULT NULL, last_message_id BIGINT(20) DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, icon VARCHAR(255) DEFAULT NULL)')
             cursor.execute('CREATE TABLE IF NOT EXISTS recipients (id BIGINT(20), channel_id BIGINT(20), unread_count BIGINT(20) DEFAULT 0)')
             cursor.execute('CREATE TABLE IF NOT EXISTS messages (id BIGINT(20), author_id BIGINT(20), channel_id BIGINT(20), content VARCHAR(255), timestamp BIGINT(20))')

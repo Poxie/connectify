@@ -21,7 +21,7 @@ def add_post_like(post_id: int, token_id: int):
         return 'User has already liked this post.', 409
 
     # Creating like
-    like = create_like(post_id, token_id)
+    like = create_like(post_id, token_id, 0)
 
     return jsonify(like)
 
@@ -58,7 +58,7 @@ def like_comment(comment_id: int, token_id: int):
     if like:
         return 'User has already liked this comment.', 409
 
-    create_like(comment_id, token_id)
+    create_like(comment_id, token_id, 2)
     return jsonify({})
 
 
