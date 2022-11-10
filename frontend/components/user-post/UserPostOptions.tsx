@@ -44,7 +44,6 @@ export const UserPostOptions: React.FC<{
 
         // If user is author, allow delete post
         if(isAuthor) {
-            // Deleting post
             const deletePost = async () => {
                 const data = await destroy(`/posts/${postId}`).catch(error => {
                     setToast(t('postDeleteError'), 'error');
