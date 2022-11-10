@@ -15,28 +15,20 @@ export const AuthProvider: React.FC<{
     const [token, setToken] = useState<null | string>(null);
     const [loading, setLoading] = useState(true);
 
-    // Checking if user is logged in on render
+    // Setting user token
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if(token) {
-            setToken(token);
-        } else {
-            setLoading(false);
-        }
+        if(!token) return setLoading(false);
+        setToken(token);
     }, []);
 
-    // Setting profile on render
+    // Fetching user profile
     useEffect(() => {
         if(!token) return;
 
         get<User>('/me')
             .then(user => {
                 setProfile(user);
-            })
-            .catch(error => {
-                console.log(error.message);
-            })
-            .finally(() => {
                 setLoading(false);
             })
     }, [token]);
