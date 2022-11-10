@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
-import { AnyAction } from "redux";
 import { useAuth } from "../contexts/auth/AuthProvider";
 
 type UseRequest = <T>(query: string, dispatchAction: any, shouldFetch: boolean) => {
