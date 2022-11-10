@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { Socket } from 'socket.io-client/build/esm/socket';
 import { addChannel, addMessage, setChannelFirst, setChannelTyping } from '../../redux/messages/actions';
+import { Channel, Message } from '../../types';
 import { useAuth } from '../auth/AuthProvider';
 import { SocketContext as SocketContextType } from './types';
 
@@ -27,7 +28,6 @@ export const SocketProvider: React.FC<{
         
         // Socket connection events
         socket.on('connect', () => {
-            console.log('CONNECTED:', socket.id)
             setSocket(socket);
         })
 
@@ -37,8 +37,7 @@ export const SocketProvider: React.FC<{
         })
 
         // Socket direct messages
-        socket.on('direct_message', (message) => {
-            console.log('direct message:', message);
+        socket.on('direct_message', (message: Message) => {
             dispatch(addMessage(message.channel_id, message, message.author_id !== profile.id));
             dispatch(setChannelFirst(message.channel_id))
         })
@@ -46,7 +45,6 @@ export const SocketProvider: React.FC<{
         // Socket channel typing
         const typingChannels: {[channelId: number]: NodeJS.Timeout} = {};
         socket.on('channel_typing', ({ channel_id: channelId, state }) => {
-            console.log('channel typing:', channelId)
             dispatch(setChannelTyping(channelId, state === 'start' ? 'increase' : 'reset'));
 
             // Checking if timeout to cancel typing should reset
@@ -63,8 +61,7 @@ export const SocketProvider: React.FC<{
 
         // Socket channel created
         socket.on('dm_channel_created', async channelId => {
-            console.log('dm channel:', channelId);
-            const channel = await get(`/channels/${channelId}`);
+            const channel = await get<Channel>(`/channels/${channelId}`);
             dispatch(addChannel(channel));
         })
 
