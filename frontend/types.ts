@@ -30,6 +30,8 @@ export type Post = {
     comment_count: number;
     timestamp: number;
     hasCommentsFetched?: boolean;
+    hasLoadedLatestComments?: boolean;
+    hasLoadedTopComments?: boolean;
 }
 export type Comment = {
     id: number;
