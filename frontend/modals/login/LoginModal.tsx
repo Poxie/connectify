@@ -97,7 +97,7 @@ export const LoginModal = () => {
                         type={'button'}
                         className={styles['change-option']}
                     >
-                        {t('alreadyHaveAnAccount')}
+                        {t('dontHaveAnAccount')}
                     </button>
                     <Button
                         disabled={disabled}
