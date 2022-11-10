@@ -80,12 +80,12 @@
     "comingSoonHeader": "Kommer snart",
     "comingSoonSubHeader": "Den här funktionen har inte kommit ännu. Håll ögonen öppna, det dröjer inte länge tills den är här!",
 
-    "successfulProfileEdit": "Profilen har uppdaterats",
-    "errorProfileEdit": "Ett fel uppstod när profilen skulle uppdateras",
-    "successfulPostDelete": "Inlägget har raderats",
-    "errorPostDelete": "Ett fel uppstod när inlägget skulle tas bort",
-    "successfulCommentAdd": "Kommentaren har lagts till",
-    "errorAddComment": "Ett fel uppstod när kommentaren skulle läggas till",
+    "profileEditSuccess": "Profilen har uppdaterats",
+    "profileEditError": "Ett fel uppstod när profilen skulle uppdateras",
+    "postDeleteSuccess": "Inlägget har raderats",
+    "postDeleteError": "Ett fel uppstod när inlägget skulle tas bort",
+    "commentAddSuccess": "Kommentaren har lagts till",
+    "addCommentError": "Ett fel uppstod när kommentaren skulle läggas till",
 
     "internalError": "Ett internt problem uppstod. Prova igen senare.",
     "unknownError": "Ett okänt fel uppstod. Försök igen senare.",

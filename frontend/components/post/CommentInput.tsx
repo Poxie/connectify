@@ -51,9 +51,10 @@ export const CommentInput: React.FC<{
                 setDisabled(false);
 
                 // Sending success toast
-                setToast(t('successfulCommentAdd'), 'success');
+                setToast(t('commentAddSuccess'), 'success');
             })
             .catch(error => {
+                setToast(t('commentAddError'), 'error');
                 setDisabled(false);
             })
     }

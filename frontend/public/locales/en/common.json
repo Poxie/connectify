@@ -80,12 +80,12 @@
     "comingSoonHeader": "Coming soon",
     "comingSoonSubHeader": "This feature is yet to come. Stay tuned, it won't be long until it's live!",
 
-    "successfulProfileEdit": "Successfully updated profile",
-    "errorProfileEdit": "Something went wrong while updating profile",
-    "successfulPostDelete": "Successfully deleted post",
-    "errorPostDelete": "Something went wrong while deleting post",
-    "successfulCommentAdd": "Successfully added comment",
-    "errorCommentAdd": "Something went wrong while adding comment",
+    "profileEditSuccess": "Successfully updated profile",
+    "profileEditError": "Something went wrong while updating profile",
+    "postDeleteSuccess": "Successfully deleted post",
+    "postDeleteError": "Something went wrong while deleting post",
+    "commentAddSuccessful": "Successfully added comment",
+    "commentAddError": "Something went wrong while adding comment",
 
     "internalError": "An internal error occured. Please try again later.",
     "unknownError": "An unknown error occured. Please try again later.",

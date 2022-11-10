@@ -47,7 +47,7 @@ export const UserPostOptions: React.FC<{
             // Deleting post
             const deletePost = async () => {
                 const data = await destroy(`/posts/${postId}`).catch(error => {
-                    setToast(error.message, 'error');
+                    setToast(t('postDeleteError'), 'error');
                 })
                 close();
                 if(!data || !profile?.id) return;
@@ -62,7 +62,7 @@ export const UserPostOptions: React.FC<{
                 dispatch(removeUserPostId(profile?.id, postId));
 
                 // Sending success toast
-                setToast(t('successfulPostDelete'), 'success');
+                setToast(t('postDeleteSuccess'), 'success');
             }
 
             // Opening confirm modal

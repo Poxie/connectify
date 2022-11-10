@@ -63,10 +63,10 @@ export const EditProfileModal = () => {
                 setDisabled(false);
 
                 // Sending status toast
-                setToast(t('successfulProfileEdit'), 'success');
+                setToast(t('profileEditSuccess'), 'success');
             })
             .catch(error => {
-                setToast(t('errorProfileEdit'), 'error');
+                setToast(t('profileEditError'),  'error');
                 setDisabled(false);
             })
     }
