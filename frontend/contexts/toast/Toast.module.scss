@@ -1,0 +1,47 @@
+.container {
+    padding: var(--spacing-primary) 40px;
+    background-color: var(--tooltip-background-primary);
+    border-radius: var(--border-radius-primary);
+    text-align: center;
+    font-weight: 600;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1414141411414;
+    overflow: hidden;
+    
+    &::after {
+        --height: 3px;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: var(--height);
+        top: calc(100% - var(--height));
+        left: 0;
+        animation: duration-stripe var(--duration) forwards linear;
+    }
+    &.error {
+        &::after {
+            background-color: var(--color-red);
+        }
+    }
+    &.success {
+        &::after {
+            background-color: var(--color-green);
+        }
+    }
+    &.info {
+        &::after {
+            background-color: var(--color-blue);
+        }
+    }
+}
+
+@keyframes duration-stripe {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0;
+    }
+}
