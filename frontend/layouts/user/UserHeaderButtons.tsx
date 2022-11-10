@@ -44,7 +44,6 @@ export const UserHeaderButtons: React.FC<{
         setDisabled(false);
     }
 
-    // Function to open edit modal
     const editProfile = () => setModal(<EditProfileModal />);
 
     return(
