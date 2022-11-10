@@ -46,7 +46,9 @@ export const UserPostOptions: React.FC<{
         if(isAuthor) {
             // Deleting post
             const deletePost = async () => {
-                const data = await destroy(`/posts/${postId}`)
+                const data = await destroy(`/posts/${postId}`).catch(error => {
+                    setToast(error.message, 'error');
+                })
                 close();
                 if(!data || !profile?.id) return;
 

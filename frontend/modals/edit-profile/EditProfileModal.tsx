@@ -65,6 +65,10 @@ export const EditProfileModal = () => {
                 // Sending status toast
                 setToast(t('successfulProfileEdit'), 'success');
             })
+            .catch(error => {
+                setToast(error.message, 'error');
+                setDisabled(false);
+            })
     }
 
     return(

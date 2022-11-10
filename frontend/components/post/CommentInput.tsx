@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addPostComment } from '../../redux/posts/actions';
 import { useTranslation } from 'next-i18next';
 import { Comment } from '../../types';
+import { useToast } from '../../contexts/toast/ToastProvider';
 
 export const CommentInput: React.FC<{
     postId: number;
@@ -14,6 +15,7 @@ export const CommentInput: React.FC<{
     const { t } = useTranslation('common');
     const { t: g } = useTranslation('post');
     const { post, token, loading } = useAuth();
+    const { setToast } = useToast();
     const dispatch = useDispatch();
     const [expanded, setExpanded] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -49,6 +51,12 @@ export const CommentInput: React.FC<{
                 // Resetting input value
                 setValue('');
                 setExpanded(false);
+                setDisabled(false);
+
+                // Sending success toast
+                setToast(t('successfulCommentAdd'), 'success');
+            })
+            .catch(error => {
                 setDisabled(false);
             })
     }

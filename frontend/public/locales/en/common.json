@@ -81,5 +81,11 @@
     "comingSoonSubHeader": "This feature is yet to come. Stay tuned, it won't be long until it's live!",
 
     "successfulProfileEdit": "Successfully updated profile",
-    "successfulPostDelete": "Successfully deleted post"
+    "errorProfileEdit": "Something went wrong while updating profile",
+    "successfulPostDelete": "Successfully deleted post",
+    "errorPostDelete": "Something went wrong while deleting post",
+    "successfulCommentAdd": "Successfully added comment",
+    "errorCommentAdd": "Something went wrong while adding comment",
+
+    "internalError": "An internal error occured. Please try again later."
 }
