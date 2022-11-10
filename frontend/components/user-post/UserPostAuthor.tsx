@@ -14,6 +14,7 @@ export const UserPostAuthor: React.FC<User> = (user) => {
                 <a className={styles['author-avatar']} aria-label={`${display_name || username}'s avatar`}>
                     <Image 
                         src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${avatar}`}
+                        alt={`${display_name || username}'s avatar`}
                         objectFit={'cover'}
                         width={25}
                         height={25}
