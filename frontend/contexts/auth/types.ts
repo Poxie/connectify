@@ -14,3 +14,5 @@ export type AuthContext = {
 export type ExtendedError = Error & {
     code: number;
 }
+
+export type RequestMethod = 'GET' | 'POST' | 'DELETE' | 'PATCH';
