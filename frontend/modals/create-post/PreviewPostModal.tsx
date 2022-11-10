@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { addUserPostId } from '../../redux/users/actions';
 import { useTranslation } from 'next-i18next';
 import { Post } from '../../types';
+import { useToast } from '../../contexts/toast/ToastProvider';
 
 export const PreviewPostModal: React.FC<{
     title: string;
@@ -20,6 +21,7 @@ export const PreviewPostModal: React.FC<{
     const { t } = useTranslation('common');
     const router = useRouter();
     const dispatch = useDispatch();
+    const { setToast } = useToast();
     const { profile, post } = useAuth();
     const { goBack, close } = useModal();
     const [disabled, setDisabled] = useState(false);
@@ -34,6 +36,7 @@ export const PreviewPostModal: React.FC<{
             title
         }).catch(() => {
             setDisabled(false);
+            setToast(t('postCreateError'), 'error');
         })
         if(!createdPost) return;
 
@@ -46,6 +49,7 @@ export const PreviewPostModal: React.FC<{
         close();
     }
 
+    const author = profile?.display_name || profile?.username;
     return(
         <>
         <ModalHeader>
@@ -55,16 +59,15 @@ export const PreviewPostModal: React.FC<{
         <div className={styles['preview']}>
             <div className={styles['preview-header']}>
                 <div className={styles['preview-avatar']}>
-                    {profile?.avatar && (
-                        <Image 
-                            width={26}
-                            height={26}
-                            src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${profile.avatar}`}
-                        />
-                    )}
+                    <Image 
+                        width={26}
+                        height={26}
+                        src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${profile?.avatar}`}
+                        alt={`${author}'s avatar`}
+                    />
                 </div>
                 <span>
-                    {profile?.display_name || profile?.username}
+                    {author}
                 </span>
                 <UserPostTimestamp timestamp={Date.now() / 1000} />
             </div>

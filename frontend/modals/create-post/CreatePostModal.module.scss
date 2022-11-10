@@ -31,6 +31,7 @@
 }
 .preview-header {
     display: flex;
+    align-items: center;
     gap: 10px;
     font-weight: 600;
     margin-bottom: 10px;
@@ -38,4 +39,7 @@
 .preview-avatar {
     border-radius: 50%;
     overflow: hidden;
+    min-width: 26px;
+    width: 26px;
+    height: 26px;
 }

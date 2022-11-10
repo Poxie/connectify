@@ -86,6 +86,7 @@
     "postDeleteError": "Ett fel uppstod när inlägget skulle tas bort",
     "commentAddSuccess": "Kommentaren har lagts till",
     "addCommentError": "Ett fel uppstod när kommentaren skulle läggas till",
+    "postCreateError": "Something went wrong while creating post",
 
     "internalError": "Ett internt problem uppstod. Prova igen senare.",
     "unknownError": "Ett okänt fel uppstod. Försök igen senare.",

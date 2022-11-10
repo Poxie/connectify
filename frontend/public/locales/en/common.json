@@ -86,6 +86,7 @@
     "postDeleteError": "Something went wrong while deleting post",
     "commentAddSuccessful": "Successfully added comment",
     "commentAddError": "Something went wrong while adding comment",
+    "postCreateError": "Something went wrong while creating post",
 
     "internalError": "An internal error occured. Please try again later.",
     "unknownError": "An unknown error occured. Please try again later.",
