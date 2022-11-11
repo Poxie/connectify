@@ -44,13 +44,14 @@ export const Feed = () => {
 
     // Feed is empty
     if(!postIds.length && reachedEnd) {
+        const searchInput = document.querySelector('[data-search-input="true"]') as HTMLInputElement | null;
         return(
             <EmptyPrompt
                 header={t('feedEmptyHeader')}
                 message={t('feedEmptyMessage')}
                 buttons={[
                     { text: t('exploreMode'), type: 'default', path: '/home/explore' },
-                    { text: t('searchMode'), type: 'secondary' }
+                    { text: t('searchMode'), type: 'secondary', onClick: () => searchInput?.focus() }
                 ]}
             />
         )

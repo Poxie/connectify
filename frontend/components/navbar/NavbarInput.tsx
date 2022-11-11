@@ -61,6 +61,7 @@ export const NavbarInput: React.FC<{
                 onChange={onChange}
                 inputClassName={styles['input']}
                 ref={inputRef}
+                extraAttributes={[['data-search-input', 'true']]}
             />
             {query && resultsShowing && (
                 <NavbarResults 
