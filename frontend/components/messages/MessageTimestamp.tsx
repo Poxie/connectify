@@ -3,33 +3,39 @@ import styles from '../../styles/Messages.module.scss';
 export const MessageTimestamp: React.FC<{
     timestamp: number;
 }> = ({ timestamp }) => {
-    const timestampDate = new Date(timestamp * 1000);
-    const diff = Date.now() / 1000 - timestamp
-    const minutesAgo = diff / 60;
-    const hoursAgo = (minutesAgo / 60);
+    const now = new Date();
+    const yesterday = new Date()
+    yesterday.setDate(now.getDate() - 1);
+    const date = new Date(timestamp * 1000);
 
-    let format: Intl.RelativeTimeFormatUnit | undefined, nonRelativeTime, time;
-    if(hoursAgo > 24) {
-        nonRelativeTime = `${timestampDate.getMonth()}/${timestampDate.getDate()}/${timestampDate.getFullYear()}`;
-    } else if(hoursAgo > 1) {
-        format = 'hours';
-        time = hoursAgo;
-    } else if(minutesAgo > 1) {
-        format = 'minutes'
-        time = minutesAgo;
+    // Determining time of message
+    let hours = date.getHours();
+    let minutes: number | string = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    const readableTime = `${hours}:${minutes} ${ampm}`;
+
+    // Determining day of message
+    const isToday = now.toDateString() === date.toDateString();
+    const isYesterday = yesterday.toDateString() === date.toDateString();
+
+    // Adding prefix to date
+    let prefix;
+    if(isToday) {
+        prefix = 'Today at '
+    } else if(isYesterday) {
+        prefix = 'Yesterday at '
     } else {
-        format = 'seconds';
-        time = diff;
+        prefix = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()} `;
     }
 
-    const locale = typeof window !== 'undefined' ? localStorage.getItem('locale') || process.env.NEXT_PUBLIC_DEFAULT_LOCALE : process.env.NEXT_PUBLIC_DEFAULT_LOCALE;
-    const readableTime = format && time ? (
-        new Intl.RelativeTimeFormat(locale).format(-Math.round(time), format)
-    ) : nonRelativeTime;
+    const readableDate = `${prefix} ${readableTime}`;
 
     return(
         <span className={styles['timestamp']}>
-            {readableTime}
+            {readableDate}
         </span>
     )
 }
