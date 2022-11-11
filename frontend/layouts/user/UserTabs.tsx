@@ -1,8 +1,10 @@
 import styles from '../../styles/User.module.scss';
 import Link from "next/link"
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useQueryId } from '../../hooks/useQueryId';
+import { useState } from 'react';
 
 const tabs = [
     { text: 'posts', path: '' },
@@ -14,7 +16,12 @@ export const UserTabs = () => {
     const userId = useQueryId('userId');
 
     return(
-        <ul className={styles['tabs']}>
+        <motion.ul 
+            initial={{ opacity: 0, translateY: 0 }}
+            exit={{ opacity: 0, translateY: -50 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            className={styles['tabs']}
+        >
             {tabs.map(tab => {
                 const path = `/users/${userId}${tab.path}`;
                 const active = path === asPath;
@@ -34,6 +41,6 @@ export const UserTabs = () => {
                     </li>
                 )
             })}
-        </ul>
+        </motion.ul>
     )
 }

@@ -1,4 +1,5 @@
 import { UserHeader } from "./UserHeader";
+import { UserStickyContainer } from "./UserStickyContainer";
 import { UserTabs } from "./UserTabs";
 
 export const UserLayout: React.FC<{
@@ -7,7 +8,7 @@ export const UserLayout: React.FC<{
     return(
         <>
             <UserHeader />
-            <UserTabs />
+            <UserStickyContainer />
             {children}
         </>
     )
