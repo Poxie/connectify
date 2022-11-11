@@ -77,10 +77,11 @@
         border-top: 2px solid var(--background-tertiary);
     }
     .tab {
-        padding: 5px;
+        padding: 8px;
+        border-radius: var(--border-radius-secondary);
 
         svg {
-            width: 25px;
+            width: 20px;
         }
     }
     .tab-text {
