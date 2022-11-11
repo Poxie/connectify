@@ -10,7 +10,7 @@
     padding: var(--spacing-primary);
 }
 .header-banner {
-    height: 260px;
+    aspect-ratio: 16 / 5;
     overflow: hidden;
     background-color: var(--background-secondary);
     border-top-left-radius: var(--border-radius-primary);
@@ -182,9 +182,6 @@
     .header-button {
         width: 100%;
         justify-content: center;
-    }
-    .header-banner {
-        height: 160px;
     }
     .header-avatar {
         min-width: 120px;
