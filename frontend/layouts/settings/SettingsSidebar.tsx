@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from './SettingsLayout.module.scss';
 
-const TABS = ['appearance', 'language'];
+const TABS = ['appearance', 'language', 'account'];
 export const SettingsSidebar = () => {
     const { t } = useTranslation('settings');
     const path = useRouter().asPath;

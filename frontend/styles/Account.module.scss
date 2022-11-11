@@ -1,0 +1,29 @@
+.container {
+    flex: 1;
+
+    &>* {
+        padding-left: var(--spacing-primary) !important;
+    }
+}
+
+.change-password {
+    display: grid;
+}
+.input:not(:last-of-type) {
+    margin-bottom: 8px;
+}
+.bottom {
+    margin-top: var(--spacing-primary);
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.error {
+    color: var(--text-secondary);
+    text-align: left;
+    flex: 1;
+    display: block;
+}
+.button {
+    justify-self: flex-end;
+}
