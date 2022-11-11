@@ -3,17 +3,29 @@ import styles from '../../styles/Messages.module.scss';
 export const MessageFooter: React.FC<{
     timestamp: number;
 }> = ({ timestamp }) => {
-    const date = new Date(timestamp * 1000);
+    const timestampDate = new Date(timestamp * 1000);
+    const diff = Date.now() / 1000 - timestamp
+    const minutesAgo = diff / 60;
+    const hoursAgo = (minutesAgo / 60);
 
-    const month = date.toLocaleString('default', { month: 'short' });
-    let hours = date.getHours();
-    let minutes: number | string = date.getMinutes();
-    if(minutes < 10) minutes = `0${minutes}`
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    
-    const readableTime = `${date.getDate()} ${month}, ${date.getFullYear()} ${hours}:${minutes} ${ampm}`;
+    let format: Intl.RelativeTimeFormatUnit | undefined, nonRelativeTime, time;
+    if(hoursAgo > 24) {
+        nonRelativeTime = `${timestampDate.getMonth()}/${timestampDate.getDate()}/${timestampDate.getFullYear()}`;
+    } else if(hoursAgo > 1) {
+        format = 'hours';
+        time = hoursAgo;
+    } else if(minutesAgo > 1) {
+        format = 'minutes'
+        time = minutesAgo;
+    } else {
+        format = 'seconds';
+        time = diff;
+    }
+
+    const locale = typeof window !== 'undefined' ? localStorage.getItem('locale') || process.env.NEXT_PUBLIC_DEFAULT_LOCALE : process.env.NEXT_PUBLIC_DEFAULT_LOCALE;
+    const readableTime = format && time ? (
+        new Intl.RelativeTimeFormat(locale).format(-Math.round(time), format)
+    ) : nonRelativeTime;
 
     return(
         <span className={styles['timestamp']}>
