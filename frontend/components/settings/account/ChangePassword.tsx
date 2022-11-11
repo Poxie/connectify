@@ -4,8 +4,10 @@ import { useAuth } from "../../../contexts/auth/AuthProvider";
 import { useToast } from "../../../contexts/toast/ToastProvider";
 import Button from "../../button";
 import { Input } from "../../input"
+import { useTranslation } from "next-i18next";
 
 export const ChangePassword = () => {
+    const { t } = useTranslation('settings');
     const { patch, profile } = useAuth();
     const { setToast } = useToast();
 
@@ -24,13 +26,13 @@ export const ChangePassword = () => {
             new_password: newPassword
         })
         .then(() => {
-            setToast(`Successfully updated password`, 'success');
+            setToast('passwordUpdatedSuccess', 'success');
             setCurrentPassword('');
             setNewPassword('');
         })
         .catch(error => {
             if(error.code === 401) {
-                setError('Current password is incorrect.');
+                setError(t('passwordIsIncorrect'));
             }
         })
     }
@@ -42,13 +44,13 @@ export const ChangePassword = () => {
             className={styles['change-password']}
         >
             <Input 
-                placeholder={'Current password'}
+                placeholder={t('currentPassword')}
                 onChange={setCurrentPassword}
                 defaultValue={currentPassword}
                 containerClassName={styles['input']}
             />
             <Input 
-                placeholder={'New password'}
+                placeholder={t('newPassword')}
                 onChange={setNewPassword}
                 defaultValue={newPassword}
                 containerClassName={styles['input']}
@@ -66,7 +68,7 @@ export const ChangePassword = () => {
                     buttonType={'submit'}
                     className={styles['button']}
                 >
-                    Update password
+                    {t('updatePassword')}
                 </Button>
             </div>
         </form>

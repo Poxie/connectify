@@ -19,5 +19,13 @@
     },
     "selectThemeColor": "Select theme color",
 
-    "displayLanguage": "Display language"
+    "displayLanguage": "Display language",
+
+    "account": "Account",
+    "changePassword": "Change password",
+    "passwordIsIncorrect": "Current password is incorrect.",
+    "passwordUpdateSuccess": "Successfully updated password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "updatePassword": "Update password"
 }

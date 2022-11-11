@@ -19,5 +19,13 @@
     },
     "selectThemeColor": "Välj tema färg",
 
-    "displayLanguage": "Visningsspråk"
+    "displayLanguage": "Visningsspråk",
+
+    "account": "Konto",
+    "changePassword": "Ändra lösenord",
+    "passwordIsIncorrect": "Det nuvarande lösenordet är inkorrekt.",
+    "passwordUpdateSuccess": "Ditt lösenord har uppdaterats",
+    "currentPassword": "Nuvarande lösenord",
+    "newPassword": "Nytt lösenord",
+    "updatePassword": "Ändra lösenord"
 }
