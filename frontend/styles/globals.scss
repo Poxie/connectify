@@ -31,11 +31,15 @@
   --input-text: #606770;
   --text-primary: #131313;
   --text-secondary: #606770;
+
+  &::-webkit-scrollbar {
+    background-color: rgba(0,0,0,.05);
+  }
 }
 [theme="light-contrast"] ,[data-theme="light-contrast"] {
   --background-secondary: #e4e4e4;
   --background-tertiary: #d1c8fa;
-  --background-quaternary: #c8bef8;
+  --background-quaternary: #bbb0f2;
   --menu-item-background-hover: #c9bdff;
   --menu-item-background-active: #b7a8fa;
   --tooltip-background-primary: #d1c8fa;
@@ -55,6 +59,19 @@
   --input-text: #8b949e;
   --text-primary: #c9d1d9;
   --text-secondary: #8b949e;
+
+  &::-webkit-scrollbar {
+    background-color: rgba(0,0,0,.2);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 120px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--background-quaternary);
+  border-radius: 120px;
 }
 
 html,
