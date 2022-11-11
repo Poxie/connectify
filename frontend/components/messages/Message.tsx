@@ -6,6 +6,7 @@ import { MessageAuthor } from './MessageAuthor';
 import { MessageFooter } from './MessageFooter';
 import { MessageContent } from './MessageContent';
 import { selectMessageById } from '../../redux/messages/selectors';
+import { MessageTimestamp } from './MessageTimestamp';
 
 const MINUTES_BETWEEN_MESSAGES = 6
 const SECONDS_IN_A_MINUTE = 60;
@@ -31,13 +32,10 @@ export const Message = React.memo<{
         (nextMessage?.timestamp || 0) - message.timestamp > SECONDS_IN_A_MINUTE * MINUTES_BETWEEN_MESSAGES
     )
 
-    // Checking if message failed
-    const failed = message.failed;
-
     const className = [
         styles['message'],
         isMyMessage ? styles['my-message'] : '',
-        failed ? styles['failed'] : '',
+        message.failed ? styles['failed'] : '',
         hasFooter ? styles['has-footer'] : ''
     ].join(' ');
     return(
@@ -50,21 +48,11 @@ export const Message = React.memo<{
                 <MessageContent content={message.content} />
                 
                 {hasFooter && (
-                    <div className={styles['message-footer']}>
-                        {message.loading && !failed && (
-                            <span>
-                                Sending...
-                            </span>
-                        )}
-                        {failed && (
-                            <span>
-                                Failed to send.
-                            </span>
-                        )}
-                        {!message.loading && (
-                            <MessageFooter timestamp={message.timestamp} />
-                        )}
-                    </div>
+                    <MessageFooter 
+                        loading={message.loading}
+                        failed={message.failed}
+                        timestamp={message.timestamp}
+                    />
                 )}
             </div>
         </div>
