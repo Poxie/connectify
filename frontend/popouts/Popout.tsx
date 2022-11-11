@@ -1,6 +1,6 @@
 import styles from '../styles/Popout.module.scss';
 import { motion } from "framer-motion"
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 const SPACE_FROM_EDGE = 20;
 const SPACE_FROM_ELEMENT = 10;
@@ -17,7 +17,7 @@ export const Popout: React.FC<{
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if(!ref.current) return;
 
         const { width, height } = ref.current.getBoundingClientRect();
