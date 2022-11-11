@@ -17,8 +17,9 @@ type InputProps = {
     name?: string;
     textArea?: boolean;
     ref?: Ref<HTMLInputElement>;
+    extraAttributes?: string[][];
 }
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, inputClassName, containerClassName, labelClassName, placeholder, onChange, onSubmit, onBlur, onFocus, focusOnMount, defaultValue, label, name, textArea }, ref) => {
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, inputClassName, containerClassName, labelClassName, placeholder, onChange, onSubmit, onBlur, onFocus, focusOnMount, defaultValue, label, name, textArea, extraAttributes }, ref) => {
     const [value, setValue] = useState(defaultValue || '');
     const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
@@ -61,7 +62,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, inp
     ].join(' ');
 
     // Properties
-    const properties = {
+    const properties: {[key: string]: any} = {
         placeholder,
         onChange: handleChange,
         onKeyDown: handleKeyDown,
@@ -73,6 +74,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, inp
         id: name,
         className: inputClassName
     }
+    extraAttributes?.forEach(([key, value]) => properties[key] = value);
     return(
         <div className={containerClassName}>
             {label && (
