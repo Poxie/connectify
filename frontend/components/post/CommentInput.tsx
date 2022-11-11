@@ -26,7 +26,7 @@ export const CommentInput: React.FC<{
         return(
             <div className={styles['add-comment']}>
                 <span>
-                    You need to login to comment.
+                    {g('loginToComment')}
                 </span>
             </div>
         )
