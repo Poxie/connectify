@@ -21,16 +21,17 @@ export default function PostPage({ post }: {
         }
     }, [post]);
 
-    const title = post ? (
+    let title = post ? (
         `${post?.author.display_name || post?.author.username}: ${post?.title}`
     ) : (
         t('postNotFound')
     )
+    title += ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     return(
         <>
         <Head>
             <title>
-                {title} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+                {title}
             </title>
             {post && (
                 <meta property="og:description" content={post.content.slice(0,152) + '...'} />

@@ -9,11 +9,13 @@ import { NextPageWithLayout } from "../_app"
 
 const Home: NextPageWithLayout = () => {
     const { t } = useTranslation('home');
+
+    const title = t('feed.title') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     return(
         <>
         <Head>
             <title>
-                {t('feed.title')} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+                {title}
             </title>
             <meta property="og:description" content={t('feed.description')} />
             <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />

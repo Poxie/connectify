@@ -21,11 +21,12 @@ const Liked: NextPageWithLayout<{
         }
     }, [user]);
 
-    const title = user ? (
+    let title = user ? (
         t('likedPostsTitle', { name: user?.display_name || user?.username })
     ) : (
         t('userNotFound')
     )
+    title += ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     const description = user?.bio ? (
         user.bio.slice(0,152) + '...'
     ) : (
@@ -39,7 +40,7 @@ const Liked: NextPageWithLayout<{
         <>
         <Head>
             <title>
-                {title} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+                {title}
             </title>
             <meta property="og:description" content={description} />
             {user && (
