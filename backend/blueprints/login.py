@@ -3,7 +3,7 @@ from database import db
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from flask import Blueprint, request, jsonify
-from utils.users import get_user_by_username
+from utils.users import get_user_by_username, get_user_by_email
 from utils.auth import token_required
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
@@ -43,6 +43,11 @@ def reset_password(token_id: int):
     email_receiver = request.form.get('email')
     if not email_receiver:
         return 'Email is required.', 400
+
+    # Checking if email is associated with logged in user
+    user = get_user_by_email(email_receiver)
+    if not user or user['email'] != email_receiver:
+        return 'Email is incorrect.', 401
 
     # Creating reset token
     payload = {

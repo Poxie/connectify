@@ -25,6 +25,17 @@ def get_users_by_username(username: str, token_id: Union[int, None]=None):
     return users
 
 """
+Simple function to fetch basic data based on email match.
+"""
+def get_user_by_email(email: str):
+    query = "SELECT * FROM users WHERE email = %s"
+    values = (email,)
+
+    user = db.fetch_one(query, values)
+
+    return user
+
+"""
 Simple function to fetch basic data based on username match.
 """
 def get_user_by_username(username: str, with_password=False):
