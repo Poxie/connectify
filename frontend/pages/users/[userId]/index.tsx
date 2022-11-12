@@ -26,17 +26,24 @@ const User: NextPageWithLayout<{
     ) : (
         t('userNotFound')
     )
+    const description = user?.bio ? (
+        user.bio.slice(0,152) + '...'
+    ) : (
+        user ? (
+            t('userProfile', { profile: user.display_name || user.username })
+        ) : (
+            t('userNotFound')
+        )
+    )
     return(
         <>
         <Head>
             <title>
                 {title} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
             </title>
+            <meta property="og:description" content={description} />
             {user && (
-                <>
-                <meta property="og:description" content={user.bio.slice(0,152) + '...'} />
                 <meta property="og:image" content={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`} />
-                </>
             )}
             <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
             <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/users/${user?.id}`} />
