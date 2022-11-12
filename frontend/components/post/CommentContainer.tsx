@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Filters } from "../filters/Filters"
 import styles from '../../styles/Post.module.scss';
 import { useAppSelector } from "../../redux/store";
-import { selectCommentIds, selectPostIsFetched } from "../../redux/posts/selectors";
+import { selectCommentIds, selectPostHasLoadedOrderType, selectPostIsFetched } from "../../redux/posts/selectors";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { Comment as CommentType } from "../../types";
 import { useDispatch } from "react-redux";
@@ -20,6 +20,7 @@ export const CommentContainer = () => {
     const postId = useQueryId('postId');
     const dispatch = useDispatch();
     const [orderType, setOrderType] = useState<CommentType['orderType']>('top');
+    const hasLoadedOrderType = useAppSelector(state => selectPostHasLoadedOrderType(state, postId, orderType));
     const postIsFetched = useAppSelector(state => selectPostIsFetched(state, postId));
     const commentIds = useAppSelector(state => selectCommentIds(state, postId, orderType));
 
@@ -35,7 +36,7 @@ export const CommentContainer = () => {
             threshold: SCROLL_THRESHOLD,
             identifier: `${postId}-${orderType}`,
             fetchOnMount: !commentIds.length,
-            standBy: postIsFetched === false
+            standBy: postIsFetched === false || hasLoadedOrderType && !commentIds.length
         }
     )
 
