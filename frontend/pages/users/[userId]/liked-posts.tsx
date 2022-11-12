@@ -32,8 +32,12 @@ const Liked: NextPageWithLayout<{
             <title>
                 {title}'s {t('likedPosts').toLowerCase()} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
             </title>
-            <meta property="og:description" content={user?.bio} />
-            <meta property="og:image" content={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user?.avatar}`} />
+            {user && (
+                <>
+                <meta property="og:description" content={user.bio.slice(0,152) + '...'} />
+                <meta property="og:image" content={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`} />
+                </>
+            )}
             <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
             <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/users/${user?.id}/liked-posts`} />
         </Head>

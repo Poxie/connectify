@@ -32,7 +32,9 @@ export default function PostPage({ post }: {
             <title>
                 {title} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
             </title>
-            <meta property="og:description" content={post?.content} />
+            {post && (
+                <meta property="og:description" content={post.content.slice(0,152) + '...'} />
+            )}
             <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
             <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/posts/${post?.id}`} />
             <meta property="og:type" content="article" />
