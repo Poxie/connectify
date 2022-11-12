@@ -17,5 +17,8 @@
     "you": "Du:",
     "reachedEnd": "Du har nått slutet av konversationen med",
     "noMessages": "Du har inte några meddelanden med",
-    "yet": "ännu"
+    "yet": "ännu",
+    "today": "Idag",
+    "yesterday": "Igår",
+    "at": "vid"
 }

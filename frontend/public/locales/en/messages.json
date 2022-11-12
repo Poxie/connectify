@@ -17,5 +17,8 @@
     "you": "You:",
     "reachedEnd": "You have reached the end of the conversation with",
     "noMessages": "You don't have any messages with",
-    "yet": "Yet"
+    "yet": "Yet",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "at": "at"
 }

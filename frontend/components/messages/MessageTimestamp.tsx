@@ -1,21 +1,20 @@
+import { useTranslation } from 'next-i18next';
+import { useCurrentLocale } from '../../hooks/useCurrentLocale';
 import styles from '../../styles/Messages.module.scss';
 
 export const MessageTimestamp: React.FC<{
     timestamp: number;
 }> = ({ timestamp }) => {
+    const { t } = useTranslation('messages');
+    const locale = useCurrentLocale();
+
     const now = new Date();
-    const yesterday = new Date()
+    const yesterday = new Date();
     yesterday.setDate(now.getDate() - 1);
     const date = new Date(timestamp * 1000);
 
     // Determining time of message
-    let hours = date.getHours();
-    let minutes: number | string = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    const readableTime = `${hours}:${minutes} ${ampm}`;
+    const readableTime = date.toLocaleTimeString(locale, { minute: '2-digit', hour: '2-digit' })
 
     // Determining day of message
     const isToday = now.toDateString() === date.toDateString();
@@ -24,14 +23,14 @@ export const MessageTimestamp: React.FC<{
     // Adding prefix to date
     let prefix;
     if(isToday) {
-        prefix = 'Today '
+        prefix = t('today');
     } else if(isYesterday) {
-        prefix = 'Yesterday '
+        prefix = t('yesterday')
     } else {
-        prefix = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()} `;
+        prefix = date.toLocaleString(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }).replaceAll('-', '/');
     }
 
-    const readableDate = `${prefix} at ${readableTime}`;
+    const readableDate = `${prefix} ${t('at')} ${readableTime}`;
 
     return(
         <span className={styles['timestamp']}>
