@@ -8,19 +8,26 @@ import { Input } from "../../components/input";
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useToast } from '../../contexts/toast/ToastProvider';
 import { useTranslation } from 'next-i18next';
+import { LoginPrompt } from '../../components/login-prompt/LoginPrompt';
 
 export const ResetPassword = () => {
     const router = useRouter();
     const { token } = router.query as { token: string };
     const { t } = useTranslation('reset-password');
     const { setToast } = useToast();
-    const { post } = useAuth();
+    const { post, loading, token: userToken } = useAuth();
 
     const [password, setPassword] = useState('');
     const [repeatedPassword, setRepeatedPassword] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => setError(''), [password, repeatedPassword]);
+
+    // Checking if user is logged in
+    if(loading) return null;
+    if(!loading && !userToken) {
+        return <LoginPrompt />;
+    }
 
     const resetPassword = (e: React.FormEvent) => {
         e.preventDefault();
