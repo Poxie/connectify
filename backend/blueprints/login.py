@@ -1,4 +1,4 @@
-import os, jwt, ssl, smtplib
+import os, jwt, ssl, smtplib, time
 from database import db
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -37,6 +37,8 @@ def user_login():
 
 EMAIL_SENDER = os.environ.get('EMAIL_SENDER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+SECONDS_IN_MINUTE = 60
+TOKEN_EXPIRATION_MINUTES = 15
 @login.post('/send_reset_password')
 @token_required
 def reset_password(token_id: int):
@@ -52,7 +54,8 @@ def reset_password(token_id: int):
     # Creating reset token
     payload = {
         'email': email_receiver,
-        'user_id': token_id
+        'user_id': token_id,
+        'exp': time.time() + SECONDS_IN_MINUTE * TOKEN_EXPIRATION_MINUTES
     }
     token = jwt.encode(payload, os.environ.get('JWT_SECRET_KEY'))
 
