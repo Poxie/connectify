@@ -62,6 +62,7 @@
     "username": "Användarnamn",
     "password": "Lösenord",
     "repeatPassword": "Upprepa lösenord",
+    "email": "Email",
     "dontHaveAnAccount": "Har du inget konto?",
     "alreadyHaveAnAccount": "Har du redan ett konto?",
     "createAccount": "Skapa konto",

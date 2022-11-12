@@ -62,6 +62,7 @@
     "username": "Username",
     "password": "Password",
     "repeatPassword": "Repeat password",
+    "email": "Email",
     "dontHaveAnAccount": "Don't have an account?",
     "alreadyHaveAnAccount": "Already have an account?",
     "createAccount": "Create account",
