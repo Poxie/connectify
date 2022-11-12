@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next';
 import { useCurrentLocale } from '../../hooks/useCurrentLocale';
 import styles from '../../styles/Messages.module.scss';
+import { HasTooltip } from '../tooltip/HasTooltip';
 
 export const MessageTimestamp: React.FC<{
     timestamp: number;
@@ -30,11 +31,17 @@ export const MessageTimestamp: React.FC<{
         prefix = date.toLocaleString(locale, { year: 'numeric', month: '2-digit', day: '2-digit' }).replaceAll('-', '/');
     }
 
-    const readableDate = `${prefix} ${t('at')} ${readableTime}`;
+    const readableDate = `${prefix} ${readableTime}`;
+    const fullDate = date.toLocaleString(locale, { dateStyle: 'full', timeStyle: 'short' });
 
     return(
-        <span className={styles['timestamp']}>
-            {readableDate}
-        </span>
+        <HasTooltip 
+            tooltip={fullDate}
+            delay={400}
+        >
+            <span className={styles['timestamp']}>
+                {readableDate}
+            </span>
+        </HasTooltip>
     )
 }

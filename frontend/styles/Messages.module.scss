@@ -140,6 +140,9 @@
     margin-top: 3px;
     margin-bottom: var(--spacing-primary);
 }
+.timestamp {
+    cursor: default;
+}
 .input-container {
     position: relative;
     padding: 0 var(--spacing-primary);
