@@ -24,6 +24,17 @@
     flex: 1;
     display: block;
 }
-.button {
+.options {
     justify-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-primary);
+}
+.forgot-password {
+    color: var(--text-secondary);
+    transition: color .2s;
+
+    &:hover {
+        color: var(--text-primary);
+    }
 }

@@ -5,11 +5,14 @@ import { useToast } from "../../../contexts/toast/ToastProvider";
 import Button from "../../button";
 import { Input } from "../../input"
 import { useTranslation } from "next-i18next";
+import { useModal } from "../../../contexts/modal/ModalProvider";
+import { ForgotPasswordModal } from "../../../modals/forgot-password/ForgotPasswordModal";
 
 export const ChangePassword = () => {
     const { t } = useTranslation('settings');
     const { patch, profile } = useAuth();
     const { setToast } = useToast();
+    const { setModal } = useModal();
 
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -36,6 +39,10 @@ export const ChangePassword = () => {
             }
         })
     }
+
+    const openForgotPasswordModal = () => {
+        setModal(<ForgotPasswordModal />)
+    }
     
     const disabled = !currentPassword || !newPassword || !!error;
     return(
@@ -48,12 +55,14 @@ export const ChangePassword = () => {
                 onChange={setCurrentPassword}
                 defaultValue={currentPassword}
                 containerClassName={styles['input']}
+                type={'password'}
             />
             <Input 
                 placeholder={t('newPassword')}
                 onChange={setNewPassword}
                 defaultValue={newPassword}
                 containerClassName={styles['input']}
+                type={'password'}
             />
             
             <div className={styles['bottom']}>
@@ -63,13 +72,21 @@ export const ChangePassword = () => {
                     </span>
                 )}
 
-                <Button
-                    disabled={disabled}
-                    buttonType={'submit'}
-                    className={styles['button']}
-                >
-                    {t('updatePassword')}
-                </Button>
+                <div className={styles['options']}>
+                    <button 
+                        className={styles['forgot-password']}
+                        onClick={openForgotPasswordModal}
+                        type={'button'}
+                    >
+                        Forgot password?
+                    </button>
+                    <Button
+                        disabled={disabled}
+                        buttonType={'submit'}
+                    >
+                        {t('updatePassword')}
+                    </Button>
+                </div>
             </div>
         </form>
     )
