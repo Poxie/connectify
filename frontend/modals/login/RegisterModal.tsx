@@ -94,7 +94,7 @@ export const RegisterModal = () => {
                     />
                     <Input 
                         placeholder={t('email')}
-                        label={t('email')}
+                        label={t('emailLabel')}
                         name={'email'}
                         onChange={setEmail}
                     />

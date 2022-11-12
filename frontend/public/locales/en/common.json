@@ -63,6 +63,7 @@
     "password": "Password",
     "repeatPassword": "Repeat password",
     "email": "Email",
+    "emailLabel": "Email (optional)",
     "dontHaveAnAccount": "Don't have an account?",
     "alreadyHaveAnAccount": "Already have an account?",
     "createAccount": "Create account",
