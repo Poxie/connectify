@@ -36,8 +36,18 @@
     }
 }
 .header {
-    margin: 0;
     padding: var(--spacing-primary);
+     
+    h2 {
+        margin: 0;
+    }
+    span {
+        margin-top: var(--spacing-primary);
+        display: block;
+    }
+}
+.main {
+    padding: 0 var(--spacing-primary);
 }
 .footer {
     display: flex;
