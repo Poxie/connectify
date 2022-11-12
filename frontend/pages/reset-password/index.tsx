@@ -7,10 +7,12 @@ import Button from "../../components/button";
 import { Input } from "../../components/input";
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useToast } from '../../contexts/toast/ToastProvider';
+import { useTranslation } from 'next-i18next';
 
 export const ResetPassword = () => {
     const router = useRouter();
     const { token } = router.query as { token: string };
+    const { t } = useTranslation('reset-password');
     const { setToast } = useToast();
     const { post } = useAuth();
 
@@ -22,7 +24,7 @@ export const ResetPassword = () => {
 
     const resetPassword = () => {
         if(password !== repeatedPassword) {
-            setError('Passwords don\'t match.');
+            setError(t('passwordsDontMatch'));
             return;
         }
 
@@ -32,14 +34,14 @@ export const ResetPassword = () => {
         })
         .then(() => {
             router.replace(`/settings/account`);
-            setToast(`Successfully reset password`);
+            setToast(t('passwordResetSuccess'));
         })
         .catch(error => {
             if(error.code === 401) {
-                setError('Unauthorized.')
+                setError(t('unauthorizedError'))
                 return
             }
-            setError('An error occured.');
+            setError(t('genericError'));
         })
     }
 
@@ -47,15 +49,15 @@ export const ResetPassword = () => {
     return(
         <div className={styles['container']}>
             <h2>
-                Reset password
+                {t('title')}
             </h2>
             <Input 
-                placeholder={'New password'}
+                placeholder={t('newPassword')}
                 onChange={setPassword}
                 type={'password'}
             />
             <Input 
-                placeholder={'Repeat password'}
+                placeholder={t('repeatPassword')}
                 onChange={setRepeatedPassword}
                 type={'password'}
             />
@@ -71,7 +73,7 @@ export const ResetPassword = () => {
                     disabled={disabled}
                     onClick={resetPassword}
                 >
-                    Reset password
+                    {t('resetPassword')}
                 </Button>
             </div>
         </div>
@@ -80,7 +82,7 @@ export const ResetPassword = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
     props: {
-        ...(await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common']))
+        ...(await serverSideTranslations(locale || process.env.NEXT_PUBLIC_DEFAULT_LOCALE, ['common', 'reset-password']))
     }
 })
 

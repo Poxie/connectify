@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import React, { useState } from "react"
 import { Input } from "../../components/input"
 import { useAuth } from "../../contexts/auth/AuthProvider";
@@ -8,6 +9,8 @@ import { ModalHeader } from "../ModalHeader"
 import { ModalMain } from "../ModalMain";
 
 export const ForgotPasswordModal = () => {
+    const { t } = useTranslation('settings');
+    const { t:g } = useTranslation('common');
     const { close } = useModal();
     const { post } = useAuth();
     const { setToast } = useToast();
@@ -15,46 +18,46 @@ export const ForgotPasswordModal = () => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const sendMail = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const sendMail = async (e?: React.FormEvent) => {
+        e?.preventDefault();
         setLoading(true);
 
         const data = await post(`/send_reset_password`, {
             email
         }).catch(error => {
             if(error.code === 401) {
-                setToast(`Email is not linked with this account. Please check for typps.`, 'error');
+                setToast(t('emailIsIncorrect'), 'error');
                 return;
             }
-            setToast(`An error occured while sending email.`, 'error');
+            setToast(t('emailGenericError'), 'error');
         }).finally(() => {
             setLoading(false);
         })
         if(!data) return;
 
-        setToast(`An email has been sent to ${email}`, 'success');
+        setToast(t('emailSentSuccess', { email }), 'success');
         setEmail('');
     }
 
     return(
         <>
         <ModalHeader 
-            subHeader={'Enter the email associated with this account to receive a link to reset your password with.'}
+            subHeader={t('resetPasswordSubHeader')}
         >
-            Reset password
+            {t('resetPassword')}
         </ModalHeader>
         <form onSubmit={sendMail}>
             <ModalMain>
                 <Input 
-                    placeholder={'Email'}
+                    placeholder={g('email')}
                     defaultValue={email}
                     onChange={setEmail}
                     type={'email'}
                 />
             </ModalMain>
             <ModalFooter 
-                cancelLabel={'Close'}
-                confirmLabel={'Send mail'}
+                cancelLabel={g('close')}
+                confirmLabel={t('sendMail')}
                 onCancel={close}
                 onConfirm={sendMail}
                 confirmDisabled={!email}

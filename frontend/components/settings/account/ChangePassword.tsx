@@ -29,7 +29,7 @@ export const ChangePassword = () => {
             new_password: newPassword
         })
         .then(() => {
-            setToast('passwordUpdatedSuccess', 'success');
+            setToast(t('passwordUpdateSuccess'), 'success');
             setCurrentPassword('');
             setNewPassword('');
         })
@@ -78,7 +78,7 @@ export const ChangePassword = () => {
                         onClick={openForgotPasswordModal}
                         type={'button'}
                     >
-                        Forgot password?
+                        {t('forgotPassword')}
                     </button>
                     <Button
                         disabled={disabled}
