@@ -2,7 +2,7 @@
   --color-primary: #008FA2;
   --color-secondary: #006F7E;
   --color-red: #cc0000;
-  --color-green: rgb(0, 255, 13);
+  --color-green: #00ff0d;
   --color-blue: #0066ff;
   --text-light-primary: #fff;
   --text-light-secondary: #cccccc;
@@ -18,6 +18,7 @@
 }
 
 [theme="light"], [data-theme="light"], [data-theme="light-contrast"], [theme="light-contrast"] {
+  --color-green: #009708;
   --background-primary: #fff;
   --background-secondary: #F5F5F5;
   --background-tertiary: #e9e5fb;
