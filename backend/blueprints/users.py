@@ -28,6 +28,7 @@ def get_user(id: int, token_id: Union[int, None]=None):
 def create_new_user():
     username = request.form.get('username')
     password = request.form.get('password')
+    email = request.form.get('email')
 
     # If missing fields, return bad request
     field_suffix = 'is a required field.'
@@ -38,7 +39,7 @@ def create_new_user():
 
     # Creating user
     try:
-        token = create_user(username, password)
+        token = create_user(username, password, email)
     except ValueError as e:
         return str(e), 409
 
