@@ -22,7 +22,7 @@ const Liked: NextPageWithLayout<{
     }, [user]);
 
     const title = user ? (
-        user?.display_name || user?.username + `'s ${t('likedPosts').toLowerCase()}`
+        t('likedPostsTitle', { name: user?.display_name || user?.username })
     ) : (
         t('userNotFound')
     )
