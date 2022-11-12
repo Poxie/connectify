@@ -4,6 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from flask import Blueprint, request, jsonify
 from utils.users import get_user_by_username, get_user_by_email
+from utils.common import get_user_by_id
 from utils.auth import token_required
 from cryptography.fernet import Fernet
 f = Fernet(os.getenv('CRYPTOGRAPHY_KEY') or '')
@@ -47,8 +48,9 @@ def reset_password(token_id: int):
         return 'Email is required.', 400
 
     # Checking if email is associated with logged in user
-    user = get_user_by_email(email_receiver)
-    if not user or user['email'] != email_receiver:
+    inputted_user = get_user_by_email(email_receiver)
+    account_user = get_user_by_id(token_id)
+    if not inputted_user or inputted_user['email'] != account_user['email']:
         return 'Email is incorrect.', 401
 
     # Creating reset token
