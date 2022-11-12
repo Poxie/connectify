@@ -1,4 +1,5 @@
 import os, jwt, ssl, smtplib
+from database import db
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from flask import Blueprint, request, jsonify
@@ -36,7 +37,7 @@ def user_login():
 
 EMAIL_SENDER = os.environ.get('EMAIL_SENDER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-@login.post('/reset_password')
+@login.post('/send_reset_password')
 @token_required
 def reset_password(token_id: int):
     email_receiver = request.form.get('email')
@@ -90,4 +91,39 @@ def reset_password(token_id: int):
         smtp.login(EMAIL_SENDER, EMAIL_PASSWORD)
         smtp.sendmail(EMAIL_SENDER, email_receiver, message.as_string())
         
-        return jsonify({})
+        return jsonify({'message': 'success'})
+
+@login.post('/reset_password')
+@token_required
+def verify_reset_token(token_id: int):
+    token = request.form.get('token')
+    password = request.form.get('password')
+    if not token:
+        return 'Token is required for password reset.', 400
+    if not password:
+        return 'Password is required for password reset.', 400
+
+    # Checking if token is valid
+    user_id, email = None, None
+    try:
+        data = jwt.decode(token, os.getenv('JWT_SECRET_KEY') or '', algorithms=['HS256'])
+        user_id = data['user_id']
+        email = data['email']
+    except Exception as e:
+        return 'Token is invalid.', 401
+
+    if not user_id or not email:
+        return 'Token values are invalid', 401
+
+    # Checking if user is correct user
+    if user_id != token_id:
+        return 'Unauthorized.', 401
+
+    # Updating user password
+    hashed_password = f.encrypt(password.encode('utf-8'))
+    query = "UPDATE users SET password = %s WHERE id = %s"
+    values = (hashed_password, token_id)
+
+    db.update(query, values)
+
+    return jsonify({'message': 'success'})
