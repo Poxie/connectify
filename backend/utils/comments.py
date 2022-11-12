@@ -44,21 +44,21 @@ def get_post_comments(post_id: int, token_id: Union[int, None]=None, order_by='t
     query = ""
     if order_by == 'top':
         query = """
-        SELECT 
-            c.id
-        FROM 
-            comments c
+        SELECT
+            comments.id,
+            COUNT(likes.user_id) AS like_count
+        FROM comments
+            LEFT JOIN likes ON comments.id = likes.parent_id
         WHERE 
-            c.post_id = %s
-        ORDER BY (
-            SELECT COUNT(*) FROM likes l WHERE l.parent_id = c.id
-        ) DESC
+            comments.post_id = %s
+        GROUP BY comments.id
+        ORDER BY like_count DESC
         LIMIT %s, %s
         """
     elif order_by == 'latest':
         query = "SELECT id FROM comments WHERE post_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
 
-    values = (post_id,start_at, amount)
+    values = (post_id, start_at, amount)
 
     # Fetching comments
     data = db.fetch_all(query, values)
