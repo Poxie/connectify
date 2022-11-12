@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { Input } from "../../components/input"
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useModal } from "../../contexts/modal/ModalProvider";
@@ -15,7 +15,8 @@ export const ForgotPasswordModal = () => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const sendMail = async () => {
+    const sendMail = async (e: React.FormEvent) => {
+        e.preventDefault();
         setLoading(true);
 
         const data = await post(`/send_reset_password`, {
@@ -32,6 +33,7 @@ export const ForgotPasswordModal = () => {
         if(!data) return;
 
         setToast(`An email has been sent to ${email}`, 'success');
+        setEmail('');
     }
 
     return(
@@ -41,21 +43,24 @@ export const ForgotPasswordModal = () => {
         >
             Reset password
         </ModalHeader>
-        <ModalMain>
-            <Input 
-                placeholder={'Email'}
-                onChange={setEmail}
-                type={'email'}
+        <form onSubmit={sendMail}>
+            <ModalMain>
+                <Input 
+                    placeholder={'Email'}
+                    defaultValue={email}
+                    onChange={setEmail}
+                    type={'email'}
+                />
+            </ModalMain>
+            <ModalFooter 
+                cancelLabel={'Close'}
+                confirmLabel={'Send mail'}
+                onCancel={close}
+                onConfirm={sendMail}
+                confirmDisabled={!email}
+                confirmLoading={loading}
             />
-        </ModalMain>
-        <ModalFooter 
-            cancelLabel={'Close'}
-            confirmLabel={'Send mail'}
-            onCancel={close}
-            onConfirm={sendMail}
-            confirmDisabled={!email}
-            confirmLoading={loading}
-        />
+        </form>
         </>
     )
 }
