@@ -24,14 +24,14 @@ export const MessageTimestamp: React.FC<{
     // Adding prefix to date
     let prefix;
     if(isToday) {
-        prefix = 'Today at '
+        prefix = 'Today '
     } else if(isYesterday) {
-        prefix = 'Yesterday at '
+        prefix = 'Yesterday '
     } else {
         prefix = `${date.getMonth()}/${date.getDate()}/${date.getFullYear()} `;
     }
 
-    const readableDate = `${prefix} ${readableTime}`;
+    const readableDate = `${prefix} at ${readableTime}`;
 
     return(
         <span className={styles['timestamp']}>
