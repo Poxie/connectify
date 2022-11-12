@@ -3,5 +3,6 @@
     "noComments": "Det här inlägget har inga kommentarer. Bli den första att kommmentera!",
     "loginToComment": "Du behöver vara inloggad för att kommentera.",
     "topComments": "Topp kommentarer",
-    "latestComments": "Senaste kommentarer"
+    "latestComments": "Senaste kommentarer",
+    "postNotFound": "Inlägget kunde inte hittas"
 }
