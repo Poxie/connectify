@@ -2,7 +2,7 @@
     display: flex;
 }
 .sidebar {
-    width: 220px;
+    min-width: 220px;
     height: calc(100vh - var(--navbar-height) - var(--spacing-primary));
     border-right: 1px solid var(--background-tertiary);
     padding-right: var(--spacing-primary);
