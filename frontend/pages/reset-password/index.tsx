@@ -2,7 +2,7 @@ import styles from '../../styles/ResetPassword.module.scss';
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/button";
 import { Input } from "../../components/input";
 import { useAuth } from '../../contexts/auth/AuthProvider';
@@ -22,7 +22,9 @@ export const ResetPassword = () => {
 
     useEffect(() => setError(''), [password, repeatedPassword]);
 
-    const resetPassword = () => {
+    const resetPassword = (e: React.FormEvent) => {
+        e.preventDefault();
+
         if(password !== repeatedPassword) {
             setError(t('passwordsDontMatch'));
             return;
@@ -51,31 +53,33 @@ export const ResetPassword = () => {
             <h2>
                 {t('title')}
             </h2>
-            <Input 
-                placeholder={t('newPassword')}
-                onChange={setPassword}
-                type={'password'}
-            />
-            <Input 
-                placeholder={t('repeatPassword')}
-                onChange={setRepeatedPassword}
-                type={'password'}
-            />
-            <div className={styles['bottom']}>
-                {error && (
-                    <span className={styles['error']}>
-                        {error}
-                    </span>
-                )}
+            <form onSubmit={resetPassword}>
+                <Input 
+                    placeholder={t('newPassword')}
+                    onChange={setPassword}
+                    type={'password'}
+                />
+                <Input 
+                    placeholder={t('repeatPassword')}
+                    onChange={setRepeatedPassword}
+                    type={'password'}
+                />
+                <div className={styles['bottom']}>
+                    {error && (
+                        <span className={styles['error']}>
+                            {error}
+                        </span>
+                    )}
 
-                <Button 
-                    className={styles['button']}
-                    disabled={disabled}
-                    onClick={resetPassword}
-                >
-                    {t('resetPassword')}
-                </Button>
-            </div>
+                    <Button 
+                        className={styles['button']}
+                        disabled={disabled}
+                        buttonType={'submit'}
+                    >
+                        {t('resetPassword')}
+                    </Button>
+                </div>
+            </form>
         </div>
     )
 }
