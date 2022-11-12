@@ -13,6 +13,7 @@
         "inputPlaceholder": "Skicka till",
         "inputButtonText": "Skicka"
     },
+    "unauthorized": "Du har inte behörighet att se den här kanalen.",
     "directMessageAriaLabel": "meddelande",
     "you": "Du:",
     "reachedEnd": "Du har nått slutet av konversationen med",

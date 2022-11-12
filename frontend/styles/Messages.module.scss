@@ -37,6 +37,10 @@
         rotate: 180deg;
     }
 }
+.label {
+    display: block;
+    margin-left: var(--spacing-primary);
+}
 .list-container {
     overflow: hidden;
     height: 100%;
