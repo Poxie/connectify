@@ -49,3 +49,23 @@ def get_popular_posts(token_id: Union[int,None]=None, start_at=0, amount=15):
         posts.append(post)
 
     return posts
+
+def get_latest_posts(token_id: Union[int, None]=None, start_at=0, amount=15):
+    # Fetching latest posts from database
+    query = """
+    SELECT id FROM posts ORDER BY timestamp DESC LIMIT %s, %s
+    """
+    values = (start_at, amount)
+
+    data = db.fetch_all(query, values)
+    if not data: 
+        return []
+
+    # Fetching post data
+    posts = []
+    post_ids = [item['id'] for item in data if 'id' in item]
+    for post_id in post_ids:
+        post = get_post_by_id(post_id, token_id)
+        posts.append(post)
+
+    return posts
