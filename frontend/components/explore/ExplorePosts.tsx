@@ -18,6 +18,10 @@ export const ExplorePosts = () => {
     const filterType = useAppSelector(selectExploreFilter);
     const topFinished = useAppSelector(selectExploreTopReachedEnd);
     const latestFinsihed = useAppSelector(selectExploreLatestReachedEnd);
+    const isAtEnd = (
+        (filterType === 'top' && topFinished) ||
+        (filterType === 'latest' && latestFinsihed)
+    );
 
     // Fetching posts on mount and scroll
     const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
@@ -37,10 +41,7 @@ export const ExplorePosts = () => {
             threshold: SCROLL_THRESHOLD,
             fetchOnMount: !postIds.length,
             identifier: filterType,
-            isAtEnd: (
-                (filterType === 'top' && topFinished) ||
-                (filterType === 'latest' && latestFinsihed)
-            )
+            isAtEnd
         }
     )
 
@@ -56,6 +57,7 @@ export const ExplorePosts = () => {
     }
 
     return(
+        <>
         <ul className={styles['post-container']}>
             {postIds.map(id => (
                 <UserPost 
@@ -64,5 +66,12 @@ export const ExplorePosts = () => {
                 />
             ))}
         </ul>
+        
+        {isAtEnd && (
+            <span className={styles['reached-end']}>
+                Nothing more to show! You have reached the end of the exploration.
+            </span>
+        )}
+        </>
     )
 }
