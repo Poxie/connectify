@@ -30,6 +30,13 @@ def create_user_post(token_id: int):
     attachments = []
     for key, item in request.files.items(multi=True):
         if key != 'attachments': continue
+
+        # Checking file extension
+        parts = item.filename.split('.')[::-1]
+        ext = parts[0]
+        if ext.lower() not in ['jpg', 'png']:
+            return 'Unsupported file format.', 400
+
         attachments.append(item)
 
     # Creating post

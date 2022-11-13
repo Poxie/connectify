@@ -164,12 +164,14 @@ def create_attachment(attachment, parent_id):
 
     id = create_id('attachments')
     file_name = os.path.join(folder, str(id) + '.png')
+    parts = attachment.filename.split('.')[::-1]
+    extension = parts[0]
     
     attachment.save(file_name)
 
     # Inserting attachments into database
-    query = "INSERT INTO attachments (id, parent_id) VALUES (%s, %s)"
-    values = (id, parent_id)
+    query = "INSERT INTO attachments (id, parent_id, extension) VALUES (%s, %s, %s)"
+    values = (id, parent_id, extension)
 
     db.insert(query, values)
 
