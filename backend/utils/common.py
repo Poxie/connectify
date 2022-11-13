@@ -171,10 +171,10 @@ def create_attachment(attachment, parent_id):
     app_root = os.path.dirname(os.path.abspath(__file__))
     folder = os.path.join(app_root, '../imgs/attachments/')
 
-    id = create_id('attachments')
-    file_name = os.path.join(folder, str(id) + '.png')
     parts = attachment.filename.split('.')[::-1]
     extension = parts[0]
+    id = create_id('attachments')
+    file_name = os.path.join(folder, str(id) + '.' + extension)
     
     attachment.save(file_name)
 
