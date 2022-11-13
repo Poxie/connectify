@@ -8,5 +8,9 @@
     "unfollow": "Avfölj",
 
     "postsReachedEnd": "Du har nått slutet av denna användares inlägg.",
-    "likedReachedEnd": "Du har nått slutet av denna användares gillade inlägg."
+    "likedReachedEnd": "Du har nått slutet av denna användares gillade inlägg.",
+
+    "likedPostsTitle": "{{name}}s gillade inlägg",
+    "userProfile": "{{profile}}s profile",
+    "userNotFound": "Användaren kunde inte hittas"
 }

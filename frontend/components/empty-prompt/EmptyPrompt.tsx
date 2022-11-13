@@ -6,7 +6,7 @@ import Button from '../button';
 export const EmptyPrompt: React.FC<{
     header: string;
     message: string;
-    buttons: {text: string, type: 'default' | 'secondary', path?: string}[];
+    buttons: {text: string, type: 'default' | 'secondary', path?: string, onClick?: () => void}[];
 }> = ({ header, message, buttons }) => {
     return(
         <motion.div 
@@ -24,6 +24,7 @@ export const EmptyPrompt: React.FC<{
             <div className={styles['buttons']}>
                 {buttons.map((button, key) => (
                     <Button
+                        onClick={button.onClick}
                         href={button.path}
                         type={button.type}
                         key={key}

@@ -14,6 +14,7 @@ export const RegisterModal = () => {
     const { goBack } = useModal();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
@@ -33,7 +34,8 @@ export const RegisterModal = () => {
 
         post<TokenData>(`/users`, {
             username,
-            password
+            password,
+            email
         })
         .then(data => {
             const token = data.token;
@@ -89,6 +91,12 @@ export const RegisterModal = () => {
                         name={'repeat-password'}
                         type={'password'}
                         onChange={setRepeatPassword}
+                    />
+                    <Input 
+                        placeholder={t('email')}
+                        label={t('emailLabel')}
+                        name={'email'}
+                        onChange={setEmail}
                     />
 
                     {error && (

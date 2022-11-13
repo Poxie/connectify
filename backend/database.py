@@ -40,7 +40,7 @@ class Database():
             cursor.execute(f'USE {MYSQL_DATABASE}')
 
             # Creating tables
-            cursor.execute('CREATE TABLE IF NOT EXISTS users (id BIGINT(20), username VARCHAR(255), password VARCHAR(255), display_name VARCHAR(255), bio VARCHAR(255) DEFAULT NULL, avatar VARCHAR(255), banner VARCHAR(255) DEFAULT NULL)')
+            cursor.execute('CREATE TABLE IF NOT EXISTS users (id BIGINT(20), username VARCHAR(255), password VARCHAR(255), email VARCHAR(255) DEFAULT NULL, display_name VARCHAR(255), bio VARCHAR(255) DEFAULT NULL, avatar VARCHAR(255), banner VARCHAR(255) DEFAULT NULL)')
             cursor.execute('CREATE TABLE IF NOT EXISTS followers (follower_id BIGINT(20), followee_id BIGINT(20), timestamp BIGINT(20))')
             cursor.execute('CREATE TABLE IF NOT EXISTS posts (id BIGINT(20), author_id BIGINT(20), title VARCHAR(255), content VARCHAR(255), timestamp BIGINT(20))')
             cursor.execute('CREATE TABLE IF NOT EXISTS comments (id BIGINT(20), author_id BIGINT(20), post_id BIGINT(20), content VARCHAR(255), timestamp BIGINT(20))')

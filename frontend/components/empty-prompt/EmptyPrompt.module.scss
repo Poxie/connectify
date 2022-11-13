@@ -16,3 +16,13 @@
     margin-top: var(--spacing-primary);
     font-size: 14px;
 }
+
+@media (max-width: 500px) {
+    .buttons {
+        flex-direction: column;
+        
+        &>* {
+            justify-content: center;
+        }
+    }
+}

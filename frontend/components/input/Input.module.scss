@@ -1,12 +1,12 @@
 .container {
     border-radius: var(--border-radius-primary);
     background-color: var(--input-background);
+    border: 1px solid var(--input-border-color);
     font-family: inherit;
     resize: vertical;
-    padding: 14px;
+    padding: 12px;
     font-size: 16px;
     outline: none;
-    border: none;
     width: 100%;
     color: var(--input-text);
 }

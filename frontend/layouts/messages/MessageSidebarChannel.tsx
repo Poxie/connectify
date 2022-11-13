@@ -52,13 +52,11 @@ export const MessageSidebarChannel: React.FC<{
                             </div>
                             <div className={styles['text']}>
                                 <div className={styles['tab-text-main']}>
-                                    <div className={styles['display-name']}>
-                                        <span>
-                                            {name}
-                                        </span>
-                                    </div>
+                                    <span className={styles['display-name']}>
+                                        {name}
+                                    </span>
                                     {username && (
-                                        <span>
+                                        <span className={styles['username']}>
                                             @{username}
                                         </span>
                                     )}

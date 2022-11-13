@@ -9,11 +9,12 @@ import { NextPageWithLayout } from "../_app";
 const appearancePage: NextPageWithLayout = () => {
     const { t } = useTranslation('settings');
 
+    const title = t('appearance') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     return(
         <>
         <Head>
             <title>
-                {t('appearance')} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+                {title}
             </title>
             <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
             <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/settings/appearance`} />

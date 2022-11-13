@@ -18,6 +18,11 @@ export const selectPostIsFetched = createSelector(
     post => post !== undefined
 )
 
+export const selectPostHasLoadedOrderType = createSelector(
+    [selectPostById, selectOrderType],
+    (post, orderType) => orderType === 'latest' ? post?.hasLoadedLatestComments : post?.hasLoadedTopComments
+)
+
 const selectFilteredComments = createSelector(
     [selectComments, selectId, selectOrderType],
     (comments, postId, orderType) => comments.filter(comment => comment.post_id === postId && comment.orderType === orderType)

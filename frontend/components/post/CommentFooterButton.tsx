@@ -12,7 +12,7 @@ export const CommentFooterButton: React.FC<{
         active ? styles['active'] : ''
     ].join(' ');
     return(
-        <div 
+        <button 
             className={className}
             onClick={onClick}
         >
@@ -21,6 +21,6 @@ export const CommentFooterButton: React.FC<{
             <span>
                 {text}
             </span>
-        </div>
+        </button>
     )
 }

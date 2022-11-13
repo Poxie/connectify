@@ -25,6 +25,17 @@ def get_users_by_username(username: str, token_id: Union[int, None]=None):
     return users
 
 """
+Simple function to fetch basic data based on email match.
+"""
+def get_user_by_email(email: str):
+    query = "SELECT * FROM users WHERE email = %s"
+    values = (email,)
+
+    user = db.fetch_one(query, values)
+
+    return user
+
+"""
 Simple function to fetch basic data based on username match.
 """
 def get_user_by_username(username: str, with_password=False):
@@ -43,7 +54,7 @@ Creates a new user. When creating an account, only username and
 password are required. Function will return a token, which can be
 used to authenticate for future http requests.
 """
-def create_user(username: str, password: str):
+def create_user(username: str, password: str, email: Union[str, None]=None):
     # Checking if username is available
     username_unavailable = get_user_by_username(username)
     if username_unavailable:
@@ -60,8 +71,8 @@ def create_user(username: str, password: str):
     avatar = f'default{randrange(0, DEFAULT_AVATAR_COUNT)}.png'
 
     # Creating insert query
-    query = "INSERT INTO users (id, username, password, avatar) VALUES (%s, %s, %s, %s)"
-    values = (id, username, hashed_password, avatar)
+    query = "INSERT INTO users (id, username, password, email, avatar) VALUES (%s, %s, %s, %s, %s)"
+    values = (id, username, hashed_password, email, avatar)
 
     # Creating user
     db.insert(query, values)

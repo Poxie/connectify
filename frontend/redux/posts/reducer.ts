@@ -27,7 +27,10 @@ const setPostComments = (state: PostsState, action: AnyAction) => {
     } = action.payload;
 
     const newPosts = updateItemInArray(state.posts, postId, post => {
-        return updateObject(post, { hasCommentsFetched: true })
+        return updateObject(post, { 
+            hasCommentsFetched: true,
+            [orderType === 'latest' ? 'hasLoadedLatestComments' : 'hasLoadedTopComments']: true
+        })
     })
     const newComments = state.comments.concat(comments.map(comment => (
         updateObject(comment, { orderType })
@@ -42,17 +45,21 @@ const setPostComments = (state: PostsState, action: AnyAction) => {
 const addPostComment = (state: PostsState, action: AnyAction) => {
     const comment: Comment = action.payload;
 
+    let hasLoadedLatestComments;
+    let hasLoadedTopComments;
     const newPosts = updateItemInArray(state.posts, comment.post_id, post => {
+        hasLoadedLatestComments = post.hasLoadedLatestComments;
+        hasLoadedTopComments = post.hasLoadedTopComments;
         return updateObject(post, {
             comment_count: post.comment_count + 1
         })
     })
 
     const orderTypeComments = [];
-    if(state.comments.find(c => c.orderType === 'latest')) {
+    if(hasLoadedLatestComments) {
         orderTypeComments.push(updateObject(comment, { orderType: 'latest' }));
     }
-    if(state.comments.find(c => c.orderType === 'top')) {
+    if(hasLoadedTopComments) {
         orderTypeComments.push(updateObject(comment, { orderType: 'top' }))
     }
     const newComments = [...orderTypeComments, ...state.comments];

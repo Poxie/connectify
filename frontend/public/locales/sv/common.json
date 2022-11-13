@@ -53,7 +53,7 @@
     "createConversationWith": "Skapa konversation med",
 
     "notLoggedInHeader": "Du behöver logga in för den här funktionen.",
-    "notLoggedInMessage": "Logga in för att få den bästa möjliga upplevelsen. Användaruppdatteringar som du följer kommer att visas här.",
+    "notLoggedInMessage": "Logga in för att uppleva den kompletta upplevelsen. Skapa och ta del av inlägg, följ användare, och starta konversationer!",
 
     "loginHeader": "Logga in i",
     "loginSubHeader": "Logga in för att uppleva den kompletta upplevelsen. Skapa och ta del av inlägg, följ användare, och starta konversationer!",
@@ -62,6 +62,8 @@
     "username": "Användarnamn",
     "password": "Lösenord",
     "repeatPassword": "Upprepa lösenord",
+    "email": "Email",
+    "emailLabel": "Email (valfritt)",
     "dontHaveAnAccount": "Har du inget konto?",
     "alreadyHaveAnAccount": "Har du redan ett konto?",
     "createAccount": "Skapa konto",

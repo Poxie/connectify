@@ -43,6 +43,8 @@ def get_user_by_id(id: int, token_id: Union[int, None]=None):
     values = (token_id, id)
 
     user = db.fetch_one(query, values)
+    if user and 'id' in user and user['id'] is None:
+        user = None
 
     if user:
         # Deleting unwanted properties
@@ -75,6 +77,8 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
     values = (token_id, id)
 
     post = db.fetch_one(query, values)
+    if post and 'id' in post and post['id'] is None:
+        post = None
 
     if post:
         # Checking if self has liked

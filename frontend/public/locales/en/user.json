@@ -8,5 +8,9 @@
     "unfollow": "Unfollow",
 
     "postsReachedEnd": "You have reached the end of this user's posts.",
-    "likedReachedEnd": "You have reached the end of this user's liked posts."
+    "likedReachedEnd": "You have reached the end of this user's liked posts.",
+
+    "likedPostsTitle": "{{name}}'s liked posts",
+    "userProfile": "{{profile}}'s profile",
+    "userNotFound": "The user was not found"
 }

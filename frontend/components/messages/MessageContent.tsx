@@ -4,9 +4,6 @@ import styles from '../../styles/Messages.module.scss';
 const linkExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 const linkRegex = new RegExp(linkExpression);
 
-const boldExpression = /\*.*?\*(?!\.\S)/
-const boldRegex = new RegExp(boldExpression);
-
 export const MessageContent: React.FC<{
     content: string;
 }> = ({ content }) => {

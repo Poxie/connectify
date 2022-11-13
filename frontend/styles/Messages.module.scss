@@ -37,6 +37,10 @@
         rotate: 180deg;
     }
 }
+.label {
+    display: block;
+    margin-left: var(--spacing-primary);
+}
 .list-container {
     overflow: hidden;
     height: 100%;
@@ -139,6 +143,9 @@
     display: block;
     margin-top: 3px;
     margin-bottom: var(--spacing-primary);
+}
+.timestamp {
+    cursor: default;
 }
 .input-container {
     position: relative;

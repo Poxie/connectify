@@ -1,4 +1,5 @@
 import styles from '../../../styles/Language.module.scss';
+import { setCookie } from 'cookies-next';
 import { useRouter } from "next/router"
 import { ChangeEvent } from "react";
 
@@ -13,6 +14,7 @@ export const DisplayLanguage = () => {
         const { pathname, asPath, query } = router;
         router.replace({ pathname, query }, asPath, { locale });
         localStorage.setItem('locale', locale);
+        setCookie('NEXT_LOCALE', locale);
     }
 
     return(

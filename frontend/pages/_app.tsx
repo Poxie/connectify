@@ -15,6 +15,7 @@ import { MenuProvider } from '../contexts/menu/MenuProvider';
 import { ThemeProvider } from '../contexts/theme/ThemeProvider';
 import { TooltipProvider } from '../contexts/tooltip/TooltipProvider';
 import { ToastProvider } from '../contexts/toast/ToastProvider';
+import { Provider } from 'react-redux';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -24,36 +25,41 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({ Component, pageProps, ...rest }: AppPropsWithLayout) {
+  // Redux store
+  const { store } = wrapper.useWrappedStore(rest);
+
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return(
-    <ThemeProvider>
-      <ToastProvider>
-        <AuthProvider>
-          <SocketProvider>
-            <TooltipProvider>
-              <ModalProvider>
-                <MenuProvider>
-                  <PopoutProvider>
-                    <Navbar />
-                    <div className={styles['app-content']}>
-                      <Sidebar />
-                      <main>
-                        {getLayout(
-                          <Component {...pageProps} />
-                        )}
-                      </main>
-                    </div>
-                  </PopoutProvider>
-                </MenuProvider>
-              </ModalProvider>
-            </TooltipProvider>
-          </SocketProvider>
-        </AuthProvider>
-      </ToastProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <SocketProvider>
+              <TooltipProvider>
+                <ModalProvider>
+                  <MenuProvider>
+                    <PopoutProvider>
+                      <Navbar />
+                      <div className={styles['app-content']}>
+                        <Sidebar />
+                        <main>
+                          {getLayout(
+                            <Component {...pageProps} />
+                          )}
+                        </main>
+                      </div>
+                    </PopoutProvider>
+                  </MenuProvider>
+                </ModalProvider>
+              </TooltipProvider>
+            </SocketProvider>
+          </AuthProvider>
+        </ToastProvider>
+      </ThemeProvider>
+    </Provider>
   )
 }
-export default wrapper.withRedux(appWithTranslation(MyApp));
+export default appWithTranslation(MyApp);

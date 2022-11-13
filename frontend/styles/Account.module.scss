@@ -1,0 +1,40 @@
+.container {
+    flex: 1;
+
+    &>* {
+        padding-left: var(--spacing-primary) !important;
+    }
+}
+
+.change-password {
+    display: grid;
+}
+.input:not(:last-of-type) {
+    margin-bottom: 8px;
+}
+.bottom {
+    margin-top: var(--spacing-primary);
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.error {
+    color: var(--text-secondary);
+    text-align: left;
+    flex: 1;
+    display: block;
+}
+.options {
+    justify-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-primary);
+}
+.forgot-password {
+    color: var(--text-secondary);
+    transition: color .2s;
+
+    &:hover {
+        color: var(--text-primary);
+    }
+}

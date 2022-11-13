@@ -9,12 +9,14 @@ import { NextPageWithLayout } from "../_app";
 
 const Explore: NextPageWithLayout = () => {
     const { t } = useTranslation('home');
-    const { t:g } = useTranslation('common')
+    const { t:g } = useTranslation('common');
+
+    const title = t('explore.title') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     return(
         <>
         <Head>
             <title>
-                {t('explore.title')} - {process.env.NEXT_PUBLIC_WEBSITE_NAME}
+                {title}
             </title>
             <meta property="og:description" content={t('explore.description')} />
             <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />

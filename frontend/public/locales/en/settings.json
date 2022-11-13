@@ -19,5 +19,20 @@
     },
     "selectThemeColor": "Select theme color",
 
-    "displayLanguage": "Display language"
+    "displayLanguage": "Display language",
+
+    "account": "Account",
+    "changePassword": "Change password",
+    "passwordIsIncorrect": "Current password is incorrect.",
+    "passwordUpdateSuccess": "Successfully updated password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "updatePassword": "Update password",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset password",
+    "resetPasswordSubHeader": "Enter the email associated with this account to receive a link to reset your password with.",
+    "sendMail": "Send mail",
+    "emailIsIncorrect": "Email is not linked with this account. Please check for typos.",
+    "emailGenericError": "An error occured while sending email.",
+    "emailSentSuccess": "An email has been sent to {{email}}"
 }

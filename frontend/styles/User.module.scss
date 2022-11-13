@@ -10,7 +10,7 @@
     padding: var(--spacing-primary);
 }
 .header-banner {
-    height: 260px;
+    aspect-ratio: 16 / 5;
     overflow: hidden;
     background-color: var(--background-secondary);
     border-top-left-radius: var(--border-radius-primary);
@@ -24,7 +24,7 @@
     width: var(--dimensions);
     min-width: var(--dimensions);
     height: var(--dimensions);
-    margin-top: calc(-1 * var(--dimensions) / 2);
+    margin-top: -70px;
     margin-right: var(--spacing-primary);
     background-color: var(--background-tertiary);
     border-radius: 50%;
@@ -60,13 +60,62 @@
     align-items: flex-start;
     gap: var(--spacing-primary);
 }
+.sticky-container {
+    z-index: 14;
+    position: sticky;
+    top: var(--navbar-height);
+    margin-bottom: var(--spacing-primary);
+    background-color: var(--background-primary);
+    border-radius: 0 0 var(--border-radius-primary) var(--border-radius-primary);
+    border: 1px solid var(--background-tertiary);
+    overflow: hidden;
+    border-top: none;
+    height: 51px;
+
+    &>* {
+        position: absolute;
+        width: 100%;
+    }
+}
+.minified-profile {
+    height: 100%;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .header-button {
+        padding: 10px 14px !important;
+    }
+}
+.minified-main {
+    padding: calc(var(--spacing-primary) / 2);
+    padding-right: var(--spacing-primary);
+    border-radius: var(--border-radius-primary);
+    transition: background-color .2s;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--background-secondary);
+    }
+}
+.minified-avatar {
+    --dimensions: 26px;
+    border-radius: 50%;
+    overflow: hidden;
+    min-width: var(--dimensions);
+    width: var(--dimensions);
+    height: var(--dimensions);
+    margin-right: calc(var(--spacing-primary) / 2);
+}
+.minified-name {
+    font-weight: 600;
+}
 .tabs {
     display: flex;
-    border: 1px solid var(--background-tertiary);
-    border-top: none;
-    border-radius: 0 0 var(--border-radius-primary) var(--border-radius-primary);
     overflow: hidden;
-    margin-bottom: var(--spacing-primary);
 
     li {
         flex: 1;
@@ -176,19 +225,19 @@
     .header-content, .header-main {
         flex-direction: column;
     }
-    .header-buttons {
-        margin-top: var(--spacing-primary);
+    .stats {
+        margin-bottom: var(--spacing-primary);
     }
     .header-button {
         width: 100%;
         justify-content: center;
     }
-    .header-banner {
-        height: 160px;
-    }
     .header-avatar {
-        min-width: 120px;
-        width: 120px;
-        height: 120px;
+        --dimensions: 120px;
+    }
+}
+@media (max-width: 450px) {
+    .header-avatar {
+        --dimensions: 100px;
     }
 }
