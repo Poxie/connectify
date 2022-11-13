@@ -5,11 +5,11 @@ import { useAppSelector } from "../../redux/store"
 import { addUserPostId, addUserPostIds, setUserPostIds, setUserReachedEnd } from "../../redux/users/actions";
 import { selectUserExists, selectUserPostIds, selectUserPostsEnd } from "../../redux/users/selectors";
 import { Post } from "../../types";
-import { ProfilePost } from "./ProfilePost";
 import { UserPostSkeleton } from '../user-post/UserPostSkeleton';
 import { useTranslation } from 'next-i18next';
 import { RequestFinished, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { useQueryId } from '../../hooks/useQueryId';
+import { UserPost } from '../user-post';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 10;
@@ -52,8 +52,8 @@ export const UserProfile = () => {
             {postIds && postIds?.length !== 0 && (
                 <ul className={styles['post-container']}>
                     {postIds.map(postId => (
-                        <ProfilePost 
-                            postId={postId}
+                        <UserPost 
+                            id={postId}
                             key={postId}
                         />
                     ))}

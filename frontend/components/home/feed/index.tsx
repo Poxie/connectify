@@ -1,7 +1,6 @@
 import styles from '../../../styles/Feed.module.scss';
 import { useAuth } from "../../../contexts/auth/AuthProvider";
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { FeedPost } from './FeedPost';
 import { UserPostSkeleton } from '../../user-post/UserPostSkeleton';
 import { setPosts } from '../../../redux/posts/actions';
 import { addFeedPostIds, setFeedPostIds, setFeedReachedEnd } from '../../../redux/feed/actions';
@@ -12,6 +11,7 @@ import { EmptyPrompt } from '../../empty-prompt/EmptyPrompt';
 import { selectFeedPostIds, selectFeedReachedEnd } from '../../../redux/feed/selectors';
 import { RequestFinished, useInfiniteScroll } from '../../../hooks/useInfiniteScroll';
 import { AnimatePresence } from 'framer-motion';
+import { UserPost } from '../../user-post';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 10;
@@ -62,7 +62,7 @@ export const Feed = () => {
 
     return(
         <div className={styles['container']}>
-            {postIds.map(id => <FeedPost id={id} key={id} />)}
+            {postIds.map(id => <UserPost id={id} key={id} />)}
 
             <AnimatePresence>
                 {feedLoading && (

@@ -5,20 +5,16 @@ import { UserPostHeader } from './UserPostHeader';
 import { UserPostContent } from './UserPostContent';
 import { UserPostFooter } from './UserPostFooter';
 import Link from 'next/link';
+import { useAppSelector } from '../../redux/store';
+import { selectPostById } from '../../redux/posts/selectors';
 
 export const UserPost: React.FC<{
-    post: Post;
-}> = React.memo(({
-    post: {
-        id,
-        author,
-        content,
-        timestamp,
-        comment_count,
-        like_count,
-        has_liked,
-    }
-}) => {
+    id: number;
+}> = React.memo(({ id }) => {
+    const post = useAppSelector(state => selectPostById(state, id));
+    if(!post) return null;
+
+    const { author, timestamp, content } = post;
     return(
         <li className={styles['container']}>
             <UserPostHeader 

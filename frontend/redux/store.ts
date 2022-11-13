@@ -3,6 +3,8 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { TypedUseSelectorHook } from "react-redux/es/types";
 import { $CombinedState, AnyAction, combineReducers } from "redux";
+import { exploreReducer } from "./explore/reducer";
+import { ExploreState } from "./explore/types";
 import { feedReducer } from "./feed/reducer";
 import { FeedState } from "./feed/types";
 import { messagesReducer } from "./messages/reducer";
@@ -19,7 +21,8 @@ const combinedReducer = combineReducers({
     posts: postsReducer,
     users: usersReducer,
     messages: messagesReducer,
-    notifications: notificationReducer
+    notifications: notificationReducer,
+    explore: exploreReducer
 });
 
 const reducer = (state: ReturnType<typeof combinedReducer>, action: AnyAction) => {
@@ -50,6 +53,7 @@ export type RootState = {
     users: UsersState;
     messages: MessagesState;
     notifications: NotificationState;
+    explore: ExploreState;
 }
 
 // Hooks

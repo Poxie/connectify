@@ -5,11 +5,11 @@ import { addUserLikedIds, setUserLikedIds, setUserReachedEnd } from "../../redux
 import { selectUserExists, selectUserLikedIds, selectUserLikedPostsEnd } from "../../redux/users/selectors";
 import { Post } from "../../types";
 import { UserPostSkeleton } from "../user-post/UserPostSkeleton";
-import { ProfilePost } from './ProfilePost';
 import { useTranslation } from 'next-i18next';
 import { RequestFinished, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { useQueryId } from '../../hooks/useQueryId';
 import { useDispatch } from 'react-redux';
+import { UserPost } from '../user-post';
 
 const SCROLL_THRESHOLD = 500;
 const FETCH_AMOUNT = 10;
@@ -52,8 +52,8 @@ export const LikedPosts = () => {
             {postIds && postIds.length !== 0 && (
                 <ul className={styles['post-container']}>
                     {postIds.map(id => (
-                        <ProfilePost 
-                            postId={id}
+                        <UserPost 
+                            id={id}
                             key={id}
                         />
                     ))}

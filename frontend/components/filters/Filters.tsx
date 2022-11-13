@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { Ref, useState } from 'react';
 import { FilterItem } from './FilterItem';
 import styles from './Filters.module.scss';
 
@@ -6,12 +6,13 @@ export type FilterType = {
     id: string;
     text: string;
 }
-export const Filters: React.FC<{
+export const Filters = React.forwardRef<HTMLUListElement, {
     items: FilterType[];
     onChange: (id: string) => void;
     defaultActive?: string;
     containerClassName?: string;
-}> = ({ items, onChange, defaultActive, containerClassName }) => {
+    ref?: Ref<HTMLUListElement>;
+}>(({ items, onChange, defaultActive, containerClassName }, ref) => {
     const [active, setActive] = useState(defaultActive || items[0].id);
 
     const onClick = (id: string) => {
@@ -24,7 +25,7 @@ export const Filters: React.FC<{
         containerClassName
     ].join(' ');
     return(
-        <ul className={className}>
+        <ul className={className} ref={ref}>
             {items.map(item => (
                 <FilterItem 
                     {...item}
@@ -35,4 +36,4 @@ export const Filters: React.FC<{
             ))}
         </ul>
     )
-}
+});
