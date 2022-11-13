@@ -1,4 +1,4 @@
-import time
+import time, os
 from database import db
 from random import randrange
 from database import db
@@ -155,3 +155,22 @@ def add_user_notification(reference_id: int, user_reference_id: int, type: int, 
 
         # Inserting notification
         db.insert(query, values)
+
+
+def create_attachment(attachment, parent_id):
+    # Storing attachment in attachments folder
+    app_root = os.path.dirname(os.path.abspath(__file__))
+    folder = os.path.join(app_root, '../imgs/attachments/')
+
+    id = create_id('attachments')
+    file_name = os.path.join(folder, str(id) + '.png')
+    
+    attachment.save(file_name)
+
+    # Inserting attachments into database
+    query = "INSERT INTO attachments (id, parent_id) VALUES (%s, %s)"
+    values = (id, parent_id)
+
+    db.insert(query, values)
+
+    return id

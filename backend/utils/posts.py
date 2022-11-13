@@ -1,7 +1,7 @@
 import time
 from database import db
 from typing import Union, List
-from utils.common import get_post_by_id, add_user_notification, create_id
+from utils.common import get_post_by_id, add_user_notification, create_attachment, create_id
 from utils.constants import POST_LIKE_TYPE
 
 """
@@ -86,6 +86,7 @@ created for people following the author of the post. Returned from the
 function is a post dict.
 """
 def create_post(post):
+    # Creating post
     id = create_id('posts')
 
     created_at = time.time()
@@ -99,6 +100,10 @@ def create_post(post):
     )
 
     db.insert(query, values)
+
+    # If attachments, create attachments
+    for attachment in post['attachments']:
+        create_attachment(attachment, id)
 
     # Fetching created post
     post = get_post_by_id(id)
