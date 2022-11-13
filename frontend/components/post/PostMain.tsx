@@ -9,6 +9,7 @@ import { useAppSelector } from "../../redux/store"
 import { Post } from "../../types"
 import { UserPostFooter } from "../user-post/UserPostFooter"
 import { UserPostHeader } from "../user-post/UserPostHeader"
+import { PostAttachments } from "./PostAttachments"
 import { PostContent } from "./PostContent"
 import { PostMainSkeleton } from "./PostMainSkeleton"
 import { PostTitle } from "./PostTitle"
@@ -37,6 +38,7 @@ export const PostMain = () => {
         />
         <PostTitle title={title} />
         <PostContent content={content} />
+        <PostAttachments id={id} />
         <UserPostFooter id={id} />
         </>
     )
