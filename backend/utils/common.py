@@ -64,7 +64,7 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
     query = """
     SELECT
         posts.*,
-        GROUP_CONCAT(a.id) AS attachment_ids,
+        GROUP_CONCAT(DISTINCT a.id) AS attachment_ids,
         COUNT(DISTINCT l.user_id) AS like_count,
         COUNT(DISTINCT c.id) AS comment_count,
         IF(l2.user_id IS NULL, FALSE, TRUE) AS has_liked 
