@@ -1,0 +1,12 @@
+.filters {
+    position: sticky;
+    top: var(--navbar-height);
+    padding: var(--spacing-primary) 0;
+    margin-top: calc(-1 * var(--spacing-primary));
+    background-color: var(--background-primary);
+    z-index: 14;
+}
+.post-container {
+    display: grid;
+    gap: var(--spacing-primary);
+}

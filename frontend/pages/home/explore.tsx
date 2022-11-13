@@ -4,10 +4,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { ReactElement } from "react";
 import { EmptyPrompt } from "../../components/empty-prompt/EmptyPrompt";
+import { Explore } from "../../components/explore";
 import { HomeLayout } from "../../layouts/home/HomeLayout";
 import { NextPageWithLayout } from "../_app";
 
-const Explore: NextPageWithLayout = () => {
+const ExplorePage: NextPageWithLayout = () => {
     const { t } = useTranslation('home');
     const { t:g } = useTranslation('common');
 
@@ -23,17 +24,11 @@ const Explore: NextPageWithLayout = () => {
             <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/home`} />
         </Head>
 
-        <EmptyPrompt 
-            header={g('comingSoonHeader')}
-            message={g('comingSoonSubHeader')}
-            buttons={[
-                { text: t('feed.title'), type: 'default', path: '/home' }
-            ]}
-        />
+        <Explore />
         </>
     )
 }
-Explore.getLayout = (page: ReactElement) => (
+ExplorePage.getLayout = (page: ReactElement) => (
     <HomeLayout>
         {page}
     </HomeLayout>
@@ -45,4 +40,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
     }
 })
 
-export default Explore;
+export default ExplorePage;
