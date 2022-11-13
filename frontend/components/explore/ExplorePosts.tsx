@@ -8,11 +8,13 @@ import { useAppSelector } from "../../redux/store"
 import { Post } from "../../types";
 import { UserPost } from "../user-post";
 import { UserPostSkeleton } from '../user-post/UserPostSkeleton';
+import { useTranslation } from 'next-i18next';
 
 const FETCH_AMOUNT = 15;
 const SCROLL_THRESHOLD = 400;
 const PLACEHOLDER_AMOUNT = 4;
 export const ExplorePosts = () => {
+    const { t } = useTranslation('home');
     const dispatch = useDispatch();
     const postIds = useAppSelector(selectExplorePostIds);
     const filterType = useAppSelector(selectExploreFilter);
@@ -48,7 +50,7 @@ export const ExplorePosts = () => {
     // Returning loading placeholders
     if(loading) {
         return(
-            <div className={styles['post-container']} aria-label={'Loading posts'}>
+            <div className={styles['post-container']} aria-label={t('loadingPosts')}>
                 {Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
                     <UserPostSkeleton key={key} />
                 ))}
@@ -69,7 +71,7 @@ export const ExplorePosts = () => {
         
         {isAtEnd && (
             <span className={styles['reached-end']}>
-                Nothing more to show! You have reached the end of the exploration.
+                {t('explore.reachedEnd')}
             </span>
         )}
         </>

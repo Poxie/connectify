@@ -5,8 +5,13 @@
     },
     "explore": {
         "title": "Explore",
-        "description": "Explore the world of new people and see what they're up to."
+        "description": "Explore the world of new people and see what they're up to.",
+        "top": "Most popular",
+        "latest": "Most recent",
+        "reachedEnd": "Nothing more to show! You have reached the end of the exploration."
     },
+
+    "loadingPosts": "Loading posts...",
 
     "feedEmptyHeader": "Your feed is empty :(",
     "feedEmptyMessage": "If you follow users, their status updates will be displayed here. We recommend you use our explore mode to find things you may have interest in!",
