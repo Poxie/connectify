@@ -45,9 +45,8 @@ export const OverlayProvider: React.FC<{
     return(
         <OverlayContext.Provider value={value}>
             <motion.div
-                animate={{ 
-                    scale: overlay ? .9 : 1, 
-                    opacity: overlay ? .6 : 1
+                animate={{  
+                    opacity: overlay ? .2 : 1
                 }}
                 transition={{ bounce: false }}
             >
