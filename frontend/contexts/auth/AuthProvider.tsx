@@ -44,6 +44,10 @@ export const AuthProvider: React.FC<{
     const makeRequest = useCallback(async function<T>(query: string, method: RequestMethod, body?: Object, signal?: AbortSignal) {
         const formData = new FormData();
         Object.entries(body || {}).forEach(([key, value]) => {
+            if(Array.isArray(value)) {
+                value.forEach(v => formData.append(key, v));
+                return;
+            }
             formData.append(key, value);
         })
 
