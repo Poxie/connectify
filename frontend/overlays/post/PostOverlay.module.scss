@@ -80,3 +80,11 @@
 .increase {
     right: var(--spacing-primary);
 }
+
+@media (max-width: 700px) {
+    .decrease, .increase {
+        bottom: var(--spacing-primary);
+        top: unset;
+        transform: unset;
+    }
+}
