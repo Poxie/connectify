@@ -116,3 +116,9 @@
 .input-container {
     padding: 0 var(--spacing-primary);
 }
+
+@media (max-width: 500px) {
+    .content {
+        flex-direction: column;
+    }
+}
