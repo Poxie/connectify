@@ -14,7 +14,7 @@ import { useQueryId } from '../../hooks/useQueryId';
 export const Attachment: React.FC<{
     defaultIndex: number;
 }> = ({ defaultIndex }) => {
-    const { t } = useTranslation('post');
+    const { t } = useTranslation('common');
     const { close } = useOverlay();
     const router = useRouter();
     const _postId = useQueryId('postId');

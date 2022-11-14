@@ -95,5 +95,15 @@
     "internalError": "An internal error occured. Please try again later.",
     "unknownError": "An unknown error occured. Please try again later.",
 
-    "invalidCredentials": "Invalid credentials."
+    "invalidCredentials": "Invalid credentials.",
+
+    "addComment": "Add comment",
+    "noComments": "This post has no comments. Be the first one to post one!",
+    "loginToComment": "You need to login to comment.",
+    "topComments": "Top comments",
+    "latestComments": "Latest comments",
+    "postNotFound": "The post was not found",
+    "previousAttachment": "Previous attachment",
+    "nextAttachment": "Next attachment",
+    "postAttachmentNumber": "Post attachment number {{number}}"
 }
