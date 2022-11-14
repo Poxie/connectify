@@ -12,7 +12,7 @@ export const CloseOverlay: React.FC<{
     const { close } = useOverlay();
 
     const onClick = () => {
-        router.replace(`/posts/${postId}`);
+        router.replace(`/posts/${postId}`, undefined, { shallow: true });
         close();
     }
     
