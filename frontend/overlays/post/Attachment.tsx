@@ -7,11 +7,13 @@ import { ArrowIcon } from '../../assets/icons/ArrowIcon';
 import { useRouter } from 'next/router';
 import { useOverlay } from '../../contexts/overlay/OverlayProvider';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
+import { useTranslation } from 'next-i18next';
 
 export const Attachment: React.FC<{
     postId: number;
     defaultIndex: number;
 }> = ({ postId, defaultIndex }) => {
+    const { t } = useTranslation('post');
     const router = useRouter();
     const { close } = useOverlay();
     const attachments = useAppSelector(state => selectPostAttachments(state, postId));
@@ -61,13 +63,13 @@ export const Attachment: React.FC<{
         <div className={styles['attachment']}>
             {active !== 0 && (
                 <HasTooltip 
-                    tooltip={'Previous attachment'} 
+                    tooltip={t('previousAttachment')} 
                     position={'right'}
                     className={styles['decrease']}
                 >
                     <button 
                         onClick={prev}
-                        aria-label="Previous attachment"
+                        aria-label={t('previousAttachment')}
                     >
                         <ArrowIcon />
                     </button>
@@ -75,19 +77,19 @@ export const Attachment: React.FC<{
             )}
             <Image 
                 src={`${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}${attachment.id}.${attachment.extension}`}
-                alt={`Post attachment number ${active}`}
+                alt={t('postAttachmentNumber', { number: active })}
                 layout={'fill'}
                 objectFit={'contain'}
             />
             {active !== attachments.length - 1 && (
                 <HasTooltip 
-                    tooltip={'Next attachment'} 
+                    tooltip={t('nextAttachment')} 
                     position={'left'}
                     className={styles['increase']}
                 >
                     <button 
                         onClick={next}
-                        aria-label="Next attachment"
+                        aria-label={t('nextAttachment')}
                     >
                         <ArrowIcon />
                     </button>

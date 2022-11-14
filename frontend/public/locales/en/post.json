@@ -4,5 +4,9 @@
     "loginToComment": "You need to login to comment.",
     "topComments": "Top comments",
     "latestComments": "Latest comments",
-    "postNotFound": "The post was not found"
+    "postNotFound": "The post was not found",
+
+    "previousAttachment": "Previous attachment",
+    "nextAttachment": "Next attachment",
+    "postAttachmentNumber": "Post attachment number {{number}}"
 }
