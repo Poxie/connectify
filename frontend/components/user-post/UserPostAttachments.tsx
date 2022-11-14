@@ -1,4 +1,4 @@
-import styles from '../../styles/Post.module.scss';
+import styles from './UserPost.module.scss';
 import { selectPostAttachments } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store"
 import { UserPostAttachment } from "./UserPostAttachment";
