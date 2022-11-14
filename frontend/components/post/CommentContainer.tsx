@@ -14,7 +14,7 @@ import { useQueryId } from "../../hooks/useQueryId";
 
 const FETCH_AMOUNT = 15;
 const SCROLL_THRESHOLD = 400;
-const LOADING_SKELETON_COUNT = 4;
+const LOADING_SKELETON_COUNT = 3;
 export const CommentContainer: React.FC<{
     containerRef?: RefObject<HTMLDivElement>;
 }> = ({ containerRef }) => {
@@ -72,13 +72,13 @@ export const CommentContainer: React.FC<{
                 </ul>
             )}
 
-            {!loading && postIsFetched && !commentIds.length && (
+            {((!loading && postIsFetched) || hasLoadedOrderType) && !commentIds.length && (
                 <span>
                     {t('noComments')}
                 </span>
             )}
 
-            {(loading || !postIsFetched) && Array.from(Array(LOADING_SKELETON_COUNT)).map((_, key) => (
+            {(loading || !postIsFetched) && !hasLoadedOrderType && Array.from(Array(LOADING_SKELETON_COUNT)).map((_, key) => (
                 <CommentSkeleton key={key} />
             ))}
         </>
