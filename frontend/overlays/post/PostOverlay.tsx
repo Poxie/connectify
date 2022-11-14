@@ -9,7 +9,7 @@ export const PostOverlay: React.FC<{
 }> = ({ postId, attachmentIndex }) => {
     return(
         <div className={styles['container']}>
-            <CloseOverlay />
+            <CloseOverlay postId={postId} />
             <Attachment postId={postId} defaultIndex={attachmentIndex || 0} />
             <Main postId={postId} />
         </div>

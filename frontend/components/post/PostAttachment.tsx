@@ -13,19 +13,12 @@ export const PostAttachment: React.FC<Attachment & {
     const { photo } = router.query as { photo?: string };
 
     const openModal = () => {
-        const onClose = () => {
-            router.replace(`/posts/${parent_id}`, undefined, { shallow: true });
-        }
-
         setOverlay(
             <PostOverlay 
                 postId={parent_id}
                 attachmentIndex={index}
                 key={index}
-            />,
-            {
-                onClose
-            }
+            />
         )
     }
 
