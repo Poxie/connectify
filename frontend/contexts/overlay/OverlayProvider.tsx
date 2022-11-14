@@ -2,7 +2,7 @@ import styles from '../../styles/Overlay.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { ReactElement, useState } from 'react';
 import { Overlay } from '../../overlays/Overlay';
-import { Context } from './types';
+import { Context, Options } from './types';
 
 const OverlayContext = React.createContext({} as Context);
 
@@ -12,15 +12,21 @@ export const OverlayProvider: React.FC<{
     children: ReactElement | ReactElement[];
 }> = ({ children }) => {
     const [overlay, setOverlay] = useState<null | ReactElement>(null);
+    const [options, setOptions] = useState<Options>({});
 
-    const _setOverlay = (overlay: ReactElement) => {
+    const _setOverlay: Context['setOverlay'] = (overlay, options={}) => {
         setOverlay(overlay);
-
+        setOptions(options);
         window.addEventListener('keydown', close);
     }
     const close = (e?: KeyboardEvent) => {
         if(e?.key && e.key !== 'Escape') return;
 
+        if(options.onClose) {
+            options.onClose();
+        }
+
+        setOptions({});
         setOverlay(null);
         window.removeEventListener('keydown', close);
     }
