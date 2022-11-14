@@ -18,6 +18,7 @@ export const CloseOverlay: React.FC<{
         <button 
             className={styles['close']}
             onClick={onClick}
+            aria-label="Close"
         >
             <AddIcon />
         </button>

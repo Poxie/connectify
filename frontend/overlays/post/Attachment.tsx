@@ -67,6 +67,7 @@ export const Attachment: React.FC<{
                 >
                     <button 
                         onClick={prev}
+                        aria-label="Previous attachment"
                     >
                         <ArrowIcon />
                     </button>
@@ -74,6 +75,7 @@ export const Attachment: React.FC<{
             )}
             <Image 
                 src={`${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}${attachment.id}.${attachment.extension}`}
+                alt={`Post attachment number ${active}`}
                 layout={'fill'}
                 objectFit={'contain'}
             />
@@ -85,6 +87,7 @@ export const Attachment: React.FC<{
                 >
                     <button 
                         onClick={next}
+                        aria-label="Next attachment"
                     >
                         <ArrowIcon />
                     </button>
