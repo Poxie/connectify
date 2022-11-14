@@ -15,7 +15,7 @@ export const PostMain = () => {
     const { get, loading } = useAuth();
     const postId = useQueryId('postId');
     const post = useAppSelector(state => selectPostMain(state, postId));
-    useRequest(`/posts/${postId}`, setPost, !post);
+    useRequest(postId ? `/posts/${postId}` : '', setPost, !post);
 
     if(!post) return <PostMainSkeleton />;
 
