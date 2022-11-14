@@ -8,7 +8,6 @@ export const PostAttachments: React.FC<{
     id: number;
 }> = ({ id }) => {
     const attachments = useAppSelector(state => selectPostAttachments(state, id));
-    console.log(attachments);
     if(!attachments?.length) return null;
 
     const rowAmount = attachments.length > 3 ? 3 : attachments.length;
