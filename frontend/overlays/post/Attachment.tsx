@@ -34,14 +34,16 @@ export const Attachment: React.FC<{
         if(photo !== undefined) {
             setActive(photo);
             currentlyActive.current = photo;
+        } else {
+            close();
         }
     }, [photo]);
 
     // Closing overlay if postId is not present
     useEffect(() => {
-        if(postId) return;
-        close(); 
-    }, [postId]);
+        if(_postId) return;
+        close();
+    }, [_postId, active]);
 
     // Allowing navigation through arrow keys
     useEffect(() => {

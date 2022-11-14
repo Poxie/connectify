@@ -11,10 +11,7 @@ export const CloseOverlay = () => {
     const router = useRouter();
     const postId = useQueryId('postId');
 
-    const onClick = () => {
-        router.replace(`/posts/${postId}`, undefined, { shallow: true });
-        close();
-    }
+    const onClick = () => router.back();
     
     return(
         <button 

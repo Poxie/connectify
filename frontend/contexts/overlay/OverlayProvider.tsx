@@ -21,7 +21,10 @@ export const OverlayProvider: React.FC<{
         window.addEventListener('keydown', close);
     }
     const close = (e?: KeyboardEvent) => {
-        if(e?.key && e.key !== 'Escape') return;
+        if(e?.key && e.key !== 'Escape') return
+        if(e?.key && e.key === 'Escape' && options.current.onEscape) {
+            options.current.onEscape();
+        }
 
         const opts = options.current;
         if(opts.onClose) {

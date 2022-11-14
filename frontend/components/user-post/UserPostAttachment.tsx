@@ -14,23 +14,19 @@ export const UserPostAttachment: React.FC<Attachment & {
     const photo = usePhotoIndex();
 
     const openModal = async () => {
-        await router.replace(router.asPath, `/posts/${parent_id}?photo=${index}`, { shallow: true })
+        const method = hasOverlay ? router.replace : router.push;
+        await method(router.asPath, `/posts/${parent_id}?photo=${index}`, { shallow: true })
         if(hasOverlay) return;
 
-        const onClose = (previousPath?: string) => {
-            if(!previousPath) return;
-            router.replace(previousPath, undefined, { shallow: true });
-        }
+        const onEscape = () => router.back();
 
         setOverlay(
             <PostOverlay 
                 attachmentIndex={index}
-                postId={parent_id}
                 key={index}
             />,
             {
-                previousPath: router.asPath,
-                onClose
+                onEscape
             }
         )
     }
