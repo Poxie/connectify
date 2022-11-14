@@ -52,7 +52,7 @@ export const UserPostOptions: React.FC<{
                 if(!data || !profile?.id) return;
 
                 // If user is on post, redirect to profile
-                if(router.asPath === `/posts/${postId}`) {
+                if(router.asPath.startsWith(`/posts/${postId}`)) {
                     await router.replace(`/users/${profile?.id}`);
                 }
                 
