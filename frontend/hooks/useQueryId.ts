@@ -1,9 +1,20 @@
 import { useRouter } from "next/router";
 
+const MANUAL_PARAM_IDS = ['postId'];
+
+const cache: { [key: string]: number } = {};
 export const useQueryId = (queryId: string) => {
     // Checking next router query
     const id = useRouter().query[queryId] as string;
-    if(id) return parseInt(id);
+    if(queryId !== 'postId') {
+        if(id) {
+            cache[queryId] = parseInt(id);
+            return parseInt(id);
+        } else if(cache[queryId]) {
+            return cache[queryId];
+        }
+    }
+    if(!MANUAL_PARAM_IDS.includes(queryId)) return 0;
 
     // Checking URL params
     const asPath = useRouter().asPath;
