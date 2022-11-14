@@ -1,13 +1,12 @@
 import React from 'react';
 import styles from './UserPost.module.scss';
-import { Post } from "../../types";
 import { UserPostHeader } from './UserPostHeader';
 import { UserPostContent } from './UserPostContent';
 import { UserPostFooter } from './UserPostFooter';
 import Link from 'next/link';
 import { useAppSelector } from '../../redux/store';
 import { selectPostById } from '../../redux/posts/selectors';
-import { PostAttachments } from '../post/PostAttachments';
+import { UserPostAttachments } from './UserPostAttachments';
 
 export const UserPost: React.FC<{
     id: number;
@@ -24,7 +23,7 @@ export const UserPost: React.FC<{
                 timestamp={timestamp}
             />
             <UserPostContent content={content} />
-            <PostAttachments id={id} />
+            <UserPostAttachments id={id} />
             <UserPostFooter id={id} />
             <Link href={`/posts/${id}`}>
                 <a aria-label="Go to post" className={styles['post-link']}/>

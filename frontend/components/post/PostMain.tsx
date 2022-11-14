@@ -1,15 +1,12 @@
-import { useEffect, useMemo } from "react"
-import { useDispatch } from "react-redux"
 import { useAuth } from "../../contexts/auth/AuthProvider"
 import { useQueryId } from "../../hooks/useQueryId"
 import { useRequest } from "../../hooks/useRequest"
 import { setPost } from "../../redux/posts/actions"
 import { selectPostMain } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
-import { Post } from "../../types"
+import { UserPostAttachments } from "../user-post/UserPostAttachments"
 import { UserPostFooter } from "../user-post/UserPostFooter"
 import { UserPostHeader } from "../user-post/UserPostHeader"
-import { PostAttachments } from "./PostAttachments"
 import { PostContent } from "./PostContent"
 import { PostMainSkeleton } from "./PostMainSkeleton"
 import { PostTitle } from "./PostTitle"
@@ -38,7 +35,7 @@ export const PostMain = () => {
         />
         <PostTitle title={title} />
         <PostContent content={content} />
-        <PostAttachments id={id} />
+        <UserPostAttachments id={id} />
         <UserPostFooter id={id} />
         </>
     )

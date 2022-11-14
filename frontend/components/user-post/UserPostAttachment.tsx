@@ -5,7 +5,7 @@ import { PostOverlay } from '../../overlays/post/PostOverlay';
 import styles from '../../styles/Post.module.scss';
 import { Attachment } from '../../types';
 
-export const PostAttachment: React.FC<Attachment & {
+export const UserPostAttachment: React.FC<Attachment & {
     index: number;
 }> = ({ id, extension, parent_id, index }) => {
     const { setOverlay } = useOverlay();
