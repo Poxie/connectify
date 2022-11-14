@@ -17,6 +17,7 @@ export const OverlayProvider: React.FC<{
     const _setOverlay: Context['setOverlay'] = (overlay, options={}) => {
         setOverlay(overlay);
         setOptions(options);
+        document.body.style.overflow = 'hidden';
         window.addEventListener('keydown', close);
     }
     const close = (e?: KeyboardEvent) => {
@@ -28,6 +29,7 @@ export const OverlayProvider: React.FC<{
 
         setOptions({});
         setOverlay(null);
+        document.body.style.overflow = '';
         window.removeEventListener('keydown', close);
     }
 
