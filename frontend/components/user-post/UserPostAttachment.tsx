@@ -1,30 +1,43 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useOverlay } from '../../contexts/overlay/OverlayProvider';
+import { usePhotoIndex } from '../../hooks/usePhotoIndex';
 import { PostOverlay } from '../../overlays/post/PostOverlay';
-import styles from '../../styles/Post.module.scss';
+import styles from './UserPost.module.scss';
 import { Attachment } from '../../types';
 
 export const UserPostAttachment: React.FC<Attachment & {
     index: number;
 }> = ({ id, extension, parent_id, index }) => {
-    const { setOverlay } = useOverlay();
+    const { setOverlay, hasOverlay } = useOverlay();
     const router = useRouter();
-    const { photo } = router.query as { photo?: string };
+    const photo = usePhotoIndex();
 
-    const openModal = () => {
+    const openModal = async () => {
+        await router.replace(router.asPath, `/posts/${parent_id}?photo=${index}`, { shallow: true })
+        if(hasOverlay) return;
+
+        const onClose = (previousPath?: string) => {
+            if(!previousPath) return;
+            router.replace(previousPath, undefined, { shallow: true });
+        }
+
         setOverlay(
             <PostOverlay 
-                postId={parent_id}
                 attachmentIndex={index}
+                postId={parent_id}
                 key={index}
-            />
+            />,
+            {
+                previousPath: router.asPath,
+                onClose
+            }
         )
     }
 
     const className = [
         styles['attachment'],
-        parseInt(photo || '') === index ? styles['active'] : ''
+        photo === index ? styles['active'] : ''
     ].join(' ');
     return(
         <div 
