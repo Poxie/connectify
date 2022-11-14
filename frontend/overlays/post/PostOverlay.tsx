@@ -5,16 +5,16 @@ import { CloseOverlay } from './CloseOverlay';
 import { useScreenType } from '../../hooks/useScreenType';
 
 export const PostOverlay: React.FC<{
-    postId: number;
     attachmentIndex?: number;
-}> = ({ postId, attachmentIndex }) => {
+}> = ({ attachmentIndex }) => {
     const screenType = useScreenType();
+
     return(
         <div className={styles['container']}>
-            <CloseOverlay postId={postId} />
-            <Attachment postId={postId} defaultIndex={attachmentIndex || 0} />
+            <CloseOverlay />
+            <Attachment defaultIndex={attachmentIndex || 0} />
             {['largium', 'large'].includes(screenType) && (
-                <Main postId={postId} />
+                <Main />
             )}
         </div>
     )

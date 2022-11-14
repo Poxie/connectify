@@ -1,6 +1,6 @@
 import styles from './PostOverlay.module.scss';
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { selectPostAttachments } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
 import { ArrowIcon } from '../../assets/icons/ArrowIcon';
@@ -8,28 +8,40 @@ import { useRouter } from 'next/router';
 import { useOverlay } from '../../contexts/overlay/OverlayProvider';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { useTranslation } from 'next-i18next';
+import { usePhotoIndex } from '../../hooks/usePhotoIndex';
+import { useQueryId } from '../../hooks/useQueryId';
 
 export const Attachment: React.FC<{
-    postId: number;
     defaultIndex: number;
-}> = ({ postId, defaultIndex }) => {
+}> = ({ defaultIndex }) => {
     const { t } = useTranslation('post');
-    const router = useRouter();
     const { close } = useOverlay();
+    const router = useRouter();
+    const _postId = useQueryId('postId');
+    const [postId, setPostId] = useState(_postId);
     const attachments = useAppSelector(state => selectPostAttachments(state, postId));
-    const [active, setActive] = useState(defaultIndex || 0);
+    const [active, setActive] = useState(defaultIndex);
+    const currentlyActive = useRef(defaultIndex);
 
-    // Updating active param
+    // Setting active photo on mount
     useEffect(() => {
-        router.replace(`/posts/${postId}?photo=${active}`, undefined, { shallow: true });
-    }, [active]);
-
-    // Closing overlay if path changes
+        router.replace(router.pathname, `/posts/${postId}?photo=${defaultIndex}`, { shallow: true });
+    }, []);
+    
+    // Updating photo index on url change
+    const photo = usePhotoIndex();
     useEffect(() => {
-        if(!router.asPath.includes('posts')) {
-            close();
+        if(photo !== undefined) {
+            setActive(photo);
+            currentlyActive.current = photo;
         }
-    }, [router.asPath]);
+    }, [photo]);
+
+    // Closing overlay if postId is not present
+    useEffect(() => {
+        if(postId) return;
+        close(); 
+    }, [postId]);
 
     // Allowing navigation through arrow keys
     useEffect(() => {
@@ -46,16 +58,14 @@ export const Attachment: React.FC<{
 
     // Attachment navigation
     const prev = () => {
-        setActive(prev => {
-            if(prev === 0) return prev;
-            return prev - 1;
-        });
+        const active = currentlyActive.current;
+        if(active === 0) return prev;
+        router.replace(router.asPath, `/posts/${postId}?photo=${active - 1}`, { shallow: true });
     }
     const next = () => {
-        setActive(prev => {
-            if(prev === attachments.length - 1) return prev;
-            return prev + 1;
-        });
+        const active = currentlyActive.current;
+        if(active === attachments.length - 1) return;
+        router.replace(router.asPath, `/posts/${postId}?photo=${active + 1}`, { shallow: true });
     }
 
     const attachment = attachments[active];

@@ -3,9 +3,7 @@ import { PostMain } from '../../components/post/PostMain';
 import { Comments } from '../../components/post/Comments';
 import { useRef } from 'react';
 
-export const Main: React.FC<{
-    postId: number;
-}> = ({ postId }) => {
+export const Main = () => {
     const ref = useRef<HTMLDivElement>(null);
 
     return(
