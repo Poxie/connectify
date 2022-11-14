@@ -6,6 +6,7 @@ import { useAppSelector } from "../../redux/store";
 import { ArrowIcon } from '../../assets/icons/ArrowIcon';
 import { useRouter } from 'next/router';
 import { useOverlay } from '../../contexts/overlay/OverlayProvider';
+import { HasTooltip } from '../../components/tooltip/HasTooltip';
 
 export const Attachment: React.FC<{
     postId: number;
@@ -59,12 +60,17 @@ export const Attachment: React.FC<{
     return(
         <div className={styles['attachment']}>
             {active !== 0 && (
-                <button 
-                    onClick={prev}
+                <HasTooltip 
+                    tooltip={'Previous attachment'} 
+                    position={'right'}
                     className={styles['decrease']}
                 >
-                    <ArrowIcon />
-                </button>
+                    <button 
+                        onClick={prev}
+                    >
+                        <ArrowIcon />
+                    </button>
+                </HasTooltip>
             )}
             <Image 
                 src={`${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}${attachment.id}.${attachment.extension}`}
@@ -72,12 +78,17 @@ export const Attachment: React.FC<{
                 objectFit={'contain'}
             />
             {active !== attachments.length - 1 && (
-                <button 
-                    onClick={next}
+                <HasTooltip 
+                    tooltip={'Next attachment'} 
+                    position={'left'}
                     className={styles['increase']}
                 >
-                    <ArrowIcon />
-                </button>
+                    <button 
+                        onClick={next}
+                    >
+                        <ArrowIcon />
+                    </button>
+                </HasTooltip>
             )}
         </div>
     )
