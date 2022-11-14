@@ -1,7 +1,7 @@
-import time
+import time, os
 from database import db
 from typing import Union, List
-from utils.common import get_post_by_id, add_user_notification, create_attachment, create_id
+from utils.common import get_post_by_id, add_user_notification, create_attachment, create_id, get_attachments_by_parent_id
 from utils.constants import POST_LIKE_TYPE
 
 """
@@ -127,11 +127,21 @@ def delete_post(post_id):
     post_query = "DELETE FROM posts WHERE id = %s"
     like_query = "DELETE FROM likes WHERE parent_id = %s"
     comment_query = "DELETE FROM comments WHERE post_id = %s"
+    attachment_query = "DELETE FROM attachments WHERE parent_id = %s"
+    
+    # Fetching attachments to delete them from attachments directory
+    attachments = get_attachments_by_parent_id(post_id)
+    app_root = os.path.dirname(os.path.abspath(__file__))
+    folder = os.path.join(app_root, '../imgs/attachments/')
+    for attachment in attachments:
+        file_name = os.path.join(folder, str(attachment['id']) + '.' + attachment['extension'])
+        os.remove(file_name)
 
     values = (post_id,)
 
     db.delete(post_query, values)
     db.delete(like_query, values)
     db.delete(comment_query, values)
+    db.delete(attachment_query, values)
 
     return {}

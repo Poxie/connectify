@@ -186,6 +186,14 @@ def create_attachment(attachment, parent_id):
 
     return id
 
+def get_attachments_by_parent_id(parent_id: int):
+    query = "SELECT * FROM attachments WHERE parent_id = %s"
+    values = (parent_id,)
+
+    attachments = db.fetch_all(query, values)
+
+    return attachments
+
 def get_attachment_by_id(id: int):
     query = "SELECT * FROM attachments WHERE id = %s"
     values = (id,)
