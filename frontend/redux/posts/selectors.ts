@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { Comment } from '../../types';
 import { RootState } from "../store";
 
-const selectId = (_:any, id: number) => id;
+const selectId = (_:any, id?: number) => id;
 const selectCommentId = (_:any,__:any, commentId: number) => commentId;
 const selectOrderType = (_:any,__:any, orderType: Comment['orderType']) => orderType;
 

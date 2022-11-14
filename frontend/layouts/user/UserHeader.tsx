@@ -11,9 +11,9 @@ import { UserHeaderSkeleton } from './UserHeaderSkeleton';
 export const UserHeader = () => {
     const userId = useQueryId('userId');
     const user = useAppSelector(state => selectUserDisplay(state, userId));
-    useRequest(`/users/${userId}`, setUser, !user);
+    useRequest(`/users/${userId}`, setUser, !user || !userId);
 
-    if(!user) return <UserHeaderSkeleton />;
+    if(!user || !userId) return <UserHeaderSkeleton />;
 
     return(
         <div className={styles['header']}>

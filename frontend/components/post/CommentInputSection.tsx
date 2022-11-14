@@ -10,6 +10,7 @@ export const CommentInputSection = () => {
     const { t } = useTranslation('common');
     const postId = useQueryId('postId');
     const commentCount = useAppSelector(state => selectPostCommentCount(state, postId));
+    if(!postId) return null;
 
     if(commentCount === undefined) {
         return <CommentInputSkeleton />;
