@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useOverlay } from '../../contexts/overlay/OverlayProvider';
 import { PostOverlay } from '../../overlays/post/PostOverlay';
 import styles from '../../styles/Post.module.scss';
@@ -8,19 +9,33 @@ export const PostAttachment: React.FC<Attachment & {
     index: number;
 }> = ({ id, extension, parent_id, index }) => {
     const { setOverlay } = useOverlay();
+    const router = useRouter();
+    const { photo } = router.query as { photo?: string };
 
     const openModal = () => {
+        const onClose = () => {
+            router.replace(`/posts/${parent_id}`, undefined, { shallow: true });
+        }
+
         setOverlay(
             <PostOverlay 
                 postId={parent_id}
-                attachmentIndex={index} 
-            />
+                attachmentIndex={index}
+                key={index}
+            />,
+            {
+                onClose
+            }
         )
     }
 
+    const className = [
+        styles['attachment'],
+        parseInt(photo || '') === index ? styles['active'] : ''
+    ].join(' ');
     return(
         <div 
-            className={styles['attachment']}
+            className={className}
             onClick={openModal}
         >
             <Image 

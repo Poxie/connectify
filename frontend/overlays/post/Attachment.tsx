@@ -4,15 +4,29 @@ import { useEffect, useState } from "react";
 import { selectPostAttachments } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
 import { ArrowIcon } from '../../assets/icons/ArrowIcon';
+import { useRouter } from 'next/router';
+import { useOverlay } from '../../contexts/overlay/OverlayProvider';
 
 export const Attachment: React.FC<{
     postId: number;
     defaultIndex: number;
 }> = ({ postId, defaultIndex }) => {
+    const router = useRouter();
+    const { close } = useOverlay();
     const attachments = useAppSelector(state => selectPostAttachments(state, postId));
     const [active, setActive] = useState(defaultIndex || 0);
 
-    if(!attachments) return null;
+    // Updating active param
+    useEffect(() => {
+        router.replace(`/posts/${postId}?photo=${active}`, undefined, { shallow: true });
+    }, [active]);
+
+    // Closing overlay if path changes
+    useEffect(() => {
+        if(!router.asPath.includes('posts')) {
+            close();
+        }
+    }, [router.asPath]);
 
     // Allowing navigation through arrow keys
     useEffect(() => {
@@ -24,6 +38,8 @@ export const Attachment: React.FC<{
         window.addEventListener('keydown', onKeyDown);
         return () => window.removeEventListener('keydown', onKeyDown);
     }, []);
+
+    if(!attachments) return null;
 
     // Attachment navigation
     const prev = () => {
