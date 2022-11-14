@@ -9,8 +9,9 @@ import { useTranslation } from 'next-i18next';
 import { AttachmentIcon } from '../../assets/icons/AttachmentIcon';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { AddIcon } from '../../assets/icons/AddIcon';
+import { PreviewAttachments } from './PreviewAttachments';
 
-type TempAttachment = {
+export type TempAttachment = {
     preview: string;
     file: File;
 }
@@ -30,6 +31,7 @@ export const CreatePostModal = () => {
             <PreviewPostModal 
                 title={title}
                 content={content}
+                attachments={attachments}
             />
         )
     }
@@ -108,27 +110,10 @@ export const CreatePostModal = () => {
                     <span className={styles['label']}>
                         Attachments
                     </span>
-                    <div className={styles['attachment-container']}>
-                        {attachments.map((attachment, key) => (
-                            <div 
-                                className={styles['attachment']}
-                                style={{ backgroundImage: `url(${attachment.preview})` }}
-                                key={key}
-                            >
-                                <HasTooltip 
-                                    tooltip={'Remove attachment'}
-                                    className={styles['remove-attachment']}
-                                >
-                                    <button
-                                        onClick={() => removeAttachment(key)}
-                                        aria-label="Remove attachment"
-                                    >
-                                        <AddIcon />
-                                    </button>
-                                </HasTooltip>
-                            </div>
-                        ))}
-                    </div>
+                    <PreviewAttachments 
+                        attachments={attachments}
+                        onDelete={removeAttachment}
+                    />
                 </div>
             )}
         </div>

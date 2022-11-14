@@ -5,7 +5,6 @@
 }
 .label {
     font-weight: 600;
-    margin-bottom: var(--spacing-primary);
     padding-top: var(--spacing-primary);
     border-top: 1px solid var(--background-secondary);
     display: block;
@@ -14,6 +13,7 @@
     --row-amount: 3;
     --spacing: 6px;
     display: flex;
+    margin-top: var(--spacing-primary);
     gap: var(--spacing);
     flex-wrap: wrap;
 
