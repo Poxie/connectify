@@ -16,5 +16,7 @@ def popular_posts(token_id: Union[int, None]=None):
         posts = get_popular_posts(token_id, start_at=start_at, amount=amount)
     elif type == 'latest':
         posts = get_latest_posts(token_id, start_at=start_at, amount=amount)
+    else:
+        return 'Unsupported type.', 400
 
     return jsonify(posts)

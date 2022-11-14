@@ -16,6 +16,7 @@ import { ThemeProvider } from '../contexts/theme/ThemeProvider';
 import { TooltipProvider } from '../contexts/tooltip/TooltipProvider';
 import { ToastProvider } from '../contexts/toast/ToastProvider';
 import { Provider } from 'react-redux';
+import { OverlayProvider } from '../contexts/overlay/OverlayProvider';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -42,15 +43,17 @@ function MyApp({ Component, pageProps, ...rest }: AppPropsWithLayout) {
                 <ModalProvider>
                   <MenuProvider>
                     <PopoutProvider>
-                      <Navbar />
-                      <div className={styles['app-content']}>
-                        <Sidebar />
-                        <main>
-                          {getLayout(
-                            <Component {...pageProps} />
-                          )}
-                        </main>
-                      </div>
+                      <OverlayProvider>
+                        <Navbar />
+                        <div className={styles['app-content']}>
+                          <Sidebar />
+                          <main>
+                            {getLayout(
+                              <Component {...pageProps} />
+                            )}
+                          </main>
+                        </div>
+                      </OverlayProvider>
                     </PopoutProvider>
                   </MenuProvider>
                 </ModalProvider>

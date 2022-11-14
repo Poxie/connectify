@@ -1,4 +1,4 @@
-import time
+import time, os
 from database import db
 from random import randrange
 from database import db
@@ -64,10 +64,12 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
     query = """
     SELECT
         posts.*,
+        GROUP_CONCAT(DISTINCT a.id) AS attachment_ids,
         COUNT(DISTINCT l.user_id) AS like_count,
         COUNT(DISTINCT c.id) AS comment_count,
         IF(l2.user_id IS NULL, FALSE, TRUE) AS has_liked 
     FROM posts
+        LEFT JOIN attachments a ON a.parent_id = posts.id
         LEFT JOIN likes l ON l.parent_id = posts.id
         LEFT JOIN comments c ON c.post_id = posts.id
         LEFT JOIN likes l2 ON l.user_id = %s
@@ -86,6 +88,13 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
 
         # Adding author to post
         post['author'] = get_user_by_id(post['author_id'])
+
+        # Adding attachments to post
+        post['attachments'] = []
+        if post['attachment_ids']:
+            for id in post['attachment_ids'].split(','):
+                attachment = get_attachment_by_id(int(id))
+                post['attachments'].append(attachment)
 
     return post
 
@@ -155,3 +164,32 @@ def add_user_notification(reference_id: int, user_reference_id: int, type: int, 
 
         # Inserting notification
         db.insert(query, values)
+
+
+def create_attachment(attachment, parent_id):
+    # Storing attachment in attachments folder
+    app_root = os.path.dirname(os.path.abspath(__file__))
+    folder = os.path.join(app_root, '../imgs/attachments/')
+
+    parts = attachment.filename.split('.')[::-1]
+    extension = parts[0]
+    id = create_id('attachments')
+    file_name = os.path.join(folder, str(id) + '.' + extension)
+    
+    attachment.save(file_name)
+
+    # Inserting attachments into database
+    query = "INSERT INTO attachments (id, parent_id, extension) VALUES (%s, %s, %s)"
+    values = (id, parent_id, extension)
+
+    db.insert(query, values)
+
+    return id
+
+def get_attachment_by_id(id: int):
+    query = "SELECT * FROM attachments WHERE id = %s"
+    values = (id,)
+
+    attachment = db.fetch_one(query, values)
+
+    return attachment

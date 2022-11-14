@@ -29,6 +29,7 @@ export type Post = {
     like_count: number;
     comment_count: number;
     timestamp: number;
+    attachments: Attachment[];
     hasCommentsFetched?: boolean;
     hasLoadedLatestComments?: boolean;
     hasLoadedTopComments?: boolean;
@@ -75,4 +76,10 @@ export type Notification = {
     type: 0 | 2;
     unread: boolean;
     created_at: number;
+}
+
+export type Attachment = {
+    id: number;
+    extension: string;
+    parent_id: number;
 }

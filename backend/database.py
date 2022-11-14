@@ -49,6 +49,7 @@ class Database():
             cursor.execute('CREATE TABLE IF NOT EXISTS recipients (id BIGINT(20), channel_id BIGINT(20), unread_count BIGINT(20) DEFAULT 0)')
             cursor.execute('CREATE TABLE IF NOT EXISTS messages (id BIGINT(20), author_id BIGINT(20), channel_id BIGINT(20), content VARCHAR(255), timestamp BIGINT(20))')
             cursor.execute('CREATE TABLE IF NOT EXISTS notifications (id BIGINT(20), type BIGINT(20), user_id BIGINT(20), reference_id BIGINT(20), user_reference_id BIGINT(20), created_at BIGINT(20), unread BOOLEAN DEFAULT 1)')
+            cursor.execute('CREATE TABLE IF NOT EXISTS attachments (id BIGINT(20), parent_id BIGINT(20), extension VARCHAR(255))')
 
             # Creating new connection after database structure created
             self.__create_connection()

@@ -4,5 +4,9 @@
     "loginToComment": "Du behöver vara inloggad för att kommentera.",
     "topComments": "Topp kommentarer",
     "latestComments": "Senaste kommentarer",
-    "postNotFound": "Inlägget kunde inte hittas"
+    "postNotFound": "Inlägget kunde inte hittas",
+
+    "previousAttachment": "Föregående bilaga",
+    "nextAttachment": "Nästa bilaga",
+    "postAttachmentNumber": "Inlägg bilaga nummer {{number}}"
 }

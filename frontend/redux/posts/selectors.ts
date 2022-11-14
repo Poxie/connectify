@@ -75,3 +75,7 @@ export const selectPostCommentCount = createSelector(
     [selectPostById],
     post => post?.comment_count
 )
+export const selectPostAttachments = createSelector(
+    [selectPostById],
+    post => post?.attachments
+)

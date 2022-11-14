@@ -47,17 +47,6 @@ export const ExplorePosts = () => {
         }
     )
 
-    // Returning loading placeholders
-    if(loading) {
-        return(
-            <div className={styles['post-container']} aria-label={t('loadingPosts')}>
-                {Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
-                    <UserPostSkeleton key={key} />
-                ))}
-            </div>
-        )
-    }
-
     return(
         <>
         <ul className={styles['post-container']}>
@@ -67,7 +56,14 @@ export const ExplorePosts = () => {
                     key={id}
                 />
             ))}
+            
+            {loading && (
+                Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
+                    <UserPostSkeleton key={key} />
+                ))
+            )}
         </ul>
+
         
         {isAtEnd && (
             <span className={styles['reached-end']}>

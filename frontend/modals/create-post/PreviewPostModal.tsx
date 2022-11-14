@@ -13,11 +13,14 @@ import { addUserPostId } from '../../redux/users/actions';
 import { useTranslation } from 'next-i18next';
 import { Post } from '../../types';
 import { useToast } from '../../contexts/toast/ToastProvider';
+import { TempAttachment } from './CreatePostModal';
+import { PreviewAttachments } from './PreviewAttachments';
 
 export const PreviewPostModal: React.FC<{
     title: string;
     content: string;
-}> = ({ title, content }) => {
+    attachments: TempAttachment[];
+}> = ({ title, content, attachments }) => {
     const { t } = useTranslation('common');
     const router = useRouter();
     const dispatch = useDispatch();
@@ -33,7 +36,8 @@ export const PreviewPostModal: React.FC<{
         // Creating post
         const createdPost = await post<Post>(`/posts`, {
             content,
-            title
+            title,
+            attachments: attachments.map(attachment => attachment.file)
         }).catch(() => {
             setDisabled(false);
             setToast(t('postCreateError'), 'error');
@@ -78,6 +82,8 @@ export const PreviewPostModal: React.FC<{
             <p>
                 {content}
             </p>
+
+            <PreviewAttachments attachments={attachments} />
         </div>
 
         <ModalFooter 

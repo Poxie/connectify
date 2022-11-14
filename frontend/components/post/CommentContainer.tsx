@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { RefObject, useState } from "react";
 import { Filters } from "../filters/Filters"
 import styles from '../../styles/Post.module.scss';
 import { useAppSelector } from "../../redux/store";
@@ -14,8 +14,10 @@ import { useQueryId } from "../../hooks/useQueryId";
 
 const FETCH_AMOUNT = 15;
 const SCROLL_THRESHOLD = 400;
-const LOADING_SKELETON_COUNT = 4;
-export const CommentContainer = () => {
+const LOADING_SKELETON_COUNT = 3;
+export const CommentContainer: React.FC<{
+    containerRef?: RefObject<HTMLDivElement>;
+}> = ({ containerRef }) => {
     const { t } = useTranslation('post');
     const postId = useQueryId('postId');
     const dispatch = useDispatch();
@@ -36,7 +38,8 @@ export const CommentContainer = () => {
             threshold: SCROLL_THRESHOLD,
             identifier: `${postId}-${orderType}`,
             fetchOnMount: !commentIds.length,
-            standBy: postIsFetched === false || hasLoadedOrderType && !commentIds.length
+            standBy: postIsFetched === false || hasLoadedOrderType && !commentIds.length,
+            scrollContainer: containerRef || undefined
         }
     )
 
@@ -69,13 +72,13 @@ export const CommentContainer = () => {
                 </ul>
             )}
 
-            {!loading && postIsFetched && !commentIds.length && (
+            {((!loading && postIsFetched) || hasLoadedOrderType) && !commentIds.length && (
                 <span>
                     {t('noComments')}
                 </span>
             )}
 
-            {(loading || !postIsFetched) && Array.from(Array(LOADING_SKELETON_COUNT)).map((_, key) => (
+            {(loading || !postIsFetched) && !hasLoadedOrderType && Array.from(Array(LOADING_SKELETON_COUNT)).map((_, key) => (
                 <CommentSkeleton key={key} />
             ))}
         </>
