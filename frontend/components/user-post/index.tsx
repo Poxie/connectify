@@ -7,6 +7,7 @@ import { UserPostFooter } from './UserPostFooter';
 import Link from 'next/link';
 import { useAppSelector } from '../../redux/store';
 import { selectPostById } from '../../redux/posts/selectors';
+import { PostAttachments } from '../post/PostAttachments';
 
 export const UserPost: React.FC<{
     id: number;
@@ -23,6 +24,7 @@ export const UserPost: React.FC<{
                 timestamp={timestamp}
             />
             <UserPostContent content={content} />
+            <PostAttachments id={id} />
             <UserPostFooter id={id} />
             <Link href={`/posts/${id}`}>
                 <a aria-label="Go to post" className={styles['post-link']}/>
