@@ -6,16 +6,16 @@
     font-size: 20px;
     color: var(--text-secondary);
     display: block;
-    margin-bottom: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
 }
 .attachments {
     --row-amount: 1;
     --attachment-spacing: 4px;
     --max-height: 250px;
-    margin-bottom: var(--spacing-primary);
     display: flex;
     flex-wrap: wrap;
     gap: var(--attachment-spacing);
+    margin-top: var(--spacing-primary);
 }
 .attachment {
     flex-grow: 1;

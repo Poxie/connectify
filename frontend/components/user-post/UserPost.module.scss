@@ -2,9 +2,6 @@
     padding: var(--spacing-primary);
     border: 2px solid var(--background-secondary);
     border-radius: var(--border-radius-primary);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-primary);
     position: relative;
 
     a:not(.post-link), button {
@@ -67,9 +64,12 @@
 }
 .content {
     color: var(--text-secondary);
+    margin-top: var(--spacing-primary);
+    display: block;
 }
 .footer {
     padding-top: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
     border-top: 1px solid var(--background-secondary);
     display: flex;
     gap: 25px;
@@ -142,6 +142,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    margin: var(--spacing-primary) 0;
+
     div {
         @extend .skeleton-text;
         height: 21px;
