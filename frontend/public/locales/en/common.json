@@ -39,6 +39,10 @@
     "preview": "Preview",
     "previewPost": "Preview post",
     "createPost": "Create post",
+    "addAttachment": "Add attachment",
+    "removeAttachment": "Remove attachment",
+    "attachments": "Attachments",
+    "attachedImage": "Attached image",
     "characters": "characters",
 
     "search": "Search",

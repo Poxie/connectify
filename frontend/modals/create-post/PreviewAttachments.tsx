@@ -2,11 +2,13 @@ import styles from './CreatePostModal.module.scss';
 import { TempAttachment } from "./CreatePostModal"
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { AddIcon } from '../../assets/icons/AddIcon';
+import { useTranslation } from 'next-i18next';
 
 export const PreviewAttachments: React.FC<{
     attachments: TempAttachment[];
     onDelete?: (index: number) => void;
 }> = ({ attachments, onDelete }) => {
+    const { t } = useTranslation('common');
     if(!attachments.length) return null;
 
     return(
@@ -19,12 +21,12 @@ export const PreviewAttachments: React.FC<{
                 >
                     {onDelete && (
                         <HasTooltip 
-                            tooltip={'Remove attachment'}
+                            tooltip={t('removeAttachment')}
                             className={styles['remove-attachment']}
                         >
                             <button
                                 onClick={() => onDelete(key)}
-                                aria-label="Remove attachment"
+                                aria-label={t('removeAttachment')}
                             >
                                 <AddIcon />
                             </button>

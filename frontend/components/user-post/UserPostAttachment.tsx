@@ -5,10 +5,12 @@ import { usePhotoIndex } from '../../hooks/usePhotoIndex';
 import { PostOverlay } from '../../overlays/post/PostOverlay';
 import styles from './UserPost.module.scss';
 import { Attachment } from '../../types';
+import { useTranslation } from 'next-i18next';
 
 export const UserPostAttachment: React.FC<Attachment & {
     index: number;
 }> = ({ id, extension, parent_id, index }) => {
+    const { t } = useTranslation('common');
     const { setOverlay, hasOverlay } = useOverlay();
     const router = useRouter();
     const photo = usePhotoIndex();
@@ -42,7 +44,7 @@ export const UserPostAttachment: React.FC<Attachment & {
         >
             <Image 
                 src={`${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}${id}.${extension}`}
-                alt={`Attached image`}
+                alt={t('attachedImage')}
                 layout={'fill'}
                 objectFit={'cover'}
             />

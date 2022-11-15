@@ -39,6 +39,10 @@
     "preview": "Förhandsvisa",
     "previewPost": "Förhandsvisa",
     "createPost": "Skapa inlägg",
+    "addAttachment": "Lägg till bilaga",
+    "removeAttachment": "Ta bort bilaga",
+    "attachments": "Bilagor",
+    "attachedImage": "Bilaga bild",
     "characters": "karaktärer",
 
     "search": "Sök",

@@ -84,9 +84,9 @@ export const CreatePostModal = () => {
             />
 
             <div className={styles['footer']}>
-                <HasTooltip tooltip={'Add attachment'}>
+                <HasTooltip tooltip={t('addAttachment')}>
                     <button
-                        aria-label="Add attachment"
+                        aria-label={t('addAttachment')}
                         onClick={openAttachmentPrompt}
                     >
                         <AttachmentIcon />
@@ -108,7 +108,7 @@ export const CreatePostModal = () => {
             {attachments.length !== 0 && (
                 <div className={styles['attachments']}>
                     <span className={styles['label']}>
-                        Attachments
+                        {t('attachments')}
                     </span>
                     <PreviewAttachments 
                         attachments={attachments}
