@@ -15,7 +15,8 @@ import { UserPostFooterButton } from './UserPostFooterButton';
 
 export const UserPostFooter: React.FC<{
     id: number;
-}> = ({ id }) => {
+    authorId: number;
+}> = ({ id, authorId }) => {
     const { t } = useTranslation();
     const { setModal } = useModal();
     const { token, post, destroy } = useAuth();

@@ -9,26 +9,20 @@ import { useOverlay } from '../../contexts/overlay/OverlayProvider';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { useTranslation } from 'next-i18next';
 import { usePhotoIndex } from '../../hooks/usePhotoIndex';
-import { useQueryId } from '../../hooks/useQueryId';
 
 export const Attachment: React.FC<{
     defaultIndex: number;
-}> = ({ defaultIndex }) => {
+    authorId: number;
+    postId: number;
+}> = ({ defaultIndex, authorId, postId }) => {
     const { t } = useTranslation('common');
     const { close } = useOverlay();
     const router = useRouter();
-    const _postId = useQueryId('postId');
-    const [postId, setPostId] = useState(_postId);
     const attachments = useAppSelector(state => selectPostAttachments(state, postId));
     const [active, setActive] = useState(defaultIndex);
     const currentlyActive = useRef(defaultIndex);
-
-    // Setting active photo on mount
-    useEffect(() => {
-        router.replace(router.pathname, `/posts/${postId}?photo=${defaultIndex}`, { shallow: true });
-    }, []);
     
-    // Updating photo index on url change
+    // Updating photo index on url change, closing if not present
     const photo = usePhotoIndex();
     useEffect(() => {
         if(photo !== undefined) {
@@ -38,12 +32,6 @@ export const Attachment: React.FC<{
             close();
         }
     }, [photo]);
-
-    // Closing overlay if postId is not present
-    useEffect(() => {
-        if(_postId) return;
-        close();
-    }, [_postId, active]);
 
     // Allowing navigation through arrow keys
     useEffect(() => {

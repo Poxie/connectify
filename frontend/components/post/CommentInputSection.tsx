@@ -6,11 +6,11 @@ import { useTranslation } from 'next-i18next';
 import { CommentInputSkeleton } from './CommentInputSkeleton';
 import { useQueryId } from '../../hooks/useQueryId';
 
-export const CommentInputSection = () => {
+export const CommentInputSection: React.FC<{
+    postId: number;
+}> = ({ postId }) => {
     const { t } = useTranslation('common');
-    const postId = useQueryId('postId');
     const commentCount = useAppSelector(state => selectPostCommentCount(state, postId));
-    if(!postId) return null;
 
     if(commentCount === undefined) {
         return <CommentInputSkeleton />;

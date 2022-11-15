@@ -17,9 +17,9 @@ const SCROLL_THRESHOLD = 400;
 const LOADING_SKELETON_COUNT = 3;
 export const CommentContainer: React.FC<{
     containerRef?: RefObject<HTMLDivElement>;
-}> = ({ containerRef }) => {
+    postId: number;
+}> = ({ containerRef, postId }) => {
     const { t } = useTranslation('common');
-    const postId = useQueryId('postId');
     const dispatch = useDispatch();
     const [orderType, setOrderType] = useState<CommentType['orderType']>('top');
     const hasLoadedOrderType = useAppSelector(state => selectPostHasLoadedOrderType(state, postId, orderType));

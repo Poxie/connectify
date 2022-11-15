@@ -6,7 +6,8 @@ import { CSSProperties } from 'react';
 
 export const UserPostAttachments: React.FC<{
     id: number;
-}> = ({ id }) => {
+    authorId: number;
+}> = ({ id, authorId }) => {
     const attachments = useAppSelector(state => selectPostAttachments(state, id));
     if(!attachments?.length) return null;
 
@@ -18,7 +19,8 @@ export const UserPostAttachments: React.FC<{
         >
             {attachments?.map((attachment, key) => (
                 <UserPostAttachment 
-                    {...attachment} 
+                    {...attachment}
+                    authorId={authorId}
                     index={key}
                     key={attachment.id} 
                 />

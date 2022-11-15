@@ -23,8 +23,8 @@ export const UserPost: React.FC<{
                 timestamp={timestamp}
             />
             <UserPostContent content={content} />
-            <UserPostAttachments id={id} />
-            <UserPostFooter id={id} />
+            <UserPostAttachments authorId={post.author_id} id={id} />
+            <UserPostFooter authorId={post.author_id} id={id} />
             <Link href={`/posts/${id}`}>
                 <a aria-label="Go to post" className={styles['post-link']}/>
             </Link>

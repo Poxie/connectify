@@ -5,11 +5,12 @@ import { CommentInputSection } from './CommentInputSection';
 
 export const Comments: React.FC<{
     containerRef?: RefObject<HTMLDivElement>;
-}> = ({ containerRef }) => {
+    postId: number;
+}> = ({ containerRef, postId }) => {
     return(
         <div className={styles['comments']}>
-            <CommentInputSection />
-            <CommentContainer containerRef={containerRef} />
+            <CommentInputSection postId={postId} />
+            <CommentContainer postId={postId} containerRef={containerRef} />
         </div>
     )
 }

@@ -11,9 +11,10 @@ import { PostContent } from "./PostContent"
 import { PostMainSkeleton } from "./PostMainSkeleton"
 import { PostTitle } from "./PostTitle"
 
-export const PostMain = () => {
+export const PostMain: React.FC<{
+    postId: number;
+}> = ({ postId }) => {
     const { get, loading } = useAuth();
-    const postId = useQueryId('postId');
     const post = useAppSelector(state => selectPostMain(state, postId));
     useRequest(postId ? `/posts/${postId}` : '', setPost, !post);
 
@@ -35,8 +36,8 @@ export const PostMain = () => {
         />
         <PostTitle title={title} />
         <PostContent content={content} />
-        <UserPostAttachments id={id} />
-        <UserPostFooter id={id} />
+        <UserPostAttachments authorId={post.author.id} id={id} />
+        <UserPostFooter authorId={post.author.id} id={id} />
         </>
     )
 }

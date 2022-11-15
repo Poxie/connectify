@@ -9,7 +9,8 @@ import { useTranslation } from 'next-i18next';
 
 export const UserPostAttachment: React.FC<Attachment & {
     index: number;
-}> = ({ id, extension, parent_id, index }) => {
+    authorId: number;
+}> = ({ id, extension, parent_id, index, authorId }) => {
     const { t } = useTranslation('common');
     const { setOverlay, hasOverlay } = useOverlay();
     const router = useRouter();
@@ -25,6 +26,8 @@ export const UserPostAttachment: React.FC<Attachment & {
         setOverlay(
             <PostOverlay 
                 attachmentIndex={index}
+                authorId={authorId}
+                postId={parent_id}
                 key={index}
             />,
             {
