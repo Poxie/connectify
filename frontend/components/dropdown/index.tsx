@@ -8,9 +8,10 @@ export type DropdownItem = {
 export const Dropdown: React.FC<{
     items: DropdownItem[];
     defaultActive?: string;
+    position?: 'top' | 'bottom';
     onChange?: (id: string) => void;
     activeItemClassName?: string;
-}> = ({ items, defaultActive, onChange, activeItemClassName }) => {
+}> = ({ items, defaultActive, onChange, activeItemClassName, position='bottom' }) => {
     const [active, setActive] = useState(defaultActive || items[0].id);
     const [displayOptions, setDisplayOptions] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -36,9 +37,10 @@ export const Dropdown: React.FC<{
     const toggle = () => setDisplayOptions(prev => !prev);
 
     const activeItem = items.find(item => item.id === active);
-    
+
     const className = [
         styles['container'],
+        styles[position],
         displayOptions ? styles['open'] : ''
     ].join(' ');
     activeItemClassName = [
