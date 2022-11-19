@@ -119,7 +119,7 @@ def update_post(post_id: int, token_id: int):
     values = []
     for key, value in properties.items():
         # Making sure users can only update allowed properties
-        if key not in ['privacy']:
+        if key not in ['privacy', 'title', 'content']:
             continue
 
         update_string = f'{key} = %s'
