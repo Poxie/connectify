@@ -111,6 +111,7 @@ export const CreatePostModal = () => {
                             { text: 'No one can view', id: 'private' }
                         ]}
                         defaultActive={privacy}
+                        position={'top'}
                         onChange={setPrivacy}
                     />
                 </div>
