@@ -48,6 +48,11 @@
     font-weight: 600;
     opacity: .8;
 }
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 .options {
     svg {
         width: 30px;

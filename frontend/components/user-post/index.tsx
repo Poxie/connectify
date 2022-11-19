@@ -21,6 +21,7 @@ export const UserPost: React.FC<{
                 user={author}
                 postId={id}
                 timestamp={timestamp}
+                privacy={post.privacy}
             />
             <UserPostContent content={content} />
             <UserPostAttachments authorId={post.author_id} id={id} />
