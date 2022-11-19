@@ -19,8 +19,9 @@ import { PreviewAttachments } from './PreviewAttachments';
 export const PreviewPostModal: React.FC<{
     title: string;
     content: string;
+    privacy: string;
     attachments: TempAttachment[];
-}> = ({ title, content, attachments }) => {
+}> = ({ title, content, privacy, attachments }) => {
     const { t } = useTranslation('common');
     const router = useRouter();
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ export const PreviewPostModal: React.FC<{
         const createdPost = await post<Post>(`/posts`, {
             content,
             title,
+            privacy,
             attachments: attachments.map(attachment => attachment.file)
         }).catch(() => {
             setDisabled(false);
