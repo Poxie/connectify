@@ -25,7 +25,8 @@ export const PostMain: React.FC<{
         author,
         timestamp,
         title,
-        content
+        content,
+        privacy
     } = post;
     return(
         <>
@@ -33,6 +34,7 @@ export const PostMain: React.FC<{
             user={author}
             timestamp={timestamp}
             postId={id}
+            privacy={privacy}
         />
         <PostTitle title={title} />
         <PostContent content={content} />

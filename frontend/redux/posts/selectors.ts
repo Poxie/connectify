@@ -60,7 +60,8 @@ export const selectPostMain = createSelector(
         title: post.title,
         content: post.content,
         author: post.author,
-        timestamp: post.timestamp
+        timestamp: post.timestamp,
+        privacy: post.privacy
     }) : undefined
 )
 export const selectPostStats = createSelector(
