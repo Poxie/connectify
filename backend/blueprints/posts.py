@@ -5,6 +5,7 @@ from utils.users import get_user_by_id
 from utils.common import get_post_by_id
 from utils.posts import get_user_posts, delete_post, create_post
 from utils.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH
+from database import db
 
 posts = Blueprint('posts', __name__)
 
@@ -101,3 +102,37 @@ def get_posts(id: int, token_id: Union[int, None]=None):
     posts = get_user_posts(id, token_id, amount=amount, start_at=start_at)
 
     return jsonify(posts)
+
+@posts.patch('/posts/<int:post_id>')
+@token_required
+def update_post(post_id: int, token_id: int):
+    properties = request.form.copy()
+
+    post = get_post_by_id(post_id, token_id)
+    if not post:
+        return 'Post does not exist', 404
+
+    if post['author_id'] != token_id:
+        return 'Unauthorized.', 401
+
+    update_query_string = []
+    values = []
+    for key, value in properties.items():
+        # Making sure users can only update allowed properties
+        if key not in ['privacy']:
+            continue
+
+        update_string = f'{key} = %s'
+        update_query_string.append(update_string)
+        values.append(value)
+
+    update_string = ', '.join(update_query_string)
+    query = f"UPDATE posts SET {update_string} WHERE id = %s"
+    
+    values.append(post_id)
+    values = tuple(values)
+    
+    db.update(query, values)
+
+    post = get_post_by_id(post_id)
+    return jsonify(post)
