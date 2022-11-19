@@ -67,16 +67,16 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
         GROUP_CONCAT(DISTINCT a.id) AS attachment_ids,
         COUNT(DISTINCT l.user_id) AS like_count,
         COUNT(DISTINCT c.id) AS comment_count,
-        IF(l2.user_id IS NULL, FALSE, TRUE) AS has_liked 
+        IF(l2.user_id IS NULL, FALSE, TRUE) AS has_liked
     FROM posts
         LEFT JOIN attachments a ON a.parent_id = posts.id
         LEFT JOIN likes l ON l.parent_id = posts.id
         LEFT JOIN comments c ON c.post_id = posts.id
         LEFT JOIN likes l2 ON l.user_id = %s
     WHERE
-        posts.id = %s
+        posts.id = %s AND (posts.privacy != 'private' OR posts.author_id = %s)
     """
-    values = (token_id, id)
+    values = (token_id, id, token_id)
 
     post = db.fetch_one(query, values)
     if post and 'id' in post and post['id'] is None:

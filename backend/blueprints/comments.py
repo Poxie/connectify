@@ -10,7 +10,7 @@ comments = Blueprint('comments', __name__)
 @token_optional
 def get_comments(post_id: int, token_id: Union[int, None]=None):
     # Checking if post exists
-    post = get_post_by_id(post_id)
+    post = get_post_by_id(post_id, token_id)
     if not post:
         return 'Post does not exist.', 404
 
@@ -34,7 +34,7 @@ def create_comment(post_id: int, token_id: int):
         return 'Required fields may not be empty.', 400
 
     # Checking if post exists
-    post = get_post_by_id(post_id)
+    post = get_post_by_id(post_id, token_id)
     if not post:
         return 'Post does not exist.', 404
 

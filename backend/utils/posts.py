@@ -10,8 +10,8 @@ can be used for pagination. token_id can be used to personalize the posts, i.e.,
 adding has_liked, is_following, etc.
 """
 def get_user_posts(user_id: int, token_id: Union[int, None]=None, amount=10, start_at=0):
-    query = "SELECT id FROM posts WHERE author_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
-    values = (user_id, start_at, amount)
+    query = "SELECT id FROM posts WHERE author_id = %s AND (privacy != 'private' OR author_id = %s) ORDER BY timestamp DESC LIMIT %s, %s"
+    values = (user_id, token_id, start_at, amount)
 
     data = db.fetch_all(query, values)
     
@@ -65,7 +65,7 @@ def get_posts_by_users(user_ids: List[int], amount: int, start_at: int, token_id
     query = f"""
     SELECT posts.id FROM users
     INNER JOIN posts ON users.id = posts.author_id
-    WHERE {where_clause} ORDER BY timestamp DESC LIMIT %s, %s
+    WHERE ({where_clause}) AND posts.privacy != 'private' ORDER BY timestamp DESC LIMIT %s, %s
     """
     values = (start_at, amount)
 
