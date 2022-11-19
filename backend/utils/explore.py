@@ -30,7 +30,7 @@ def get_popular_posts(token_id: Union[int,None]=None, start_at=0, amount=15):
     FROM posts p
         LEFT JOIN likes l ON p.id = l.parent_id
     WHERE 
-        p.timestamp > %s
+        p.timestamp > %s AND p.privacy = 'all'
     GROUP BY p.id
     ORDER BY like_count DESC
     LIMIT %s, %s
@@ -53,7 +53,7 @@ def get_popular_posts(token_id: Union[int,None]=None, start_at=0, amount=15):
 def get_latest_posts(token_id: Union[int, None]=None, start_at=0, amount=15):
     # Fetching latest posts from database
     query = """
-    SELECT id FROM posts ORDER BY timestamp DESC LIMIT %s, %s
+    SELECT id FROM posts WHERE privacy = 'all' ORDER BY timestamp DESC LIMIT %s, %s
     """
     values = (start_at, amount)
 
