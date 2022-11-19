@@ -61,8 +61,12 @@ export const Feed = () => {
     if(!loading && !token) return <LoginPrompt />;
 
     return(
-        <div className={styles['container']}>
-            {postIds.map(id => <UserPost id={id} key={id} />)}
+        <>
+            {postIds.length && (
+                <ul className={styles['container']}>
+                    {postIds.map(id => <UserPost id={id} key={id} />)}
+                </ul>
+            )}
 
             <AnimatePresence>
                 {feedLoading && (
@@ -79,6 +83,6 @@ export const Feed = () => {
                     {t('reachedEnd')}
                 </span>
             )}
-        </div>
+        </>
     )
 }
