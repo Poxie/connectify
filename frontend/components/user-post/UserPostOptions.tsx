@@ -14,6 +14,7 @@ import { removeUserPostId } from '../../redux/users/actions';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { ConfirmModal } from '../../modals/confirm/ConfirmModal';
 import { useToast } from '../../contexts/toast/ToastProvider';
+import { EditPostModal } from '../../modals/edit-post/EditPostModal';
 
 export const UserPostOptions: React.FC<{
     postId: number;
@@ -77,8 +78,18 @@ export const UserPostOptions: React.FC<{
                 )
             }
 
-            // Unshifting delete options
+            // Opening edit modal
+            const editPost = () => {
+                setModal(
+                    <EditPostModal 
+                        postId={postId}
+                    />
+                )
+            }
+
+            // Unshifting options
             groups.unshift([
+                { text: 'Edit post', onClick: editPost },
                 { text: t('deletePost'), onClick: confirmDeletion, type: 'danger' }
             ])
         }
