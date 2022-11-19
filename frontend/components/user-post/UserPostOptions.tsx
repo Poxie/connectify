@@ -89,7 +89,7 @@ export const UserPostOptions: React.FC<{
 
             // Unshifting options
             groups.unshift([
-                { text: 'Edit post', onClick: editPost },
+                { text: t('editPost.header'), onClick: editPost },
                 { text: t('deletePost'), onClick: confirmDeletion, type: 'danger' }
             ])
         }

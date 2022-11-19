@@ -12,10 +12,12 @@ import { Post } from "../../types";
 import { ModalFooter } from "../ModalFooter";
 import { ModalHeader } from "../ModalHeader";
 import { ModalMain } from "../ModalMain";
+import { useTranslation } from 'next-i18next';
 
 export const EditPostModal: React.FC<{
     postId: number;
 }> = ({ postId }) => {
+    const { t } = useTranslation('common');
     const { patch } = useAuth();
     const { close } = useModal();
     const { setToast } = useToast();
@@ -37,38 +39,38 @@ export const EditPostModal: React.FC<{
         await patch(`/posts/${postId}`, {
             ...tempPost.current
         }).catch(error => {
-            setToast(`Something went wrong while updating post.`, 'error');
+            setToast(t('editPost.error'), 'error');
         }).finally(() => {
             setLoading(false);
         })
 
         dispatch(updatePost(postId, {...tempPost.current}));
-        setToast('Successfully updated post.', 'success');
+        setToast(t('editPost.success'), 'success');
     }
 
     return(
         <>
             <ModalHeader>
-                Edit post
+                {t('editPost.header')}
             </ModalHeader>
             <ModalMain className={styles['content']}>
                 <Input 
                     onChange={value => onPropertyChange('title', value)}
                     defaultValue={post.title}
-                    placeholder={'Title'}
-                    label={'Title'}
+                    placeholder={t('editPost.title')}
+                    label={t('editPost.title')}
                 />
                 <Input 
                     onChange={value => onPropertyChange('content', value)}
                     defaultValue={post.content}
-                    placeholder={'Content'}
-                    label={'Content'}
+                    placeholder={t('editPost.content')}
+                    label={t('editPost.content')}
                     textArea
                 />
             </ModalMain>
             <ModalFooter 
-                cancelLabel={'Cancel'}
-                confirmLabel={'Save changes'}
+                cancelLabel={t('cancel')}
+                confirmLabel={t('saveChanges')}
                 onCancel={close}
                 onConfirm={onConfirm}
                 confirmLoading={loading}

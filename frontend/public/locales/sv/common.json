@@ -117,5 +117,13 @@
         "private": "Ingen får visa",
         "error": "Något gick fel när synligheten skulle uppdateras.",
         "success": "Inläggssynligheten har uppdaterats."
+    },
+
+    "editPost": {
+        "header": "Redigera inlägg",
+        "title": "Titel",
+        "content": "Innehåll",
+        "error": "Något gick fel när inlägget skulle uppdateras.",
+        "success": "Inlägget har uppdaterats."
     }
 }

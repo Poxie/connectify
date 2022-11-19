@@ -117,5 +117,13 @@
         "private": "No one can view",
         "error": "Something went wrong while updating visibility.",
         "success": "Post visibilty has been updated."
+    },
+
+    "editPost": {
+        "header": "Edit post",
+        "title": "Title",
+        "content": "Content",
+        "error": "Something went wrong while updating post.",
+        "success": "Successfully updated post."
     }
 }
