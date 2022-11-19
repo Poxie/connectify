@@ -3,9 +3,14 @@ import { ReactElement } from "react"
 
 export const ModalMain: React.FC<{
     children: ReactElement | ReactElement[];
-}> = ({ children }) => {
+    className?: string;
+}> = ({ children, className }) => {
+    className = [
+        styles['main'],
+        className
+    ].join(' ');
     return(
-        <div className={styles['main']}>
+        <div className={className}>
             {children}
         </div>
     )
