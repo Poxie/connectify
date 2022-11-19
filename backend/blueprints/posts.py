@@ -53,7 +53,7 @@ def create_user_post(token_id: int):
         'author_id': token_id,
         'attachments': attachments
     }
-    post = create_post(data)
+    post = create_post(data, token_id)
 
     return jsonify(post)
 
@@ -131,7 +131,7 @@ def update_post(post_id: int, token_id: int):
     
     values.append(post_id)
     values = tuple(values)
-    
+
     db.update(query, values)
 
     post = get_post_by_id(post_id)

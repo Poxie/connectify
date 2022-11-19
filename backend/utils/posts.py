@@ -85,7 +85,7 @@ content, title, and author_id. After post creation, a notification is
 created for people following the author of the post. Returned from the
 function is a post dict.
 """
-def create_post(post):
+def create_post(post, token_id):
     # Creating post
     id = create_id('posts')
 
@@ -107,7 +107,7 @@ def create_post(post):
         create_attachment(attachment, id)
 
     # Fetching created post
-    post = get_post_by_id(id)
+    post = get_post_by_id(id, token_id)
 
     # Creating notification for following users
     if post:
