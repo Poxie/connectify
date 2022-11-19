@@ -1,6 +1,5 @@
 .container {
     position: relative;
-    z-index: 141414;
     
     &.open {
         .active-item::after {
@@ -33,6 +32,7 @@
 }
 .item-container {
     position: absolute;
+    z-index: 141414;
     border-radius: var(--border-radius-secondary);
     background-color: var(--background-secondary);
     box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px 0px;
