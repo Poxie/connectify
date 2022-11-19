@@ -13,6 +13,7 @@ posts = Blueprint('posts', __name__)
 def create_user_post(token_id: int):
     title = request.form.get('title')
     content = request.form.get('content')
+    privacy = request.form.get('privacy') or 'all'
 
     # Checking if required fields are missing
     if not title or not content:
@@ -43,6 +44,7 @@ def create_user_post(token_id: int):
     data = {
         'title': title, 
         'content': content,
+        'privacy': privacy,
         'author_id': token_id,
         'attachments': attachments
     }

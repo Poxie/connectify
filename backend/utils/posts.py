@@ -90,12 +90,13 @@ def create_post(post):
     id = create_id('posts')
 
     created_at = time.time()
-    query = "INSERT INTO posts (id, author_id, title, content, timestamp) VALUES (%s, %s, %s, %s, %s)"
+    query = "INSERT INTO posts (id, author_id, title, content, privacy, timestamp) VALUES (%s, %s, %s, %s, %s, %s)"
     values = (
         id,
         post['author_id'],
         post['title'],
         post['content'],
+        post['privacy'],
         created_at
     )
 
