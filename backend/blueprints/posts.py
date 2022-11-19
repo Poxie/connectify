@@ -27,6 +27,10 @@ def create_user_post(token_id: int):
     if len(content) > MAX_CONTENT_LENGTH:
         return f'Content may not exceed {MAX_CONTENT_LENGTH} characters.', 400
 
+    # Checking if privacy setting is unsupported
+    if privacy not in ['all', 'semi', 'private']:
+        return 'Privacy setting is unsupported.', 400
+
     # Adding post attachments
     attachments = []
     for key, item in request.files.items(multi=True):
