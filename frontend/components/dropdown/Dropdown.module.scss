@@ -1,6 +1,7 @@
 .container {
     position: relative;
-
+    z-index: 141414;
+    
     &.open {
         .active-item::after {
             transform: rotate(180deg);
