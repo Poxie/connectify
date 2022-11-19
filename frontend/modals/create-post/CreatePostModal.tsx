@@ -106,9 +106,9 @@ export const CreatePostModal = () => {
                     </HasTooltip>
                     <Dropdown 
                         items={[
-                            { text: 'Show in explore', id: 'all' },
-                            { text: 'Only on my profile', id: 'semi' },
-                            { text: 'No one can view', id: 'private' }
+                            { text: t('visibility.all'), id: 'all' },
+                            { text: t('visibility.semi'), id: 'semi' },
+                            { text: t('visibility.private'), id: 'private' }
                         ]}
                         defaultActive={privacy}
                         position={'top'}

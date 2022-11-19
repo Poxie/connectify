@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
@@ -10,6 +11,7 @@ export const UserPostVisibilty: React.FC<{
     postId: number;
     privacy?: Post['privacy'];
 }> = ({ privacy, postId }) => {
+    const { t } = useTranslation('common');
     const { patch } = useAuth();
     const { setToast } = useToast();
     const dispatch = useDispatch();
@@ -23,11 +25,11 @@ export const UserPostVisibilty: React.FC<{
         const data = patch(`/posts/${postId}`, {
             privacy: id
         }).catch(error => {
-            setToast(`Something went wrong while updating visiblity.`, 'error');
+            setToast(t('visibility.error'), 'error');
         })
         if(!data) return;
 
-        setToast(`Post visibility has been updated.`, 'success');
+        setToast(t('visibility.success'), 'success');
         dispatch(updatePost(postId, { privacy: id as Post['privacy'] }));
     }
 
@@ -35,9 +37,9 @@ export const UserPostVisibilty: React.FC<{
         <>
         <Dropdown 
             items={[
-                { text: 'Show in explore', id: 'all' },
-                { text: 'Only on my profile', id: 'semi' },
-                { text: 'No one can view', id: 'private' }
+                { text: t('visibility.all'), id: 'all' },
+                { text: t('visibility.semi'), id: 'semi' },
+                { text: t('visibility.private'), id: 'private' }
             ]}
             defaultActive={privacy}
             onChange={updatePrivacy}

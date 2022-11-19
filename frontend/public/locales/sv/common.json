@@ -109,5 +109,13 @@
     "postNotFound": "Inlägget kunde inte hittas",
     "previousAttachment": "Föregående bilaga",
     "nextAttachment": "Nästa bilaga",
-    "postAttachmentNumber": "Inlägg bilaga nummer {{number}}"
+    "postAttachmentNumber": "Inlägg bilaga nummer {{number}}",
+
+    "visibility": {
+        "all": "Visa i utforskaräge",
+        "semi": "Bara på min profil",
+        "private": "Ingen får visa",
+        "error": "Något gick fel när synligheten skulle uppdateras.",
+        "success": "Inläggssynligheten har uppdaterats."
+    }
 }

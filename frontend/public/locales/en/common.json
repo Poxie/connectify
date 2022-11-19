@@ -109,5 +109,13 @@
     "postNotFound": "The post was not found",
     "previousAttachment": "Previous attachment",
     "nextAttachment": "Next attachment",
-    "postAttachmentNumber": "Post attachment number {{number}}"
+    "postAttachmentNumber": "Post attachment number {{number}}",
+
+    "visibility": {
+        "all": "Show in explore",
+        "semi": "Only on my profile",
+        "private": "No one can view",
+        "error": "Something went wrong while updating visibility.",
+        "success": "Post visibilty has been updated."
+    }
 }
