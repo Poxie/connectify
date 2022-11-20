@@ -39,6 +39,8 @@ def get_user_by_id(id: int, token_id: Union[int, None]=None):
         LEFT JOIN followers f2 ON (f2.followee_id = users.id AND f2.follower_id = %s)
     WHERE 
         users.id = %s
+    GROUP BY
+        users.id, users.username, users.password, users.email, users.display_name, users.bio, users.avatar, users.banner
     """
     values = (token_id, token_id, token_id, id)
 
@@ -75,6 +77,8 @@ def get_post_by_id(id: int, token_id: Union[int, None]=None):
         LEFT JOIN likes l2 ON l.user_id = %s
     WHERE
         posts.id = %s AND (posts.privacy != 'private' OR posts.author_id = %s)
+    GROUP BY
+        posts.id, posts.author_id, posts.title, posts.content, posts.privacy, posts.timestamp, l2.user_id
     """
     values = (token_id, id, token_id)
 

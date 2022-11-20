@@ -25,6 +25,8 @@ def get_recipient_by_id(user_id: int, token_id: Union[int, None]=None):
         LEFT JOIN recipients r ON r.id = u.id
     WHERE 
         u.id = %s
+    GROUP BY
+        u.id, u.username, u.display_name, u.password, u.email, u.bio, u.avatar, u.banner, r.channel_id, r.unread_count, r.id
     """
     values = (token_id, user_id)
 
@@ -47,6 +49,8 @@ def get_channel_by_id(channel_id: int, token_id: Union[int, None]=None):
         JOIN users u on u.id = r.id
     WHERE 
         channels.id = %s
+    GROUP BY
+        channels.id, channels.type, channels.last_message_timestamp, channels.last_message_id, channels.name, channels.icon
     """
     values = (channel_id,)
 
