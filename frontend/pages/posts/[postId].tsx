@@ -11,7 +11,7 @@ export default function PostPage({ post }: {
     const { t } = useTranslation('post');
 
     let title = post ? (
-        `${post?.author.display_name || post?.author.username}: ${post?.title}`
+        `${post?.author.display_name || post?.author.username}: ${post?.title || t('noTitle')}`
     ) : (
         t('postNotFound')
     )
