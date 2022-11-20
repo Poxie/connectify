@@ -1,8 +1,9 @@
+import json
 from typing import Union
 from flask import Blueprint, request, jsonify
 from utils.auth import token_required, token_optional
 from utils.users import get_user_by_id
-from utils.common import get_post_by_id
+from utils.common import get_post_by_id, get_attachments_by_parent_id, remove_attachment, create_attachment
 from utils.posts import get_user_posts, delete_post, create_post
 from utils.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH
 from database import db
@@ -115,6 +116,25 @@ def update_post(post_id: int, token_id: int):
     if post['author_id'] != token_id:
         return 'Unauthorized.', 401
 
+    # Updating current attachments
+    attachment_ids_prop = properties.getlist('attachment_ids')
+    if len(attachment_ids_prop):
+        attachment_ids = attachment_ids_prop[0]
+        current_attachments = get_attachments_by_parent_id(post_id)
+
+        # Removing attachment if not in new attachment_ids
+        for attachment in current_attachments:
+            if str(attachment['id']) in attachment_ids: 
+                continue
+
+            remove_attachment(attachment['id'], attachment['extension'])
+
+    # Adding new attachments
+    attachments = request.files.items()
+    for key, value in attachments:
+        create_attachment(value, post_id)
+
+    # Updating basic post properties
     update_query_string = []
     values = []
     for key, value in properties.items():

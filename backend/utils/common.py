@@ -186,6 +186,17 @@ def create_attachment(attachment, parent_id):
 
     return id
 
+def remove_attachment(attachment_id: int, extension: str):
+    query = "DELETE FROM attachments WHERE id = %s"
+    values = (attachment_id,)
+
+    db.delete(query, values)
+
+    app_root = os.path.dirname(os.path.abspath(__file__))
+    folder = os.path.join(app_root, '../imgs/attachments/')
+    file_name = os.path.join(folder, str(attachment_id) + '.' + extension)
+    os.remove(file_name)
+
 def get_attachments_by_parent_id(parent_id: int):
     query = "SELECT * FROM attachments WHERE parent_id = %s"
     values = (parent_id,)
