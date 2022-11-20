@@ -73,6 +73,11 @@
         }
     }
 }
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .options {
     display: flex;
     gap: 8px;
@@ -96,5 +101,14 @@
     }
     input {
         display: none;
+    }
+}
+.characters {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    &.error {
+        color: var(--color-red);
     }
 }

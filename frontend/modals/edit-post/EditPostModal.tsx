@@ -39,6 +39,7 @@ export const EditPostModal: React.FC<{
             id: attachment.id
         })
     ) || []);
+    const [contentLength, setContentLength] = useState(post?.content.length);
     const [loading, setLoading] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -47,6 +48,7 @@ export const EditPostModal: React.FC<{
     const onPropertyChange = (property: keyof Post, value: any) => {
         if(!tempPost.current) return;
         tempPost.current[property] = value;
+        if(property === 'content') setContentLength(value.length);
     }
     const onAttachmentRemove = (id: number) => {
         setTempAttachments(prev => prev?.filter(attachment => attachment.id !== id));
@@ -100,6 +102,12 @@ export const EditPostModal: React.FC<{
         setToast(t('editPost.success'), 'success');
     }
 
+    const disabled = (contentLength || 0) > 400;
+
+    const characterClassName = [
+        styles['characters'],
+        (contentLength || 0) > 400 ? styles['error'] : ''
+    ].join(' ');
     return(
         <>
             <ModalHeader>
@@ -120,7 +128,7 @@ export const EditPostModal: React.FC<{
                     label={t('editPost.content')}
                     textArea
                 />
-                <div>
+                <div className={styles['footer']}>
                     <div className={styles['options']}>
                         <HasTooltip tooltip={t('addAttachment')}>
                             <button 
@@ -148,6 +156,9 @@ export const EditPostModal: React.FC<{
                             onChange={value => onPropertyChange('privacy', value)}
                         />
                     </div>
+                    <span className={characterClassName}>
+                        {contentLength}/400 {t('characters')}
+                    </span>
                 </div>
                 {tempAttachments.length !== 0 && (
                     <PostAttachments 
@@ -163,6 +174,7 @@ export const EditPostModal: React.FC<{
                 onCancel={close}
                 onConfirm={onConfirm}
                 confirmLoading={loading}
+                confirmDisabled={disabled}
             />
         </>
     )
