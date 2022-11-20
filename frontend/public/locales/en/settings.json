@@ -1,22 +1,26 @@
 {
     "header": "Settings",
-    "appearance": "Appearance",
     
-    "themes": {
-        "header": "Themes",
-        "light": "Light theme",
-        "light-contrast": "Light contrast theme",
-        "dark": "Dark theme"
+    "appearance": {
+        "header": "Appearance",
+        "selectThemeColor": "Select theme color",
+
+        "themes": {
+            "header": "Themes",
+            "light": "Light theme",
+            "light-contrast": "Light contrast theme",
+            "dark": "Dark theme"
+        },
+
+        "colors": {
+            "header": "Colors",
+            "blue": "blue",
+            "orange": "orange",
+            "purple": "purple",
+            "red": "red",
+            "pink": "pink"
+        }
     },
-    "colors": {
-        "header": "Colors",
-        "blue": "blue",
-        "orange": "orange",
-        "purple": "purple",
-        "red": "red",
-        "pink": "pink"
-    },
-    "selectThemeColor": "Select theme color",
 
     "language": {
         "header": "Language",

@@ -10,12 +10,12 @@ export const Appearance = () => {
     return(
         <div className={styles['container']}>
             <SettingsHeader>
-                {t('appearance')}
+                {t('appearance.header')}
             </SettingsHeader>
-            <SettingsSection title={t('themes.header')}>
+            <SettingsSection title={t('appearance.themes.header')}>
                 <AppearanceThemes />
             </SettingsSection>
-            <SettingsSection title={t('colors.header')}>
+            <SettingsSection title={t('appearance.colors.header')}>
                 <AppearanceColors />
             </SettingsSection>
         </div>

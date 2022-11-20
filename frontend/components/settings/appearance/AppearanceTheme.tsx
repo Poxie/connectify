@@ -10,7 +10,7 @@ export const AppearanceTheme: React.FC<{
     const { t } = useTranslation('settings');
     const { setTheme, theme: currentTheme } = useTheme();
 
-    const title = t(`themes.${theme}`);
+    const title = t(`appearance.themes.${theme}`);
     
     const active = theme === currentTheme;
     const className = [

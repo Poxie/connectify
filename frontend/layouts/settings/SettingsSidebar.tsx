@@ -9,7 +9,7 @@ export const SettingsSidebar = () => {
     const { token } = useAuth();
     const path = useRouter().asPath;
 
-    const tabs = ['appearance', 'language.header'];
+    const tabs = ['appearance.header', 'language.header'];
     if(token) {
         tabs.push('account.header');
     }

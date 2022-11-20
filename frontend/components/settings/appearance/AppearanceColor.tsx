@@ -13,7 +13,7 @@ export const AppearanceColor: React.FC<{
     const { setColor, color: activeColor } = useTheme();
 
     // Setting up aria label
-    const ariaLabel = `${t('selectThemeColor')} ${t('colors.' + id)}`;
+    const ariaLabel = `${t('appearance.selectThemeColor')} ${t('appearance.colors.' + id)}`;
 
     // Checking if active
     const active = activeColor === id;

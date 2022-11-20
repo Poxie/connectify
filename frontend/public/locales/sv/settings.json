@@ -1,22 +1,25 @@
 {
     "header": "Inställningar",
-    "appearance": "Utseende",
-    
-    "themes": {
-        "header": "Teman",
-        "light": "Ljust tema",
-        "light-contrast": "Ljus kontrast tema",
-        "dark": "Mörkt tema"
+
+    "appearance": {
+        "header": "Utseende",
+        "selectThemeColor": "Välj tema färg",
+
+        "themes": {
+            "header": "Teman",
+            "light": "Ljust tema",
+            "light-contrast": "Ljus kontrast tema",
+            "dark": "Mörkt tema"
+        },
+        "colors": {
+            "header": "Färger",
+            "blue": "blå",
+            "orange": "orange",
+            "purple": "lila",
+            "red": "röd",
+            "pink": "rosa"
+        }
     },
-    "colors": {
-        "header": "Färger",
-        "blue": "blå",
-        "orange": "orange",
-        "purple": "lila",
-        "red": "röd",
-        "pink": "rosa"
-    },
-    "selectThemeColor": "Välj tema färg",
 
     "language": {
         "header": "Språk",
