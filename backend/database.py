@@ -2,8 +2,9 @@ import os
 from flask import abort
 from dotenv import load_dotenv
 import mysql.connector
+from mysql.connector import pooling
 from mysql.connector.cursor import MySQLCursorBufferedDict
-from mysql.connector.errors import DatabaseError
+from mysql.connector.errors import DatabaseError, PoolError
 
 # Making sure we can use environment variables
 load_dotenv()
@@ -12,23 +13,27 @@ MYSQL_DATABASE = os.getenv('MYSQL_DATABASE')
 config = {
     'host': os.getenv('MYSQL_HOST'),
     'user': os.getenv('MYSQL_USER'),
-    'passwd': os.getenv('MYSQL_PASSWORD'),
+    'password': os.getenv('MYSQL_PASSWORD'),
     'database': os.getenv('MYSQL_DATABASE')
 }
 class Database():
     def __init__(self):
-        self.connection = None
-        self.connection = self.__create_connection()
+        self.pool = self.__create_connection()
 
     def __create_connection(self):
         try:
-            return mysql.connector.connect(**config)
+            return pooling.MySQLConnectionPool(
+                pool_name='pynative_pool',
+                pool_size=10,
+                pool_reset_session=True,
+                **config
+            )
         except DatabaseError as e:
             # Database does not exist
             db = mysql.connector.connect(
                 host=config['host'],
                 user=config['user'],
-                passwd=config['passwd']
+                passwd=config['password']
             )
 
             cursor = db.cursor(buffered=True)
@@ -53,45 +58,69 @@ class Database():
             return self.__create_connection()
 
     def query(self, query, values):
-        cursor = self.connection.cursor(dictionary=True)
+        connection = self.pool.get_connection()
+        cursor = connection.cursor(dictionary=True, buffered=True)
         cursor.execute(query, values)
-        return cursor
+        return {'cursor': cursor, 'connection': connection}
 
     def fetch_all(self, query, values):
         data = []
-        cursor = self.query(query, values)
+        query = self.query(query, values)
+        cursor = query['cursor']
+        connection = query['connection']
+
         if cursor.with_rows:
             data = cursor.fetchall()
+
         cursor.close()
+        connection.close()
         return data
 
     def fetch_one(self, query, values):
         data = None
-        cursor = self.query(query, values)
+        query = self.query(query, values)
+        cursor = query['cursor']
+        connection = query['connection']
+
         if cursor.with_rows:
             data = cursor.fetchone()
+
         cursor.close()
+        connection.close()
         return data
 
-    def update(self, query, values):
-        cursor = self.query(query, values)
+    def update(self, query, values=()):
+        query = self.query(query, values)
+        cursor = query['cursor']
+        connection = query['connection']
+
         rowcount = cursor.rowcount
-        self.connection.commit()
+        
+        connection.commit()
         cursor.close()
+        connection.close()
         return rowcount
     
     def insert(self, query, values):
-        cursor = self.query(query, values)
+        query = self.query(query, values)
+        cursor = query['cursor']
+        connection = query['connection']
+
         id = cursor.lastrowid
-        self.connection.commit()
+        connection.commit()
         cursor.close()
+        connection.close()
         return id
 
     def delete(self, query, values):
-        cursor = self.query(query, values)
+        query = self.query(query, values)
+        cursor = query['cursor']
+        connection = query['connection']
+
         id = cursor.lastrowid
-        self.connection.commit()
+        connection.commit()
         cursor.close()
+        connection.close()
         return id
 
 db = Database()
