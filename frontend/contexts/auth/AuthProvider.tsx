@@ -45,7 +45,11 @@ export const AuthProvider: React.FC<{
         const formData = new FormData();
         Object.entries(body || {}).forEach(([key, value]) => {
             if(Array.isArray(value)) {
-                value.forEach(v => formData.append(key, v));
+                if(value[0] instanceof File) {
+                    value.forEach(v => formData.append(key, v));
+                } else {
+                    formData.append(key, JSON.stringify(value));
+                }
                 return;
             }
             formData.append(key, value);
