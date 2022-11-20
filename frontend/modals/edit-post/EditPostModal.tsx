@@ -32,7 +32,7 @@ export const EditPostModal: React.FC<{
     const { setToast } = useToast();
     const dispatch = useDispatch();
     const post = useAppSelector(state => selectPostById(state, postId));
-    const tempPost = useRef<any>({});
+    const tempPost = useRef<Partial<Post>>({});
     const [tempAttachments, setTempAttachments] = useState<TempAttachment[]>(post?.attachments.map(attachment => ({
         preview: `${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}/${attachment.id}.${attachment.extension}`,
         id: attachment.id
