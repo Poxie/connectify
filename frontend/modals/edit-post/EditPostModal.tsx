@@ -73,6 +73,12 @@ export const EditPostModal: React.FC<{
 
     const onConfirm = async () => {
         if(!tempPost.current) return;
+
+        // Sending content cannot be empty toast
+        if(tempPost.current.content?.trim() === '') {
+            return setToast(t('editPost.contentError'), 'error');
+        }
+        
         setLoading(true);
         
         const post = await patch<Post>(`/posts/${postId}`, {
