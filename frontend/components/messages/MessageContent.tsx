@@ -7,20 +7,22 @@ const linkRegex = new RegExp(linkExpression);
 export const MessageContent: React.FC<{
     content: string;
 }> = ({ content }) => {
-    const newContent = content.split(' ').map(word => {
+    const newContent = content.split(' ').map((word, key) => {
         // Checking if content includes link
         if(word.match(linkRegex)) {
             return (
                 <a 
                     href={word} 
-                    target="_blank" 
+                    target="_blank"
+                    rel="noreferrer"
                     className={styles['link']}
+                    key={key}
                 >
                     {word}
                 </a>
             )
         }
-        return word;
+        return <Fragment key={key}>{word}</Fragment>;
     })
 
     return(
