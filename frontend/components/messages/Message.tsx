@@ -77,3 +77,4 @@ export const Message = React.memo<{
         </>
     )
 });
+Message.displayName = 'Message';

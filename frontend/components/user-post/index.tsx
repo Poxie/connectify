@@ -32,3 +32,4 @@ export const UserPost: React.FC<{
         </li>
     )
 });
+UserPost.displayName = 'UserPost';

@@ -37,3 +37,4 @@ export const Filters = React.forwardRef<HTMLUListElement, {
         </ul>
     )
 });
+Filters.displayName = 'Filters';

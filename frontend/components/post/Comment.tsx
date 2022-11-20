@@ -47,3 +47,4 @@ export const Comment: React.FC<{
         </li>
     )
 });
+Comment.displayName = 'Comment';

@@ -103,3 +103,4 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ type, inp
         </div>
     )
 });
+Input.displayName = 'Input';
