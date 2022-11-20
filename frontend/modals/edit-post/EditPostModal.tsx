@@ -1,5 +1,5 @@
 import styles from './EditPostModal.module.scss';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Input } from "../../components/input";
 import { useAuth } from "../../contexts/auth/AuthProvider";
@@ -36,6 +36,17 @@ export const EditPostModal: React.FC<{
     const [contentLength, setContentLength] = useState(post?.content.length);
     const [loading, setLoading] = useState(false);
 
+    // Updating temp attachments on attachment change
+    useEffect(() => {
+        if(!attachments) return;
+        setTempAttachments(
+            attachments.map(attachment => ({
+                preview: `${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}/${attachment.id}.${attachment.extension}`,
+                id: attachment.id
+            }))
+        );
+    }, [attachments]);
+
     if(!post) return null;
 
     const onPropertyChange = (property: keyof Post, value: any) => {
@@ -52,6 +63,11 @@ export const EditPostModal: React.FC<{
 
     const onConfirm = async () => {
         if(!tempPost.current) return;
+        const tempIds = tempAttachments.map(a => a.id);
+        const ids = attachments?.map(a => a.id);
+        if(tempIds.sort().join(',') === ids?.sort().join(',') && Object.keys(tempPost.current).length === 0) {
+            return setToast(t('editPost.noChanges'), 'info');
+        }
 
         // Sending content cannot be empty toast
         if(tempPost.current.content?.trim() === '') {

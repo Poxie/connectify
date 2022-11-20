@@ -125,6 +125,7 @@
         "content": "Content",
         "error": "Something went wrong while updating post.",
         "contentError": "Content may not be empty.",
-        "success": "Successfully updated post."
+        "success": "Successfully updated post.",
+        "noChanges": "No changes have been made."
     }
 }
