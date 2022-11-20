@@ -32,7 +32,8 @@ export const Messages: React.FC<{
 
     // Fetching messages on mount and scroll
     const onRequestFinished: RequestFinished<MessageType[]> = (messages, reachedEnd) => {
-        dispatch(prependMessages(channelId, messages));
+        const filteredMessages = messages.filter(message => !messageIds?.includes(message.id));
+        dispatch(prependMessages(channelId, filteredMessages));
 
         if(reachedEnd) {
             dispatch(setChannelReachedEnd(channelId, true));
