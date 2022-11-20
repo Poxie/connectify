@@ -13,6 +13,7 @@ import { ModalFooter } from "../ModalFooter";
 import { ModalHeader } from "../ModalHeader";
 import { ModalMain } from "../ModalMain";
 import { useTranslation } from 'next-i18next';
+import { PostAttachments } from './PostAttachments';
 
 export const EditPostModal: React.FC<{
     postId: number;
@@ -23,7 +24,8 @@ export const EditPostModal: React.FC<{
     const { setToast } = useToast();
     const dispatch = useDispatch();
     const post = useAppSelector(state => selectPostById(state, postId));
-    const tempPost = useRef<any>({...post});
+    const tempPost = useRef<any>({});
+    const [tempAttachments, setTempAttachments] = useState(post?.attachments || []);
     const [loading, setLoading] = useState(false);
 
     if(!post) return null;
@@ -32,19 +34,27 @@ export const EditPostModal: React.FC<{
         if(!tempPost.current) return;
         tempPost.current[property] = value;
     }
+    const onAttachmentRemove = (id: number) => {
+        setTempAttachments(prev => prev?.filter(attachment => attachment.id !== id));
+    }
+
     const onConfirm = async () => {
         if(!tempPost.current) return;
         setLoading(true);
         
-        await patch(`/posts/${postId}`, {
-            ...tempPost.current
+        const post = await patch<Post>(`/posts/${postId}`, {
+            ...tempPost.current,
+            ...{
+                attachment_ids: tempAttachments.map(attachment => attachment.id)
+            }
         }).catch(error => {
             setToast(t('editPost.error'), 'error');
         }).finally(() => {
             setLoading(false);
         })
 
-        dispatch(updatePost(postId, {...tempPost.current}));
+        tempPost.current = {};
+        dispatch(updatePost(postId, {...post}));
         setToast(t('editPost.success'), 'success');
     }
 
@@ -54,6 +64,7 @@ export const EditPostModal: React.FC<{
                 {t('editPost.header')}
             </ModalHeader>
             <ModalMain className={styles['content']}>
+                <>
                 <Input 
                     onChange={value => onPropertyChange('title', value)}
                     defaultValue={post.title}
@@ -67,6 +78,13 @@ export const EditPostModal: React.FC<{
                     label={t('editPost.content')}
                     textArea
                 />
+                {tempAttachments.length !== 0 && (
+                    <PostAttachments 
+                        attachments={tempAttachments}
+                        onRemove={onAttachmentRemove}
+                    />
+                )}
+                </>
             </ModalMain>
             <ModalFooter 
                 cancelLabel={t('cancel')}

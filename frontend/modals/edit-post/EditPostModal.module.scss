@@ -2,3 +2,65 @@
     display: grid;
     gap: var(--spacing-primary);
 }
+.attachment-container {
+    --row-amount: 3;
+    --spacing: 6px;
+    display: flex;
+    margin-top: var(--spacing-primary);
+    gap: var(--spacing);
+    flex-wrap: wrap;
+
+    &>.attachment {
+        position: relative;
+        width: calc(100% / var(--row-amount) - var(--spacing) * var(--row-amount));
+        aspect-ratio: 1.5 / 1;
+        max-height: 200px;
+        border-radius: var(--border-radius-primary);
+        flex-grow: 1;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+        background-position: center;
+
+        img {
+            object-fit: contain;
+            position: absolute;
+        }
+
+        &:hover {
+            .remove-attachment button {
+                opacity: 1;
+            }
+        }
+    }
+    .remove-attachment {
+        position: absolute;
+        right: var(--spacing);
+        top: var(--spacing);
+        z-index: 12;
+
+        button {
+            background-color: var(--background-secondary);
+            border-radius: var(--border-radius-secondary);
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity .2s;
+
+            svg {
+                display: block;
+                width: 12px;
+                height: 12px;
+                fill: var(--text-primary);
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
