@@ -16,6 +16,7 @@ import { useTranslation } from 'next-i18next';
 import { PostAttachments } from './PostAttachments';
 import { AttachmentIcon } from '../../assets/icons/AttachmentIcon';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
+import { Dropdown } from '../../components/dropdown';
 
 export type TempAttachment = {
     preview: string;
@@ -125,6 +126,16 @@ export const EditPostModal: React.FC<{
                                 />
                             </button>
                         </HasTooltip>
+                        <Dropdown 
+                            items={[
+                                { text: t('visibility.all'), id: 'all' },
+                                { text: t('visibility.semi'), id: 'semi' },
+                                { text: t('visibility.private'), id: 'private' }
+                            ]}
+                            position={'top'}
+                            defaultActive={post.privacy}
+                            onChange={value => onPropertyChange('privacy', value)}
+                        />
                     </div>
                 </div>
                 {tempAttachments.length !== 0 && (
