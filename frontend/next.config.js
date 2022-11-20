@@ -6,7 +6,7 @@ module.exports = {
     scrollRestoration: true
   },
   images: {
-    domains: ['localhost', '127.0.0.1']
+    domains: [process.env.NEXT_PUBLIC_IMAGE_DOMAIN]
   },
   async redirects() {
     return[

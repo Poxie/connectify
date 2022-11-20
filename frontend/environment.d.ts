@@ -10,7 +10,8 @@ declare global {
             NEXT_PUBLIC_AVATAR_ENDPOINT: string;
             NEXT_PUBLIC_ATTACHMENT_ENDPOINT: string;
             NEXT_PUBLIC_WEBSOCKET_ENDPOINT: string;
-        }
+            NEXT_PUBLIC_IMAGE_DOMAIN: string;
+	}
     }
 }
 
