@@ -6,7 +6,7 @@ import { Account } from "../../components/settings/account/Account";
 import { SettingsLayout } from "../../layouts/settings/SettingsLayout";
 import { NextPageWithLayout } from "../_app";
 
-const accountPage: NextPageWithLayout = () => {
+const AccountPage: NextPageWithLayout = () => {
     const { t } = useTranslation('settings');
 
     const title = t('account') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
@@ -25,7 +25,7 @@ const accountPage: NextPageWithLayout = () => {
     )
 }
 
-accountPage.getLayout = page => (
+AccountPage.getLayout = page => (
     <SettingsLayout>
         {page}
     </SettingsLayout>
@@ -37,4 +37,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
     }
 })
 
-export default accountPage;
+export default AccountPage;

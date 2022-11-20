@@ -6,7 +6,7 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { GetServerSideProps } from "next";
 
-const languagePage: NextPageWithLayout = () => {
+const LanguagePage: NextPageWithLayout = () => {
     const { t } = useTranslation('settings');
 
     const title = t('language') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`
@@ -25,7 +25,7 @@ const languagePage: NextPageWithLayout = () => {
     )
 }
 
-languagePage.getLayout = page => (
+LanguagePage.getLayout = page => (
     <SettingsLayout>
         {page}
     </SettingsLayout>
@@ -37,4 +37,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
     }
 })
 
-export default languagePage;
+export default LanguagePage;

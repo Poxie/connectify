@@ -6,7 +6,7 @@ import { Appearance } from "../../components/settings/appearance/Appearance";
 import { SettingsLayout } from "../../layouts/settings/SettingsLayout";
 import { NextPageWithLayout } from "../_app";
 
-const appearancePage: NextPageWithLayout = () => {
+const AppearancePage: NextPageWithLayout = () => {
     const { t } = useTranslation('settings');
 
     const title = t('appearance') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
@@ -25,7 +25,7 @@ const appearancePage: NextPageWithLayout = () => {
     )
 }
 
-appearancePage.getLayout = page => (
+AppearancePage.getLayout = page => (
     <SettingsLayout>
         {page}
     </SettingsLayout>
@@ -37,4 +37,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
     }
 })
 
-export default appearancePage;
+export default AppearancePage;
