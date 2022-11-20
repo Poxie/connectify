@@ -18,12 +18,8 @@ def create_user_post(token_id: int):
     privacy = request.form.get('privacy') or 'all'
 
     # Checking if required fields are missing
-    if not title or not content:
-        return 'Required fields may not be empty.', 400
-
-    # Checking if title is too long
-    if len(title) > MAX_TITLE_LENGTH:
-        return f'Title may not exceed {MAX_TITLE_LENGTH} characters.', 400
+    if not content:
+        return 'Content may not be empty.', 400
 
     # Checking if content is too long
     if len(content) > MAX_CONTENT_LENGTH:
