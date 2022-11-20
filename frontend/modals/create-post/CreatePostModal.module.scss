@@ -20,7 +20,7 @@
     &>.attachment {
         position: relative;
         width: calc(100% / var(--row-amount) - var(--spacing) * var(--row-amount));
-        aspect-ratio: 1;
+        aspect-ratio: 1.5 / 1;
         max-height: 200px;
         border-radius: var(--border-radius-primary);
         flex-grow: 1;
