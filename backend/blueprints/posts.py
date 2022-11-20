@@ -116,6 +116,9 @@ def update_post(post_id: int, token_id: int):
     if post['author_id'] != token_id:
         return 'Unauthorized.', 401
 
+    if properties.get('content') and properties.get('content').strip() == '':
+        return 'Content is required.', 400
+
     # Updating current attachments
     attachment_ids_prop = properties.getlist('attachment_ids')
     if len(attachment_ids_prop):
