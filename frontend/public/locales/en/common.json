@@ -89,7 +89,7 @@
 
     "postDeleteSuccess": "Successfully deleted post",
     "postDeleteError": "Something went wrong while deleting post",
-    "commentAddSuccessful": "Successfully added comment",
+    "commentAddSuccess": "Successfully added comment",
     "commentAddError": "Something went wrong while adding comment",
     "postCreateError": "Something went wrong while creating post",
 
