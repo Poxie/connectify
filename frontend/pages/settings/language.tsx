@@ -9,7 +9,7 @@ import { GetServerSideProps } from "next";
 const LanguagePage: NextPageWithLayout = () => {
     const { t } = useTranslation('settings');
 
-    const title = t('language') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`
+    const title = t('language.header') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`
     return(
         <>
         <Head>

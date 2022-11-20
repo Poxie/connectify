@@ -9,7 +9,7 @@ import { NextPageWithLayout } from "../_app";
 const AccountPage: NextPageWithLayout = () => {
     const { t } = useTranslation('settings');
 
-    const title = t('account') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
+    const title = t('account.header') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     return(
         <>
         <Head>
