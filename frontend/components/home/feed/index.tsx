@@ -62,7 +62,7 @@ export const Feed = () => {
 
     return(
         <>
-            {postIds.length && (
+            {postIds.length !== 0 && (
                 <ul className={styles['container']}>
                     {postIds.map(id => <UserPost id={id} key={id} />)}
                 </ul>
