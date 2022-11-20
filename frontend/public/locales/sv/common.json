@@ -72,14 +72,7 @@
     "alreadyHaveAnAccount": "Har du redan ett konto?",
     "createAccount": "Skapa konto",
     
-    "editProfile": "Redigera Profil",
-    "changeBanner": "Ändra banner",
-    "changeAvatar": "Ändra profilbild",
-    "displayName": "Visningsnamn",
-    "displayNamePlaceholder": "Välj ett namn...",
-    "bio": "Bio",
-    "bioPlaceholder": "Skriv lite om dig själv!",
-    "saveChanges": "Spara Ändringar",
+    "saveChanges": "Spara ändringar",
 
     "deletePostHeader": "Ta bort det här inlägget?",
     "deletePostSubHeader": "Är du säker på att du vill ta bort det här inlägget? Du kan inte ångra dig.",
@@ -88,8 +81,6 @@
     "comingSoonHeader": "Kommer snart",
     "comingSoonSubHeader": "Den här funktionen har inte kommit ännu. Håll ögonen öppna, det dröjer inte länge tills den är här!",
 
-    "profileEditSuccess": "Profilen har uppdaterats",
-    "profileEditError": "Ett fel uppstod när profilen skulle uppdateras",
     "postDeleteSuccess": "Inlägget har raderats",
     "postDeleteError": "Ett fel uppstod när inlägget skulle tas bort",
     "commentAddSuccess": "Kommentaren har lagts till",

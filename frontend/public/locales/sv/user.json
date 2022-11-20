@@ -3,7 +3,6 @@
     "noPosts": "Användaren har inte lagt upp något ännu.",
     "likedPosts": "Gillade inlägg",
     "noLikedPosts": "Användaren har inte gillat några inlägg.",
-    "editProfile": "Redigera profil",
     "follow": "Följ",
     "unfollow": "Avfölj",
 
@@ -12,5 +11,17 @@
 
     "likedPostsTitle": "{{name}}s gillade inlägg",
     "userProfile": "{{profile}}s profile",
-    "userNotFound": "Användaren kunde inte hittas"
+    "userNotFound": "Användaren kunde inte hittas",
+
+    "editProfile": {
+        "header": "Redigera Profil",
+        "changeBanner": "Ändra banner",
+        "changeAvatar": "Ändra profilbild",
+        "displayName": "Visningsnamn",
+        "displayNamePlaceholder": "Välj ett namn...",
+        "bio": "Bio",
+        "bioPlaceholder": "Skriv lite om dig själv!",
+        "success": "Profilen har uppdaterats.",
+        "error": "Något gick fel när profilen skulle uppdateras."
+    }
 }

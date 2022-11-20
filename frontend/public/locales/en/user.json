@@ -3,7 +3,6 @@
     "noPosts": "User has not posted anything yet.",
     "likedPosts": "Liked posts",
     "noLikedPosts": "User has not liked any posts.",
-    "editProfile": "Edit profile",
     "follow": "Follow",
     "unfollow": "Unfollow",
 
@@ -12,5 +11,17 @@
 
     "likedPostsTitle": "{{name}}'s liked posts",
     "userProfile": "{{profile}}'s profile",
-    "userNotFound": "The user was not found"
+    "userNotFound": "The user was not found",
+
+    "editProfile": {
+        "header": "Edit profile",
+        "changeBanner": "Change banner",
+        "changeAvatar": "Change avatar",
+        "displayName": "Display name",
+        "displayNamePlaceholder": "Choose a name...",
+        "bio": "Bio",
+        "bioPlaceholder": "Write a little about yourself!",
+        "success": "Successfully updated profile",
+        "error": "Something went wrong while updating profile"
+    }
 }

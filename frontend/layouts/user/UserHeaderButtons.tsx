@@ -63,7 +63,7 @@ export const UserHeaderButtons: React.FC<{
                     onClick={editProfile}
                     className={styles['header-button']}
                 >
-                    {t('editProfile')}
+                    {t('editProfile.header')}
                 </Button>
             )}
         </div>

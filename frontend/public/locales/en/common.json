@@ -72,14 +72,13 @@
     "alreadyHaveAnAccount": "Already have an account?",
     "createAccount": "Create account",
     
-    "editProfile": "Edit Profile",
     "changeBanner": "Change banner",
     "changeAvatar": "Change avatar",
     "displayName": "Display name",
     "displayNamePlaceholder": "Select a name to go by...",
     "bio": "Bio",
     "bioPlaceholder": "Type a few words about yourself!",
-    "saveChanges": "Save Changes",
+    "saveChanges": "Save changes",
 
     "deletePostHeader": "Delete this post?",
     "deletePostSubHeader": "Are you sure you want to delete this post? It cannot be undone.",
@@ -88,8 +87,6 @@
     "comingSoonHeader": "Coming soon",
     "comingSoonSubHeader": "This feature is yet to come. Stay tuned, it won't be long until it's live!",
 
-    "profileEditSuccess": "Successfully updated profile",
-    "profileEditError": "Something went wrong while updating profile",
     "postDeleteSuccess": "Successfully deleted post",
     "postDeleteError": "Something went wrong while deleting post",
     "commentAddSuccessful": "Successfully added comment",

@@ -17,7 +17,8 @@ import { UserStats } from '../../layouts/user/UserStats';
 import { useToast } from '../../contexts/toast/ToastProvider';
 
 export const EditProfileModal = () => {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation('user');
+    const { t:g } = useTranslation('common');
     const { profile, patch } = useAuth();
     const { close } = useModal();
     const { setToast } = useToast();
@@ -63,10 +64,10 @@ export const EditProfileModal = () => {
                 setDisabled(false);
 
                 // Sending status toast
-                setToast(t('profileEditSuccess'), 'success');
+                setToast(t('editProfile.success'), 'success');
             })
             .catch(error => {
-                setToast(t('profileEditError'),  'error');
+                setToast(t('editProfile.error'),  'error');
                 setDisabled(false);
             })
     }
@@ -74,7 +75,7 @@ export const EditProfileModal = () => {
     return(
         <>
             <ModalHeader>
-                {t('editProfile')}
+                {t('editProfile.header')}
             </ModalHeader>
             <EditProfileBanner 
                 updateProperty={updateProperty}
@@ -101,14 +102,14 @@ export const EditProfileModal = () => {
             <div className={styles['input-container']}>
                 <Input 
                     labelClassName={styles['label']}
-                    placeholder={t('displayNamePlaceholder')}
-                    label={t('displayName')}
+                    placeholder={t('editProfile.displayNamePlaceholder')}
+                    label={t('editProfile.displayName')}
                     defaultValue={tempUser?.display_name || ''}
                     onChange={name => updateProperty('display_name', name)}
                 />
                 <Input 
                     labelClassName={styles['label']}
-                    placeholder={t('bioPlaceholder')}
+                    placeholder={t('editProfile.bioPlaceholder')}
                     label={'Bio'}
                     defaultValue={tempUser?.bio || ''}
                     onChange={bio => updateProperty('bio', bio)}
@@ -116,9 +117,9 @@ export const EditProfileModal = () => {
                 />
             </div>
             <ModalFooter 
-                cancelLabel={t('close')}
+                cancelLabel={g('close')}
                 onCancel={cancel}
-                confirmLabel={t('saveChanges')}
+                confirmLabel={g('saveChanges')}
                 onConfirm={confirm}
                 confirmLoading={disabled}
             />
