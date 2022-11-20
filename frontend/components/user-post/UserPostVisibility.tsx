@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useToast } from "../../contexts/toast/ToastProvider";
@@ -16,6 +16,11 @@ export const UserPostVisibilty: React.FC<{
     const { setToast } = useToast();
     const dispatch = useDispatch();
     const [hasBeenPrivate, setHasBeenPrivate] = useState(privacy === 'private');
+
+    // If post becomes private, show setting
+    useEffect(() => {
+        if(privacy === 'private') setHasBeenPrivate(true);
+    }, [privacy]);
 
     if(!hasBeenPrivate) return null;
 
