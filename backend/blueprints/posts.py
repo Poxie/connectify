@@ -124,6 +124,7 @@ def update_post(post_id: int, token_id: int):
 
         # Removing attachment if not in new attachment_ids
         for attachment in current_attachments:
+            print(attachment['id'], attachment_ids, str(attachment['id']) in attachment_ids)
             if str(attachment['id']) in attachment_ids: 
                 continue
 
@@ -146,13 +147,14 @@ def update_post(post_id: int, token_id: int):
         update_query_string.append(update_string)
         values.append(value)
 
-    update_string = ', '.join(update_query_string)
-    query = f"UPDATE posts SET {update_string} WHERE id = %s"
-    
-    values.append(post_id)
-    values = tuple(values)
+    if len(values):
+        update_string = ', '.join(update_query_string)
+        query = f"UPDATE posts SET {update_string} WHERE id = %s"
+        
+        values.append(post_id)
+        values = tuple(values)
 
-    db.update(query, values)
+        db.update(query, values)
 
     post = get_post_by_id(post_id)
     return jsonify(post)
