@@ -2,6 +2,15 @@
     display: grid;
     gap: var(--spacing-primary);
 }
+.attachments {
+    border-top: 1px solid var(--background-secondary);
+    padding-top: var(--spacing-primary);
+
+    &>span {
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+}
 .attachment-container {
     --row-amount: 3;
     --spacing: 6px;
