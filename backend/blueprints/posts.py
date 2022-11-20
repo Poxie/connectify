@@ -124,15 +124,22 @@ def update_post(post_id: int, token_id: int):
 
         # Removing attachment if not in new attachment_ids
         for attachment in current_attachments:
-            print(attachment['id'], attachment_ids, str(attachment['id']) in attachment_ids)
             if str(attachment['id']) in attachment_ids: 
                 continue
 
             remove_attachment(attachment['id'], attachment['extension'])
 
     # Adding new attachments
-    attachments = request.files.items()
+    attachments = request.files.items(multi=True)
     for key, value in attachments:
+        if key != 'attachments': continue
+
+        # Checking file extension
+        parts = value.filename.split('.')[::-1]
+        ext = parts[0]
+        if ext.lower() not in ['jpg', 'png']:
+            return 'Unsupported file format.', 400
+
         create_attachment(value, post_id)
 
     # Updating basic post properties
