@@ -86,6 +86,7 @@ export const EditPostModal: React.FC<{
         }).finally(() => {
             setLoading(false);
         })
+        if(!post) return;
 
         tempPost.current = {};
         dispatch(updatePost(postId, {...post}));
