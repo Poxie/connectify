@@ -94,7 +94,7 @@ export const EditPostModal: React.FC<{
                 <>
                 <Input 
                     onChange={value => onPropertyChange('title', value)}
-                    defaultValue={post.title}
+                    defaultValue={post.title || ''}
                     placeholder={t('editPost.title')}
                     label={t('editPost.title')}
                 />

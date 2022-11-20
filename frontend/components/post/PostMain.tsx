@@ -36,7 +36,9 @@ export const PostMain: React.FC<{
             postId={id}
             privacy={privacy}
         />
-        <PostTitle title={title} />
+        {title && (
+            <PostTitle title={title} />
+        )}
         <PostContent content={content} />
         <UserPostAttachments authorId={post.author.id} id={id} />
         <UserPostFooter authorId={post.author.id} id={id} />

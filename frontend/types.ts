@@ -23,7 +23,7 @@ export type Post = {
     id: number;
     author: User;
     author_id: number;
-    title: string;
+    title: string | null;
     content: string;
     has_liked: boolean;
     like_count: number;
