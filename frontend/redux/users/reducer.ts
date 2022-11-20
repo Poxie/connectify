@@ -110,7 +110,7 @@ const addUserPostIds: ReducerAction = (state, action) => {
 
     const newUsers = updateItemInArray(state.users, userId, user => {
         return updateObject(user, {
-            postIds: [...postIds, ...(user.postIds || [])]
+            postIds: [...(user.postIds || []), ...postIds]
         })
     })
     
