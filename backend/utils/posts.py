@@ -110,7 +110,7 @@ def create_post(post, token_id):
     post = get_post_by_id(id, token_id)
 
     # Creating notification for following users
-    if post:
+    if post and post['privacy'] != 'private':
         add_user_notification(
             reference_id=id, 
             user_reference_id=post['author_id'],
