@@ -65,6 +65,35 @@
     padding: var(--spacing-primary);
     display: block;
 }
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: var(--spacing-primary) 0;
+
+    span {
+        background-color: var(--background-primary);
+        margin-top: -2px;
+        padding: 0 6px;
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    &::after {
+        content: '';
+        background-color: var(--background-tertiary);
+        z-index: -1;
+        height: 1px;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+    }
+}
 .message {
     align-self: flex-start;
     position: relative;

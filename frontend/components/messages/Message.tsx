@@ -7,6 +7,7 @@ import { MessageFooter } from './MessageFooter';
 import { MessageContent } from './MessageContent';
 import { selectMessageById } from '../../redux/messages/selectors';
 import { MessageTimestamp } from './MessageTimestamp';
+import { MessageDivider } from './MessageDivider';
 
 const MINUTES_BETWEEN_MESSAGES = 6
 const SECONDS_IN_A_MINUTE = 60;
@@ -24,8 +25,18 @@ export const Message = React.memo<{
     
     if(!message) return null;
 
+    // Determining if previous message was sent on different day
+    const prevMessageDate = new Date((prevMessage?.timestamp || message.timestamp) * 1000);
+    const nowMessageDate = new Date(message.timestamp * 1000);
+    const isSameDay = prevMessageDate.toDateString() === nowMessageDate.toDateString();
+
     // Checking if current message should have author and footer
-    const hasAuthor = prevMessage?.author_id !== message.author_id;
+    const hasAuthor = (
+        // If previous message is other author
+        prevMessage?.author_id !== message.author_id ||
+        // If previous message was sent on different day
+        !isSameDay
+    )
     const hasFooter = (
         nextMessage?.author_id !== message.author_id || 
         // If time between messages are 6 mins or longer, add timestamp
@@ -39,6 +50,13 @@ export const Message = React.memo<{
         hasFooter ? styles['has-footer'] : ''
     ].join(' ');
     return(
+        <>
+        {!isSameDay && (
+            <MessageDivider 
+                timestamp={message.timestamp}
+            />
+        )}
+
         <div className={className}>
             {!isMyMessage && hasAuthor && (
                 <MessageAuthor author={message.author} />
@@ -56,5 +74,6 @@ export const Message = React.memo<{
                 )}
             </div>
         </div>
+        </>
     )
 });
