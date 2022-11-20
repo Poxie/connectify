@@ -33,14 +33,14 @@ def get_user_by_id(id: int, token_id: Union[int, None]=None):
         COUNT(DISTINCT f.follower_id) AS follower_count,
         IF(f2.follower_id IS NULL, FALSE, TRUE) as is_following
     FROM users
-        LEFT JOIN posts p ON p.author_id = users.id
-        LEFT JOIN likes l ON p.id = l.parent_id
+        LEFT JOIN posts p ON (p.author_id = users.id AND (p.privacy != 'private' OR p.author_id = %s))
+        LEFT JOIN likes l ON (p.id = l.parent_id AND (p.privacy != 'private' OR p.author_id = %s))
         LEFT JOIN followers f ON f.followee_id = users.id
         LEFT JOIN followers f2 ON (f2.followee_id = users.id AND f2.follower_id = %s)
     WHERE 
         users.id = %s
     """
-    values = (token_id, id)
+    values = (token_id, token_id, token_id, id)
 
     user = db.fetch_one(query, values)
     if user and 'id' in user and user['id'] is None:
