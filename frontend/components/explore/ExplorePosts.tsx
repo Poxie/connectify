@@ -27,9 +27,12 @@ export const ExplorePosts = () => {
 
     // Fetching posts on mount and scroll
     const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
+        // Preventing duplicate posts
+        const filteredPosts = posts.filter(post => !postIds.includes(post.id));
+
         const action = filterType === 'top' ? setExploreTopIds : setExploreLatestIds;
-        dispatch(action(posts.map(post => post.id)));
-        dispatch(setPosts(posts));
+        dispatch(action(filteredPosts.map(post => post.id)));
+        dispatch(setPosts(filteredPosts));
 
         if(reachedEnd) {
             dispatch(setExploreFilterReachedEnd(filterType));

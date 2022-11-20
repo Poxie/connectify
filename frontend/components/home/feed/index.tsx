@@ -25,11 +25,13 @@ export const Feed = () => {
 
     // Fetching feed post on mount and scroll
     const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
+        const filteredPosts = posts.filter(post => !postIds.includes(post.id));
+
         if(reachedEnd) {
             dispatch(setFeedReachedEnd(true));
         }
-        dispatch(setPosts(posts));
-        dispatch(addFeedPostIds(posts.map(post => post.id)));
+        dispatch(setPosts(filteredPosts));
+        dispatch(addFeedPostIds(filteredPosts.map(post => post.id)));
     };
     const { loading: feedLoading } = useInfiniteScroll<Post[]>(
         `/feed?amount=${FETCH_AMOUNT}&start_at=${postIds.length}`,
