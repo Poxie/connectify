@@ -163,5 +163,5 @@ def update_post(post_id: int, token_id: int):
 
         db.update(query, values)
 
-    post = get_post_by_id(post_id)
+    post = get_post_by_id(post_id, token_id)
     return jsonify(post)
