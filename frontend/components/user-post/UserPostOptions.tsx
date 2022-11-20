@@ -33,7 +33,7 @@ export const UserPostOptions: React.FC<{
     const onClick = () => {
         // Function to copy post URL
         const copyLink = () => {
-            navigator.clipboard.writeText(`${window.location.host}/posts/${postId}`);
+            navigator.clipboard.writeText(`${window.location.origin}/posts/${postId}`);
         }
 
         // Creating menu groups
