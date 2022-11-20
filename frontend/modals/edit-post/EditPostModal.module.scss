@@ -64,3 +64,27 @@
         }
     }
 }
+.options {
+    display: flex;
+
+    .button {
+        border: 2px solid var(--background-secondary);
+        border-radius: var(--border-radius-secondary);
+        transition: background-color 0.15s;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+
+        svg {
+            fill: var(--text-secondary);
+            display: block;
+        }
+
+        &:hover {
+            background-color: var(--background-secondary);
+        }
+    }
+    input {
+        display: none;
+    }
+}

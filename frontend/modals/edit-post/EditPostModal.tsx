@@ -8,13 +8,20 @@ import { useToast } from "../../contexts/toast/ToastProvider";
 import { updatePost } from "../../redux/posts/actions";
 import { selectPostById } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
-import { Post } from "../../types";
+import { Attachment, Post } from "../../types";
 import { ModalFooter } from "../ModalFooter";
 import { ModalHeader } from "../ModalHeader";
 import { ModalMain } from "../ModalMain";
 import { useTranslation } from 'next-i18next';
 import { PostAttachments } from './PostAttachments';
+import { AttachmentIcon } from '../../assets/icons/AttachmentIcon';
+import { HasTooltip } from '../../components/tooltip/HasTooltip';
 
+export type TempAttachment = {
+    preview: string;
+    file?: File;
+    id: number;
+}
 export const EditPostModal: React.FC<{
     postId: number;
 }> = ({ postId }) => {
@@ -25,8 +32,12 @@ export const EditPostModal: React.FC<{
     const dispatch = useDispatch();
     const post = useAppSelector(state => selectPostById(state, postId));
     const tempPost = useRef<any>({});
-    const [tempAttachments, setTempAttachments] = useState(post?.attachments || []);
+    const [tempAttachments, setTempAttachments] = useState<TempAttachment[]>(post?.attachments.map(attachment => ({
+        preview: `${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}/${attachment.id}.${attachment.extension}`,
+        id: attachment.id
+    })) || []);
     const [loading, setLoading] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     if(!post) return null;
 
@@ -37,6 +48,25 @@ export const EditPostModal: React.FC<{
     const onAttachmentRemove = (id: number) => {
         setTempAttachments(prev => prev?.filter(attachment => attachment.id !== id));
     }
+    const addAttachments = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if(!files) return;
+        
+        const processedAttachments: TempAttachment[] = []
+        for(const file of Array.from(files)) {
+            const blob = new Blob([file]);
+            const preview = URL.createObjectURL(blob);
+            processedAttachments.push({
+                file,
+                preview,
+                id: Math.random()
+            })
+        }
+        setTempAttachments(prev => [...prev, ...processedAttachments]);
+    }
+    const openAttachmentPrompt = () => {
+        inputRef.current?.click();
+    }
 
     const onConfirm = async () => {
         if(!tempPost.current) return;
@@ -45,7 +75,8 @@ export const EditPostModal: React.FC<{
         const post = await patch<Post>(`/posts/${postId}`, {
             ...tempPost.current,
             ...{
-                attachment_ids: tempAttachments.map(attachment => attachment.id)
+                attachment_ids: tempAttachments.filter(a => !a.file).map(a => a.id),
+                attachments: tempAttachments.filter(a => a.file).map(a => a.file)
             }
         }).catch(error => {
             setToast(t('editPost.error'), 'error');
@@ -78,6 +109,24 @@ export const EditPostModal: React.FC<{
                     label={t('editPost.content')}
                     textArea
                 />
+                <div>
+                    <div className={styles['options']}>
+                        <HasTooltip tooltip={'Add attachment'}>
+                            <button 
+                                onClick={openAttachmentPrompt}
+                                className={styles['button']}
+                            >
+                                <AttachmentIcon />
+                                <input 
+                                    type="file"
+                                    multiple 
+                                    onChange={addAttachments}
+                                    ref={inputRef}
+                                />
+                            </button>
+                        </HasTooltip>
+                    </div>
+                </div>
                 {tempAttachments.length !== 0 && (
                     <PostAttachments 
                         attachments={tempAttachments}

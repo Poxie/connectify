@@ -1,10 +1,10 @@
 import { AddIcon } from "../../assets/icons/AddIcon";
 import { HasTooltip } from "../../components/tooltip/HasTooltip";
-import { Attachment } from "../../types"
+import { TempAttachment } from "./EditPostModal";
 import styles from './EditPostModal.module.scss';
 
 export const PostAttachments: React.FC<{
-    attachments: Attachment[];
+    attachments: TempAttachment[];
     onRemove: (id: number) => void;
 }> = ({ attachments, onRemove }) => {
     return(
@@ -17,7 +17,7 @@ export const PostAttachments: React.FC<{
                 {attachments.map(attachment => (
                     <div
                         className={styles['attachment']}
-                        style={{ backgroundImage: `url(${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}/${attachment.id}.${attachment.extension})` }}
+                        style={{ backgroundImage: `url(${attachment.preview})` }}
                         key={attachment.id}
                     >
                         <HasTooltip 
