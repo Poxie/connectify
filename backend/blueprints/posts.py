@@ -116,11 +116,12 @@ def update_post(post_id: int, token_id: int):
     if post['author_id'] != token_id:
         return 'Unauthorized.', 401
 
-    if properties.get('content') and properties.get('content').strip() == '':
-        return 'Content is required.', 400
-    
-    if len(properties.get('content')) > MAX_CONTENT_LENGTH:
-        return f'Content may not exceed {MAX_CONTENT_LENGTH} characters', 400
+    if properties.get('content'):
+        if properties.get('content').strip() == '':
+            return 'Content is required.', 400
+            
+        if len(properties.get('content')) > MAX_CONTENT_LENGTH:
+            return f'Content may not exceed {MAX_CONTENT_LENGTH} characters', 400
 
     # Updating current attachments
     attachment_ids_prop = properties.getlist('attachment_ids')
