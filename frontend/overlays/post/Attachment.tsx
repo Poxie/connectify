@@ -33,6 +33,21 @@ export const Attachment: React.FC<{
         }
     }, [photo]);
 
+    // If attachments are removed, make sure photoId exists
+    useEffect(() => {
+        if(!attachments || photo === undefined) return;
+
+        // If all attachments are removed
+        if(!attachments.length) {
+            close();
+        }
+
+        // If attachmentId no longer exists
+        if(photo > attachments.length - 1) {
+            router.replace(router.asPath, `/posts/${postId}?photo=${active - 1}`, { shallow: true });
+        }
+    }, [attachments?.length, photo]);
+
     // Allowing navigation through arrow keys
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
@@ -59,6 +74,8 @@ export const Attachment: React.FC<{
     }
 
     const attachment = attachments[active];
+    if(!attachment) return <div className={styles['attachment']} />;
+
     return(
         <div className={styles['attachment']}>
             {active !== 0 && (
