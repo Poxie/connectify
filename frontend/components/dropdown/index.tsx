@@ -16,6 +16,12 @@ export const Dropdown: React.FC<{
     const [displayOptions, setDisplayOptions] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
+    // Updating active on defaultActive chane
+    useEffect(() => {
+        if(!defaultActive) return;
+        setActive(defaultActive);
+    }, [defaultActive]);
+
     // Closing on click outside component
     useEffect(() => {
         const checkForClickOutside = (e: MouseEvent) => {
