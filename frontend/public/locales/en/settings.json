@@ -21,18 +21,24 @@
 
     "displayLanguage": "Display language",
 
-    "account": "Account",
-    "changePassword": "Change password",
-    "passwordIsIncorrect": "Current password is incorrect.",
-    "passwordUpdateSuccess": "Successfully updated password",
-    "currentPassword": "Current password",
-    "newPassword": "New password",
-    "updatePassword": "Update password",
-    "forgotPassword": "Forgot password?",
-    "resetPassword": "Reset password",
-    "resetPasswordSubHeader": "Enter the email associated with this account to receive a link to reset your password with.",
-    "sendMail": "Send mail",
-    "emailIsIncorrect": "Email is not linked with this account. Please check for typos.",
-    "emailGenericError": "An error occured while sending email.",
-    "emailSentSuccess": "An email has been sent to {{email}}"
+    "account": {
+        "header": "Account",
+        "changePassword": "Change password",
+        "passwordIsIncorrect": "The current password is incorrect.",
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "forgotPassword": "Forgot your password?",
+        "updatePassword": "Change password"
+    },
+
+    "resetPassword": {
+        "header": "Reset password",
+        "subHeader": "Enter the email associated with this account to receive a link to reset your password with.",
+        "sendMail": "Send mail",
+        "errors": {
+            "incorrect": "This mail is not connected to your account. Please check for typos.",
+            "generic": "An error occured while sending mail."
+        },
+        "success": "An email has been sent to {{email}}"
+    }
 }

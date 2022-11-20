@@ -20,9 +20,9 @@ export const Account = () => {
     return(
         <div className={styles['container']}>
             <SettingsHeader>
-                {t('account')}
+                {t('account.header')}
             </SettingsHeader>
-            <SettingsSection title={t('changePassword')}>
+            <SettingsSection title={t('account.changePassword')}>
                 <ChangePassword />
             </SettingsSection>
         </div>

@@ -12,7 +12,7 @@
     "colors": {
         "header": "Färger",
         "blue": "blå",
-            "orange": "orange",
+        "orange": "orange",
         "purple": "lila",
         "red": "röd",
         "pink": "rosa"
@@ -21,18 +21,24 @@
 
     "displayLanguage": "Visningsspråk",
 
-    "account": "Konto",
-    "changePassword": "Ändra lösenord",
-    "passwordIsIncorrect": "Det nuvarande lösenordet är inkorrekt.",
-    "passwordUpdateSuccess": "Ditt lösenord har uppdaterats",
-    "currentPassword": "Nuvarande lösenord",
-    "newPassword": "Nytt lösenord",
-    "updatePassword": "Ändra lösenord",
-    "forgotPassword": "Glömt ditt lösenord?",
-    "resetPassword": "Återställ lösenord",
-    "resetPasswordSubHeader": "Ange mailen länkat med det här kontot för att skicka en återställningslänk för ditt lösenord.",
-    "sendMail": "Skicka mail",
-    "emailIsIncorrect": "Mailen är inte kopplat till ditt konto. Kolla efter typos.",
-    "emailGenericError": "Ett fel uootod när mailet skulle skickas.",
-    "emailSentSuccess": "Ett mail har skickats till {{email}}"
+    "account": {
+        "header": "Konto",
+        "changePassword": "Ändra lösenord",
+        "passwordIsIncorrect": "Det nuvarande lösenordet är inkorrekt.",
+        "currentPassword": "Nuvarande lösenord",
+        "newPassword": "Nytt lösenord",
+        "forgotPassword": "Glömt ditt lösenord?",
+        "updatePassword": "Ändra lösenord"
+    },
+
+    "resetPassword": {
+        "header": "Återställ lösenord",
+        "subHeader": "Ange mailen länkat med det här kontot för att skicka en återställningslänk för ditt lösenord.",
+        "sendMail": "Skicka mail",
+        "errors": {
+            "incorrect": "Mailen är inte kopplat till ditt konto. Kolla efter typos.",
+            "generic": "Ett fel uppstod när mailet skulle skickas"
+        },
+        "success": "Ett mail har skicats till {{email}}"
+    }
 }

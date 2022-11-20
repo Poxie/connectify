@@ -29,13 +29,13 @@ export const ChangePassword = () => {
             new_password: newPassword
         })
         .then(() => {
-            setToast(t('passwordUpdateSuccess'), 'success');
+            setToast(t('account.success'), 'success');
             setCurrentPassword('');
             setNewPassword('');
         })
         .catch(error => {
             if(error.code === 401) {
-                setError(t('passwordIsIncorrect'));
+                setError(t('account.errors.mailIncorrect'));
             }
         })
     }
@@ -51,14 +51,14 @@ export const ChangePassword = () => {
             className={styles['change-password']}
         >
             <Input 
-                placeholder={t('currentPassword')}
+                placeholder={t('account.currentPassword')}
                 onChange={setCurrentPassword}
                 defaultValue={currentPassword}
                 containerClassName={styles['input']}
                 type={'password'}
             />
             <Input 
-                placeholder={t('newPassword')}
+                placeholder={t('account.newPassword')}
                 onChange={setNewPassword}
                 defaultValue={newPassword}
                 containerClassName={styles['input']}
@@ -78,13 +78,13 @@ export const ChangePassword = () => {
                         onClick={openForgotPasswordModal}
                         type={'button'}
                     >
-                        {t('forgotPassword')}
+                        {t('account.forgotPassword')}
                     </button>
                     <Button
                         disabled={disabled}
                         buttonType={'submit'}
                     >
-                        {t('updatePassword')}
+                        {t('account.updatePassword')}
                     </Button>
                 </div>
             </div>

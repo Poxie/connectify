@@ -26,25 +26,25 @@ export const ForgotPasswordModal = () => {
             email
         }).catch(error => {
             if(error.code === 401) {
-                setToast(t('emailIsIncorrect'), 'error');
+                setToast(t('resetPassword.errors.incorrect'), 'error');
                 return;
             }
-            setToast(t('emailGenericError'), 'error');
+            setToast(t('resetPassword.errors.generic'), 'error');
         }).finally(() => {
             setLoading(false);
         })
         if(!data) return;
 
-        setToast(t('emailSentSuccess', { email }), 'success');
+        setToast(t('resetPassword.success', { email }), 'success');
         setEmail('');
     }
 
     return(
         <>
         <ModalHeader 
-            subHeader={t('resetPasswordSubHeader')}
+            subHeader={t('resetPassword.subHeader')}
         >
-            {t('resetPassword')}
+            {t('resetPassword.header')}
         </ModalHeader>
         <form onSubmit={sendMail}>
             <ModalMain>
@@ -57,7 +57,7 @@ export const ForgotPasswordModal = () => {
             </ModalMain>
             <ModalFooter 
                 cancelLabel={g('close')}
-                confirmLabel={t('sendMail')}
+                confirmLabel={t('resetPassword.sendMail')}
                 onCancel={close}
                 onConfirm={sendMail}
                 confirmDisabled={!email}

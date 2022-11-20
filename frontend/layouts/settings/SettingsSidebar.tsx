@@ -11,7 +11,7 @@ export const SettingsSidebar = () => {
 
     const tabs = ['appearance', 'language'];
     if(token) {
-        tabs.push('account');
+        tabs.push('account.header');
     }
     return(
         <div className={styles['sidebar']}>
@@ -21,7 +21,8 @@ export const SettingsSidebar = () => {
 
             <ul className={styles['tabs']}>
                 {tabs.map(tab => {
-                    const active = path.endsWith(tab.toLowerCase());
+                    const tabPath = tab.split('.')[0].toLocaleLowerCase();
+                    const active = path.endsWith(tabPath);
 
                     const className = [
                         styles['tab'],
@@ -29,7 +30,7 @@ export const SettingsSidebar = () => {
                     ].join(' ');
                     return(
                         <li key={tab}>
-                            <Link href={`/settings/${tab.toLowerCase()}`}>
+                            <Link href={`/settings/${tabPath}`}>
                                 <a className={className}>
                                     {t(tab)}
                                 </a> 
