@@ -28,7 +28,7 @@ class Database():
             db = mysql.connector.connect(
                 host=config['host'],
                 user=config['user'],
-                passwd=['passwd']
+                passwd=config['passwd']
             )
 
             cursor = db.cursor(buffered=True)
