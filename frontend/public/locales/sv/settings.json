@@ -33,7 +33,8 @@
         "currentPassword": "Nuvarande lösenord",
         "newPassword": "Nytt lösenord",
         "forgotPassword": "Glömt ditt lösenord?",
-        "updatePassword": "Ändra lösenord"
+        "updatePassword": "Ändra lösenord",
+        "success": "Lösenordet har ändrats."
     },
 
     "resetPassword": {

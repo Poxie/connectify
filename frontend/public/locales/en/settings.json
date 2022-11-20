@@ -34,7 +34,8 @@
         "currentPassword": "Current password",
         "newPassword": "New password",
         "forgotPassword": "Forgot your password?",
-        "updatePassword": "Change password"
+        "updatePassword": "Change password",
+        "success": "Successfully updated password."
     },
 
     "resetPassword": {
