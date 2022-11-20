@@ -16,14 +16,16 @@ export default function PostPage({ post }: {
         t('postNotFound')
     )
     title += ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
+    let description = post?.content || '';
+    if(description.length > 150) description.slice(0, 150) + '...';
     return(
         <>
         <Head>
             <title>
                 {title}
             </title>
-            {post && (
-                <meta property="og:description" content={post.content.slice(0,152) + '...'} />
+            {description && (
+                <meta property="og:description" content={description} />
             )}
             <meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
             <meta property="og:url" content={`${process.env.NEXT_PUBLIC_WEBSITE_ORIGIN}/posts/${post?.id}`} />

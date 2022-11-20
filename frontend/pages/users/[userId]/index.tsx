@@ -28,7 +28,9 @@ const User: NextPageWithLayout<{
     )
     title += ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`
     const description = user?.bio ? (
-        user.bio.slice(0,152) + '...'
+        user.bio.length > 150 ? (
+            user.bio.slice(0,150) + '...'
+        ) : user.bio
     ) : (
         user ? (
             t('userProfile', { profile: user.display_name || user.username })
