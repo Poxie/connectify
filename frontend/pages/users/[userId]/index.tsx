@@ -21,6 +21,7 @@ const User: NextPageWithLayout<{
         }
     }, [user]);
 
+    const name = user?.display_name || user?.username
     let title = user ? (
         user?.display_name || user?.username
     ) : (
@@ -44,6 +45,9 @@ const User: NextPageWithLayout<{
             <title>
                 {title}
             </title>
+            {user && (
+                <meta property="og:title" content={name} />
+            )}
             <meta property="og:description" content={description} />
             {user && (
                 <meta property="og:image" content={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`} />

@@ -10,8 +10,9 @@ export default function PostPage({ post }: {
 }) {
     const { t } = useTranslation('post');
 
+    const name = post?.author.display_name || post?.author.username;
     let title = post ? (
-        `${post?.author.display_name || post?.author.username}: ${post?.title || t('noTitle')}`
+        `${name}: ${post?.title || t('noTitle')}`
     ) : (
         t('postNotFound')
     )
@@ -24,6 +25,9 @@ export default function PostPage({ post }: {
             <title>
                 {title}
             </title>
+            {post && (
+                <meta property="og:title" content={post?.title || `${name}: ${t('noTitle')}`} />
+            )}
             {description && (
                 <meta property="og:description" content={description} />
             )}
