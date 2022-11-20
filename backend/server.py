@@ -5,7 +5,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 load_dotenv()
 
-server = socketio.Server(cors_allowed_origins="http://localhost:3000")
+server = socketio.Server(cors_allowed_origins=os.environ.get('FRONTEND_ORIGIN'))
 app = Flask(__name__)
 app.wsgi_app = socketio.WSGIApp(server, app.wsgi_app)
 CORS(app, origins="*")
