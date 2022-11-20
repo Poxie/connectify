@@ -33,10 +33,12 @@ export const EditPostModal: React.FC<{
     const dispatch = useDispatch();
     const post = useAppSelector(state => selectPostById(state, postId));
     const tempPost = useRef<Partial<Post>>({});
-    const [tempAttachments, setTempAttachments] = useState<TempAttachment[]>(post?.attachments.map(attachment => ({
-        preview: `${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}/${attachment.id}.${attachment.extension}`,
-        id: attachment.id
-    })) || []);
+    const [tempAttachments, setTempAttachments] = useState<TempAttachment[]>(
+        post?.attachments.map(attachment => ({
+            preview: `${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}/${attachment.id}.${attachment.extension}`,
+            id: attachment.id
+        })
+    ) || []);
     const [loading, setLoading] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
