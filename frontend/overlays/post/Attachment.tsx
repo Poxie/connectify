@@ -39,7 +39,7 @@ export const Attachment: React.FC<{
 
         // If all attachments are removed
         if(!attachments.length) {
-            close();
+            router.back();
         }
 
         // If attachmentId no longer exists
