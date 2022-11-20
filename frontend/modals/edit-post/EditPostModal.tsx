@@ -84,6 +84,7 @@ export const EditPostModal: React.FC<{
         const post = await patch<Post>(`/posts/${postId}`, {
             ...tempPost.current,
             ...{
+                // Separating File objects from previously added attachmentIds
                 attachment_ids: tempAttachments.filter(a => !a.file).map(a => a.id),
                 attachments: tempAttachments.filter(a => a.file).map(a => a.file)
             }
