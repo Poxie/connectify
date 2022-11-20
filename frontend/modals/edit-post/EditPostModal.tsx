@@ -6,23 +6,16 @@ import { useAuth } from "../../contexts/auth/AuthProvider";
 import { useModal } from "../../contexts/modal/ModalProvider";
 import { useToast } from "../../contexts/toast/ToastProvider";
 import { updatePost } from "../../redux/posts/actions";
-import { selectPostById } from "../../redux/posts/selectors";
+import { selectPostAttachments, selectPostMain } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
-import { Attachment, Post } from "../../types";
+import { Post, TempAttachment } from "../../types";
 import { ModalFooter } from "../ModalFooter";
 import { ModalHeader } from "../ModalHeader";
 import { ModalMain } from "../ModalMain";
 import { useTranslation } from 'next-i18next';
-import { PostAttachments } from './PostAttachments';
-import { AttachmentIcon } from '../../assets/icons/AttachmentIcon';
-import { HasTooltip } from '../../components/tooltip/HasTooltip';
-import { Dropdown } from '../../components/dropdown';
+import { PostOptions } from '../../components/post-options/PostOptions';
+import { TempPostAttachments } from '../../components/temp-post-attachments/TempPostAttachments';
 
-export type TempAttachment = {
-    preview: string;
-    file?: File;
-    id: number;
-}
 export const EditPostModal: React.FC<{
     postId: number;
 }> = ({ postId }) => {
@@ -31,17 +24,17 @@ export const EditPostModal: React.FC<{
     const { close } = useModal();
     const { setToast } = useToast();
     const dispatch = useDispatch();
-    const post = useAppSelector(state => selectPostById(state, postId));
+    const post = useAppSelector(state => selectPostMain(state, postId));
+    const attachments = useAppSelector(state => selectPostAttachments(state, postId));
     const tempPost = useRef<Partial<Post>>({});
     const [tempAttachments, setTempAttachments] = useState<TempAttachment[]>(
-        post?.attachments.map(attachment => ({
+        attachments?.map(attachment => ({
             preview: `${process.env.NEXT_PUBLIC_ATTACHMENT_ENDPOINT}/${attachment.id}.${attachment.extension}`,
             id: attachment.id
         })
     ) || []);
     const [contentLength, setContentLength] = useState(post?.content.length);
     const [loading, setLoading] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
 
     if(!post) return null;
 
@@ -53,24 +46,8 @@ export const EditPostModal: React.FC<{
     const onAttachmentRemove = (id: number) => {
         setTempAttachments(prev => prev?.filter(attachment => attachment.id !== id));
     }
-    const addAttachments = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if(!files) return;
-        
-        const processedAttachments: TempAttachment[] = []
-        for(const file of Array.from(files)) {
-            const blob = new Blob([file]);
-            const preview = URL.createObjectURL(blob);
-            processedAttachments.push({
-                file,
-                preview,
-                id: Math.random()
-            })
-        }
-        setTempAttachments(prev => [...prev, ...processedAttachments]);
-    }
-    const openAttachmentPrompt = () => {
-        inputRef.current?.click();
+    const onAttachmendAdd = (attachments: TempAttachment[]) => {
+        setTempAttachments(prev => [...prev, ...attachments]);
     }
 
     const onConfirm = async () => {
@@ -129,39 +106,17 @@ export const EditPostModal: React.FC<{
                     textArea
                 />
                 <div className={styles['footer']}>
-                    <div className={styles['options']}>
-                        <HasTooltip tooltip={t('addAttachment')}>
-                            <button 
-                                onClick={openAttachmentPrompt}
-                                className={styles['button']}
-                                aria-label={t('addAttachment')}
-                            >
-                                <AttachmentIcon />
-                                <input 
-                                    type="file"
-                                    multiple 
-                                    onChange={addAttachments}
-                                    ref={inputRef}
-                                />
-                            </button>
-                        </HasTooltip>
-                        <Dropdown 
-                            items={[
-                                { text: t('visibility.all'), id: 'all' },
-                                { text: t('visibility.semi'), id: 'semi' },
-                                { text: t('visibility.private'), id: 'private' }
-                            ]}
-                            position={'top'}
-                            defaultActive={post.privacy}
-                            onChange={value => onPropertyChange('privacy', value)}
-                        />
-                    </div>
+                    <PostOptions 
+                        onAttachmentAdd={onAttachmendAdd}
+                        onVisibilityChange={value => onPropertyChange('privacy', value)}
+                        visibility={post.privacy}
+                    />
                     <span className={characterClassName}>
                         {contentLength}/400 {t('characters')}
                     </span>
                 </div>
                 {tempAttachments.length !== 0 && (
-                    <PostAttachments 
+                    <TempPostAttachments 
                         attachments={tempAttachments}
                         onRemove={onAttachmentRemove}
                     />

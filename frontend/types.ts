@@ -84,3 +84,8 @@ export type Attachment = {
     extension: string;
     parent_id: number;
 }
+export type TempAttachment = {
+    preview: string;
+    file?: File;
+    id: number;
+}

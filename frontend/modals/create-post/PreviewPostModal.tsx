@@ -11,10 +11,9 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { addUserPostId } from '../../redux/users/actions';
 import { useTranslation } from 'next-i18next';
-import { Post } from '../../types';
+import { Post, TempAttachment } from '../../types';
 import { useToast } from '../../contexts/toast/ToastProvider';
-import { TempAttachment } from './CreatePostModal';
-import { PreviewAttachments } from './PreviewAttachments';
+import { TempPostAttachments } from '../../components/temp-post-attachments/TempPostAttachments';
 
 export const PreviewPostModal: React.FC<{
     title: string;
@@ -85,7 +84,12 @@ export const PreviewPostModal: React.FC<{
                 {content}
             </p>
 
-            <PreviewAttachments attachments={attachments} />
+            {attachments.length !== 0 && (
+                <TempPostAttachments 
+                    attachments={attachments}
+                    hasLabel={false}
+                />
+            )}
         </div>
 
         <ModalFooter 

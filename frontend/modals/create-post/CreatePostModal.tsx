@@ -6,29 +6,24 @@ import { ModalFooter } from '../ModalFooter';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { PreviewPostModal } from './PreviewPostModal';
 import { useTranslation } from 'next-i18next';
-import { AttachmentIcon } from '../../assets/icons/AttachmentIcon';
-import { HasTooltip } from '../../components/tooltip/HasTooltip';
-import { AddIcon } from '../../assets/icons/AddIcon';
-import { PreviewAttachments } from './PreviewAttachments';
-import { Dropdown } from '../../components/dropdown';
-
-export type TempAttachment = {
-    preview: string;
-    file: File;
-}
+import { PostOptions } from '../../components/post-options/PostOptions';
+import { TempPostAttachments } from '../../components/temp-post-attachments/TempPostAttachments';
+import { TempAttachment } from '../../types';
 
 const MAX_CHARACTER_LENGTH = 400;
 export const CreatePostModal = () => {
     const { t } = useTranslation('common');
     const { close, pushModal } = useModal();
-    const [title, setTitle] = useState('');
+    const properties = useRef({ 
+        title: '',
+        privacy: ''
+    })
     const [content, setContent] = useState('');
-    const [privacy, setPrivacy] = useState('all');
     const [attachments, setAttachments] = useState<TempAttachment[]>([]);
-    const attachmentRef = useRef<HTMLInputElement>(null);
 
     // Preview post
     const previewPost = () => {
+        const { title, privacy } = properties.current;
         pushModal(
             <PreviewPostModal 
                 title={title}
@@ -40,31 +35,15 @@ export const CreatePostModal = () => {
     }
 
     // Adding attachment
-    const openAttachmentPrompt = () => attachmentRef.current?.click();
-    const addAttachments = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
-        if(!files) return;
-        
-        const processedAttachments: TempAttachment[] = []
-        for(const file of Array.from(files)) {
-            const blob = new Blob([file]);
-            const preview = URL.createObjectURL(blob);
-            processedAttachments.push({
-                file,
-                preview
-            })
-        }
-        setAttachments(prev => [...prev, ...processedAttachments]);
+    const onAttachmendAdd = (attachments: TempAttachment[]) => {
+        setAttachments(prev => [...prev, ...attachments]);
     }
-    const removeAttachment = (index: number) => {
-        setAttachments(prev => {
-            prev.splice(index, 1);
-            return [...prev];
-        })
+    const onAttachmentRemove = (id: number) => {
+        setAttachments(prev => prev.filter(a => a.id !== id));
     }
 
     // Determining if post is complete
-    const disabled = !title || !content || content.length > MAX_CHARACTER_LENGTH;
+    const disabled = !content || content.length > MAX_CHARACTER_LENGTH;
 
     const characterClassName = [
         styles['character-length'],
@@ -78,7 +57,7 @@ export const CreatePostModal = () => {
         <div className={styles['content']}>
             <Input 
                 placeholder={t('postTitle')}
-                onChange={setTitle}
+                onChange={value => properties.current.title = value}
             />
             <Input 
                 placeholder={t('postContent')}
@@ -87,34 +66,11 @@ export const CreatePostModal = () => {
             />
 
             <div className={styles['footer']}>
-                <div className={styles['options']}>
-                    <HasTooltip tooltip={t('addAttachment')}>
-                        <button
-                            aria-label={t('addAttachment')}
-                            onClick={openAttachmentPrompt}
-                            className={styles['button']}
-                        >
-                            <AttachmentIcon />
-                            <input 
-                                type="file" 
-                                multiple={true}
-                                aria-hidden="true"
-                                onChange={addAttachments}
-                                ref={attachmentRef}
-                            />
-                        </button>
-                    </HasTooltip>
-                    <Dropdown 
-                        items={[
-                            { text: t('visibility.all'), id: 'all' },
-                            { text: t('visibility.semi'), id: 'semi' },
-                            { text: t('visibility.private'), id: 'private' }
-                        ]}
-                        defaultActive={privacy}
-                        position={'top'}
-                        onChange={setPrivacy}
-                    />
-                </div>
+                <PostOptions 
+                    onAttachmentAdd={onAttachmendAdd}
+                    visibility={'all'}
+                    onVisibilityChange={value => properties.current.privacy = value}
+                />
 
                 <span className={characterClassName}>
                     {content.length}/{MAX_CHARACTER_LENGTH} {t('characters')}
@@ -122,15 +78,10 @@ export const CreatePostModal = () => {
             </div>
 
             {attachments.length !== 0 && (
-                <div className={styles['attachments']}>
-                    <span className={styles['label']}>
-                        {t('attachments')}
-                    </span>
-                    <PreviewAttachments 
-                        attachments={attachments}
-                        onDelete={removeAttachment}
-                    />
-                </div>
+                <TempPostAttachments 
+                    attachments={attachments}
+                    onRemove={onAttachmentRemove}
+                />
             )}
         </div>
         <ModalFooter 

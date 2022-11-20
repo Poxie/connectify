@@ -1,15 +1,7 @@
-.content {
-    display: grid;
-    gap: var(--spacing-primary);
-}
-.attachments {
-    border-top: 1px solid var(--background-secondary);
+.container>span {
     padding-top: var(--spacing-primary);
-
-    &>span {
-        color: var(--text-secondary);
-        font-weight: 600;
-    }
+    border-top: 1px solid var(--background-secondary);
+    display: block;
 }
 .attachment-container {
     --row-amount: 3;
@@ -71,19 +63,5 @@
                 transform: rotate(45deg);
             }
         }
-    }
-}
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.characters {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-secondary);
-
-    &.error {
-        color: var(--color-red);
     }
 }
