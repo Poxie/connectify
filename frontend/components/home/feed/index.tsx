@@ -70,11 +70,13 @@ export const Feed = () => {
 
             <AnimatePresence>
                 {feedLoading && (
-                    Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
-                        <UserPostSkeleton 
-                            key={key}
-                        />
-                    ))
+                    <ul className={styles['container']}>
+                        {Array.from(Array(PLACEHOLDER_AMOUNT)).map((_, key) => (
+                            <UserPostSkeleton 
+                                key={key}
+                            />
+                        ))}
+                    </ul>
                 )}
             </AnimatePresence>
 
