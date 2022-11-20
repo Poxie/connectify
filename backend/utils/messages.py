@@ -9,7 +9,7 @@ can be used for pagination. Desired message ids are fetched, then looped through
 to hydrate message information related to selected id.
 """
 def get_channel_messages(channel_id: int, amount: int=50, start_at: int=0):
-    query = "SELECT id FROM messages WHERE channel_id = %s ORDER BY timestamp LIMIT %s, %s"
+    query = "SELECT id FROM messages WHERE channel_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
     values = (channel_id, start_at, amount)
 
     data = db.fetch_all(query, values)
@@ -21,7 +21,7 @@ def get_channel_messages(channel_id: int, amount: int=50, start_at: int=0):
         message = get_message_by_id(message_id)
         messages.append(message)
 
-    return messages
+    return messages[::-1]
 
 """
 Gets the total count of unread messages of a user.
