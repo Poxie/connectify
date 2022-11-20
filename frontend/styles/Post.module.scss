@@ -6,38 +6,7 @@
     font-size: 20px;
     color: var(--text-secondary);
     display: block;
-    margin-bottom: var(--spacing-primary);
-}
-.attachments {
-    --row-amount: 1;
-    --attachment-spacing: 4px;
-    --max-height: 250px;
-    margin-bottom: var(--spacing-primary);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--attachment-spacing);
-}
-.attachment {
-    flex-grow: 1;
-    width: calc(100% / var(--row-amount) - var(--attachment-spacing));
-    max-height: var(--max-height);
-    aspect-ratio: 2 / 1;
-    position: relative;
-    border-radius: var(--border-radius-primary);
-    overflow: hidden;
-    cursor: pointer;
-
-    img {
-        transition: transform .2s;
-    }
-    &:hover {
-        img {
-            transform: scale(1.05);
-        }
-    }
-    &.active {
-        border: 4px solid var(--color-primary);
-    }
+    margin-top: var(--spacing-primary);
 }
 .comments {
     padding-top: var(--spacing-primary);

@@ -1,20 +1,13 @@
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { AddIcon } from '../../assets/icons/AddIcon';
-import { useOverlay } from '../../contexts/overlay/OverlayProvider';
 import styles from './PostOverlay.module.scss';
 
-export const CloseOverlay: React.FC<{
-    postId: number;
-}> = ({ postId }) => {
+export const CloseOverlay = () => {
     const { t } = useTranslation('common');
     const router = useRouter();
-    const { close } = useOverlay();
 
-    const onClick = () => {
-        router.replace(`/posts/${postId}`);
-        close();
-    }
+    const onClick = () => router.back();
     
     return(
         <button 

@@ -1,12 +1,13 @@
-import styles from '../../styles/Post.module.scss';
+import styles from './UserPost.module.scss';
 import { selectPostAttachments } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store"
-import { PostAttachment } from "./PostAttachment";
+import { UserPostAttachment } from "./UserPostAttachment";
 import { CSSProperties } from 'react';
 
-export const PostAttachments: React.FC<{
+export const UserPostAttachments: React.FC<{
     id: number;
-}> = ({ id }) => {
+    authorId: number;
+}> = ({ id, authorId }) => {
     const attachments = useAppSelector(state => selectPostAttachments(state, id));
     if(!attachments?.length) return null;
 
@@ -17,8 +18,9 @@ export const PostAttachments: React.FC<{
             style={{ '--row-amount': rowAmount } as CSSProperties}
         >
             {attachments?.map((attachment, key) => (
-                <PostAttachment 
-                    {...attachment} 
+                <UserPostAttachment 
+                    {...attachment}
+                    authorId={authorId}
                     index={key}
                     key={attachment.id} 
                 />

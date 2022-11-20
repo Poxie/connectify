@@ -23,6 +23,7 @@ export const UserProfile = () => {
 
     // Fetching posts on mount and scroll
     const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
+        if(!userId) return;
         if(reachedEnd) {
             dispatch(setUserReachedEnd(userId, 'postIds'));
         }

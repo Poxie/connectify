@@ -1,24 +1,22 @@
-import { useEffect, useMemo } from "react"
-import { useDispatch } from "react-redux"
 import { useAuth } from "../../contexts/auth/AuthProvider"
 import { useQueryId } from "../../hooks/useQueryId"
 import { useRequest } from "../../hooks/useRequest"
 import { setPost } from "../../redux/posts/actions"
 import { selectPostMain } from "../../redux/posts/selectors"
 import { useAppSelector } from "../../redux/store"
-import { Post } from "../../types"
+import { UserPostAttachments } from "../user-post/UserPostAttachments"
 import { UserPostFooter } from "../user-post/UserPostFooter"
 import { UserPostHeader } from "../user-post/UserPostHeader"
-import { PostAttachments } from "./PostAttachments"
 import { PostContent } from "./PostContent"
 import { PostMainSkeleton } from "./PostMainSkeleton"
 import { PostTitle } from "./PostTitle"
 
-export const PostMain = () => {
+export const PostMain: React.FC<{
+    postId: number;
+}> = ({ postId }) => {
     const { get, loading } = useAuth();
-    const postId = useQueryId('postId');
     const post = useAppSelector(state => selectPostMain(state, postId));
-    useRequest(`/posts/${postId}`, setPost, !post);
+    useRequest(postId ? `/posts/${postId}` : '', setPost, !post);
 
     if(!post) return <PostMainSkeleton />;
 
@@ -27,7 +25,8 @@ export const PostMain = () => {
         author,
         timestamp,
         title,
-        content
+        content,
+        privacy
     } = post;
     return(
         <>
@@ -35,11 +34,12 @@ export const PostMain = () => {
             user={author}
             timestamp={timestamp}
             postId={id}
+            privacy={privacy}
         />
         <PostTitle title={title} />
         <PostContent content={content} />
-        <PostAttachments id={id} />
-        <UserPostFooter id={id} />
+        <UserPostAttachments authorId={post.author.id} id={id} />
+        <UserPostFooter authorId={post.author.id} id={id} />
         </>
     )
 }

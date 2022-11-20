@@ -1,7 +1,7 @@
-import time
+import time, os
 from database import db
 from typing import Union, List
-from utils.common import get_post_by_id, add_user_notification, create_attachment, create_id
+from utils.common import get_post_by_id, add_user_notification, create_attachment, create_id, get_attachments_by_parent_id
 from utils.constants import POST_LIKE_TYPE
 
 """
@@ -10,8 +10,8 @@ can be used for pagination. token_id can be used to personalize the posts, i.e.,
 adding has_liked, is_following, etc.
 """
 def get_user_posts(user_id: int, token_id: Union[int, None]=None, amount=10, start_at=0):
-    query = "SELECT id FROM posts WHERE author_id = %s ORDER BY timestamp DESC LIMIT %s, %s"
-    values = (user_id, start_at, amount)
+    query = "SELECT id FROM posts WHERE author_id = %s AND (privacy != 'private' OR author_id = %s) ORDER BY timestamp DESC LIMIT %s, %s"
+    values = (user_id, token_id, start_at, amount)
 
     data = db.fetch_all(query, values)
     
@@ -65,7 +65,7 @@ def get_posts_by_users(user_ids: List[int], amount: int, start_at: int, token_id
     query = f"""
     SELECT posts.id FROM users
     INNER JOIN posts ON users.id = posts.author_id
-    WHERE {where_clause} ORDER BY timestamp DESC LIMIT %s, %s
+    WHERE ({where_clause}) AND posts.privacy != 'private' ORDER BY timestamp DESC LIMIT %s, %s
     """
     values = (start_at, amount)
 
@@ -85,17 +85,18 @@ content, title, and author_id. After post creation, a notification is
 created for people following the author of the post. Returned from the
 function is a post dict.
 """
-def create_post(post):
+def create_post(post, token_id):
     # Creating post
     id = create_id('posts')
 
     created_at = time.time()
-    query = "INSERT INTO posts (id, author_id, title, content, timestamp) VALUES (%s, %s, %s, %s, %s)"
+    query = "INSERT INTO posts (id, author_id, title, content, privacy, timestamp) VALUES (%s, %s, %s, %s, %s, %s)"
     values = (
         id,
         post['author_id'],
         post['title'],
         post['content'],
+        post['privacy'],
         created_at
     )
 
@@ -106,7 +107,7 @@ def create_post(post):
         create_attachment(attachment, id)
 
     # Fetching created post
-    post = get_post_by_id(id)
+    post = get_post_by_id(id, token_id)
 
     # Creating notification for following users
     if post:
@@ -127,11 +128,21 @@ def delete_post(post_id):
     post_query = "DELETE FROM posts WHERE id = %s"
     like_query = "DELETE FROM likes WHERE parent_id = %s"
     comment_query = "DELETE FROM comments WHERE post_id = %s"
+    attachment_query = "DELETE FROM attachments WHERE parent_id = %s"
+    
+    # Fetching attachments to delete them from attachments directory
+    attachments = get_attachments_by_parent_id(post_id)
+    app_root = os.path.dirname(os.path.abspath(__file__))
+    folder = os.path.join(app_root, '../imgs/attachments/')
+    for attachment in attachments:
+        file_name = os.path.join(folder, str(attachment['id']) + '.' + attachment['extension'])
+        os.remove(file_name)
 
     values = (post_id,)
 
     db.delete(post_query, values)
     db.delete(like_query, values)
     db.delete(comment_query, values)
+    db.delete(attachment_query, values)
 
     return {}

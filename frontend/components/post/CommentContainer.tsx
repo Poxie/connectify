@@ -17,9 +17,9 @@ const SCROLL_THRESHOLD = 400;
 const LOADING_SKELETON_COUNT = 3;
 export const CommentContainer: React.FC<{
     containerRef?: RefObject<HTMLDivElement>;
-}> = ({ containerRef }) => {
-    const { t } = useTranslation('post');
-    const postId = useQueryId('postId');
+    postId: number;
+}> = ({ containerRef, postId }) => {
+    const { t } = useTranslation('common');
     const dispatch = useDispatch();
     const [orderType, setOrderType] = useState<CommentType['orderType']>('top');
     const hasLoadedOrderType = useAppSelector(state => selectPostHasLoadedOrderType(state, postId, orderType));
@@ -28,6 +28,7 @@ export const CommentContainer: React.FC<{
 
     // Fetching comments
     const onRequestFinished = (result: CommentType[]) => {
+        if(!postId) return;
         dispatch(setPostComments(postId, result, orderType));
     }
     const { loading } = useInfiniteScroll(
@@ -38,10 +39,11 @@ export const CommentContainer: React.FC<{
             threshold: SCROLL_THRESHOLD,
             identifier: `${postId}-${orderType}`,
             fetchOnMount: !commentIds.length,
-            standBy: postIsFetched === false || hasLoadedOrderType && !commentIds.length,
+            standBy: postIsFetched === false || hasLoadedOrderType && !commentIds.length || !postId,
             scrollContainer: containerRef || undefined
         }
     )
+    if(!postId) return null;
 
     const _setOrderType = (type: string) => {
         setOrderType(type as CommentType['orderType']);

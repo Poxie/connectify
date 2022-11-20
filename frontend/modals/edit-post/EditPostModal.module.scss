@@ -1,13 +1,15 @@
 .content {
-    padding: 0 var(--spacing-primary);
     display: grid;
-    gap: 10px;
+    gap: var(--spacing-primary);
 }
-.label {
-    font-weight: 600;
-    padding-top: var(--spacing-primary);
+.attachments {
     border-top: 1px solid var(--background-secondary);
-    display: block;
+    padding-top: var(--spacing-primary);
+
+    &>span {
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
 }
 .attachment-container {
     --row-amount: 3;
@@ -75,11 +77,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.options {
+    display: flex;
+    gap: 8px;
 
     .button {
         border: 2px solid var(--background-secondary);
-        border-radius: 6px;
-        transition: background-color .15s;
+        border-radius: var(--border-radius-secondary);
+        transition: background-color 0.15s;
         width: 32px;
         height: 32px;
         padding: 6px;
@@ -93,52 +99,16 @@
             background-color: var(--background-secondary);
         }
     }
-    input[type="file"] {
+    input {
         display: none;
     }
 }
-.options {
-    display: flex;
-    align-items: center;
-    gap: calc(var(--spacing-primary) / 2);
-}
-.character-length {
+.characters {
     font-size: 14px;
-    text-align: right;
+    font-weight: 600;
     color: var(--text-secondary);
-    font-weight: 700;
 
     &.error {
         color: var(--color-red);
     }
-}
-.preview {
-    padding: var(--spacing-primary);
-    margin: var(--spacing-primary);
-    background-color: var(--background-secondary);
-    border: 2px solid var(--background-tertiary);
-    border-radius: var(--border-radius-primary);
-    margin-top: 0;
-
-    h3 {
-        margin: 0;
-    }
-    p {
-        margin-bottom: 0;
-        margin-top: 10px;
-    }
-}
-.preview-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-.preview-avatar {
-    border-radius: 50%;
-    overflow: hidden;
-    min-width: 26px;
-    width: 26px;
-    height: 26px;
 }

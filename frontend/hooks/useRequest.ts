@@ -13,7 +13,7 @@ export const useRequest: UseRequest = <T>(query: string, dispatchAction: any, sh
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if(tokenLoading || !shouldFetch) return;
+        if(tokenLoading || !shouldFetch || !query) return;
 
         get<T>(query)
             .then(data => {

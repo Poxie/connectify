@@ -12,7 +12,7 @@ comment_likes = Blueprint('comment_likes', __name__, url_prefix='/comments/<int:
 @token_required
 def add_post_like(post_id: int, token_id: int):
     # Checking if post exists
-    post = get_post_by_id(post_id)
+    post = get_post_by_id(post_id, token_id)
     if not post:
         return 'Post does not exist.', 404
 
@@ -31,7 +31,7 @@ def add_post_like(post_id: int, token_id: int):
 @token_required
 def remove_post_like(post_id: int, token_id: int):
     # Checking if post exists
-    post = get_post_by_id(post_id)
+    post = get_post_by_id(post_id, token_id)
     if not post:
         return 'Post does not exist.', 404
 

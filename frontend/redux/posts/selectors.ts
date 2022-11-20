@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { Comment } from '../../types';
 import { RootState } from "../store";
 
-const selectId = (_:any, id: number) => id;
+const selectId = (_:any, id?: number) => id;
 const selectCommentId = (_:any,__:any, commentId: number) => commentId;
 const selectOrderType = (_:any,__:any, orderType: Comment['orderType']) => orderType;
 
@@ -60,7 +60,8 @@ export const selectPostMain = createSelector(
         title: post.title,
         content: post.content,
         author: post.author,
-        timestamp: post.timestamp
+        timestamp: post.timestamp,
+        privacy: post.privacy
     }) : undefined
 )
 export const selectPostStats = createSelector(

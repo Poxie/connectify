@@ -10,8 +10,8 @@ export const Main: React.FC<{
 
     return(
         <div className={styles['main']} ref={ref}>
-            <PostMain />
-            <Comments containerRef={ref} />
+            <PostMain postId={postId} />
+            <Comments postId={postId} containerRef={ref} />
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import styles from './PostOverlay.module.scss';
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { selectPostAttachments } from "../../redux/posts/selectors";
 import { useAppSelector } from "../../redux/store";
 import { ArrowIcon } from '../../assets/icons/ArrowIcon';
@@ -8,28 +8,45 @@ import { useRouter } from 'next/router';
 import { useOverlay } from '../../contexts/overlay/OverlayProvider';
 import { HasTooltip } from '../../components/tooltip/HasTooltip';
 import { useTranslation } from 'next-i18next';
+import { usePhotoIndex } from '../../hooks/usePhotoIndex';
 
 export const Attachment: React.FC<{
-    postId: number;
     defaultIndex: number;
-}> = ({ postId, defaultIndex }) => {
-    const { t } = useTranslation('post');
-    const router = useRouter();
+    authorId: number;
+    postId: number;
+}> = ({ defaultIndex, authorId, postId }) => {
+    const { t } = useTranslation('common');
     const { close } = useOverlay();
+    const router = useRouter();
     const attachments = useAppSelector(state => selectPostAttachments(state, postId));
-    const [active, setActive] = useState(defaultIndex || 0);
-
-    // Updating active param
+    const [active, setActive] = useState(defaultIndex);
+    const currentlyActive = useRef(defaultIndex);
+    
+    // Updating photo index on url change, closing if not present
+    const photo = usePhotoIndex();
     useEffect(() => {
-        router.replace(`/posts/${postId}?photo=${active}`, undefined, { shallow: true });
-    }, [active]);
-
-    // Closing overlay if path changes
-    useEffect(() => {
-        if(!router.asPath.includes('posts')) {
+        if(photo !== undefined) {
+            setActive(photo);
+            currentlyActive.current = photo;
+        } else {
             close();
         }
-    }, [router.asPath]);
+    }, [photo]);
+
+    // If attachments are removed, make sure photoId exists
+    useEffect(() => {
+        if(!attachments || photo === undefined) return;
+
+        // If all attachments are removed
+        if(!attachments.length) {
+            close();
+        }
+
+        // If attachmentId no longer exists
+        if(photo > attachments.length - 1) {
+            router.replace(router.asPath, `/posts/${postId}?photo=${active - 1}`, { shallow: true });
+        }
+    }, [attachments?.length, photo]);
 
     // Allowing navigation through arrow keys
     useEffect(() => {
@@ -46,19 +63,19 @@ export const Attachment: React.FC<{
 
     // Attachment navigation
     const prev = () => {
-        setActive(prev => {
-            if(prev === 0) return prev;
-            return prev - 1;
-        });
+        const active = currentlyActive.current;
+        if(active === 0) return prev;
+        router.replace(router.asPath, `/posts/${postId}?photo=${active - 1}`, { shallow: true });
     }
     const next = () => {
-        setActive(prev => {
-            if(prev === attachments.length - 1) return prev;
-            return prev + 1;
-        });
+        const active = currentlyActive.current;
+        if(active === attachments.length - 1) return;
+        router.replace(router.asPath, `/posts/${postId}?photo=${active + 1}`, { shallow: true });
     }
 
     const attachment = attachments[active];
+    if(!attachment) return <div className={styles['attachment']} />;
+
     return(
         <div className={styles['attachment']}>
             {active !== 0 && (

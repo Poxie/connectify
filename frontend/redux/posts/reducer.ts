@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { Comment, Post } from "../../types";
 import { createReducer, updateItemInArray, updateObject } from "../utils";
-import { ADD_COMMENT_LIKE, ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_COMMENT_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS } from "./constants"
+import { ADD_COMMENT_LIKE, ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_COMMENT_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS, UPDATE_POST } from "./constants"
 import { PostsReducer, PostsState } from "./types"
 
 // Reducer actions
@@ -17,6 +17,15 @@ const setPost = (state: PostsState, action: AnyAction) => {
 const removePost = (state: PostsState, action: AnyAction) => {
     const newPosts = state.posts.filter(post => post.id !== action.payload);
     return updateObject(state, { posts: newPosts })
+}
+
+const updatePost = (state: PostsState, action: AnyAction) => {
+    console.log(action.payload);
+    const newPosts = updateItemInArray(state.posts, action.payload.id, post => {
+        return updateObject(post, action.payload.properties)
+    });
+
+    return updateObject(state, { posts: newPosts });
 }
 
 const setPostComments = (state: PostsState, action: AnyAction) => {
@@ -139,6 +148,7 @@ export const postsReducer = createReducer({
 }, {
     [SET_POST]: setPost,
     [REMOVE_POST]: removePost,
+    [UPDATE_POST]: updatePost,
     [SET_POST_COMMENTS]: setPostComments,
     [ADD_POST_COMMENT]: addPostComment,
     [SET_POSTS]: setPosts,

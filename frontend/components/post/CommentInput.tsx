@@ -13,7 +13,6 @@ export const CommentInput: React.FC<{
     postId: number;
 }> = ({ postId }) => {
     const { t } = useTranslation('common');
-    const { t: g } = useTranslation('post');
     const { post, token, loading } = useAuth();
     const { setToast } = useToast();
     const dispatch = useDispatch();
@@ -26,7 +25,7 @@ export const CommentInput: React.FC<{
         return(
             <div className={styles['add-comment']}>
                 <span>
-                    {g('loginToComment')}
+                    {t('loginToComment')}
                 </span>
             </div>
         )
@@ -66,7 +65,7 @@ export const CommentInput: React.FC<{
     return(
         <div className={styles['add-comment']}>
             <Input 
-                placeholder={g('addComment')} 
+                placeholder={t('addComment')} 
                 defaultValue={value}
                 onChange={setValue}
                 onFocus={open}
@@ -83,7 +82,7 @@ export const CommentInput: React.FC<{
                         onClick={addComment}
                         disabled={disabled}
                     >
-                        {g('addComment')}
+                        {t('addComment')}
                     </Button>
                 </div>
             )}

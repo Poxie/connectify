@@ -21,12 +21,9 @@ export const ConfirmModal: React.FC<{
 
     return(
         <>
-        <ModalHeader>
+        <ModalHeader subHeader={subHeader}>
             {header}
         </ModalHeader>
-        <span style={{ padding: '0 var(--spacing-primary)' }}>
-            {subHeader}
-        </span>
         <ModalFooter 
             cancelLabel={cancelLabel || t('cancel')}
             confirmLabel={confirmLabel || t('confirm')}

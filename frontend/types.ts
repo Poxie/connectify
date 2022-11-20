@@ -29,6 +29,7 @@ export type Post = {
     like_count: number;
     comment_count: number;
     timestamp: number;
+    privacy: 'all' | 'semi' | 'private';
     attachments: Attachment[];
     hasCommentsFetched?: boolean;
     hasLoadedLatestComments?: boolean;

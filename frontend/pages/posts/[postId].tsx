@@ -2,24 +2,13 @@ import { GetServerSideProps } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { Post } from "../../components/post"
-import { useToast } from "../../contexts/toast/ToastProvider";
-import { Post as PostType } from "../../types"
+import { Post } from "../../components/post";
+import { Post as PostType } from "../../types";
 
 export default function PostPage({ post }: {
     post: PostType | undefined;
 }) {
     const { t } = useTranslation('post');
-    const { setToast } = useToast();
-    const router = useRouter();
-    
-    useEffect(() => {
-        if(!post) {
-            setToast(t('postNotFound'), 'error');
-        }
-    }, [post]);
 
     let title = post ? (
         `${post?.author.display_name || post?.author.username}: ${post?.title}`
