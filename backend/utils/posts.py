@@ -1,7 +1,7 @@
 import time, os
 from database import db
 from typing import Union, List
-from utils.common import get_post_by_id, add_user_notification, create_attachment, create_id, get_attachments_by_parent_id
+from utils.common import get_post_by_id, add_user_notification, create_attachment, remove_attachment, create_id, get_attachments_by_parent_id
 from utils.constants import POST_LIKE_TYPE
 
 """
@@ -132,11 +132,8 @@ def delete_post(post_id):
     
     # Fetching attachments to delete them from attachments directory
     attachments = get_attachments_by_parent_id(post_id)
-    app_root = os.path.dirname(os.path.abspath(__file__))
-    folder = os.path.join(app_root, '../imgs/attachments/')
     for attachment in attachments:
-        file_name = os.path.join(folder, str(attachment['id']) + '.' + attachment['extension'])
-        os.remove(file_name)
+        remove_attachment(attachment['id'], attachment['extension'])
 
     values = (post_id,)
 

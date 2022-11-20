@@ -195,7 +195,10 @@ def remove_attachment(attachment_id: int, extension: str):
     app_root = os.path.dirname(os.path.abspath(__file__))
     folder = os.path.join(app_root, '../imgs/attachments/')
     file_name = os.path.join(folder, str(attachment_id) + '.' + extension)
-    os.remove(file_name)
+    try:
+        os.remove(file_name)
+    except Exception as e:
+        print('Error removing attachment', e)
 
 def get_attachments_by_parent_id(parent_id: int):
     query = "SELECT * FROM attachments WHERE parent_id = %s"
