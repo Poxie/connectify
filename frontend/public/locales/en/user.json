@@ -22,6 +22,7 @@
         "bio": "Bio",
         "bioPlaceholder": "Write a little about yourself!",
         "success": "Successfully updated profile",
-        "error": "Something went wrong while updating profile"
+        "error": "Something went wrong while updating profile",
+        "noChanges": "No changes have been made."
     }
 }

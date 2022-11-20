@@ -24,54 +24,60 @@ export const EditProfileModal = () => {
     const { setToast } = useToast();
     const dispatch = useDispatch();
     const user = useAppSelector(state => selectUserById(state, profile?.id || 0));
-    const [tempUser, setTempUser] = useState<User | undefined>(user);
-    const [disabled, setDisabled] = useState(false);
-
-    // Updating on object changes
-    useEffect(() => {
-        setTempUser(user);
-    }, [user]);
+    const [tempUser, setTempUser] = useState(user);
+    const [loading, setLoading] = useState(false);
+    if(!user || !tempUser) return null;
 
     const updateProperty = (property: keyof User, value: any) => {
-        if(!user) return;
+        setTempUser(prev => {
+            if(!prev) return prev;
 
-        // Updating temporary properties
-        setTempUser((user: any) => {
-            if(!user) return user;
-            user = {...user};
-            user[property] = value;
+            const user = {...prev, ...{
+                [property]: value
+            }}
             return user;
-        })
+        });
     }
 
     const cancel = close;
-    const confirm = () => {
-        if(!tempUser) return;
-        setDisabled(true);
+    const confirm = async () => {
+        // Checking what properties to update
+        const propertiesToUpdate: Partial<User> = {};
+        Object.entries(tempUser).forEach(([prop, value]: [prop: any, value: any]) => {
+            if(user[prop as keyof User] !== value) {
+                propertiesToUpdate[prop as keyof User] = value;
+            }
+        })
 
-        // Updating user
-        patch<User>(`/users/${user?.id}`, tempUser)
-            .then(user => {
-                // Making sure not to dispatch user object with file value
-                if(tempUser.banner instanceof File) {
-                    tempUser.banner = user.banner;
-                }
-                if(tempUser.avatar instanceof File) {
-                    tempUser.avatar = user.avatar;
-                }
+        // If no changes have been made
+        if(!Object.keys(propertiesToUpdate).length) {
+            return setToast(t('editProfile.noChanges'), 'info');
+        }
 
-                dispatch(setUser(tempUser));
-                setDisabled(false);
+        setLoading(true);
 
-                // Sending status toast
-                setToast(t('editProfile.success'), 'success');
-            })
+        const newUser = await patch<User>(`/users/${user.id}`, propertiesToUpdate)
             .catch(error => {
-                setToast(t('editProfile.error'),  'error');
-                setDisabled(false);
+                setToast(t('editProfile.error'), 'error');
             })
+            .finally(() => {
+                setLoading(false);
+            });
+
+        if(!newUser) return;
+
+        const userToUpdate = {...tempUser};
+        
+        // Checking if banner or avatar is of type file
+        if(userToUpdate.avatar instanceof File) userToUpdate.avatar = newUser.avatar;
+        if(userToUpdate.banner instanceof File) userToUpdate.banner = newUser.banner;
+
+        dispatch(setUser(userToUpdate));
+        setTempUser(userToUpdate);
+        setToast(t('editProfile.success'), 'success');
     }
 
+    const { username, bio, banner, avatar, display_name } = tempUser;
     return(
         <>
             <ModalHeader>
@@ -79,21 +85,21 @@ export const EditProfileModal = () => {
             </ModalHeader>
             <EditProfileBanner 
                 updateProperty={updateProperty}
-                banner={tempUser?.banner || null}
+                banner={banner || null}
             />
             <div className={styles['content']}>
                 <EditProfileAvatar 
                     updateProperty={updateProperty}
-                    avatar={tempUser?.avatar || null}
+                    avatar={avatar || null}
                 />
 
                 <div className={styles['text']}>
                     <span className={styles['name']}>
-                        {tempUser?.display_name || tempUser?.username}
+                        {display_name || username}
                     </span>
-                    {tempUser?.bio && (
+                    {bio && (
                         <span className={styles['bio']}>
-                            {tempUser.bio}
+                            {bio}
                         </span>
                     )}
                     <UserStats userId={user?.id as number} />
@@ -104,14 +110,14 @@ export const EditProfileModal = () => {
                     labelClassName={styles['label']}
                     placeholder={t('editProfile.displayNamePlaceholder')}
                     label={t('editProfile.displayName')}
-                    defaultValue={tempUser?.display_name || ''}
+                    defaultValue={display_name || ''}
                     onChange={name => updateProperty('display_name', name)}
                 />
                 <Input 
                     labelClassName={styles['label']}
                     placeholder={t('editProfile.bioPlaceholder')}
                     label={'Bio'}
-                    defaultValue={tempUser?.bio || ''}
+                    defaultValue={bio || ''}
                     onChange={bio => updateProperty('bio', bio)}
                     textArea={true}
                 />
@@ -121,7 +127,7 @@ export const EditProfileModal = () => {
                 onCancel={cancel}
                 confirmLabel={g('saveChanges')}
                 onConfirm={confirm}
-                confirmLoading={disabled}
+                confirmLoading={loading}
             />
         </>
     )

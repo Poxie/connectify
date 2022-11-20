@@ -22,6 +22,7 @@
         "bio": "Bio",
         "bioPlaceholder": "Skriv lite om dig själv!",
         "success": "Profilen har uppdaterats.",
-        "error": "Något gick fel när profilen skulle uppdateras."
+        "error": "Något gick fel när profilen skulle uppdateras.",
+        "noChanges": "Inga ändringar har gjorts."
     }
 }
