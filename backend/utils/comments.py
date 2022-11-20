@@ -19,6 +19,8 @@ def get_comment_by_id(id: int, token_id: Union[int, None]=None):
         LEFT JOIN likes l2 ON l.user_id = %s
     WHERE
         c.id = %s
+    GROUP BY
+        c.id, c.content, c.author_id, c.post_id, c.timestamp, l2.user_id
     """
     values = (token_id, id)
 
