@@ -224,7 +224,6 @@ def update_unread_count(channel_id: int, recipient_id: int, count: int):
 
         if where_query:
             update_query = "UPDATE notifications SET unread = 0 WHERE " + where_query
-            print(update_query)
             db.update(update_query)
 
     # Creating update query
