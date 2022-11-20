@@ -9,9 +9,9 @@ export const Language = () => {
     return(
         <div className={styles['container']}>
             <SettingsHeader>
-                {t('language')}
+                {t('language.header')}
             </SettingsHeader>
-            <SettingsSection title={t('displayLanguage')}>
+            <SettingsSection title={t('language.displayLanguage')}>
                 <DisplayLanguage />
             </SettingsSection>
         </div>

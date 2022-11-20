@@ -1,7 +1,6 @@
 {
     "header": "Settings",
     "appearance": "Appearance",
-    "language": "Language",
     
     "themes": {
         "header": "Themes",
@@ -19,7 +18,10 @@
     },
     "selectThemeColor": "Select theme color",
 
-    "displayLanguage": "Display language",
+    "language": {
+        "header": "Language",
+        "displayLanguage": "Display language"
+    },
 
     "account": {
         "header": "Account",

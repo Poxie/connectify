@@ -1,7 +1,6 @@
 {
     "header": "Inställningar",
     "appearance": "Utseende",
-    "language": "Språk",
     
     "themes": {
         "header": "Teman",
@@ -19,7 +18,10 @@
     },
     "selectThemeColor": "Välj tema färg",
 
-    "displayLanguage": "Visningsspråk",
+    "language": {
+        "header": "Språk",
+        "displayLanguage": "Visningsspråk"
+    },
 
     "account": {
         "header": "Konto",
