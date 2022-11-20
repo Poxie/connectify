@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { AddIcon } from "../../assets/icons/AddIcon";
 import { HasTooltip } from "../../components/tooltip/HasTooltip";
 import { TempAttachment } from "./EditPostModal";
@@ -7,10 +8,12 @@ export const PostAttachments: React.FC<{
     attachments: TempAttachment[];
     onRemove: (id: number) => void;
 }> = ({ attachments, onRemove }) => {
+    const { t } = useTranslation('common');
+
     return(
         <div className={styles['attachments']}>
             <span>
-                Attachments
+                {t('attachments')}
             </span>
 
             <div className={styles['attachment-container']}>
@@ -22,9 +25,12 @@ export const PostAttachments: React.FC<{
                     >
                         <HasTooltip 
                             className={styles['remove-attachment']}
-                            tooltip={'Remove attachment'}
+                            tooltip={t('removeAttachment')}
                         >
-                            <button onClick={() => onRemove(attachment.id)}>
+                            <button 
+                                onClick={() => onRemove(attachment.id)}
+                                aria-label={t('removeAttachment')}
+                            >
                                 <AddIcon />
                             </button>
                         </HasTooltip>

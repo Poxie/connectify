@@ -112,10 +112,11 @@ export const EditPostModal: React.FC<{
                 />
                 <div>
                     <div className={styles['options']}>
-                        <HasTooltip tooltip={'Add attachment'}>
+                        <HasTooltip tooltip={t('addAttachment')}>
                             <button 
                                 onClick={openAttachmentPrompt}
                                 className={styles['button']}
+                                aria-label={t('addAttachment')}
                             >
                                 <AttachmentIcon />
                                 <input 
