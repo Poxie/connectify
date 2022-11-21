@@ -19,7 +19,7 @@ export const PostOptions: React.FC<{
     }
     const onAttachmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
-        if(!files) return;
+        if(!files || !inputRef.current) return;
         
         const processedAttachments: TempAttachment[] = []
         for(const file of Array.from(files)) {
@@ -33,6 +33,7 @@ export const PostOptions: React.FC<{
         }
 
         onAttachmentAdd(processedAttachments);
+        inputRef.current.value = '';
     }
 
     const dropdownItems: DropdownItem[] = useMemo(() => [
