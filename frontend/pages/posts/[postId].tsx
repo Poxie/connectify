@@ -3,16 +3,21 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Head from "next/head";
 import { Post } from "../../components/post";
+import { useQueryId } from "../../hooks/useQueryId";
+import { selectPostMain } from "../../redux/posts/selectors";
+import { useAppSelector } from "../../redux/store";
 import { Post as PostType } from "../../types";
 
 export default function PostPage({ post }: {
     post: PostType | undefined;
 }) {
     const { t } = useTranslation('post');
+    const postId = useQueryId('postId');
+    const postMain = useAppSelector(state => selectPostMain(state, postId))
 
-    const name = post?.author.display_name || post?.author.username;
-    let title = post ? (
-        `${name}: ${post?.title || t('noTitle')}`
+    const name = post?.author.display_name || post?.author.username || postMain?.author.display_name || postMain?.author.username;
+    let title = post || postMain ? (
+        `${name}: ${post?.title || postMain?.title || t('noTitle')}`
     ) : (
         t('postNotFound')
     )
