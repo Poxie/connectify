@@ -25,8 +25,9 @@ export const Comments: React.FC<{
     const commentIds = useAppSelector(state => selectCommentIds(state, postId, orderType));
     
     // Fetching comments
-    const onRequestFinished: RequestFinished<CommentType[]> = (result, reachedEnd) => {
-        dispatch(addComments(result, orderType));
+    const onRequestFinished: RequestFinished<CommentType[]> = (comments, reachedEnd) => {
+        const filteredComments = comments.filter(comment => !commentIds.includes(comment.id));
+        dispatch(addComments(filteredComments, orderType));
     }
     const { loading, reachedEnd } = useInfiniteScroll<CommentType[]>(
         `/posts/${postId}/comments?amount=${FETCH_AMOUNT}&start_at=${commentIds.length}&order_by=${orderType}`,
