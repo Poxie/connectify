@@ -22,7 +22,8 @@ export const UserPostFooter: React.FC<{
     const { token, post, destroy } = useAuth();
     const dispatch = useDispatch();
     const router = useRouter();
-    const stats = useAppSelector(state => selectPostStats(state, id))
+    const stats = useAppSelector(state => selectPostStats(state, id));
+    if(!stats) return null;
 
     const toggleLike = async () => {
         // If user is not logged in
