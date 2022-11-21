@@ -43,7 +43,7 @@ export const Messages: React.FC<{
             fetchOnMount: !messageIds,
             direction: 'up',
             scrollContainer,
-            identifier: channelId
+            identifier: `channel-${channelId}`
         }
     )
 
