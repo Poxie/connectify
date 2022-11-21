@@ -7,6 +7,7 @@ import { CommentContent } from "./CommentContent";
 import { CommentFooter } from "./CommentFooter";
 import Link from 'next/link';
 import { UserPostTimestamp } from '../user-post/UserPostTimestamp';
+import { CommentOptions } from './CommentOptions';
 
 export const Comment: React.FC<{
     id: number;
@@ -20,30 +21,33 @@ export const Comment: React.FC<{
     const { content, timestamp } = main;
     return(
         <li className={styles['comment']}>
-            <Link href={`/users/${author.id}`}>
-                <a className={styles['comment-avatar']}>
-                    <Image 
-                        width={25}
-                        height={25}
-                        objectFit={'cover'}
-                        src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${author.avatar}`}
-                        alt={`${name}'s avatar`}
-                    />
-                </a>
-            </Link>
-            <div className={styles['comment-main']}>
-                <div className={styles['comment-header']}>
-                    <Link href={`/users/${author.id}`}>
-                        <a className={styles['comment-author']}>
-                            {name}
-                        </a>
-                    </Link>
-                    <UserPostTimestamp timestamp={timestamp} />
-                </div>
+            <div className={styles['comment-left']}>
+                <Link href={`/users/${author.id}`}>
+                    <a className={styles['comment-avatar']}>
+                        <Image 
+                            width={25}
+                            height={25}
+                            objectFit={'cover'}
+                            src={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}/${author.avatar}`}
+                            alt={`${name}'s avatar`}
+                        />
+                    </a>
+                </Link>
+                <div className={styles['comment-main']}>
+                    <div className={styles['comment-header']}>
+                        <Link href={`/users/${author.id}`}>
+                            <a className={styles['comment-author']}>
+                                {name}
+                            </a>
+                        </Link>
+                        <UserPostTimestamp timestamp={timestamp} />
+                    </div>
 
-                <CommentContent content={content} />
-                <CommentFooter id={id} />
+                    <CommentContent content={content} />
+                    <CommentFooter id={id} />
+                </div>
             </div>
+            <CommentOptions id={id} />
         </li>
     )
 });
