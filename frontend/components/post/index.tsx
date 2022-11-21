@@ -13,3 +13,4 @@ export const Post = React.memo(() => {
         </div>
     )
 });
+Post.displayName = 'Post';
