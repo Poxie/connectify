@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { Comment, Post } from "../../types";
 import { createReducer, updateItemInArray, updateObject } from "../utils";
-import { ADD_COMMENT_LIKE, ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_COMMENT_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS, UPDATE_POST } from "./constants"
+import { ADD_COMMENT_LIKE, ADD_POST_COMMENT, ADD_POST_LIKE, REMOVE_COMMENT, REMOVE_COMMENT_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, SET_POST_COMMENTS, UPDATE_POST } from "./constants"
 import { PostsReducer, PostsState } from "./types"
 
 // Reducer actions
@@ -79,6 +79,11 @@ const addPostComment = (state: PostsState, action: AnyAction) => {
     })
 }
 
+const removeComment = (state: PostsState, action: AnyAction) => {
+    const comments = state.comments.filter(comment => comment.id !== action.payload);
+    return updateObject(state, { comments });
+}
+
 const setPosts = (state: PostsState, action: AnyAction) => {
     const posts = action.payload.map((post: Post) => {
         post.hasCommentsFetched = false;
@@ -151,6 +156,7 @@ export const postsReducer = createReducer({
     [UPDATE_POST]: updatePost,
     [SET_POST_COMMENTS]: setPostComments,
     [ADD_POST_COMMENT]: addPostComment,
+    [REMOVE_COMMENT]: removeComment,
     [SET_POSTS]: setPosts,
     [ADD_POST_LIKE]: addPostLike,
     [REMOVE_POST_LIKE]: removePostLike,

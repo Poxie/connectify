@@ -1,7 +1,7 @@
 from typing import Union
 from flask import Blueprint, request, jsonify
 from utils.common import get_post_by_id
-from utils.comments import get_post_comments, create_post_comment
+from utils.comments import get_post_comments, create_post_comment, get_comment_by_id, delete_comment
 from utils.auth import token_required, token_optional
 
 comments = Blueprint('comments', __name__)
@@ -46,3 +46,18 @@ def create_comment(post_id: int, token_id: int):
     comment = create_post_comment(post_id, data)
 
     return jsonify(comment)
+
+
+@comments.delete('/comments/<int:comment_id>')
+@token_required
+def destroy_comment(comment_id: int, token_id: int):
+    comment = get_comment_by_id(comment_id)
+    if not comment:
+        return 'Comment does not exist.', 404
+
+    if comment['author_id'] != token_id:
+        return 'Unauthorized.', 401
+
+    delete_comment(comment_id)
+
+    return jsonify({})

@@ -39,7 +39,11 @@
 }
 .comment {
     display: flex;
+    justify-content: space-between;
     margin-bottom: var(--spacing-primary);
+}
+.comment-left {
+    display: flex;
 }
 .comment-avatar {
     border-radius: 50%;
@@ -106,6 +110,23 @@
         svg {
             fill: var(--color-primary);
         }
+    }
+}
+.comment-options {
+    button {
+        padding: 6px;
+        border-radius: 50%;
+        transition: background-color .15s;
+
+        &:hover {
+            background-color: var(--background-secondary);
+        }
+    }
+    svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+        fill: var(--text-secondary);
     }
 }
 
