@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { createReducer, updateObject } from "../utils";
-import { SET_EXPLORE_FILTER, SET_EXPLORE_FILTER_REACHED_END, SET_EXPLORE_LATEST_IDS, SET_EXPLORE_TOP_IDS } from "./constants"
+import { SET_EXPLORE_FILTER, SET_EXPLORE_LATEST_IDS, SET_EXPLORE_TOP_IDS } from "./constants"
 import { ExploreState } from "./types"
 
 // Reducer actions
@@ -24,24 +24,13 @@ const setExploreFilter: ReducerAction = (state, action) => {
     })
 }
 
-const setExploreFilterReachedEnd: ReducerAction = (state, action) => {
-    const property = action.payload === 'top' ? 'topReachedEnd' : 'latestReachedEnd';
-    return updateObject(state, {
-        [property]: true
-    })
-}
-
 // Creating reducer
 export const exploreReducer = createReducer({
     top: [],
     latest: [],
-    activeFilter: 'top',
-    topReachedEnd: false,
-    latestReachedEnd: false,
-    loading: true
+    activeFilter: 'top'
 }, {
     [SET_EXPLORE_TOP_IDS]: setExploreTopIds,
     [SET_EXPLORE_LATEST_IDS]: setExploreLatestIds,
-    [SET_EXPLORE_FILTER]: setExploreFilter,
-    [SET_EXPLORE_FILTER_REACHED_END]: setExploreFilterReachedEnd
+    [SET_EXPLORE_FILTER]: setExploreFilter
 })

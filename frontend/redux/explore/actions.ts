@@ -1,4 +1,4 @@
-import { SET_EXPLORE_FILTER, SET_EXPLORE_FILTER_REACHED_END, SET_EXPLORE_LATEST_IDS, SET_EXPLORE_TOP_IDS } from "./constants";
+import { SET_EXPLORE_FILTER, SET_EXPLORE_LATEST_IDS, SET_EXPLORE_TOP_IDS } from "./constants";
 import { ExploreFilter } from "./types";
 
 export const setExploreTopIds = (postIds: number[]) => ({
@@ -12,8 +12,4 @@ export const setExploreLatestIds = (postIds: number[]) => ({
 export const setExploreFilter = (filter: ExploreFilter) => ({
     type: SET_EXPLORE_FILTER,
     payload: filter
-})
-export const setExploreFilterReachedEnd = (type: ExploreFilter) => ({
-    type: SET_EXPLORE_FILTER_REACHED_END,
-    payload: type
 })

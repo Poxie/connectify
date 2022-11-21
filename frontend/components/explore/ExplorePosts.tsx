@@ -1,8 +1,8 @@
 import styles from '../../styles/Explore.module.scss';
 import { useDispatch } from "react-redux";
 import { RequestFinished, useInfiniteScroll } from "../../hooks/useInfiniteScroll";
-import { setExploreFilterReachedEnd, setExploreLatestIds, setExploreTopIds } from "../../redux/explore/actions";
-import { selectExploreFilter, selectExploreLatestReachedEnd, selectExploreLoading, selectExplorePostIds, selectExploreTopReachedEnd } from "../../redux/explore/selectors"
+import { setExploreLatestIds, setExploreTopIds } from "../../redux/explore/actions";
+import { selectExploreFilter, selectExplorePostIds } from "../../redux/explore/selectors"
 import { setPosts } from "../../redux/posts/actions";
 import { useAppSelector } from "../../redux/store"
 import { Post } from "../../types";
@@ -18,12 +18,6 @@ export const ExplorePosts = () => {
     const dispatch = useDispatch();
     const postIds = useAppSelector(selectExplorePostIds);
     const filterType = useAppSelector(selectExploreFilter);
-    const topFinished = useAppSelector(selectExploreTopReachedEnd);
-    const latestFinsihed = useAppSelector(selectExploreLatestReachedEnd);
-    const isAtEnd = (
-        (filterType === 'top' && topFinished) ||
-        (filterType === 'latest' && latestFinsihed)
-    );
 
     // Fetching posts on mount and scroll
     const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
@@ -33,20 +27,15 @@ export const ExplorePosts = () => {
         const action = filterType === 'top' ? setExploreTopIds : setExploreLatestIds;
         dispatch(action(filteredPosts.map(post => post.id)));
         dispatch(setPosts(filteredPosts));
-
-        if(reachedEnd) {
-            dispatch(setExploreFilterReachedEnd(filterType));
-        }
     }
-    const { loading } = useInfiniteScroll(
+    const { loading, reachedEnd } = useInfiniteScroll(
         `/explore?type=${filterType}&start_at=${postIds.length}&amount=${FETCH_AMOUNT}`,
         onRequestFinished,
         {
             fetchAmount: FETCH_AMOUNT,
             threshold: SCROLL_THRESHOLD,
             fetchOnMount: !postIds.length,
-            identifier: filterType,
-            isAtEnd
+            identifier: `explore-${filterType}`
         }
     )
 
@@ -68,7 +57,7 @@ export const ExplorePosts = () => {
         </ul>
 
         
-        {isAtEnd && (
+        {reachedEnd && (
             <span className={styles['reached-end']}>
                 {t('explore.reachedEnd')}
             </span>
