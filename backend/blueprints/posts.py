@@ -5,7 +5,7 @@ from utils.auth import token_required, token_optional
 from utils.users import get_user_by_id
 from utils.common import get_post_by_id, get_attachments_by_parent_id, remove_attachment, create_attachment
 from utils.posts import get_user_posts, delete_post, create_post
-from utils.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH
+from utils.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH, ALLOWED_FILE_EXTENSIONS
 from database import db
 
 posts = Blueprint('posts', __name__)
@@ -37,7 +37,7 @@ def create_user_post(token_id: int):
         # Checking file extension
         parts = item.filename.split('.')[::-1]
         ext = parts[0]
-        if ext.lower() not in ['jpg', 'png']:
+        if ext.lower() not in ALLOWED_FILE_EXTENSIONS:
             return 'Unsupported file format.', 400
 
         attachments.append(item)
@@ -140,7 +140,7 @@ def update_post(post_id: int, token_id: int):
         # Checking file extension
         parts = value.filename.split('.')[::-1]
         ext = parts[0]
-        if ext.lower() not in ['jpg', 'png']:
+        if ext.lower() not in ALLOWED_FILE_EXTENSIONS:
             return 'Unsupported file format.', 400
 
         create_attachment(value, post_id)
