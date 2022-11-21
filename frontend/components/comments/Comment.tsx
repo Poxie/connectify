@@ -5,14 +5,18 @@ import { CommentOptions } from './CommentOptions';
 
 export const Comment: React.FC<{
     id: number;
-}> = ({ id }) => {
+    postId: number;
+}> = ({ id, postId }) => {
     return(
         <div className={styles['comment']}>
             <div className={styles['content']}>
                 <CommentAvatar commentId={id} />
                 <CommentMain commentId={id} />
             </div>
-            <CommentOptions commentId={id} />
+            <CommentOptions 
+                commentId={id}
+                postId={postId} 
+            />
         </div>
     )
 }

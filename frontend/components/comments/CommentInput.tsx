@@ -11,6 +11,7 @@ import { addComment } from '../../redux/comments/actions';
 import { useAppSelector } from '../../redux/store';
 import { selectPostCommentCount, selectPostStats } from '../../redux/posts/selectors';
 import { CommentInputSkeleton } from './CommentInputSkeleton';
+import { updateCommentCount } from '../../redux/posts/actions';
 
 export const CommentInput: React.FC<{
     postId: number;
@@ -54,6 +55,7 @@ export const CommentInput: React.FC<{
 
         // Adding comment locally
         dispatch(addComment(comment));
+        dispatch(updateCommentCount(postId, 'increase'));
 
         // Resetting input value
         setExpanded(false);

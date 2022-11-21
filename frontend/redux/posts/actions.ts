@@ -1,5 +1,5 @@
 import { Post } from "../../types";
-import { ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, UPDATE_POST } from "./constants";
+import { ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, UPDATE_COMMENT_COUNT, UPDATE_POST } from "./constants";
 
 export const setPost = (post: Post) => ({
     type: SET_POST,
@@ -24,4 +24,8 @@ export const removePostLike = (id: number) => ({
 export const updatePost = (id: number, properties: Partial<Post>) => ({
     type: UPDATE_POST,
     payload: { id, properties }
+})
+export const updateCommentCount = (postId: number, type: 'increase' | 'decrease', amount=1) => ({
+    type: UPDATE_COMMENT_COUNT,
+    payload: { postId, type, amount }
 })

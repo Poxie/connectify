@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { Comment, Post } from "../../types";
 import { createReducer, updateItemInArray, updateObject } from "../utils";
-import { ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, UPDATE_POST } from "./constants"
+import { ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, UPDATE_COMMENT_COUNT, UPDATE_POST } from "./constants"
 import { PostsReducer, PostsState } from "./types"
 
 // Reducer actions
@@ -63,6 +63,22 @@ const removePostLike = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts })
 }
 
+const updateCommentCount = (state: PostsState, action: AnyAction) => {
+    const { postId, type, amount }: {
+        postId: number;
+        type: 'decrease' | 'increase';
+        amount: number;
+    } = action.payload;
+
+    const newPosts = updateItemInArray(state.posts, postId, post => {
+        return updateObject(post, { 
+            comment_count: post.comment_count + (type === 'increase' ? amount : -amount)
+        })
+    })
+
+    return updateObject(state, { posts: newPosts });
+}
+
 // Creating reducer
 export const postsReducer = createReducer({
     posts: [],
@@ -74,4 +90,5 @@ export const postsReducer = createReducer({
     [SET_POSTS]: setPosts,
     [ADD_POST_LIKE]: addPostLike,
     [REMOVE_POST_LIKE]: removePostLike,
+    [UPDATE_COMMENT_COUNT]: updateCommentCount
 })

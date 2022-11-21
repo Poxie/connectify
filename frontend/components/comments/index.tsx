@@ -51,6 +51,7 @@ export const Comments: React.FC<{
                     {commentIds.map(commentId => (
                         <Comment 
                             id={commentId}
+                            postId={postId}
                             key={commentId}
                         />
                     ))}

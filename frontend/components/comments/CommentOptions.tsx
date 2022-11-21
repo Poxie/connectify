@@ -11,12 +11,14 @@ import { useToast } from '../../contexts/toast/ToastProvider';
 import { ConfirmModal } from '../../modals/confirm/ConfirmModal';
 import { removeComment } from '../../redux/comments/actions';
 import { selectCommentAuthor } from '../../redux/comments/selectors';
+import { updateCommentCount } from '../../redux/posts/actions';
 import { useAppSelector } from '../../redux/store';
 import styles from '../../styles/Comments.module.scss';
 
 export const CommentOptions: React.FC<{
     commentId: number;
-}> = ({ commentId }) => {
+    postId: number;
+}> = ({ commentId, postId }) => {
     const { t } = useTranslation('common');
     const { destroy, profile } = useAuth();
     const { setModal, close } = useModal();
@@ -41,6 +43,7 @@ export const CommentOptions: React.FC<{
                     .then(() => {
                         setToast(t('commentRemoveSuccess'), 'success');
                         dispatch(removeComment(commentId));
+                        dispatch(updateCommentCount(postId, 'decrease'));
                         close();
                     })
                     .catch(() => {
