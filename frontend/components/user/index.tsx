@@ -2,8 +2,8 @@ import styles from '../../styles/User.module.scss';
 import { useDispatch } from "react-redux";
 import { setPosts } from "../../redux/posts/actions";
 import { useAppSelector } from "../../redux/store"
-import { addUserPostId, addUserPostIds, setUserPostIds, setUserReachedEnd } from "../../redux/users/actions";
-import { selectUserExists, selectUserPostIds, selectUserPostsEnd } from "../../redux/users/selectors";
+import { addUserPostIds } from "../../redux/users/actions";
+import { selectUserExists, selectUserPostIds } from "../../redux/users/selectors";
 import { Post } from "../../types";
 import { UserPostSkeleton } from '../user-post/UserPostSkeleton';
 import { useTranslation } from 'next-i18next';
@@ -18,26 +18,22 @@ export const UserProfile = () => {
     const dispatch = useDispatch();
     const userId = useQueryId('userId');
     const postIds = useAppSelector(state => selectUserPostIds(state, userId));
-    const reachedEnd = useAppSelector(state => selectUserPostsEnd(state, userId));
     const userExists = useAppSelector(state => selectUserExists(state, userId));
 
     // Fetching posts on mount and scroll
-    const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
+    const onRequestFinished: RequestFinished<Post[]> = (posts) => {
         if(!userId) return;
-        if(reachedEnd) {
-            dispatch(setUserReachedEnd(userId, 'postIds'));
-        }
         dispatch(setPosts(posts));
         dispatch(addUserPostIds(userId, posts.map(post => post.id)))
     }
-    const { loading } = useInfiniteScroll<Post[]>(
+    const { loading, reachedEnd } = useInfiniteScroll<Post[]>(
         `/users/${userId}/posts?amount=${FETCH_AMOUNT}&start_at=${postIds?.length || 0}`,
         onRequestFinished,
         {
             fetchAmount: FETCH_AMOUNT,
             threshold: SCROLL_THRESHOLD,
             fetchOnMount: !postIds,
-            isAtEnd: reachedEnd,
+            identifier: `user-${userId}`,
             standBy: !userExists
         }
     )

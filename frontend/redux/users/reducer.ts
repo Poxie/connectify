@@ -1,8 +1,8 @@
 import { AnyAction } from "redux";
 import { User } from "../../types";
 import { createReducer } from "../utils";
-import { ADD_USER_FOLLOW, ADD_USER_LIKED_IDS, ADD_USER_POST_ID, ADD_USER_POST_IDS, REMOVE_USER_FOLLOW, REMOVE_USER_POST_ID, SET_USER, SET_USER_LIKED_IDS, SET_USER_POST_IDS, SET_USER_REACHED_END } from "./constants";
-import { UsersReducer, UsersState } from "./types"
+import { ADD_USER_FOLLOW, ADD_USER_LIKED_IDS, ADD_USER_POST_ID, ADD_USER_POST_IDS, REMOVE_USER_FOLLOW, REMOVE_USER_POST_ID, SET_USER } from "./constants";
+import { UsersState } from "./types"
 
 // Utility functions
 function updateObject<T>(oldObject: T, newObject: Partial<T>): T {
@@ -55,19 +55,6 @@ const removeUserFollow: ReducerAction = (state, action) => {
     return updateObject(state, { users: newUsers });
 }
 
-const setUserPostIds: ReducerAction = (state, action) => {
-    const { userId, postIds }: {
-        userId: number;
-        postIds: number[];
-    } = action.payload;
-
-    const newUsers = updateItemInArray(state.users, userId, user => {
-        return updateObject(user, { postIds });
-    });
-
-    return updateObject(state, { users: newUsers });
-}
-
 const removeUserPostId: ReducerAction = (state, action) => {
     const { userId, postId } = action.payload;
 
@@ -75,19 +62,6 @@ const removeUserPostId: ReducerAction = (state, action) => {
         return updateObject(user, {
             postIds: user.postIds?.filter(id => id !== postId)
         });
-    });
-
-    return updateObject(state, { users: newUsers });
-}
-
-const setUserLikedIds: ReducerAction = (state, action) => {
-    const { userId, postIds }: {
-        userId: number;
-        postIds: number[];
-    } = action.payload;
-
-    const newUsers = updateItemInArray(state.users, userId, user => {
-        return updateObject(user, { likedIds: postIds });
     });
 
     return updateObject(state, { users: newUsers });
@@ -129,21 +103,6 @@ const addUserLikedIds: ReducerAction = (state, action) => {
     return updateObject(state, { users: newUsers })
 }
 
-const setUserReachedEnd: ReducerAction = (state, action) => {
-    const { userId, type }: {
-        userId: number;
-        type: 'postIds' | 'likedIds';
-    } = action.payload;
-
-    const newUsers = updateItemInArray(state.users, userId, user => {
-        return updateObject(user, {
-            [type === 'likedIds' ? 'likedIdsEnd' : 'postIdsEnd']: true
-        })
-    })
-
-    return updateObject(state, { users: newUsers })
-}
-
 // Creating reducer
 export const usersReducer = createReducer<UsersState>({
     users: []
@@ -151,11 +110,8 @@ export const usersReducer = createReducer<UsersState>({
     [SET_USER]: setUser,
     [ADD_USER_FOLLOW]: addUserFollow,
     [REMOVE_USER_FOLLOW]: removeUserFollow,
-    [SET_USER_POST_IDS]: setUserPostIds,
     [REMOVE_USER_POST_ID]: removeUserPostId,
-    [SET_USER_LIKED_IDS]: setUserLikedIds,
     [ADD_USER_POST_ID]: addUserPostId,
     [ADD_USER_POST_IDS]: addUserPostIds,
-    [SET_USER_REACHED_END]: setUserReachedEnd,
     [ADD_USER_LIKED_IDS]: addUserLikedIds
 })

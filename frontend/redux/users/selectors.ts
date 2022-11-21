@@ -42,12 +42,3 @@ export const selectUserStats = createSelector(
         post_count: user.post_count
     }) : undefined
 )
-
-export const selectUserPostsEnd = createSelector(
-    [selectUserById],
-    user => user?.postIdsEnd
-)
-export const selectUserLikedPostsEnd = createSelector(
-    [selectUserById],
-    user => user?.likedIdsEnd
-)
