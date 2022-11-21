@@ -116,3 +116,14 @@ def create_post_comment(post_id: int, data):
     comment = get_comment_by_id(id)
     
     return comment
+
+"""
+Function to delete a comment.
+"""
+def delete_comment(comment_id: int):
+    query = "DELETE FROM comments WHERE id = %s"
+    like_query = "DELETE FROM likes WHERE parent_id = %s"
+    values = (comment_id,)
+
+    db.delete(query, values)
+    db.delete(like_query, values)
