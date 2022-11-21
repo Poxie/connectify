@@ -25,7 +25,7 @@ export const CommentInput: React.FC<{
     const [value, setValue] = useState('');
 
     // If post is not fetched
-    if(!commentCount) return <CommentInputSkeleton />;
+    if(commentCount === undefined) return <CommentInputSkeleton />;
 
     // If user is not logged in
     if(!token && !loading) {
