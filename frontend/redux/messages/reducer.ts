@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { Channel } from "../../types";
 import { createReducer, updateItemInArray, updateObject } from "../utils";
-import { ADD_CHANNEL, ADD_MESSAGE, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_FIRST, SET_CHANNEL_REACHED_END, SET_CHANNEL_TYPING, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED, SET_TOTAL_UNREAD_COUNT } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_TYPING, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED, SET_TOTAL_UNREAD_COUNT } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 // Reducer actions
@@ -151,16 +151,6 @@ const setTotalUnreadCount: ReducerAction = (state, action) => {
     return updateObject(state, { totalUnreadCount: action.payload });
 }
 
-const setChannelReachedEnd: ReducerAction = (state, action) => {
-    const { channelId, state: reachedEnd } = action.payload;
-
-    const channels = updateItemInArray(state.channels, channelId, channel => {
-        return updateObject(channel, { reachedEnd })
-    })
-
-    return updateObject(state, { channels });
-}
-
 // Creating reducer
 export const messagesReducer = createReducer({
     messages: [],
@@ -178,6 +168,5 @@ export const messagesReducer = createReducer({
     [ADD_MESSAGE]: addMessage,
     [SET_MESSAGE_FAILED]: setMessageFailed,
     [REMOVE_UNREAD_COUNT]: removeUnreadCount,
-    [SET_TOTAL_UNREAD_COUNT]: setTotalUnreadCount,
-    [SET_CHANNEL_REACHED_END]: setChannelReachedEnd
+    [SET_TOTAL_UNREAD_COUNT]: setTotalUnreadCount
 })

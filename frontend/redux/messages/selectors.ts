@@ -32,11 +32,6 @@ export const selectChannelUnreadCount = createSelector(
 );
 export const selectTotalUnreadCount = (state: RootState) => state.messages.totalUnreadCount;
 
-export const selectChannelReachedEnd = createSelector(
-    [selectChannelById],
-    channel => channel?.reachedEnd === true
-)
-
 const selectMessages = (state: RootState) => state.messages.messages;
 const selectMessageId = (_: any, __: any, id: number) => id;
 

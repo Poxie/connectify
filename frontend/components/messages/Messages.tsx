@@ -2,13 +2,13 @@ import styles from '../../styles/Messages.module.scss';
 import { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { prependMessages, removeUnreadCount, setChannelReachedEnd, setLastChannelId, setMessages } from "../../redux/messages/actions";
+import { prependMessages, removeUnreadCount, setLastChannelId, setMessages } from "../../redux/messages/actions";
 import { useAppSelector } from "../../redux/store";
 import { Message } from "./Message";
 import { Message as MessageType, User } from '../../types';
 import Link from 'next/link';
 import { Loader } from '../loader';
-import { selectChannelReachedEnd, selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
+import { selectChannelUnreadCount, selectLastChannelId, selectMessageIds } from '../../redux/messages/selectors';
 import { RequestFinished, useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { useTranslation } from 'next-i18next';
 
@@ -24,7 +24,6 @@ export const Messages: React.FC<{
     const dispatch = useDispatch();
     const messageIds = useAppSelector(state => selectMessageIds(state, channelId));
     const unreadCount = useAppSelector(state => selectChannelUnreadCount(state, channelId));
-    const reachedEnd = useAppSelector(state => selectChannelReachedEnd(state, channelId))
     const lastChannelId = useAppSelector(selectLastChannelId);
     const scrollContainer = useRef<HTMLDivElement>(null);
     const list = useRef<HTMLUListElement>(null);
@@ -34,12 +33,8 @@ export const Messages: React.FC<{
     const onRequestFinished: RequestFinished<MessageType[]> = (messages, reachedEnd) => {
         const filteredMessages = messages.filter(message => !messageIds?.includes(message.id));
         dispatch(prependMessages(channelId, filteredMessages));
-
-        if(reachedEnd) {
-            dispatch(setChannelReachedEnd(channelId, true));
-        }
     }
-    const { loading } = useInfiniteScroll(
+    const { loading, reachedEnd } = useInfiniteScroll(
         `/channels/${channelId}/messages?amount=${MESSAGES_TO_LOAD}&start_at=${messageIds?.length || 0}`,
         onRequestFinished,
         {
@@ -48,8 +43,7 @@ export const Messages: React.FC<{
             fetchOnMount: !messageIds,
             direction: 'up',
             scrollContainer,
-            identifier: channelId,
-            isAtEnd: reachedEnd
+            identifier: channelId
         }
     )
 
