@@ -28,6 +28,13 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
     const [reachedEnd, setReachedEnd] = useState(options.identifier ? endCache[options.identifier] : false);
     const fetching = useRef(false);
 
+    useEffect(() => {
+        if(options.identifier && endCache[options.identifier]) {
+            return setReachedEnd(true);
+        }
+        setReachedEnd(false);
+    }, [options.identifier]);
+
     // Fetching on mount
     useEffect(() => {
         if(!options.fetchOnMount || tokenLoading || options.isAtEnd || options.standBy || fetching.current || endCache[options.identifier || '']) return setLoading(false);
