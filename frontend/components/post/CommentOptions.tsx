@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,6 +17,7 @@ import styles from '../../styles/Post.module.scss';
 export const CommentOptions: React.FC<{
     id: number;
 }> = ({ id }) => {
+    const { t } = useTranslation('common');
     const { profile, destroy } = useAuth();
     const { setModal, close } = useModal();
     const { setToast } = useToast();
@@ -28,7 +30,7 @@ export const CommentOptions: React.FC<{
     const goToAuthor = () => router.push(`/users/${author?.id}`);
     const onClick = () => {
         const items: MenuGroup[] = [[
-            { text: 'Go to author', onClick: goToAuthor }
+            { text: t('goToAuthor'), onClick: goToAuthor }
         ]]
 
         // If user is author of comment, allow extra options
@@ -36,20 +38,20 @@ export const CommentOptions: React.FC<{
             const deleteComment = () => {
                 destroy(`/comments/${id}`)
                     .then(() => {
-                        setToast('Comment has been deleted.', 'success');
+                        setToast(t('commentRemoveSuccess'), 'success');
                         dispatch(removeComment(id));
                         close();
                     })
                     .catch(error => {
-                        setToast('Something went wrong while deleting comment.', 'error');
+                        setToast(t('commentRemoveError'), 'error');
                     })
             }
 
             const confirmDeletion = () => {
                 setModal(
                     <ConfirmModal 
-                        header={'Remove this comment?'}
-                        subHeader={'Are you sure you want to delete this comment? It cannot be undone.'}
+                        header={t('commentRemoveHeader')}
+                        subHeader={t('commentRemoveSubHeader')}
                         onCancel={close}
                         onConfirm={deleteComment}
                     />
@@ -57,7 +59,7 @@ export const CommentOptions: React.FC<{
             }
 
             items.push([
-                { text: 'Delete comment', onClick: confirmDeletion, type: 'danger' }
+                { text: t('commentRemove'), onClick: confirmDeletion, type: 'danger' }
             ])
         }
 

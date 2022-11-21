@@ -83,9 +83,16 @@
 
     "postDeleteSuccess": "Inlägget har raderats",
     "postDeleteError": "Ett fel uppstod när inlägget skulle tas bort",
-    "commentAddSuccess": "Kommentaren har lagts till",
-    "addCommentError": "Ett fel uppstod när kommentaren skulle läggas till",
     "postCreateError": "Something went wrong while creating post",
+
+    "goToAuthor": "Gå till användaren",
+    "commentRemove": "Ta bort kommentar",
+    "commentRemoveHeader": "Ta bort den här kommentaren?",
+    "commentRemoveSubHeader": "Är du säker på att du vill ta bort den här kommentaren? Du kan inte ångra dig.",
+    "commentAddSuccess": "Kommentaren har lagts upp",
+    "commentAddError": "Något gick fel när kommentaren skulle läggas till",
+    "commentRemoveSuccess": "Kommentaren har tagits bort",
+    "commentRemoveError": "Något gick fel när kommentaren skulle tas bort",
 
     "internalError": "Ett internt problem uppstod. Prova igen senare.",
     "unknownError": "Ett okänt fel uppstod. Försök igen senare.",
