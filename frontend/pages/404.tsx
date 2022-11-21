@@ -14,6 +14,8 @@ export default function _404() {
                 src={require('../assets/imgs/404.png').default}
                 layout={'fill'}
                 objectFit={'cover'}
+                priority
+                alt=""
             />
             <div className={styles['text']}>
                 <h2>
