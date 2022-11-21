@@ -1,5 +1,4 @@
-import os, jwt
-import socketio
+import os, jwt, socketio, eventlet, eventlet.wsgi
 from flask import Flask, request
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -100,4 +99,4 @@ def get_my_id(token: str):
     return id
 
 if __name__ == '__main__':
-    app.run(port=8000)
+    eventlet.wsgi.server(eventlet.listen(('', int(os.environ.get('WEBSOCKET_PORT')))), app)
