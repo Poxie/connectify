@@ -97,7 +97,8 @@ def get_post_comment_count(post_id: int):
 Function to create a post comment.
 """
 def create_post_comment(post_id: int, data):
-    id = create_id('comments')
+    # Using posts here to make sure postIds and commentIds cant be the same
+    id = create_id('posts')
 
     # Creating query
     query = "INSERT INTO comments (id, post_id, author_id, content, timestamp) VALUES (%s, %s, %s, %s, %s)"
