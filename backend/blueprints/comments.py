@@ -56,7 +56,7 @@ def destroy_comment(comment_id: int, token_id: int):
         return 'Comment does not exist.', 404
 
     if comment['author_id'] != token_id:
-        return 'Unauthorized.', 404
+        return 'Unauthorized.', 401
 
     delete_comment(comment_id)
 
