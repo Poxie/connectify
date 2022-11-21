@@ -1,13 +1,16 @@
-import styles from '../../styles/Post.module.scss';
+import styles from '../../styles/Comments.module.scss';
 import { useState } from "react"
 import Button from "../button";
 import { Input } from "../input"
 import { useAuth } from '../../contexts/auth/AuthProvider';
 import { useDispatch } from 'react-redux';
-import { addPostComment } from '../../redux/posts/actions';
 import { useTranslation } from 'next-i18next';
 import { Comment } from '../../types';
 import { useToast } from '../../contexts/toast/ToastProvider';
+import { addComment } from '../../redux/comments/actions';
+import { useAppSelector } from '../../redux/store';
+import { selectPostCommentCount, selectPostStats } from '../../redux/posts/selectors';
+import { CommentInputSkeleton } from './CommentInputSkeleton';
 
 export const CommentInput: React.FC<{
     postId: number;
@@ -16,14 +19,18 @@ export const CommentInput: React.FC<{
     const { post, token, loading } = useAuth();
     const { setToast } = useToast();
     const dispatch = useDispatch();
+    const commentCount = useAppSelector(state => selectPostCommentCount(state, postId));
     const [expanded, setExpanded] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [value, setValue] = useState('');
 
+    // If post is not fetched
+    if(!commentCount) return <CommentInputSkeleton />;
+
     // If user is not logged in
     if(!token && !loading) {
         return(
-            <div className={styles['add-comment']}>
+            <div className={styles['comment-input']}>
                 <span>
                     {t('loginToComment')}
                 </span>
@@ -32,30 +39,29 @@ export const CommentInput: React.FC<{
     }
 
     // Function to create comment
-    const addComment = () => {
+    const createComment = async () => {
         if(!value) return;
 
         setDisabled(true);
 
-        post<Comment>(`/posts/${postId}/comments`, {
+        const comment = await post<Comment>(`/posts/${postId}/comments`, {
             content: value
+        }).catch(error => {
+            setToast(t('commentAddError'), 'error');
+            setDisabled(false);
         })
-            .then(comment => {
-                // Adding comment to post locally
-                dispatch(addPostComment(comment));
+        if(!comment) return;
 
-                // Resetting input value
-                setValue('');
-                setExpanded(false);
-                setDisabled(false);
+        // Adding comment locally
+        dispatch(addComment(comment));
 
-                // Sending success toast
-                setToast(t('commentAddSuccess'), 'success');
-            })
-            .catch(error => {
-                setToast(t('commentAddError'), 'error');
-                setDisabled(false);
-            })
+        // Resetting input value
+        setExpanded(false);
+        setDisabled(false);
+        setValue('');
+
+        // Sending success toast
+        setToast(t('commentAddSuccess'), 'success');
     }
 
     // Functions to open and close options
@@ -63,15 +69,19 @@ export const CommentInput: React.FC<{
     const open = () => setExpanded(true);
 
     return(
-        <div className={styles['add-comment']}>
+        <div className={styles['comment-input']}>
+            <span className={styles['comment-count']}>
+                {commentCount} {t('comments')}
+            </span>
+            
             <Input 
-                placeholder={t('addComment')} 
+                placeholder={t('addComment')}
                 defaultValue={value}
                 onChange={setValue}
                 onFocus={open}
             />
             {expanded && (
-                <div className={styles['add-comment-buttons']}>
+                <div className={styles['comment-input-buttons']}>
                     <Button 
                         type={'transparent'}
                         onClick={close}
@@ -79,7 +89,7 @@ export const CommentInput: React.FC<{
                         {t('cancel')}
                     </Button>
                     <Button 
-                        onClick={addComment}
+                        onClick={createComment}
                         disabled={disabled}
                     >
                         {t('addComment')}

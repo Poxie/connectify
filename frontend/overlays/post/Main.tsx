@@ -1,7 +1,7 @@
 import styles from './PostOverlay.module.scss';
 import { PostMain } from '../../components/post/PostMain';
-import { Comments } from '../../components/post/Comments';
 import { useRef } from 'react';
+import { Comments } from '../../components/comments';
 
 export const Main: React.FC<{
     postId: number;
