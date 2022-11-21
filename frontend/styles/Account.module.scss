@@ -38,3 +38,11 @@
         color: var(--text-primary);
     }
 }
+
+@media (max-width: 500px) {
+    .container {
+        &>* {
+            padding-left: 0 !important;
+        }
+    }
+}
