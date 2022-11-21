@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { Channel } from "../../types";
 import { createReducer, updateItemInArray, updateObject } from "../utils";
-import { ADD_CHANNEL, ADD_MESSAGE, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_TYPING, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED, SET_TOTAL_UNREAD_COUNT } from "./constants"
+import { ADD_CHANNEL, ADD_MESSAGE, PREPEND_MESSAGES, REMOVE_UNREAD_COUNT, SET_CHANNELS, SET_CHANNEL_FIRST, SET_CHANNEL_TYPING, SET_LAST_CHANNEL_ID, SET_MESSAGES, SET_MESSAGE_FAILED, SET_TOTAL_UNREAD_COUNT } from "./constants"
 import { MessagesState, Reducer } from "./types"
 
 // Reducer actions
@@ -14,6 +14,17 @@ const setChannels: ReducerAction = (state, action) => {
         channels,
         loading: false
     })
+}
+
+const setChannelFirst: ReducerAction = (state, action) => {
+    let foundChannel: Channel | undefined;
+    const channels = state.channels.filter(channel => {
+        if(channel.id === action.payload) foundChannel = channel;
+        return channel.id !== action.payload;
+    });
+    const newChannels = foundChannel ? [...[foundChannel], ...channels] : channels;
+
+    return updateObject(state, { channels: newChannels });
 }
 
 const addChannel: ReducerAction = (state, action) => {
@@ -161,6 +172,7 @@ export const messagesReducer = createReducer({
 }, {
     [SET_CHANNELS]: setChannels,
     [ADD_CHANNEL]: addChannel,
+    [SET_CHANNEL_FIRST]: setChannelFirst,
     [SET_LAST_CHANNEL_ID]: setLastChannelId,
     [SET_CHANNEL_TYPING]: setChannelTyping,
     [SET_MESSAGES]: setMessages,
