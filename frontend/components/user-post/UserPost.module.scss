@@ -71,6 +71,7 @@
     color: var(--text-secondary);
     margin-top: var(--spacing-primary);
     display: block;
+    overflow-wrap: anywhere;
 }
 .attachments {
     --row-amount: 1;
