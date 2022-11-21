@@ -11,6 +11,7 @@ export const Tooltip: React.FC<{
     refElement: RefObject<HTMLDivElement>;
 }> = ({ children, position, refElement }) => {
     const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+    const [tooltipOffset, setTooltipOffset] = useState(0);
     const ref = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
@@ -41,13 +42,18 @@ export const Tooltip: React.FC<{
         }
 
         // Checking if position exceeds viewport
+        let offset = 0;
         if(left + width > window.innerWidth - SPACE_FROM_ORIGIN) {
-            left = window.innerWidth - width - refWidth - SPACE_FROM_ORIGIN;
+            const newLeft = window.innerWidth - width - refWidth - SPACE_FROM_ORIGIN;
+            offset = left - newLeft;
+            left = newLeft
         }
         if(left < 0) {
+            offset = left - SPACE_FROM_ORIGIN;
             left = SPACE_FROM_ORIGIN;
         }
 
+        setTooltipOffset(offset);
         setTooltipPosition({ top, left });
     }, [refElement.current]);
 
@@ -70,7 +76,9 @@ export const Tooltip: React.FC<{
             }}
             transition={{ duration: .15 }}
             className={styles['container']}
-            style={{...tooltipPosition}}
+            style={{...tooltipPosition, ...{
+                '--tooltip-offset': `${tooltipOffset}px`
+            }}}
             data-position={position}
             ref={ref}
         >

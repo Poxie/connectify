@@ -1,4 +1,5 @@
 .container {
+    --tooltip-offset: 0px;
     position: fixed;
     z-index: 14141411414;
     background-color: var(--tooltip-background-primary);
@@ -20,7 +21,7 @@
         &::after {
             border-top-color: var(--tooltip-background-primary);
             top: 100%;
-            left: 50%;
+            left: calc(50% + var(--tooltip-offset));
             transform: translateX(-50%);
         }
     }
@@ -29,7 +30,7 @@
         &::after {
             border-bottom-color: var(--tooltip-background-primary);
             bottom: 100%;
-            left: 50%;
+            left: calc(50% + var(--tooltip-offset));
             transform: translateX(-50%);
         }
     }
