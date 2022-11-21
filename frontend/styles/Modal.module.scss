@@ -12,27 +12,29 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: height .3s;
     background-color: var(--background-primary);
     z-index: 141414141414;
     border-radius: var(--border-radius-primary);
     width: 600px;
     max-width: var(--width-max);
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 .content {
+    flex: 1;
     display: flex;
+    align-items: center;
     transition: transform .5s;
 
     &>div {
         min-width: 100%;
-        transition: max-height .7s;
+        height: 100%;
     }
     &>.active {
         max-height: 800px;
         overflow: auto;
-    }
-    &>:not(.active) {
-        max-height: 0px;
     }
 }
 .header {

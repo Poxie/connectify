@@ -1,16 +1,19 @@
 import { motion } from 'framer-motion';
 import styles from '../styles/Modal.module.scss';
 
+const INITIAL_SCALE_ANIMATION = .8
 export const Modal: React.FC<{
     children: any;
     activeIndex: number;
-}> = ({ children, activeIndex }) => {
+    height: number;
+}> = ({ children, activeIndex, height }) => {
     return(
         <motion.div 
             className={styles['container']}
-            initial={{ scale: .2, opacity: 0, translateX: '-50%', translateY: '-50%' }}
+            style={{ height: `${height}px` }}
+            initial={{ scale: INITIAL_SCALE_ANIMATION, opacity: 0, translateX: '-50%', translateY: '-50%' }}
             animate={{ scale: 1, opacity: 1, translateX: '-50%', translateY: '-50%' }}
-            exit={{ scale: .2, opacity: 0, translateX: '-50%', translateY: '-50%' }}
+            exit={{ scale: INITIAL_SCALE_ANIMATION, opacity: 0, translateX: '-50%', translateY: '-50%' }}
             transition={{ duration: .3 }}
         >
             <div 

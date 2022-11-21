@@ -4,6 +4,7 @@ import React, { ReactElement, useCallback, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { ModalContext as ModalContextType } from './types';
 import { Modal } from '../../modals/Modal';
+import { ModalContainer } from '../../modals/ModalContainer';
 
 const ModalContext = React.createContext({} as ModalContextType);
 
@@ -14,6 +15,7 @@ export const ModalProvider: React.FC<{
 }> = ({ children }) => {
     const [modals, setModals] = useState<ReactElement[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [height, setHeight] = useState(0);
 
     // Setting modal
     const _setModal: ModalContextType['setModal'] = useCallback(modal => {
@@ -46,6 +48,7 @@ export const ModalProvider: React.FC<{
     const close = useCallback(() => {
         setModals([]);
         setActiveIndex(0);
+        setHeight(0);
     }, []);
 
     const value = {
@@ -61,14 +64,16 @@ export const ModalProvider: React.FC<{
             <AnimatePresence>
                 {modals.length && (
                     <>
-                    <Modal activeIndex={activeIndex}>
+                    <Modal activeIndex={activeIndex} height={height}>
                         {modals.map((modal, key) => (
-                            <div 
-                                className={key === activeIndex ? styles['active'] : ''}
+                            <ModalContainer 
+                                active={key === activeIndex}
+                                setHeight={setHeight}
+                                height={height}
                                 key={key}
                             >
                                 {modal}
-                            </div>
+                            </ModalContainer>
                         ))}
                     </Modal>
                     <motion.div 
