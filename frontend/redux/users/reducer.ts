@@ -60,7 +60,8 @@ const removeUserPostId: ReducerAction = (state, action) => {
 
     const newUsers = updateItemInArray(state.users, userId, user => {
         return updateObject(user, {
-            postIds: user.postIds?.filter(id => id !== postId)
+            postIds: user.postIds?.filter(id => id !== postId),
+            post_count: user.post_count - 1
         });
     });
 
@@ -72,7 +73,8 @@ const addUserPostId: ReducerAction = (state, action) => {
 
     const newUsers = updateItemInArray(state.users, userId, user => {
         return updateObject(user, {
-            postIds: [...[postId], ...(user.postIds || [])]
+            postIds: [...[postId], ...(user.postIds || [])],
+            post_count: user.post_count + 1
         })
     })
 
