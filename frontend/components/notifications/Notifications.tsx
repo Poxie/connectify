@@ -2,8 +2,8 @@ import styles from '../../styles/Notifications.module.scss';
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/auth/AuthProvider";
-import { addNotifications, setNotificationCount, setNotifications, setNotificationsReachedEnd } from "../../redux/notifications/actions";
-import { selectNotificationIds, selectUnreadCount, selectNotificationsReachedEnd } from "../../redux/notifications/selectors"
+import { addNotifications, setNotificationCount } from "../../redux/notifications/actions";
+import { selectNotificationIds, selectUnreadCount } from "../../redux/notifications/selectors"
 import { useAppSelector } from "../../redux/store"
 import { Notification } from "./Notification";
 import { NotificationSkeleton } from "./NotificationSkeleton";
@@ -22,23 +22,19 @@ export const Notifications = () => {
     const dispatch = useDispatch();
     const notificationCount = useAppSelector(selectUnreadCount);
     const notificationIds = useAppSelector(selectNotificationIds);
-    const reachedEnd = useAppSelector(selectNotificationsReachedEnd);
 
     // Fetching on mount and scroll
     const onRequestFinished: RequestFinished<NotificationType[]> = (notifications, reachedEnd) => {
         dispatch(addNotifications(notifications));
-        if(reachedEnd) {
-            dispatch(setNotificationsReachedEnd(true));
-        }
     }
-    const { loading: notificationsLoading } = useInfiniteScroll<NotificationType[]>(
+    const { reachedEnd, loading: notificationsLoading } = useInfiniteScroll<NotificationType[]>(
         `/notifications?amount=${FETCH_AMOUNT}&start_at=${notificationIds.length}`,
         onRequestFinished,
         {
             fetchAmount: FETCH_AMOUNT,
             threshold: SCROLL_THRESHOLD,
             fetchOnMount: notificationIds.length === 0,
-            isAtEnd: reachedEnd,
+            identifier: 'notifications',
             standBy: !token
         }
     )
