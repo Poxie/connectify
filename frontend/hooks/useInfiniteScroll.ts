@@ -21,15 +21,16 @@ type InfiniteScroll = <T>(
     reachedEnd: boolean;
 }
 
+const endCache: {[identifier: string]: boolean} = {};
 export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, options) => {
     const { get, token, loading: tokenLoading } = useAuth();
     const [loading, setLoading] = useState(options.fetchOnMount ? true : false);
-    const [reachedEnd, setReachedEnd] = useState(false);
+    const [reachedEnd, setReachedEnd] = useState(options.identifier ? endCache[options.identifier] : false);
     const fetching = useRef(false);
 
     // Fetching on mount
     useEffect(() => {
-        if(!options.fetchOnMount || tokenLoading || options.isAtEnd || options.standBy || fetching.current) return;
+        if(!options.fetchOnMount || tokenLoading || options.isAtEnd || options.standBy || fetching.current || endCache[options.identifier || '']) return setLoading(false);
 
         fetching.current = true;
         setLoading(true);
@@ -40,12 +41,17 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
                 setLoading(false);
                 setReachedEnd(reachedEnd);
                 fetching.current = false;
+
+                // Adding reached end to cache
+                if(reachedEnd && options.identifier) {
+                    endCache[options.identifier] = true
+                }
             })
     }, [tokenLoading, options.identifier, options.standBy]);
 
     // Handling event listeners
     useEffect(() => {
-        if(!token) return;
+        if(!token || reachedEnd) return;
 
         // Selecting correct scroll container
         const scrollContainer = options.scrollContainer?.current || window;
@@ -91,13 +97,18 @@ export const useInfiniteScroll: InfiniteScroll = (query, onRequestFinished, opti
     
                 if(reachedEnd) {
                     scrollContainer.removeEventListener('scroll', onScroll);
+                    
+                    // Caching query reached end
+                    if(options.identifier) {
+                        endCache[options.identifier] = true;
+                    }
                 }
             }
         }
 
         scrollContainer.addEventListener('scroll', onScroll);
         return () => scrollContainer.removeEventListener('scroll', onScroll);
-    }, [get, token, tokenLoading, query]);
+    }, [get, token, tokenLoading, query, reachedEnd]);
 
     return {
         loading,

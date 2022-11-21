@@ -1,5 +1,3 @@
-import { useAuth } from "../../contexts/auth/AuthProvider"
-import { useQueryId } from "../../hooks/useQueryId"
 import { useRequest } from "../../hooks/useRequest"
 import { setPost } from "../../redux/posts/actions"
 import { selectPostMain } from "../../redux/posts/selectors"
@@ -14,7 +12,6 @@ import { PostTitle } from "./PostTitle"
 export const PostMain: React.FC<{
     postId: number;
 }> = ({ postId }) => {
-    const { get, loading } = useAuth();
     const post = useAppSelector(state => selectPostMain(state, postId));
     useRequest(postId ? `/posts/${postId}` : '', setPost, !post);
 

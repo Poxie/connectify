@@ -1,0 +1,198 @@
+.container {
+    padding-top: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
+    border-top: 1px solid var(--background-secondary);
+}
+.comment-count {
+    margin-bottom: var(--spacing-primary);
+    color: var(--text-secondary);
+    font-size: 14px;
+    display: block;
+}
+.comment-input {
+    border-bottom: 1px solid var(--background-tertiary);
+    margin-bottom: var(--spacing-primary);
+    padding-bottom: var(--spacing-primary);
+}
+.comment-input-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: var(--spacing-primary);
+}
+.comment-container {
+    padding-top: calc(var(--spacing-primary) / 2);
+    margin-bottom: calc(-1 * var(--spacing-primary) / 2);
+}
+.comment {
+    display: flex;
+    justify-content: space-between;
+    padding: calc(var(--spacing-primary) / 2) 0;
+}
+.content {
+    display: flex;
+}
+.avatar {
+    margin-right: var(--spacing-primary);
+    width: 32px;
+    height: 32px;
+    display: block;
+
+    img {
+        border-radius: 50%;
+    }
+}
+.header {
+    margin-bottom: 2px;
+    margin-top: -5px;
+    display: flex;
+    gap: 8px;
+}
+.author {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color .15s;
+
+    &:hover {
+        color: var(--text-primary);
+    }
+}
+.footer {
+    margin-top: 8px;
+}
+.button {
+    border-radius: 8px;
+    border: 1px solid var(--background-secondary);
+    padding: 6px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color .2s, border-color .2s;
+
+    &:hover {
+        background-color: var(--background-secondary);
+    }
+
+    svg {
+        width: 12px;
+        fill: var(--text-secondary);
+        margin-right: 5px;
+        display: block;
+    }
+
+    &.active {
+        border-color: var(--color-primary);
+        background-color: var(--background-secondary);
+
+        svg {
+            fill: var(--color-primary);
+        }
+
+        &:hover {
+            background-color: var(--background-tertiary);
+        }
+    }
+}
+.options {
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    transition: background-color .2s;
+
+    svg {
+        fill: var(--text-secondary);
+        display: block;
+    }
+
+    &:hover {
+        background-color: var(--background-secondary);
+    }
+}
+.label {
+    display: block;
+    text-align: center;
+    padding: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
+    border-top: 1px solid var(--background-secondary);
+}
+
+// Loading skeleton
+.skeleton-comment-count {
+    width: 100px;
+    height: 19px;
+    margin-bottom: var(--spacing-primary);
+}
+.skeleton-comment-input {
+    width: 100%;
+    height: 49px;
+    border-radius: var(--border-radius-primary);
+    background-color: var(--background-tertiary);
+}
+
+.skeleton-text {
+    background-color: var(--background-tertiary);
+    border-radius: 5px;
+    height: 20px;
+}
+.skeleton-author,
+.skeleton-timestamp,
+.skeleton-footer-button,
+.skeleton-comment-count,
+.skeleton-content div {
+    @extend .skeleton-text;
+}
+
+.skeleton-comment {
+    padding: 10px 0;
+    display: flex;
+    gap: var(--spacing-primary);
+}
+.skeleton-content {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+
+    div {
+        height: 18px;
+
+        &:nth-of-type(1) {
+            width: 75px;
+        }
+        &:nth-of-type(2) {
+            width: 55px;
+        }
+        &:nth-of-type(3) {
+            width: 125px;
+        }
+    }
+}
+.skeleton-footer-button {
+    margin-top: 10px;
+    width: 62px;
+}
+.skeleton-header {
+    display: flex;
+    gap: var(--spacing-primary);
+    margin-bottom: 8px;
+}
+.skeleton-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: var(--background-tertiary);
+    border-radius: 50%;
+}
+.skeleton-author {
+    width: 80px;
+    height: 20px;
+}
+.skeleton-timestamp {
+    width: 120px;
+    height: 20px;
+}
+.skeleton-content {
+    width: 300px;
+    height: 18px;
+}

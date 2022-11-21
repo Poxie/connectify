@@ -1,8 +1,8 @@
-import styles from '../../styles/Post.module.scss';
+import styles from '../../styles/Comments.module.scss';
 
 export const CommentInputSkeleton = () => {
     return(
-        <div className={styles['add-comment']} aria-hidden="true">
+        <div className={styles['comment-input']} aria-hidden="true">
             <div className={styles['skeleton-comment-count']} />
             <div className={styles['skeleton-comment-input']} />
         </div>

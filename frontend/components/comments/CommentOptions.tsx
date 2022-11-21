@@ -9,40 +9,41 @@ import { MenuGroup } from '../../contexts/menu/types';
 import { useModal } from '../../contexts/modal/ModalProvider';
 import { useToast } from '../../contexts/toast/ToastProvider';
 import { ConfirmModal } from '../../modals/confirm/ConfirmModal';
-import { removeComment } from '../../redux/posts/actions';
-import { selectCommentAuthor } from '../../redux/posts/selectors';
+import { removeComment } from '../../redux/comments/actions';
+import { selectCommentAuthor } from '../../redux/comments/selectors';
 import { useAppSelector } from '../../redux/store';
-import styles from '../../styles/Post.module.scss';
+import styles from '../../styles/Comments.module.scss';
 
 export const CommentOptions: React.FC<{
-    id: number;
-}> = ({ id }) => {
+    commentId: number;
+}> = ({ commentId }) => {
     const { t } = useTranslation('common');
-    const { profile, destroy } = useAuth();
+    const { destroy, profile } = useAuth();
     const { setModal, close } = useModal();
     const { setToast } = useToast();
     const { setMenu } = useMenu();
     const router = useRouter();
     const dispatch = useDispatch();
-    const author = useAppSelector(state => selectCommentAuthor(state, id));
+    const author = useAppSelector(state => selectCommentAuthor(state, commentId));
     const ref = useRef<HTMLButtonElement>(null);
+    
+    const openMenu = () => {
+        const goToAuthor = () => router.push(`/users/${author?.id}`);
 
-    const goToAuthor = () => router.push(`/users/${author?.id}`);
-    const onClick = () => {
         const items: MenuGroup[] = [[
             { text: t('goToAuthor'), onClick: goToAuthor }
         ]]
 
-        // If user is author of comment, allow extra options
-        if(profile?.id === author?.id) {
+        // If user is author of comment
+        if(author?.id === profile?.id) {
             const deleteComment = () => {
-                destroy(`/comments/${id}`)
+                destroy(`/comments/${commentId}`)
                     .then(() => {
                         setToast(t('commentRemoveSuccess'), 'success');
-                        dispatch(removeComment(id));
+                        dispatch(removeComment(commentId));
                         close();
                     })
-                    .catch(error => {
+                    .catch(() => {
                         setToast(t('commentRemoveError'), 'error');
                     })
             }
@@ -55,25 +56,23 @@ export const CommentOptions: React.FC<{
                         onCancel={close}
                         onConfirm={deleteComment}
                     />
-                );
+                )
             }
 
             items.push([
                 { text: t('commentRemove'), onClick: confirmDeletion, type: 'danger' }
-            ])
+            ]);
         }
-
         setMenu(items, ref);
     }
 
     return(
-        <div className={styles['comment-options']}>
-            <button 
-                onClick={onClick}
-                ref={ref}
-            >
-                <OptionsIcon />
-            </button>
-        </div>
+        <button 
+            className={styles['options']}
+            onClick={openMenu}
+            ref={ref}
+        >
+            <OptionsIcon />
+        </button>
     )
 }

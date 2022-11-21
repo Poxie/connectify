@@ -1,6 +1,6 @@
 import { useQueryId } from '../../hooks/useQueryId';
 import styles from '../../styles/Post.module.scss';
-import { Comments } from './Comments';
+import { Comments } from '../comments';
 import { PostMain } from './PostMain';
 
 export const Post = () => {
