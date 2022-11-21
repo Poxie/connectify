@@ -20,7 +20,6 @@ const removePost = (state: PostsState, action: AnyAction) => {
 }
 
 const updatePost = (state: PostsState, action: AnyAction) => {
-    console.log(action.payload);
     const newPosts = updateItemInArray(state.posts, action.payload.id, post => {
         return updateObject(post, action.payload.properties)
     });

@@ -19,7 +19,6 @@ export const UserStickyContainer = () => {
             // Preventing unnecessary computing if sticky position is same
             if(top === prevTop) return;
             prevTop = top;
-            console.log('oops');
 
             // Getting navbar height, i.e., stick scroll position
             const SCROLL_THRESHOLD = parseInt(
