@@ -97,7 +97,7 @@
     }
 }
 .options {
-    border-radius: 50%;
+    border-radius: 6px;
     width: 28px;
     height: 28px;
     padding: 6px;
@@ -110,6 +110,9 @@
 
     &:hover {
         background-color: var(--background-secondary);
+    }
+    &:active {
+        background-color: var(--background-tertiary);
     }
 }
 .label {

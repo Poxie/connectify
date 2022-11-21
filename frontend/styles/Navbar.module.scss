@@ -87,6 +87,9 @@
     &:hover {
         background-color: var(--background-tertiary);
     }
+    &:active {
+        background-color: var(--background-quaternary);
+    }
 }
 .result-avatar {
     width: 50px;

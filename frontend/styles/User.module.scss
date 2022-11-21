@@ -142,6 +142,9 @@
         &:hover {
             background-color: var(--background-secondary);
         }
+        &:active {
+            background-color: var(--background-tertiary);
+        }
         
         &.active-tab {
             color: var(--text-primary);

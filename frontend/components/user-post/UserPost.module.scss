@@ -63,6 +63,9 @@
         display: block;
 
         &:hover {
+            background-color: var(--background-secondary);
+        }
+        &:active {
             background-color: var(--background-tertiary);
         }
     }

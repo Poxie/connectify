@@ -28,6 +28,9 @@
     &:active, &.active {
         background-color: var(--background-tertiary);
     }
+    &.active:active {
+        background-color: var(--background-quaternary) !important;
+    }
 }
 
 @media (max-width: 500px) {

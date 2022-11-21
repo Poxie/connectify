@@ -18,6 +18,13 @@
     &.active {
         border-color: var(--background-quaternary);
         background-color: var(--background-tertiary);
-        color: var(--text-primary)
+        color: var(--text-primary);
+
+        &:active {
+            background-color: var(--background-quaternary);
+        }
+    }
+    &:active {
+        background-color: var(--background-tertiary);
     }
 }
