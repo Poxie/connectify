@@ -3,12 +3,12 @@ import { useAuth } from "../../../contexts/auth/AuthProvider";
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { UserPostSkeleton } from '../../user-post/UserPostSkeleton';
 import { setPosts } from '../../../redux/posts/actions';
-import { addFeedPostIds, setFeedPostIds, setFeedReachedEnd } from '../../../redux/feed/actions';
+import { addFeedPostIds } from '../../../redux/feed/actions';
 import { Post } from '../../../types';
 import { LoginPrompt } from '../../login-prompt/LoginPrompt';
 import { useTranslation } from 'next-i18next';
 import { EmptyPrompt } from '../../empty-prompt/EmptyPrompt';
-import { selectFeedPostIds, selectFeedReachedEnd } from '../../../redux/feed/selectors';
+import { selectFeedPostIds } from '../../../redux/feed/selectors';
 import { RequestFinished, useInfiniteScroll } from '../../../hooks/useInfiniteScroll';
 import { AnimatePresence } from 'framer-motion';
 import { UserPost } from '../../user-post';
@@ -21,26 +21,22 @@ export const Feed = () => {
     const { token, loading } = useAuth();
     const dispatch = useAppDispatch();
     const postIds = useAppSelector(selectFeedPostIds);
-    const reachedEnd = useAppSelector(selectFeedReachedEnd);
 
     // Fetching feed post on mount and scroll
     const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
         const filteredPosts = posts.filter(post => !postIds.includes(post.id));
 
-        if(reachedEnd) {
-            dispatch(setFeedReachedEnd(true));
-        }
         dispatch(setPosts(filteredPosts));
         dispatch(addFeedPostIds(filteredPosts.map(post => post.id)));
     };
-    const { loading: feedLoading } = useInfiniteScroll<Post[]>(
+    const { reachedEnd, loading: feedLoading } = useInfiniteScroll<Post[]>(
         `/feed?amount=${FETCH_AMOUNT}&start_at=${postIds.length}`,
         onRequestFinished,
         {
             threshold: SCROLL_THRESHOLD,
             fetchAmount: FETCH_AMOUNT,
             fetchOnMount: postIds.length === 0 && token !== null,
-            isAtEnd: reachedEnd
+            identifier: 'feed'
         }
     )
 
