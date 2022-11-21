@@ -19,8 +19,7 @@ const addNotifications: ReducerAction = (state, action) => {
 // Creating reducer
 export const notificationReducer = createReducer({
     notifications: [],
-    unreadCount: 0,
-    loading: true
+    unreadCount: 0
 }, {
     [SET_NOTIFICATION_COUNT]: setNotificationCount,
     [ADD_NOTIFICATIONS]: addNotifications

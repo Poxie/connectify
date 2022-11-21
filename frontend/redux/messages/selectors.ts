@@ -4,7 +4,6 @@ import { RootState } from "../store";
 const selectChannels = (state: RootState) => state.messages.channels;
 const selectId = (_: any, id: number) => id;
 
-export const selectChannelsLoading = (state: RootState) => state.messages.loading;
 export const selectChannelIds = (state: RootState) => state.messages.channels.map(channel => channel.id);
 export const selectChannelById = createSelector(
     [selectChannels, selectId],

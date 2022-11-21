@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { Comment } from "../../types";
-import { RootState, useAppSelector } from "../store";
+import { RootState } from "../store";
 
 const selectId = (_:any, id: number) => id;
 const selectOrderType = (_:any,__:any, orderType: Comment['orderType']) => orderType;

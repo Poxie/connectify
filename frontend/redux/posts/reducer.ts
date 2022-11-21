@@ -1,11 +1,13 @@
 import { AnyAction } from "redux";
-import { Comment, Post } from "../../types";
+import { Post } from "../../types";
 import { createReducer, updateItemInArray, updateObject } from "../utils";
 import { ADD_POST_LIKE, REMOVE_POST, REMOVE_POST_LIKE, SET_POST, SET_POSTS, UPDATE_COMMENT_COUNT, UPDATE_POST } from "./constants"
-import { PostsReducer, PostsState } from "./types"
+import { PostsState } from "./types"
 
 // Reducer actions
-const setPost = (state: PostsState, action: AnyAction) => {
+type ReducerAction = (state: PostsState, action: AnyAction) => PostsState;
+
+const setPost: ReducerAction = (state, action) => {
     const post: Post = action.payload;
     post.hasCommentsFetched = false;
 
@@ -14,12 +16,12 @@ const setPost = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts });
 }
 
-const removePost = (state: PostsState, action: AnyAction) => {
+const removePost: ReducerAction = (state, action) => {
     const newPosts = state.posts.filter(post => post.id !== action.payload);
     return updateObject(state, { posts: newPosts })
 }
 
-const updatePost = (state: PostsState, action: AnyAction) => {
+const updatePost: ReducerAction = (state, action) => {
     const newPosts = updateItemInArray(state.posts, action.payload.id, post => {
         return updateObject(post, action.payload.properties)
     });
@@ -27,7 +29,7 @@ const updatePost = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts });
 }
 
-const setPosts = (state: PostsState, action: AnyAction) => {
+const setPosts: ReducerAction = (state, action) => {
     const posts = action.payload.map((post: Post) => {
         post.hasCommentsFetched = false;
         return post;
@@ -37,7 +39,7 @@ const setPosts = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts })
 }
 
-const addPostLike = (state: PostsState, action: AnyAction) => {
+const addPostLike: ReducerAction = (state, action) => {
     const postId = action.payload;
 
     const newPosts = updateItemInArray(state.posts, postId, post => {
@@ -50,7 +52,7 @@ const addPostLike = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts });
 }
 
-const removePostLike = (state: PostsState, action: AnyAction) => {
+const removePostLike: ReducerAction = (state, action) => {
     const postId = action.payload;
 
     const newPosts = updateItemInArray(state.posts, postId, post => {
@@ -63,7 +65,7 @@ const removePostLike = (state: PostsState, action: AnyAction) => {
     return updateObject(state, { posts: newPosts })
 }
 
-const updateCommentCount = (state: PostsState, action: AnyAction) => {
+const updateCommentCount: ReducerAction = (state, action) => {
     const { postId, type, amount }: {
         postId: number;
         type: 'decrease' | 'increase';
@@ -81,8 +83,7 @@ const updateCommentCount = (state: PostsState, action: AnyAction) => {
 
 // Creating reducer
 export const postsReducer = createReducer({
-    posts: [],
-    comments: []
+    posts: []
 }, {
     [SET_POST]: setPost,
     [REMOVE_POST]: removePost,

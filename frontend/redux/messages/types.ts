@@ -6,7 +6,6 @@ export type MessagesState = {
     channels: Channel[];
     messages: {[key: number]: Message[] | undefined};
     totalUnreadCount: number;
-    loading: boolean;
 };
 
 export type Reducer = (state: MessagesState, action: AnyAction) => MessagesState;
