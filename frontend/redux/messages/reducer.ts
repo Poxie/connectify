@@ -10,7 +10,10 @@ type ReducerAction = (state: MessagesState, action: AnyAction) => MessagesState;
 const setChannels: ReducerAction = (state, action) => {
     const channels = action.payload;
 
-    return updateObject(state, { channels })
+    return updateObject(state, {
+        channels,
+        loading: false
+    })
 }
 
 const setChannelFirst: ReducerAction = (state, action) => {
@@ -164,7 +167,8 @@ export const messagesReducer = createReducer({
     messages: [],
     channels: [],
     lastChannelId: null,
-    totalUnreadCount: 0
+    totalUnreadCount: 0,
+    loading: true
 }, {
     [SET_CHANNELS]: setChannels,
     [ADD_CHANNEL]: addChannel,
