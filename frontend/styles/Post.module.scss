@@ -9,127 +9,6 @@
     margin-top: var(--spacing-primary);
     overflow-wrap: anywhere;
 }
-.comments {
-    padding-top: var(--spacing-primary);
-    margin-top: var(--spacing-primary);
-    border-top: 1px solid var(--background-tertiary);
-}
-.comments-header {
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-primary);
-    display: block;
-}
-.add-comment {
-    border-bottom: 1px solid var(--background-tertiary);
-    margin-bottom: var(--spacing-primary);
-    padding-bottom: var(--spacing-primary);
-}
-.add-comment-buttons {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    margin-top: var(--spacing-primary);
-}
-.filters {
-    margin-bottom: var(--spacing-primary) !important;
-}
-.comment-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-primary);
-}
-.comment {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: var(--spacing-primary);
-}
-.comment-left {
-    display: flex;
-}
-.comment-avatar {
-    border-radius: 50%;
-    width: 25px;
-    min-width: 25px;
-    height: 25px;
-    overflow: hidden;
-    margin-right: var(--spacing-primary);
-}
-.comment-author {
-    transition: color .2s;
-    
-    &:hover {
-        color: var(--text-primary);
-    }
-}
-.comment-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-secondary);
-
-    &>* {
-        margin-top: 0;
-    }
-}
-.comment-content {
-    font-size: 14px;
-    color: var(--text-secondary);
-    display: block;
-    margin-top: 8px;
-}
-.comment-footer {
-    display: flex;
-    margin-top: 6px;
-}
-.comment-footer-button {
-    border-radius: 8px;
-    border: 1px solid var(--background-secondary);
-    padding: 6px;
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color .2s, border-color .2s;
-
-    &:hover {
-        background-color: var(--background-secondary);
-    }
-
-    svg {
-        width: 12px;
-        fill: var(--text-secondary);
-        margin-right: 5px;
-        display: block;
-    }
-
-    &.active {
-        border-color: var(--color-primary);
-        background-color: var(--background-secondary);
-
-        svg {
-            fill: var(--color-primary);
-        }
-    }
-}
-.comment-options {
-    button {
-        padding: 6px;
-        border-radius: 50%;
-        transition: background-color .15s;
-
-        &:hover {
-            background-color: var(--background-secondary);
-        }
-    }
-    svg {
-        width: 20px;
-        height: 20px;
-        display: block;
-        fill: var(--text-secondary);
-    }
-}
 
 .skeleton-text {
     background-color: var(--background-tertiary);
@@ -144,11 +23,7 @@
 }
 .skeleton-author, 
 .skeleton-timestamp, 
-.skeleton-footer-button,
-.skeleton-comment-count,
-.skeleton-comment-author,
-.skeleton-comment-timestamp,
-.skeleton-comment-content {
+.skeleton-footer-button {
     @extend .skeleton-text;
 }
 .skeleton-avatar {
@@ -162,11 +37,6 @@
 }
 .skeleton-timestamp {
     width: 120px;
-}
-.skeleton-input {
-    height: 49px;
-    border-radius: var(--border-radius-primary);
-    background-color: var(--background-tertiary);
 }
 .skeleton-divider {
     background-color: var(--background-tertiary);
@@ -232,52 +102,4 @@
 .skeleton-footer-button {
     width: 70px;
     height: 26px;
-}
-.skeleton-comments {
-    margin-top: var(--spacing-primary);
-    border-top: 1px solid var(--background-tertiary);
-}
-.skeleton-comment-count {
-    width: 100px;
-    height: 20px;
-    margin-bottom: var(--spacing-primary);
-}
-.skeleton-comment-input {
-    width: 100%;
-    height: 49px;
-    border-radius: var(--border-radius-primary);
-    background-color: var(--background-tertiary);
-}
-.skeleton-comment {
-    padding: 10px 0;
-    display: flex;
-    gap: var(--spacing-primary);
-
-    .skeleton-content {
-        margin-top: 8px;
-
-        div {
-            height: 18px;
-        }
-    }
-    .skeleton-footer-button {
-        margin-top: 5px;
-    }
-}
-.skeleton-comment-header {
-    display: flex;
-    gap: var(--spacing-primary);
-    margin-bottom: 8px;
-}
-.skeleton-comment-author {
-    width: 80px;
-    height: 20px;
-}
-.skeleton-comment-timestamp {
-    width: 120px;
-    height: 20px;
-}
-.skeleton-comment-content {
-    width: 300px;
-    height: 18px;
 }
