@@ -1,7 +1,7 @@
 name: Deploy App
 
 on:
-  pust:
+  push:
     branches: [ main ]
 
 jobs:
