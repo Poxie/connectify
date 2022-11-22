@@ -4,6 +4,17 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  NEXT_PUBLIC_API_ENDPOINT: https://youlery-api.poxen.dev
+  NEXT_PUBLIC_WEBSITE_NAME: Youlery
+  NEXT_PUBLIC_DEFAULT_LOCALE: en
+  NEXT_PUBLIC_WEBSITE_ORIGIN: https://youlery.poxen.dev
+  NEXT_PUBLIC_BANNER_ENDPOINT: https://youlery-imgs.poxen.dev/banner/
+  NEXT_PUBLIC_AVATAR_ENDPOINT: https://youlery-imgs.poxen.dev/avatar/
+  NEXT_PUBLIC_ATTACHMENT_ENDPOINT: https://youlery-imgs.poxen.dev/attachments/
+  NEXT_PUBLIC_WEBSOCKET_ENDPOINT: wss://ws.poxen.dev
+  NEXT_PUBLIC_IMAGE_DOMAIN: youlery-imgs.poxen.dev
+
 jobs:
   pull_request:
       runs-on: ubuntu-latest
@@ -12,5 +23,8 @@ jobs:
         - uses: actions/setup-node@v1
           with:
             node-version: 12
-        - run: npm ci
-        - run: npm run build
+        - name: Installing Dependencies
+          working-directory: ./frontend
+          run: |
+            npm ci
+            npm run build
