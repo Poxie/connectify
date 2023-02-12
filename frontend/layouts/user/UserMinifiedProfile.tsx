@@ -10,7 +10,7 @@ export const UserMinifiedProfile = () => {
     const userId = useQueryId('userId');
     const user = useAppSelector(state => selectUserDisplay(state, userId));
     const name = user?.display_name || user?.username;
-    if(!userId) return;
+    if(!userId) return null;
 
     const goToProfile = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
