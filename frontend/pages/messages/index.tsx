@@ -28,9 +28,6 @@ const Messages: NextPageWithLayout = () => {
     const openModal = () => {
         setModal(<SelectUserModal />);
     }
-
-    // Hiding at small screens
-    if(['small', 'medium'].includes(screenType)) return null;
     
     const title = t('title') + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     return(
