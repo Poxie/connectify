@@ -6,6 +6,8 @@ import { PostMain } from './PostMain';
 
 export const Post = React.memo(() => {
     const postId = useQueryId('postId');
+    if(!postId) return null;
+
     return(
         <div className={styles['container']}>
             <PostMain postId={postId} />

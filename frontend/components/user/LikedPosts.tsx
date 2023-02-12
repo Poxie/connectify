@@ -22,6 +22,7 @@ export const LikedPosts = () => {
 
     // Fetching posts on mount and scroll
     const onRequestFinished: RequestFinished<Post[]> = (posts, reachedEnd) => {
+        if(!userId) return;
         dispatch(setPosts(posts));
         dispatch(addUserLikedIds(userId, posts.map(post => post.id)))
     }
