@@ -20,6 +20,7 @@ export const ModalProvider: React.FC<{
     // Setting modal
     const _setModal: ModalContextType['setModal'] = useCallback(modal => {
         setModals([modal]);
+        document.body.style.overflow = 'hidden';
     }, [setModals]);
 
     // Pushing modal
@@ -49,6 +50,7 @@ export const ModalProvider: React.FC<{
         setModals([]);
         setActiveIndex(0);
         setHeight(0);
+        document.body.style.overflow = '';
     }, []);
 
     const value = {
