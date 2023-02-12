@@ -26,6 +26,10 @@ export const HasTooltip: React.FC<{
         }
         close();
     }
+    const handleClick = () => {
+        if(onClick) onClick();
+        close();
+    }
 
     // Closing and cancelling on unmount
     useEffect(() => {
@@ -42,7 +46,7 @@ export const HasTooltip: React.FC<{
             className={className} 
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            onClick={onClick}
+            onClick={handleClick}
             ref={ref}
         >
             {children}
