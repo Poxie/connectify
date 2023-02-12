@@ -1,6 +1,8 @@
 .header {
     border: 2px solid var(--background-secondary);
     border-radius: var(--border-radius-primary) var(--border-radius-primary) 0 0;
+    margin-top: var(--spacing-primary);
+
     h2 {
         margin: 0;
     }

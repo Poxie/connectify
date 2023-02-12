@@ -1,9 +1,10 @@
 .tab-container {
     position: relative;
+    margin-bottom: var(--spacing-primary);
+    padding-top: var(--spacing-primary);
 }
 .tabs {
     display: flex;
-    margin-bottom: var(--spacing-primary);
 }
 .tab {
     flex-basis: 50%;
