@@ -8,6 +8,7 @@
 .header-content {
     display: flex;
     padding: var(--spacing-primary);
+    gap: var(--spacing-primary);
 }
 .header-banner {
     aspect-ratio: 16 / 5;
@@ -49,7 +50,6 @@
     display: block;
 }
 .stats {
-    margin-top: var(--spacing-primary);
     font-size: 12px;
     padding: 10px;
     background-color: var(--background-secondary);
@@ -60,6 +60,7 @@
     display: flex;
     align-items: flex-start;
     gap: var(--spacing-primary);
+    margin-top: var(--spacing-primary);
 }
 .sticky-container {
     z-index: 14;
@@ -229,9 +230,6 @@
     .header-content, .header-main {
         flex-direction: column;
     }
-    .stats {
-        margin-bottom: var(--spacing-primary);
-    }
     .header-button {
         width: 100%;
         justify-content: center;
@@ -239,9 +237,17 @@
     .header-avatar {
         --dimensions: 120px;
     }
+    .header-button-skeleton {
+        width: 100%;
+    }
 }
 @media (max-width: 450px) {
     .header-avatar {
         --dimensions: 100px;
+    }
+    .tabs {
+        span {
+            font-size: 13px;
+        }
     }
 }
