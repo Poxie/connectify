@@ -15,7 +15,7 @@ export const MessagesLayout: React.FC<{
     children: ReactElement;
 }> = ({ children }) => {
     const { token, loading: tokenLoading } = useAuth();
-    const channelId = useQueryId('channelId');
+    const channelId = useQueryId('channelId', false);
     const screenType = useScreenType();
     const channelsLoading = useAppSelector(selectChannelsLoading);
     
