@@ -13,7 +13,7 @@ import { NextPageWithLayout } from "../_app"
 const MessagesChannel: NextPageWithLayout = () => {
     const { t } = useTranslation('messages');
     const channelId = useQueryId('channelId');
-    const channelName = useAppSelector(state => selectChannelName(state, channelId));
+    const channelName = useAppSelector(state => selectChannelName(state, channelId as number));
 
     const title = (channelName || t('title')) + ` - ${process.env.NEXT_PUBLIC_WEBSITE_NAME}`;
     return(

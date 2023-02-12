@@ -12,7 +12,7 @@ export const selectChannelById = createSelector(
 )
 export const selectChannelName = createSelector(
     [selectChannelById],
-    channel => channel?.recipients[0].display_name || channel?.recipients[0].username
+    channel => channel ? channel?.recipients[0].display_name || channel?.recipients[0].username : undefined
 )
 
 export const selectLastChannelId = (state: RootState) => state.messages.lastChannelId;
