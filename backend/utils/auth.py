@@ -1,4 +1,3 @@
-from multiprocessing import AuthenticationError
 from weakref import ref
 import jwt, os
 from flask import request, jsonify
