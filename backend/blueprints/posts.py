@@ -39,8 +39,7 @@ def create_user_post(token_id: int):
         if key != 'attachments': continue
 
         # Checking file extension
-        parts = item.filename.split('.')[::-1]
-        ext = parts[0]
+        ext = item.filename.split('.')[-1]
         if ext.lower() not in ALLOWED_FILE_EXTENSIONS:
             return 'Unsupported file format.', 400
 
