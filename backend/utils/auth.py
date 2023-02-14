@@ -1,6 +1,5 @@
-from weakref import ref
 import jwt, os
-from flask import request, jsonify
+from flask import request
 from functools import wraps
 
 def token_required(f):
