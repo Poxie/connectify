@@ -7,7 +7,6 @@ import { useModal } from '../../contexts/modal/ModalProvider';
 import { SelectUserModal } from '../../modals/select-user/SelectUserModal';
 import { useDispatch } from 'react-redux';
 import { setLastChannelId } from '../../redux/messages/actions';
-import { useScreenType } from '../../hooks/useScreenType';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
@@ -17,7 +16,6 @@ const Messages: NextPageWithLayout = () => {
     const { t } = useTranslation('messages');
     const { setModal } = useModal();
     const dispatch = useDispatch();
-    const screenType = useScreenType();
 
     // Resetting last channelId
     useEffect(() => {
