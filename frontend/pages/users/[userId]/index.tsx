@@ -48,6 +48,7 @@ const User: NextPageWithLayout<{
             {user && (
                 <meta property="og:title" content={name} />
             )}
+            <meta property="description" content={description} />
             <meta property="og:description" content={description} />
             {user && (
                 <meta property="og:image" content={`${process.env.NEXT_PUBLIC_AVATAR_ENDPOINT}${user.avatar}`} />
