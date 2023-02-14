@@ -1,5 +1,9 @@
 .container {
     display: flex;
+
+    &>div {
+        padding-top: var(--spacing-primary);
+    }
 }
 .sidebar {
     min-width: 220px;
@@ -36,6 +40,10 @@
 @media (max-width: 500px) {
     .container {
         flex-direction: column;
+
+        &>:last-child {
+            padding-top: 0;
+        }
     }
     .sidebar {
         height: unset;
