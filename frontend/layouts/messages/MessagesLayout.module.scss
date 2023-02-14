@@ -1,10 +1,14 @@
 .container {
     display: flex;
     flex-grow: 1;
-    padding-top: var(--spacing-primary);
+    height: calc(100vh - var(--navbar-height) - var(--spacing-primary));
+
+    &>div {
+        padding: var(--spacing-primary) 0;
+    }
 }
 .sidebar {
-    padding-right: var(--spacing-primary);
+    padding-right: var(--spacing-primary) !important;
     border-right: 2px solid var(--background-tertiary);
     min-width: 320px;
     width: 320px;
@@ -229,6 +233,7 @@
         width: 100%;
         border-right: 0;
         padding-right: 0;
+        padding-bottom: 0 !important;
         border-bottom: 1px solid var(--background-tertiary);
     }
 }

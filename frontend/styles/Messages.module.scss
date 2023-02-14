@@ -1,8 +1,8 @@
 .container {
     flex: 1;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    padding-bottom: var(--spacing-primary);
 }
 .loading {
     height: 100%;
@@ -191,7 +191,7 @@
 }
 
 .empty {
-    padding: 0 var(--spacing-primary);
+    padding: var(--spacing-primary) !important;
     text-align: center;
     display: flex;
     flex-direction: column;
