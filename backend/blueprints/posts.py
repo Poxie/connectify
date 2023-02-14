@@ -5,7 +5,7 @@ from utils.auth import token_required, token_optional
 from utils.users import get_user_by_id
 from utils.common import get_post_by_id, get_attachments_by_parent_id, remove_attachment, create_attachment
 from utils.posts import get_user_posts, delete_post, create_post
-from utils.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH, ALLOWED_FILE_EXTENSIONS
+from utils.constants import MAX_TITLE_LENGTH, MAX_CONTENT_LENGTH, ALLOWED_FILE_EXTENSIONS, ALLOWED_PRIVACY_SETTINGS
 from database import db
 
 posts = Blueprint('posts', __name__)
@@ -30,7 +30,7 @@ def create_user_post(token_id: int):
         return f'Content may not exceed {MAX_CONTENT_LENGTH} characters.', 400
 
     # Checking if privacy setting is unsupported
-    if privacy not in ['all', 'semi', 'private']:
+    if privacy not in ALLOWED_PRIVACY_SETTINGS:
         return 'Privacy setting is unsupported.', 400
 
     # Adding post attachments
