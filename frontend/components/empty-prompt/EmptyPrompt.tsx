@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import styles from './EmptyPrompt.module.scss';
-import { ReactElement } from 'react';
 import Button from '../button';
 
 export const EmptyPrompt: React.FC<{

@@ -1,5 +1,4 @@
 import styles from './LoginPrompt.module.scss';
-import { ReactElement } from "react";
 import { useTranslation } from 'next-i18next';
 import { LoginModal } from '../../modals/login/LoginModal';
 import Button from '../button';
