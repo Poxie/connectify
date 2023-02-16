@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 from database import db
 from utils.common import get_user_by_id
 from utils.posts import get_user_liked_posts
-from utils.users import get_users_by_username, create_user
+from utils.users import get_users_by_username, create_user, delete_user
 from utils.auth import token_required, token_optional
 from utils.messages import get_unread_message_count
 from cryptography.fernet import Fernet
@@ -44,6 +44,17 @@ def create_new_user():
         return str(e), 409
 
     return jsonify({ 'token': token })
+
+
+@users.delete('/users/<int:user_id>')
+@token_required
+def remove_user(user_id: int, token_id: int):
+    if user_id != token_id:
+        return 'Unauthorized', 401
+
+    result = delete_user(token_id)
+
+    return jsonify({})
 
 
 @users.patch('/users/<int:user_id>')

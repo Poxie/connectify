@@ -81,3 +81,12 @@ def create_user(username: str, password: str, email: Union[str, None]=None):
     token = jwt.encode({ 'id': id }, os.getenv('JWT_SECRET_KEY') or '')
 
     return token
+
+"""
+Function to delete a user.
+"""
+def delete_user(user_id: int):
+    query = "UPDATE users SET password = '', username = 'deleted-user', email = '', display_name = 'Deleted User', bio='' WHERE id = %s"
+    result = db.update(query, (user_id,))
+    
+    return result
