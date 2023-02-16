@@ -5,6 +5,7 @@ import { LoginPrompt } from '../../login-prompt/LoginPrompt';
 import { SettingsHeader } from "../SettingsHeader"
 import { SettingsSection } from '../SettingsSection';
 import { ChangePassword } from './ChangePassword';
+import { DeleteAccount } from './DeleteAccount';
 
 export const Account = () => {
     const { t } = useTranslation('settings');
@@ -24,6 +25,9 @@ export const Account = () => {
             </SettingsHeader>
             <SettingsSection title={t('account.changePassword')}>
                 <ChangePassword />
+            </SettingsSection>
+            <SettingsSection title={'Delete account'} hasDivider>
+                <DeleteAccount />
             </SettingsSection>
         </div>
     )

@@ -6,6 +6,10 @@
         margin-bottom: var(--spacing-primary);
         font-size: 16px;
     }
+
+    &.has-divider {
+        border-top: 1px solid var(--background-secondary);
+    }
 }
 .title {
     font-size: 20px;

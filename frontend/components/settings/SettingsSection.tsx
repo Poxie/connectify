@@ -4,9 +4,14 @@ import { ReactElement } from "react";
 export const SettingsSection: React.FC<{
     title: string;
     children: ReactElement;
-}> = ({ title, children }) => {
+    hasDivider?: boolean;
+}> = ({ title, children, hasDivider }) => {
+    const className = [
+        styles['section'],
+        hasDivider ? styles['has-divider'] : ''
+    ].join(' ');
     return(
-        <div className={styles['section']}>
+        <div className={className}>
             <h3>
                 {title}
             </h3>

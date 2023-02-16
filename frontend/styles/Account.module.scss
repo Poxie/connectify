@@ -39,6 +39,21 @@
     }
 }
 
+.delete-button {
+    padding: 8px 12px;
+    border: 1px solid var(--background-tertiary);
+    background-color: var(--background-secondary);
+    border-radius: var(--border-radius-primary);
+    transition: background-color .2s, color .2s;
+    color: #f85149;
+    font-weight: 700;
+
+    &:hover {
+        background-color: #f85149;
+        color: var(--text-light-primary);
+    }
+}
+
 @media (max-width: 500px) {
     .container {
         &>* {
