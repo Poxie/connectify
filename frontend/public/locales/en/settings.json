@@ -35,7 +35,14 @@
         "newPassword": "New password",
         "forgotPassword": "Forgot your password?",
         "updatePassword": "Change password",
-        "success": "Successfully updated password."
+        "success": "Successfully updated password.",
+        "deleteAccount": "Delete account",
+        "deleteAccountDescription": "If you no longer want your account you can delete it here. Note, however, that this cannot be undone once your account has been deleted.",
+        "deleteAccountButton": "Delete Account",
+        "deleteModalHeader": "Delete account?",
+        "deleteModalSubHeader": "Are you sure you want to delete your account? This action cannot be undone once performed, be careful.",
+        "deleteModalConfirm": "Delete account",
+        "deleteAccountError": "Something went wrong while deleting account."
     },
 
     "resetPassword": {

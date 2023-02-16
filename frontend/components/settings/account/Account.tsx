@@ -26,7 +26,7 @@ export const Account = () => {
             <SettingsSection title={t('account.changePassword')}>
                 <ChangePassword />
             </SettingsSection>
-            <SettingsSection title={'Delete account'} hasDivider>
+            <SettingsSection title={t('account.deleteAccount')} hasDivider>
                 <DeleteAccount />
             </SettingsSection>
         </div>

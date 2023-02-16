@@ -34,7 +34,14 @@
         "newPassword": "Nytt lösenord",
         "forgotPassword": "Glömt ditt lösenord?",
         "updatePassword": "Ändra lösenord",
-        "success": "Lösenordet har ändrats."
+        "success": "Lösenordet har ändrats.",
+        "deleteAccount": "Ta bort konto",
+        "deleteAccountDescription": "Om du inte längre vill ha ditt konto kan du ta bort det här. Notera dock att denna handling inte kan ångras efter den är gjord.",
+        "deleteAccountButton": "Ta bort konto",
+        "deleteModalHeader": "Ta bort konto?",
+        "deleteModalSubHeader": "Är du säker på att du vill ta bort ditt konto? Denna handling kan inte ångras när den är gjord, var försiktig.",
+        "deleteModalConfirm": "Ta bort konto",
+        "deleteAccountError": "Något gick fel när kontot skulle raderas."
     },
 
     "resetPassword": {
