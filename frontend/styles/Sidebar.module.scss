@@ -19,6 +19,7 @@
     color: var(--text-secondary);
     font-weight: 600;
     padding: 10px;
+    margin-left: -10px;
     border-radius: var(--border-radius-primary);
     transition: background-color .1s;
     position: relative;
@@ -82,6 +83,7 @@
     }
     .tab {
         padding: 8px;
+        margin-left: 0;
         border-radius: var(--border-radius-secondary);
 
         svg {
